@@ -10,6 +10,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from '@/components/ui/form'
 import {
   Popover,
@@ -28,6 +29,26 @@ import { Textarea } from '@/components/ui/textarea'
 import { useForm } from 'react-hook-form'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { useToast } from '@/hooks/use-toast'
+import * as z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+
+const orderFormSchema = z.object({
+  serviceType: z.string().min(1, {
+    message: "Service type is required",
+  }),
+  pickupDate: z.date({
+    required_error: "Pickup date is required",
+  }),
+  pickupLocation: z.string().min(1, {
+    message: "Pickup location is required",
+  }),
+  dropoffLocation: z.string().min(1, {
+    message: "Drop-off location is required",
+  }),
+  notes: z.string().optional(),
+})
+
+type OrderFormValues = z.infer<typeof orderFormSchema>
 
 const serviceTypes = [
   { value: 'delivery', label: 'Delivery' },
@@ -39,7 +60,9 @@ export const NewOrderForm = () => {
   const { language } = useLanguageStore()
   const t = translations[language]
   const { toast } = useToast()
-  const form = useForm({
+
+  const form = useForm<OrderFormValues>({
+    resolver: zodResolver(orderFormSchema),
     defaultValues: {
       serviceType: '',
       pickupDate: new Date(),
@@ -49,7 +72,7 @@ export const NewOrderForm = () => {
     },
   })
 
-  const onSubmit = async (values: any) => {
+  const onSubmit = async (values: OrderFormValues) => {
     console.log(values)
     toast({
       title: 'Order placed successfully',
@@ -81,6 +104,7 @@ export const NewOrderForm = () => {
                   ))}
                 </SelectContent>
               </Select>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -122,6 +146,7 @@ export const NewOrderForm = () => {
                   />
                 </PopoverContent>
               </Popover>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -135,6 +160,7 @@ export const NewOrderForm = () => {
               <FormControl>
                 <Input placeholder={t.pickupLocation} {...field} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -148,6 +174,7 @@ export const NewOrderForm = () => {
               <FormControl>
                 <Input placeholder={t.dropoffLocation} {...field} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -161,6 +188,7 @@ export const NewOrderForm = () => {
               <FormControl>
                 <Textarea placeholder={t.notes} {...field} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
