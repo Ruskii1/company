@@ -1,3 +1,4 @@
+
 import { CalendarIcon } from 'lucide-react'
 import { format } from 'date-fns'
 import { cn } from '@/lib/utils'
@@ -51,9 +52,24 @@ const orderFormSchema = z.object({
 type OrderFormValues = z.infer<typeof orderFormSchema>
 
 const serviceTypes = [
-  { value: 'delivery', label: 'Delivery' },
-  { value: 'pickup', label: 'Pick-up' },
-  { value: 'express', label: 'Express' },
+  { value: 'regular-tow', label: 'سطحة عادية' },
+  { value: 'half-down-tow', label: 'سطحة هاف داون' },
+  { value: 'full-down-tow', label: 'سطحة فل داون' },
+  { value: 'closed-tow', label: 'سطحة مغلقة' },
+  { value: 'sports-tow', label: 'سطحة رياضية' },
+  { value: 'marine-tow', label: 'سطحة بحرية' },
+  { value: 'intercity-regular-tow', label: 'سطحة عادية - بين المدن' },
+  { value: 'intercity-half-down-tow', label: 'سطحة هاف داون - بين المدن' },
+  { value: 'intercity-full-down-tow', label: 'سطحة فل داون - بين المدن' },
+  { value: 'intercity-closed-tow', label: 'سطحة مغلقة - بين المدن' },
+  { value: 'intercity-sports-tow', label: 'سطحة رياضية - بين المدن' },
+  { value: 'intercity-marine-tow', label: 'سطحة بحرية - بين المدن' },
+  { value: 'mvpi-check', label: 'الفحص الدوري - MVPI' },
+  { value: 'battery-subscription', label: 'اشتراك بطارية' },
+  { value: 'battery-change', label: 'تغيير البطارية' },
+  { value: 'tire-inflation', label: 'تعبئة الإطار بالهواء' },
+  { value: 'spare-tire-change', label: 'تغيير الإطار الاحتياطي' },
+  { value: 'new-tire-purchase', label: 'شراء إطار جديد وتغييره' },
 ]
 
 export const NewOrderForm = () => {
