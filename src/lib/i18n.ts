@@ -1,4 +1,3 @@
-
 import { create } from 'zustand'
 
 type Language = 'en' | 'ar'
@@ -32,6 +31,17 @@ export const translations = {
     pickupDate: 'Pick-Up Date & Time',
     selectDate: 'Select a date',
     optional: '(optional)',
+    employeePortal: 'Employee Portal',
+    orderManagement: 'Order Management',
+    taskId: 'Task ID',
+    customerName: 'Customer Name',
+    actions: 'Actions',
+    viewDetails: 'View Details',
+    time: 'Time',
+    customerNotes: 'Customer Notes',
+    employeeNotes: 'Employee Notes',
+    addNote: 'Add Note',
+    saveNote: 'Save Note',
   },
   ar: {
     customerPortal: 'بوابة العملاء',
@@ -51,5 +61,16 @@ export const translations = {
     pickupDate: 'التاريخ والوقت',
     selectDate: 'اختر تاريخ',
     optional: '(اختياري)',
+    employeePortal: 'بوابة الموظفين',
+    orderManagement: 'إدارة الطلبات',
+    taskId: 'رقم المهمة',
+    customerName: 'اسم العميل',
+    actions: 'الإجراءات',
+    viewDetails: 'عرض التفاصيل',
+    time: 'الوقت',
+    customerNotes: 'ملاحظات العميل',
+    employeeNotes: 'ملاحظات الموظف',
+    addNote: 'إضافة ملاحظة',
+    saveNote: 'حفظ الملاحظة',
   },
 }
