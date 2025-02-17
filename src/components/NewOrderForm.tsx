@@ -1,5 +1,4 @@
 
-import { useState } from 'react'
 import { CalendarIcon } from 'lucide-react'
 import { format } from 'date-fns'
 import { cn } from '@/lib/utils'
@@ -91,7 +90,7 @@ export const NewOrderForm = () => {
           name="pickupDate"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Pick-up Date & Time</FormLabel>
+              <FormLabel>{t.pickupDate}</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -105,7 +104,7 @@ export const NewOrderForm = () => {
                       {field.value ? (
                         format(field.value, 'PPP')
                       ) : (
-                        <span>Pick a date</span>
+                        <span>{t.selectDate}</span>
                       )}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
@@ -158,7 +157,7 @@ export const NewOrderForm = () => {
           name="notes"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t.notes}</FormLabel>
+              <FormLabel>{t.notes} {t.optional}</FormLabel>
               <FormControl>
                 <Textarea placeholder={t.notes} {...field} />
               </FormControl>
