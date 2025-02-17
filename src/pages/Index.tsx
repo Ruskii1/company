@@ -22,7 +22,7 @@ const Index = () => {
 
   return (
     <div className={`min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 p-8 ${language === 'ar' ? 'rtl' : 'ltr'}`}>
-      <div className="fixed top-4 right-4 z-50 flex items-center gap-4">
+      <div className="fixed top-4 ltr:right-4 rtl:left-4 z-50 flex items-center gap-4">
         <Button
           variant="outline"
           size="icon"
