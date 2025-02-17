@@ -6,7 +6,7 @@ import { OrderTable } from '@/components/OrderTable'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { LogOut, UserCircle2 } from 'lucide-react'
+import { LogOut, UserCircle2, Home } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 const Index = () => {
@@ -27,7 +27,8 @@ const Index = () => {
           variant="outline"
           size="icon"
           onClick={() => navigate('/employee')}
-          className="bg-white"
+          className="bg-white hover:bg-gray-100"
+          title="Go to Employee Portal"
         >
           <UserCircle2 className="h-5 w-5" />
         </Button>
@@ -36,7 +37,7 @@ const Index = () => {
           variant="outline"
           size="icon"
           onClick={handleLogout}
-          className="bg-white"
+          className="bg-white hover:bg-gray-100"
         >
           <LogOut className="h-5 w-5" />
         </Button>
