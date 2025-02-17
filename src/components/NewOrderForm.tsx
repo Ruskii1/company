@@ -51,25 +51,25 @@ const orderFormSchema = z.object({
 
 type OrderFormValues = z.infer<typeof orderFormSchema>
 
-const serviceTypes = [
-  { value: 'regular-tow', label: 'سطحة عادية' },
-  { value: 'half-down-tow', label: 'سطحة هاف داون' },
-  { value: 'full-down-tow', label: 'سطحة فل داون' },
-  { value: 'closed-tow', label: 'سطحة مغلقة' },
-  { value: 'sports-tow', label: 'سطحة رياضية' },
-  { value: 'marine-tow', label: 'سطحة بحرية' },
-  { value: 'intercity-regular-tow', label: 'سطحة عادية - بين المدن' },
-  { value: 'intercity-half-down-tow', label: 'سطحة هاف داون - بين المدن' },
-  { value: 'intercity-full-down-tow', label: 'سطحة فل داون - بين المدن' },
-  { value: 'intercity-closed-tow', label: 'سطحة مغلقة - بين المدن' },
-  { value: 'intercity-sports-tow', label: 'سطحة رياضية - بين المدن' },
-  { value: 'intercity-marine-tow', label: 'سطحة بحرية - بين المدن' },
-  { value: 'mvpi-check', label: 'الفحص الدوري - MVPI' },
-  { value: 'battery-subscription', label: 'اشتراك بطارية' },
-  { value: 'battery-change', label: 'تغيير البطارية' },
-  { value: 'tire-inflation', label: 'تعبئة الإطار بالهواء' },
-  { value: 'spare-tire-change', label: 'تغيير الإطار الاحتياطي' },
-  { value: 'new-tire-purchase', label: 'شراء إطار جديد وتغييره' },
+const serviceTypeValues = [
+  'standard-tow',
+  'half-down-tow',
+  'full-down-tow',
+  'enclosed-tow',
+  '4x4-tow',
+  '8-wheel-tow',
+  'intercity-standard-tow',
+  'intercity-half-down-tow',
+  'intercity-full-down-tow',
+  'intercity-enclosed-tow',
+  'intercity-4x4-tow',
+  'intercity-8-wheel-tow',
+  'mvpi-check',
+  'battery-subscription',
+  'battery-change',
+  'tire-inflation',
+  'spare-tire-change',
+  'new-tire-purchase',
 ]
 
 export const NewOrderForm = () => {
@@ -113,9 +113,9 @@ export const NewOrderForm = () => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {serviceTypes.map((type) => (
-                    <SelectItem key={type.value} value={type.value}>
-                      {type.label}
+                  {serviceTypeValues.map((type) => (
+                    <SelectItem key={type} value={type}>
+                      {t.services[type]}
                     </SelectItem>
                   ))}
                 </SelectContent>
