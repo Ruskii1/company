@@ -11,7 +11,7 @@ export const LanguageToggle = () => {
       variant="ghost"
       size="icon"
       onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
-      className="fixed top-4 right-4 z-50"
+      className="bg-white hover:bg-gray-100"
     >
       <Globe className="h-5 w-5" />
     </Button>
