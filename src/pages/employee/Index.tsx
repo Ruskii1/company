@@ -6,13 +6,15 @@ import { EmployeeSidebar } from '@/components/employee/EmployeeSidebar'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { LogOut } from 'lucide-react'
+import { LogOut, Home } from 'lucide-react'
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+import { useNavigate } from 'react-router-dom'
 
 const EmployeePortal = () => {
   const { language } = useLanguageStore()
   const t = translations[language]
   const [orders] = useState<any[]>([])
+  const navigate = useNavigate()
 
   const handleLogout = () => {
     // Add logout logic here
@@ -26,6 +28,15 @@ const EmployeePortal = () => {
         
         <div className="flex-1 p-8">
           <div className="fixed top-4 right-4 z-50 flex items-center gap-4 dir-ltr">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => navigate('/')}
+              className="bg-white hover:bg-gray-100"
+              title="Go to Customer Portal"
+            >
+              <Home className="h-5 w-5" />
+            </Button>
             <SidebarTrigger />
             <LanguageToggle />
             <Button

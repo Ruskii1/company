@@ -1,4 +1,3 @@
-
 import { create } from 'zustand'
 
 type Language = 'en' | 'ar'
@@ -43,6 +42,15 @@ export const translations = {
     employeeNotes: 'Employee Notes',
     addNote: 'Add Note',
     saveNote: 'Save Note',
+    navigation: 'Navigation',
+    tickets: 'Tickets',
+    todaysRequests: "Today's Requests",
+    createNewRequest: 'Create New Request',
+    corporateAccounts: 'Corporate Accounts',
+    serviceProviders: 'Service Providers',
+    serviceProvidersMap: 'Service Providers Map',
+    serviceProviderCompanies: 'Service Provider Companies',
+    customerId: 'Customer ID',
     services: {
       'standard-tow': 'Standard Tow Truck',
       'half-down-tow': 'Half-Down Tow Truck',
@@ -93,6 +101,15 @@ export const translations = {
     employeeNotes: 'ملاحظات الموظف',
     addNote: 'إضافة ملاحظة',
     saveNote: 'حفظ الملاحظة',
+    navigation: 'التنقل',
+    tickets: 'التذاكر',
+    todaysRequests: 'طلبات اليوم',
+    createNewRequest: 'إنشاء طلب جديد',
+    corporateAccounts: 'الحسابات المؤسسية',
+    serviceProviders: 'مزودي الخدمة',
+    serviceProvidersMap: 'خريطة مزودي الخدمة',
+    serviceProviderCompanies: 'شركات مزودي الخدمة',
+    customerId: 'معرف العميل',
     services: {
       'standard-tow': 'سطحة عادية',
       'half-down-tow': 'سطحة هاف داون',

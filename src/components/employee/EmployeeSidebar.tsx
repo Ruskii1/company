@@ -31,55 +31,55 @@ export function EmployeeSidebar() {
 
   const menuItems = [
     {
-      title: 'Home',
+      title: t.orderManagement,
       icon: Home,
       path: '/employee'
     },
     {
-      title: 'Tickets',
+      title: t.tickets,
       icon: Ticket,
       path: '/employee/tickets'
     },
     {
-      title: "Today's Requests",
+      title: t.todaysRequests,
       icon: Clock,
       path: '/employee/today'
     },
     {
-      title: 'Create New Request',
+      title: t.createNewRequest,
       icon: FilePlus,
       path: '/employee/new-request'
     },
     {
-      title: 'Corporate Accounts',
+      title: t.corporateAccounts,
       icon: Building2,
       path: '/employee/corporate'
     },
     {
-      title: 'Service Providers',
+      title: t.serviceProviders,
       icon: Users,
       path: '/employee/providers'
     },
     {
-      title: 'Service Providers Map',
+      title: t.serviceProvidersMap,
       icon: Map,
       path: '/employee/providers-map'
     },
     {
-      title: 'Service Provider Companies',
+      title: t.serviceProviderCompanies,
       icon: Building,
       path: '/employee/provider-companies'
     }
   ]
 
   return (
-    <Sidebar>
+    <Sidebar side={language === 'ar' ? 'right' : 'left'}>
       <SidebarHeader className="border-b p-4">
-        <h2 className="text-lg font-semibold">Employee Portal</h2>
+        <h2 className="text-lg font-semibold">{t.employeePortal}</h2>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+          <SidebarGroupLabel>{t.navigation}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {menuItems.map((item) => (
