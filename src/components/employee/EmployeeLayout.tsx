@@ -1,5 +1,6 @@
 
 import { LanguageToggle } from '@/components/LanguageToggle'
+import { ThemeToggle } from '@/components/ThemeToggle'
 import { EmployeeSidebar } from '@/components/employee/EmployeeSidebar'
 import { useLanguageStore } from '@/lib/i18n'
 import { Button } from '@/components/ui/button'
@@ -23,7 +24,7 @@ export function EmployeeLayout({ children }: EmployeeLayoutProps) {
 
   return (
     <SidebarProvider defaultOpen>
-      <div className={`min-h-screen w-full flex bg-gradient-to-b from-gray-50 to-gray-100 ${language === 'ar' ? 'rtl' : 'ltr'}`}>
+      <div className={`min-h-screen w-full flex bg-gradient-to-b from-background to-background/80 ${language === 'ar' ? 'rtl' : 'ltr'}`}>
         <EmployeeSidebar />
         
         <div className="flex-1 p-8">
@@ -32,18 +33,19 @@ export function EmployeeLayout({ children }: EmployeeLayoutProps) {
               variant="outline"
               size="icon"
               onClick={() => navigate('/')}
-              className="bg-white hover:bg-gray-100"
+              className="bg-background hover:bg-accent"
               title="Go to Customer Portal"
             >
               <Home className="h-5 w-5" />
             </Button>
             <SidebarTrigger />
+            <ThemeToggle />
             <LanguageToggle />
             <Button
               variant="outline"
               size="icon"
               onClick={handleLogout}
-              className="bg-white hover:bg-gray-100"
+              className="bg-background hover:bg-accent"
             >
               <LogOut className="h-5 w-5" />
             </Button>

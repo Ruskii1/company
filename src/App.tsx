@@ -15,6 +15,7 @@ import ServiceProvidersPage from './pages/employee/providers/Index'
 import ServiceProvidersMapPage from './pages/employee/providers-map/Index'
 import ServiceProviderCompaniesPage from './pages/employee/provider-companies/Index'
 import { EmployeeLayout } from './components/employee/EmployeeLayout'
+import { ThemeProvider } from './lib/theme'
 
 const queryClient = new QueryClient()
 
@@ -61,11 +62,13 @@ const router = createBrowserRouter([
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <RouterProvider router={router} />
-      </TooltipProvider>
+      <ThemeProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <RouterProvider router={router} />
+        </TooltipProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   )
 }
