@@ -34,6 +34,10 @@ const AllRequestsPage = () => {
     // Here you would implement the actual filtering logic
   }
 
+  // Fallback for missing translations
+  const requestNumberLabel = t.requestNumber || "Request #"
+  const enterRequestNumberPlaceholder = t.enterRequestNumber || "Enter request number"
+
   return (
     <Card className="backdrop-blur-sm bg-white/80 dark:bg-gray-800/80">
       <CardHeader className="flex flex-row items-center justify-between">
@@ -45,11 +49,11 @@ const AllRequestsPage = () => {
               name="requestNumber"
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center space-x-2">
-                  <FormLabel className="whitespace-nowrap">{t.requestNumber || "Request #"}:</FormLabel>
+                  <FormLabel className="whitespace-nowrap">{requestNumberLabel}:</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Input 
-                        placeholder={t.enterRequestNumber || "Enter request number"} 
+                        placeholder={enterRequestNumberPlaceholder} 
                         className="pr-8" 
                         {...field} 
                       />
