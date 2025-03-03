@@ -10,6 +10,7 @@ import {
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
+import { Badge } from "@/components/ui/badge"
 
 interface Order {
   id: string
@@ -30,6 +31,21 @@ export const OrderManagementTable = ({ orders }: OrderManagementTableProps) => {
   const { language } = useLanguageStore()
   const t = translations[language]
   const navigate = useNavigate()
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'Completed':
+        return <Badge className="bg-green-500">{status}</Badge>
+      case 'In Progress':
+        return <Badge className="bg-blue-500">{status}</Badge>
+      case 'Pending':
+        return <Badge className="bg-yellow-500 text-black">{status}</Badge>
+      case 'Scheduled':
+        return <Badge className="bg-purple-500">{status}</Badge>
+      default:
+        return <Badge>{status}</Badge>
+    }
+  }
 
   return (
     <div className="rounded-md border">
@@ -76,9 +92,13 @@ export const OrderManagementTable = ({ orders }: OrderManagementTableProps) => {
                 <TableCell>{order.pickupTime}</TableCell>
                 <TableCell>{order.pickupLocation}</TableCell>
                 <TableCell>{order.dropoffLocation}</TableCell>
-                <TableCell>{order.status}</TableCell>
+                <TableCell>{getStatusBadge(order.status)}</TableCell>
                 <TableCell>
-                  <Button variant="outline" size="sm">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => navigate(`/employee/orders/${order.taskId}`)}
+                  >
                     {t.viewDetails}
                   </Button>
                 </TableCell>
