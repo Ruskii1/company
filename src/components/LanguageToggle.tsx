@@ -8,10 +8,10 @@ export const LanguageToggle = () => {
 
   return (
     <Button
-      variant="ghost"
+      variant="outline"
       size="icon"
       onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
-      className="bg-white hover:bg-gray-100"
+      title={language === 'en' ? "Switch to Arabic" : "Switch to English"}
     >
       <Globe className="h-5 w-5" />
     </Button>
