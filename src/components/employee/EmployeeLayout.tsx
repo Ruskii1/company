@@ -1,6 +1,5 @@
 
 import { LanguageToggle } from '@/components/LanguageToggle'
-import { ThemeToggle } from '@/components/ThemeToggle'
 import { EmployeeSidebar } from '@/components/employee/EmployeeSidebar'
 import { useLanguageStore } from '@/lib/i18n'
 import { Button } from '@/components/ui/button'
@@ -38,8 +37,13 @@ export function EmployeeLayout({ children }: EmployeeLayoutProps) {
             >
               <Home className="h-5 w-5" />
             </Button>
-            <SidebarTrigger />
-            <ThemeToggle />
+            <Button 
+              variant="outline" 
+              size="icon"
+              className="bg-background hover:bg-accent"
+            >
+              <SidebarTrigger className="h-5 w-5" />
+            </Button>
             <LanguageToggle />
             <Button
               variant="outline"

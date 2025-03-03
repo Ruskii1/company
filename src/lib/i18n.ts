@@ -1,3 +1,4 @@
+
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
@@ -41,6 +42,30 @@ export const translations = {
     serviceProviderCompanies: "Service Provider Companies",
     requestNumber: "Request #",
     enterRequestNumber: "Enter request number",
+    // Additional required translations
+    serviceType: "Service Type",
+    services: "Services",
+    pickupDate: "Pickup Date",
+    selectDate: "Select Date",
+    pickupLocation: "Pickup Location",
+    dropoffLocation: "Dropoff Location",
+    notes: "Notes",
+    optional: "Optional",
+    placeOrder: "Place Order",
+    id: "ID",
+    companyName: "Company Name",
+    employeeName: "Employee Name",
+    pickupTime: "Pickup Time",
+    status: "Status",
+    actions: "Actions",
+    noOrders: "No orders found.",
+    customerId: "Customer ID",
+    customerPortal: "Customer Portal",
+    placeNewOrder: "Place New Order",
+    yourOrders: "Your Orders",
+    taskId: "Task ID",
+    customerName: "Customer Name",
+    viewDetails: "View Details"
   },
   ar: {
     allRequests: "جميع الطلبات",
@@ -61,5 +86,29 @@ export const translations = {
     serviceProviderCompanies: "شركات مقدمي الخدمات",
     requestNumber: "رقم الطلب",
     enterRequestNumber: "أدخل رقم الطلب",
+    // Additional required translations
+    serviceType: "نوع الخدمة",
+    services: "الخدمات",
+    pickupDate: "تاريخ الاستلام",
+    selectDate: "اختر التاريخ",
+    pickupLocation: "موقع الاستلام",
+    dropoffLocation: "موقع التسليم",
+    notes: "ملاحظات",
+    optional: "اختياري",
+    placeOrder: "تقديم الطلب",
+    id: "المعرف",
+    companyName: "اسم الشركة",
+    employeeName: "اسم الموظف",
+    pickupTime: "وقت الاستلام",
+    status: "الحالة",
+    actions: "الإجراءات",
+    noOrders: "لم يتم العثور على طلبات.",
+    customerId: "معرف العميل",
+    customerPortal: "بوابة العميل",
+    placeNewOrder: "تقديم طلب جديد",
+    yourOrders: "طلباتك",
+    taskId: "رقم المهمة",
+    customerName: "اسم العميل",
+    viewDetails: "عرض التفاصيل"
   },
 }
