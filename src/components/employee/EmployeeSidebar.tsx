@@ -19,9 +19,11 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarFooter
 } from '@/components/ui/sidebar'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { ThemeToggle } from '@/components/ThemeToggle'
 
 export function EmployeeSidebar() {
   const { language } = useLanguageStore()
@@ -97,6 +99,9 @@ export function EmployeeSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter className="border-t p-4">
+        <ThemeToggle />
+      </SidebarFooter>
     </Sidebar>
   )
 }
