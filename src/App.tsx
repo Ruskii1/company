@@ -14,6 +14,8 @@ import CorporateAccountsPage from './pages/employee/corporate/Index'
 import ServiceProvidersPage from './pages/employee/providers/Index'
 import ServiceProvidersMapPage from './pages/employee/providers-map/Index'
 import ServiceProviderCompaniesPage from './pages/employee/provider-companies/Index'
+import OrderDetails from './pages/employee/orders/OrderDetails'
+import CustomerDetails from './pages/employee/customers/CustomerDetails'
 import { EmployeeLayout } from './components/employee/EmployeeLayout'
 import { ThemeProvider } from './lib/theme'
 
@@ -56,6 +58,14 @@ const router = createBrowserRouter([
   {
     path: '/employee/provider-companies',
     element: <EmployeeLayout><ServiceProviderCompaniesPage /></EmployeeLayout>,
+  },
+  {
+    path: '/employee/orders/:taskId',
+    element: <EmployeeLayout><OrderDetails /></EmployeeLayout>,
+  },
+  {
+    path: '/employee/customers/:customerId',
+    element: <EmployeeLayout><CustomerDetails /></EmployeeLayout>,
   }
 ])
 

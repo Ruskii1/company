@@ -64,7 +64,12 @@ export const translations = {
     taskId: "Task ID",
     customerName: "Customer Name",
     viewDetails: "View Details",
-    escalateStatus: "Escalate Status"
+    escalateStatus: "Escalate Status",
+    viewCustomerDetails: "View Customer Details",
+    viewOrderDetails: "View Order Details",
+    backToOrderManagement: "Back to Order Management",
+    orderDetails: "Order Details",
+    customerDetails: "Customer Details"
   },
   ar: {
     allRequests: "جميع الطلبات",
@@ -108,6 +113,11 @@ export const translations = {
     taskId: "رقم المهمة",
     customerName: "اسم العميل",
     viewDetails: "عرض التفاصيل",
-    escalateStatus: "تصعيد الحالة"
+    escalateStatus: "تصعيد الحالة",
+    viewCustomerDetails: "عرض تفاصيل العميل",
+    viewOrderDetails: "عرض تفاصيل الطلب",
+    backToOrderManagement: "العودة إلى إدارة الطلبات",
+    orderDetails: "تفاصيل الطلب",
+    customerDetails: "تفاصيل العميل"
   },
 }
