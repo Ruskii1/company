@@ -2,7 +2,7 @@
 import {
   Home,
   Ticket,
-  Clock,
+  List,
   FilePlus,
   Building2,
   Users,
@@ -41,9 +41,9 @@ export function EmployeeSidebar() {
       path: '/employee/tickets'
     },
     {
-      title: t.todaysRequests,
-      icon: Clock,
-      path: '/employee/today'
+      title: t.allRequests,
+      icon: List,
+      path: '/employee/requests'
     },
     {
       title: t.createNewRequest,

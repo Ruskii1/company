@@ -1,3 +1,4 @@
+
 import { create } from 'zustand'
 
 type Language = 'en' | 'ar'
@@ -45,6 +46,12 @@ export const translations = {
     navigation: 'Navigation',
     tickets: 'Tickets',
     todaysRequests: "Today's Requests",
+    allRequests: "All Requests",
+    pastRequests: "Past Requests",
+    futureRequests: "Future Requests",
+    noPastRequests: "No past requests to display",
+    noTodayRequests: "No requests for today",
+    noFutureRequests: "No future requests scheduled",
     createNewRequest: 'Create New Request',
     corporateAccounts: 'Corporate Accounts',
     serviceProviders: 'Service Providers',
@@ -104,6 +111,12 @@ export const translations = {
     navigation: 'التنقل',
     tickets: 'التذاكر',
     todaysRequests: 'طلبات اليوم',
+    allRequests: "جميع الطلبات",
+    pastRequests: "الطلبات السابقة",
+    futureRequests: "الطلبات المستقبلية",
+    noPastRequests: "لا توجد طلبات سابقة للعرض",
+    noTodayRequests: "لا توجد طلبات لهذا اليوم",
+    noFutureRequests: "لا توجد طلبات مستقبلية مجدولة",
     createNewRequest: 'إنشاء طلب جديد',
     corporateAccounts: 'الحسابات المؤسسية',
     serviceProviders: 'مزودي الخدمة',

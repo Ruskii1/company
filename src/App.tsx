@@ -8,7 +8,7 @@ import CustomerPortal from './pages/customer/Index'
 import EmployeePortal from './pages/employee/Index'
 import NotFound from './pages/NotFound'
 import TicketsPage from './pages/employee/tickets/Index'
-import TodayRequestsPage from './pages/employee/today/Index'
+import AllRequestsPage from './pages/employee/requests/Index'
 import CreateRequestPage from './pages/employee/new-request/Index'
 import CorporateAccountsPage from './pages/employee/corporate/Index'
 import ServiceProvidersPage from './pages/employee/providers/Index'
@@ -34,8 +34,8 @@ const router = createBrowserRouter([
     element: <EmployeeLayout><TicketsPage /></EmployeeLayout>,
   },
   {
-    path: '/employee/today',
-    element: <EmployeeLayout><TodayRequestsPage /></EmployeeLayout>,
+    path: '/employee/requests',
+    element: <EmployeeLayout><AllRequestsPage /></EmployeeLayout>,
   },
   {
     path: '/employee/new-request',
