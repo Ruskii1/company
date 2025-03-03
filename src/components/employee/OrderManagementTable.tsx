@@ -11,6 +11,9 @@ import { useLanguageStore, translations } from '@/lib/i18n'
 import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
 import { Badge } from "@/components/ui/badge"
+import { toast } from "sonner"
+import { useState } from "react"
+import { MapPin } from "lucide-react"
 
 interface Order {
   id: string
@@ -25,9 +28,10 @@ interface Order {
 
 interface OrderManagementTableProps {
   orders: Order[]
+  onStatusChange: (id: string, newStatus: string) => void
 }
 
-export const OrderManagementTable = ({ orders }: OrderManagementTableProps) => {
+export const OrderManagementTable = ({ orders, onStatusChange }: OrderManagementTableProps) => {
   const { language } = useLanguageStore()
   const t = translations[language]
   const navigate = useNavigate()
@@ -45,6 +49,37 @@ export const OrderManagementTable = ({ orders }: OrderManagementTableProps) => {
       default:
         return <Badge>{status}</Badge>
     }
+  }
+
+  const escalateStatus = (id: string, currentStatus: string) => {
+    let newStatus: string
+    
+    switch (currentStatus) {
+      case 'Pending':
+        newStatus = 'Scheduled'
+        break
+      case 'Scheduled':
+        newStatus = 'In Progress'
+        break
+      case 'In Progress':
+        newStatus = 'Completed'
+        break
+      default:
+        newStatus = currentStatus
+        break
+    }
+    
+    if (newStatus !== currentStatus) {
+      onStatusChange(id, newStatus)
+      toast.success(`Order status updated to ${newStatus}`)
+    } else if (currentStatus === 'Completed') {
+      toast.info("Order is already completed")
+    }
+  }
+
+  const openInGoogleMaps = (location: string) => {
+    const encodedLocation = encodeURIComponent(location)
+    window.open(`https://www.google.com/maps/search/?api=1&query=${encodedLocation}`, '_blank')
   }
 
   return (
@@ -90,17 +125,53 @@ export const OrderManagementTable = ({ orders }: OrderManagementTableProps) => {
                 </TableCell>
                 <TableCell>{order.serviceType}</TableCell>
                 <TableCell>{order.pickupTime}</TableCell>
-                <TableCell>{order.pickupLocation}</TableCell>
-                <TableCell>{order.dropoffLocation}</TableCell>
+                <TableCell>
+                  <div className="flex items-center gap-2">
+                    <span className="truncate max-w-44">{order.pickupLocation}</span>
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      onClick={() => openInGoogleMaps(order.pickupLocation)}
+                      className="ml-1 h-8 w-8"
+                    >
+                      <MapPin size={16} />
+                    </Button>
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="flex items-center gap-2">
+                    <span className="truncate max-w-44">{order.dropoffLocation}</span>
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      onClick={() => openInGoogleMaps(order.dropoffLocation)}
+                      className="ml-1 h-8 w-8"
+                    >
+                      <MapPin size={16} />
+                    </Button>
+                  </div>
+                </TableCell>
                 <TableCell>{getStatusBadge(order.status)}</TableCell>
                 <TableCell>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => navigate(`/employee/orders/${order.taskId}`)}
-                  >
-                    {t.viewDetails}
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => navigate(`/employee/orders/${order.taskId}`)}
+                    >
+                      {t.viewDetails}
+                    </Button>
+                    {order.status !== 'Completed' && (
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => escalateStatus(order.id, order.status)}
+                        className="bg-blue-500 text-white hover:bg-blue-600"
+                      >
+                        {t.escalateStatus}
+                      </Button>
+                    )}
+                  </div>
                 </TableCell>
               </TableRow>
             ))

@@ -3,13 +3,14 @@ import { useState } from 'react'
 import { OrderManagementTable } from '@/components/employee/OrderManagementTable'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Toaster } from 'sonner'
 
 const EmployeePortal = () => {
   const { language } = useLanguageStore()
   const t = translations[language]
   
   // Dummy order data for demonstration
-  const [orders] = useState([
+  const [orders, setOrders] = useState([
     {
       id: '1001',
       taskId: 'TASK-2023-001',
@@ -62,8 +63,17 @@ const EmployeePortal = () => {
     }
   ])
 
+  const handleStatusChange = (id: string, newStatus: string) => {
+    setOrders((prevOrders) =>
+      prevOrders.map((order) =>
+        order.id === id ? { ...order, status: newStatus } : order
+      )
+    )
+  }
+
   return (
     <>
+      <Toaster />
       <h1 className="text-4xl font-bold text-center mb-12">{t.employeePortal}</h1>
       
       <Card className="backdrop-blur-sm bg-white/80 dark:bg-gray-800/80">
@@ -71,7 +81,10 @@ const EmployeePortal = () => {
           <CardTitle>{t.orderManagement}</CardTitle>
         </CardHeader>
         <CardContent>
-          <OrderManagementTable orders={orders} />
+          <OrderManagementTable 
+            orders={orders} 
+            onStatusChange={handleStatusChange} 
+          />
         </CardContent>
       </Card>
     </>

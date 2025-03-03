@@ -1,4 +1,3 @@
-
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
@@ -42,7 +41,6 @@ export const translations = {
     serviceProviderCompanies: "Service Provider Companies",
     requestNumber: "Request #",
     enterRequestNumber: "Enter request number",
-    // Additional required translations
     serviceType: "Service Type",
     services: "Services",
     pickupDate: "Pickup Date",
@@ -65,7 +63,8 @@ export const translations = {
     yourOrders: "Your Orders",
     taskId: "Task ID",
     customerName: "Customer Name",
-    viewDetails: "View Details"
+    viewDetails: "View Details",
+    escalateStatus: "Escalate Status"
   },
   ar: {
     allRequests: "جميع الطلبات",
@@ -86,7 +85,6 @@ export const translations = {
     serviceProviderCompanies: "شركات مقدمي الخدمات",
     requestNumber: "رقم الطلب",
     enterRequestNumber: "أدخل رقم الطلب",
-    // Additional required translations
     serviceType: "نوع الخدمة",
     services: "الخدمات",
     pickupDate: "تاريخ الاستلام",
@@ -109,6 +107,7 @@ export const translations = {
     yourOrders: "طلباتك",
     taskId: "رقم المهمة",
     customerName: "اسم العميل",
-    viewDetails: "عرض التفاصيل"
+    viewDetails: "عرض التفاصيل",
+    escalateStatus: "تصعيد الحالة"
   },
 }
