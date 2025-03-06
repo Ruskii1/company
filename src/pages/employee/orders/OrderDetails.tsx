@@ -1,13 +1,22 @@
-
 import { useParams, useNavigate } from 'react-router-dom'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { ArrowLeft, MapPin, Clock, Camera, Car, User, Calendar, Briefcase, Check, X } from 'lucide-react'
+import { ArrowLeft, MapPin, Clock, Camera, Car, User, Calendar, Briefcase, Check, X, MessageCircle } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
+import { Textarea } from '@/components/ui/textarea'
+import { useToast } from '@/hooks/use-toast'
+
+interface Note {
+  id: string
+  sender: 'customer' | 'employee'
+  message: string
+  timestamp: string
+  senderName: string
+}
 
 interface Order {
   id: string
@@ -47,6 +56,7 @@ interface Order {
     name: string
     vin: string
   }
+  conversation: Note[]
 }
 
 const OrderDetails = () => {
@@ -57,15 +67,14 @@ const OrderDetails = () => {
   const [order, setOrder] = useState<Order | null>(null)
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('details')
+  const [newNote, setNewNote] = useState('')
+  const { toast } = useToast()
 
-  // Simulate data fetching
   useEffect(() => {
-    // In a real app, this would be an API call
     setTimeout(() => {
-      // Mock data - in a real app, fetch from API using taskId
       const mockOrder = {
         id: '1001',
-        taskId: '2023-001', // Updated format: year-number
+        taskId: '2023-001',
         customerName: 'Acme Corporation',
         serviceType: 'Package Delivery',
         pickupTime: '2023-06-15 09:00 AM',
@@ -110,7 +119,37 @@ const OrderDetails = () => {
           model: 'Toyota Camry',
           name: 'Sedan',
           vin: '1HGCM82633A123456'
-        }
+        },
+        conversation: [
+          {
+            id: '1',
+            sender: 'customer',
+            message: 'Hi, could you please make sure the package is delivered before noon?',
+            timestamp: '2023-06-14 10:15 AM',
+            senderName: 'Acme Corporation'
+          },
+          {
+            id: '2',
+            sender: 'employee',
+            message: 'Yes, we\'ve scheduled it for 9:00 AM delivery. Our driver will call you 30 minutes before arrival.',
+            timestamp: '2023-06-14 10:20 AM',
+            senderName: 'Support Team'
+          },
+          {
+            id: '3',
+            sender: 'customer',
+            message: 'Great, thank you! Is there any way to track the delivery?',
+            timestamp: '2023-06-14 10:25 AM',
+            senderName: 'Acme Corporation'
+          },
+          {
+            id: '4',
+            sender: 'employee',
+            message: 'You\'ll receive a tracking link via email once the driver picks up your package. You can also check status updates in your account dashboard.',
+            timestamp: '2023-06-14 10:30 AM',
+            senderName: 'Support Team'
+          }
+        ]
       }
       
       setOrder(mockOrder)
@@ -136,6 +175,30 @@ const OrderDetails = () => {
   const openInGoogleMaps = (location: string) => {
     const encodedLocation = encodeURIComponent(location)
     window.open(`https://www.google.com/maps/search/?api=1&query=${encodedLocation}`, '_blank')
+  }
+
+  const handleSendNote = () => {
+    if (!newNote.trim() || !order) return;
+
+    const newNoteObj: Note = {
+      id: Date.now().toString(),
+      sender: 'employee',
+      message: newNote.trim(),
+      timestamp: new Date().toLocaleString(),
+      senderName: 'Support Team'
+    };
+
+    setOrder({
+      ...order,
+      conversation: [...order.conversation, newNoteObj]
+    });
+
+    setNewNote('');
+    
+    toast({
+      title: "Note sent",
+      description: "Your message has been added to the conversation",
+    });
   }
 
   if (loading) {
@@ -180,11 +243,12 @@ const OrderDetails = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <Tabs defaultValue="details" value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid grid-cols-4 w-full md:w-auto">
+          <TabsList className="grid grid-cols-5 w-full md:w-auto">
             <TabsTrigger value="details">Details</TabsTrigger>
             <TabsTrigger value="time">Time</TabsTrigger>
             <TabsTrigger value="provider">Provider</TabsTrigger>
             <TabsTrigger value="car">Car Details</TabsTrigger>
+            <TabsTrigger value="notes">Notes</TabsTrigger>
           </TabsList>
           
           <TabsContent value="details" className="space-y-6">
@@ -429,6 +493,56 @@ const OrderDetails = () => {
                     </TableRow>
                   </TableBody>
                 </Table>
+              </CardContent>
+            </Card>
+          </TabsContent>
+          
+          <TabsContent value="notes">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <MessageCircle className="h-5 w-5" />
+                  Conversation History
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4 mb-6">
+                  {order.conversation.map((note) => (
+                    <div 
+                      key={note.id}
+                      className={`p-3 rounded-lg ${
+                        note.sender === 'customer' 
+                          ? 'bg-blue-50 dark:bg-blue-950 border-l-4 border-blue-500 ml-auto mr-0' 
+                          : 'bg-green-50 dark:bg-green-950 border-l-4 border-green-500 mr-auto ml-0'
+                      } max-w-[80%]`}
+                    >
+                      <div className="flex justify-between items-start mb-1">
+                        <span className="font-semibold text-sm">
+                          {note.senderName} 
+                          <span className="ml-2 text-xs font-normal text-gray-500">
+                            ({note.sender})
+                          </span>
+                        </span>
+                        <span className="text-xs text-gray-500">{note.timestamp}</span>
+                      </div>
+                      <p className="text-sm">{note.message}</p>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="space-y-2">
+                  <Textarea
+                    placeholder="Add a note to this conversation..."
+                    value={newNote}
+                    onChange={(e) => setNewNote(e.target.value)}
+                    className="min-h-[100px]"
+                  />
+                  <div className="flex justify-end">
+                    <Button onClick={handleSendNote} disabled={!newNote.trim()}>
+                      Send Note
+                    </Button>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
