@@ -3,7 +3,7 @@ import { useLanguageStore, translations } from '@/lib/i18n'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { ArrowLeft, MapPin, Clock, Camera, Car, User, Calendar, Briefcase, Check, X, MessageCircle } from 'lucide-react'
+import { ArrowLeft, MapPin, Clock, Camera, Car, User, Calendar, Briefcase, Check, X, MessageCircle, FileText } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
@@ -16,6 +16,13 @@ interface Note {
   message: string
   timestamp: string
   senderName: string
+}
+
+interface InternalNote {
+  id: string
+  message: string
+  timestamp: string
+  employeeName: string
 }
 
 interface Order {
@@ -57,6 +64,7 @@ interface Order {
     vin: string
   }
   conversation: Note[]
+  internalNotes: InternalNote[]
 }
 
 const OrderDetails = () => {
@@ -68,6 +76,7 @@ const OrderDetails = () => {
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('notes')
   const [newNote, setNewNote] = useState('')
+  const [newInternalNote, setNewInternalNote] = useState('')
   const { toast } = useToast()
 
   useEffect(() => {
@@ -149,6 +158,20 @@ const OrderDetails = () => {
             timestamp: '2023-06-14 10:30 AM',
             senderName: 'Support Team'
           }
+        ],
+        internalNotes: [
+          {
+            id: '1',
+            message: 'Customer is a VIP client, please prioritize this delivery.',
+            timestamp: '2023-06-14 09:00 AM',
+            employeeName: 'Maria Johnson'
+          },
+          {
+            id: '2',
+            message: 'Previous deliveries to this address had access issues. Code for the building is #4321.',
+            timestamp: '2023-06-14 09:30 AM',
+            employeeName: 'Robert Chen'
+          }
         ]
       }
       
@@ -198,6 +221,29 @@ const OrderDetails = () => {
     toast({
       title: "Note sent",
       description: "Your message has been added to the conversation",
+    });
+  }
+
+  const handleSaveInternalNote = () => {
+    if (!newInternalNote.trim() || !order) return;
+
+    const newInternalNoteObj: InternalNote = {
+      id: Date.now().toString(),
+      message: newInternalNote.trim(),
+      timestamp: new Date().toLocaleString(),
+      employeeName: 'Current Employee'
+    };
+
+    setOrder({
+      ...order,
+      internalNotes: [...order.internalNotes, newInternalNoteObj]
+    });
+
+    setNewInternalNote('');
+    
+    toast({
+      title: "Internal note saved",
+      description: "Your note has been added to the order",
     });
   }
 
@@ -256,18 +302,37 @@ const OrderDetails = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <MessageCircle className="h-5 w-5" />
-                  Internal Notes
+                  <FileText className="h-5 w-5" />
+                  Internal Notes (Employee-only)
                 </CardTitle>
               </CardHeader>
               <CardContent>
+                <div className="space-y-4 mb-6">
+                  {order.internalNotes.map((note) => (
+                    <div 
+                      key={note.id}
+                      className="p-3 rounded-lg border-l-4 border-primary bg-muted"
+                    >
+                      <div className="flex justify-between items-start mb-1">
+                        <span className="font-semibold text-sm">
+                          {note.employeeName}
+                        </span>
+                        <span className="text-xs text-gray-500">{note.timestamp}</span>
+                      </div>
+                      <p className="text-sm">{note.message}</p>
+                    </div>
+                  ))}
+                </div>
+                
                 <div className="space-y-2">
                   <Textarea
                     placeholder="Add internal notes about this order (not visible to customer)..."
                     className="min-h-[100px]"
+                    value={newInternalNote}
+                    onChange={(e) => setNewInternalNote(e.target.value)}
                   />
                   <div className="flex justify-end">
-                    <Button>
+                    <Button onClick={handleSaveInternalNote} disabled={!newInternalNote.trim()}>
                       Save Note
                     </Button>
                   </div>
