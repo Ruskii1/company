@@ -3,7 +3,7 @@ import { useLanguageStore, translations } from '@/lib/i18n'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { ArrowLeft, MapPin, Clock, Camera, Car, User, Calendar, Briefcase, Check, X, MessageCircle, FileText } from 'lucide-react'
+import { ArrowLeft, MapPin, Clock, Camera, Car, User, Calendar, Briefcase, Check, X, MessageCircle, FileText, AlertCircle } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
@@ -37,6 +37,7 @@ interface Order {
   notes?: string
   acceptedBy?: string
   declinedBy?: string[]
+  pendingProviders?: string[]
   timeTracking: {
     acceptedAt: string
     inRouteAt: string
@@ -93,6 +94,7 @@ const OrderDetails = () => {
         notes: 'Handle with care. Fragile items inside.',
         acceptedBy: 'John Doe',
         declinedBy: ['Sarah Smith', 'Michael Brown', 'Jane Wilson'],
+        pendingProviders: ['Alex Johnson', 'David Miller', 'Emma Thompson'],
         timeTracking: {
           acceptedAt: '2023-06-15 08:45 AM',
           inRouteAt: '2023-06-15 08:50 AM',
@@ -382,6 +384,22 @@ const OrderDetails = () => {
                   {order.declinedBy && order.declinedBy.length > 0 ? (
                     <ul className="list-disc pl-5">
                       {order.declinedBy.map((provider, index) => (
+                        <li key={index}>{provider}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p>None</p>
+                  )}
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold mb-1 flex items-center gap-2">
+                    <AlertCircle className="h-5 w-5 text-amber-500" />
+                    Pending Response
+                  </h3>
+                  {order.pendingProviders && order.pendingProviders.length > 0 ? (
+                    <ul className="list-disc pl-5">
+                      {order.pendingProviders.map((provider, index) => (
                         <li key={index}>{provider}</li>
                       ))}
                     </ul>
