@@ -85,7 +85,13 @@ export const translations = {
     viewTicketDetails: "View Ticket Details",
     replyToTicket: "Reply to Ticket",
     sendReply: "Send Reply",
-    backToTickets: "Back to Tickets"
+    backToTickets: "Back to Tickets",
+    home: "Home",
+    settings: "Settings",
+    theme: "Theme",
+    language: "Language",
+    notifications: "Notifications",
+    signOut: "Sign Out"
   },
   ar: {
     allRequests: "جميع الطلبات",
@@ -149,6 +155,12 @@ export const translations = {
     viewTicketDetails: "عرض تفاصيل التذكرة",
     replyToTicket: "الرد على التذكرة",
     sendReply: "إرسال الرد",
-    backToTickets: "العودة إلى التذاكر"
+    backToTickets: "العودة إلى التذاكر",
+    home: "الرئيسية",
+    settings: "الإعدادات",
+    theme: "المظهر",
+    language: "اللغة",
+    notifications: "الإشعارات",
+    signOut: "تسجيل الخروج"
   },
 }

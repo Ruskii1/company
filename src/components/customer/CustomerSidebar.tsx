@@ -25,7 +25,7 @@ export function CustomerSidebar() {
   
   const menuItems = [
     {
-      title: t.customerPortal,
+      title: t.home,
       url: '/',
       icon: Home,
     },
