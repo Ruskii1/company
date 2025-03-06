@@ -1,71 +1,72 @@
 
 import { useState } from 'react'
-import { LanguageToggle } from '@/components/LanguageToggle'
-import { ThemeToggle } from '@/components/ThemeToggle'
+import { useLanguageStore, translations } from '@/lib/i18n'
 import { NewOrderForm } from '@/components/NewOrderForm'
 import { OrderTable } from '@/components/OrderTable'
-import { useLanguageStore, translations } from '@/lib/i18n'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { LogOut, UserCircle2 } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
 
 const Index = () => {
   const { language } = useLanguageStore()
   const t = translations[language]
-  const [orders] = useState<any[]>([])
-  const navigate = useNavigate()
-
-  const handleLogout = () => {
-    // Add logout logic here
-    console.log('Logging out...')
-  }
+  
+  // Dummy orders data
+  const [orders] = useState<any[]>([
+    {
+      id: 'ORD-10001',
+      companyName: 'TechCorp',
+      employeeName: 'John Smith',
+      serviceType: 'Document Delivery',
+      pickupTime: '2023-09-15 14:30',
+      pickupLocation: '123 Main St, Dubai',
+      dropoffLocation: '456 Business Ave, Dubai',
+      notes: 'Handle with care',
+      status: 'Completed'
+    },
+    {
+      id: 'ORD-10002',
+      companyName: 'GlobalTrade',
+      employeeName: 'Sarah Johnson',
+      serviceType: 'Package Pickup',
+      pickupTime: '2023-09-16 10:00',
+      pickupLocation: '789 Market Blvd, Dubai',
+      dropoffLocation: '321 Commerce St, Dubai',
+      notes: 'Call before delivery',
+      status: 'In Progress'
+    },
+    {
+      id: 'ORD-10003',
+      companyName: 'SmartSolutions',
+      employeeName: 'Michael Brown',
+      serviceType: 'Express Delivery',
+      pickupTime: '2023-09-17 09:15',
+      pickupLocation: '555 Tech Park, Dubai',
+      dropoffLocation: '777 Innovation Center, Dubai',
+      notes: '',
+      status: 'Pending'
+    }
+  ]);
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b from-background to-background/80 p-8 ${language === 'ar' ? 'rtl' : 'ltr'}`}>
-      <div className={`fixed ${language === 'ar' ? 'left-4' : 'right-4'} top-4 z-50 flex items-center gap-4 dir-ltr`}>
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => navigate('/employee')}
-          className="bg-background hover:bg-accent"
-          title="Go to Employee Portal"
-        >
-          <UserCircle2 className="h-5 w-5" />
-        </Button>
-        <ThemeToggle />
-        <LanguageToggle />
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={handleLogout}
-          className="bg-background hover:bg-accent"
-        >
-          <LogOut className="h-5 w-5" />
-        </Button>
-      </div>
+    <div className="space-y-8">
+      <h1 className="text-3xl font-bold">{t.customerPortal}</h1>
       
-      <div className="max-w-7xl mx-auto space-y-8">
-        <h1 className="text-4xl font-bold text-center mb-12">{t.customerPortal}</h1>
-        
-        <Card className="backdrop-blur-sm bg-white/80 dark:bg-gray-800/80">
-          <CardHeader>
-            <CardTitle>{t.placeNewOrder}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <NewOrderForm />
-          </CardContent>
-        </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>{t.placeNewOrder}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <NewOrderForm />
+        </CardContent>
+      </Card>
 
-        <Card className="backdrop-blur-sm bg-white/80 dark:bg-gray-800/80">
-          <CardHeader>
-            <CardTitle>{t.yourOrders}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <OrderTable orders={orders} />
-          </CardContent>
-        </Card>
-      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>{t.yourOrders}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <OrderTable orders={orders} />
+        </CardContent>
+      </Card>
     </div>
   )
 }

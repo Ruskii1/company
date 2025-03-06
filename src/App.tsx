@@ -5,6 +5,10 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import CustomerPortal from './pages/customer/Index'
+import CustomerNewOrder from './pages/customer/NewOrder'
+import CustomerRequests from './pages/customer/Requests'
+import CustomerTickets from './pages/customer/Tickets'
+import CustomerCredit from './pages/customer/Credit'
 import EmployeePortal from './pages/employee/Index'
 import NotFound from './pages/NotFound'
 import TicketsPage from './pages/employee/tickets/Index'
@@ -17,6 +21,7 @@ import ServiceProviderCompaniesPage from './pages/employee/provider-companies/In
 import OrderDetails from './pages/employee/orders/OrderDetails'
 import CustomerDetails from './pages/employee/customers/CustomerDetails'
 import { EmployeeLayout } from './components/employee/EmployeeLayout'
+import { CustomerLayout } from './components/customer/CustomerLayout'
 import { ThemeProvider } from './lib/theme'
 
 const queryClient = new QueryClient()
@@ -24,8 +29,24 @@ const queryClient = new QueryClient()
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <CustomerPortal />,
+    element: <CustomerLayout><CustomerPortal /></CustomerLayout>,
     errorElement: <NotFound />
+  },
+  {
+    path: '/new-order',
+    element: <CustomerLayout><CustomerNewOrder /></CustomerLayout>,
+  },
+  {
+    path: '/requests',
+    element: <CustomerLayout><CustomerRequests /></CustomerLayout>,
+  },
+  {
+    path: '/tickets',
+    element: <CustomerLayout><CustomerTickets /></CustomerLayout>,
+  },
+  {
+    path: '/credit',
+    element: <CustomerLayout><CustomerCredit /></CustomerLayout>,
   },
   {
     path: '/employee',

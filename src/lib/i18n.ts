@@ -1,3 +1,4 @@
+
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
@@ -69,7 +70,22 @@ export const translations = {
     viewOrderDetails: "View Order Details",
     backToOrderManagement: "Back to Order Management",
     orderDetails: "Order Details",
-    customerDetails: "Customer Details"
+    customerDetails: "Customer Details",
+    credit: "Credit",
+    currentBalance: "Current Balance",
+    addCredit: "Add Credit",
+    amount: "Amount",
+    transactionHistory: "Transaction History",
+    submitNewTicket: "Submit a New Ticket",
+    myTickets: "My Tickets",
+    newTicket: "New Ticket",
+    title: "Title",
+    description: "Description",
+    submit: "Submit",
+    viewTicketDetails: "View Ticket Details",
+    replyToTicket: "Reply to Ticket",
+    sendReply: "Send Reply",
+    backToTickets: "Back to Tickets"
   },
   ar: {
     allRequests: "جميع الطلبات",
@@ -118,6 +134,21 @@ export const translations = {
     viewOrderDetails: "عرض تفاصيل الطلب",
     backToOrderManagement: "العودة إلى إدارة الطلبات",
     orderDetails: "تفاصيل الطلب",
-    customerDetails: "تفاصيل العميل"
+    customerDetails: "تفاصيل العميل",
+    credit: "الرصيد",
+    currentBalance: "الرصيد الحالي",
+    addCredit: "إضافة رصيد",
+    amount: "المبلغ",
+    transactionHistory: "سجل المعاملات",
+    submitNewTicket: "تقديم تذكرة جديدة",
+    myTickets: "تذاكري",
+    newTicket: "تذكرة جديدة",
+    title: "العنوان",
+    description: "الوصف",
+    submit: "تقديم",
+    viewTicketDetails: "عرض تفاصيل التذكرة",
+    replyToTicket: "الرد على التذكرة",
+    sendReply: "إرسال الرد",
+    backToTickets: "العودة إلى التذاكر"
   },
 }
