@@ -66,7 +66,7 @@ const OrderDetails = () => {
   const t = translations[language]
   const [order, setOrder] = useState<Order | null>(null)
   const [loading, setLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState('details')
+  const [activeTab, setActiveTab] = useState('notes')
   const [newNote, setNewNote] = useState('')
   const { toast } = useToast()
 
@@ -242,14 +242,39 @@ const OrderDetails = () => {
         </div>
       </CardHeader>
       <CardContent className="space-y-6">
-        <Tabs defaultValue="details" value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid grid-cols-5 w-full md:w-auto">
+        <Tabs defaultValue="notes" value={activeTab} onValueChange={setActiveTab}>
+          <TabsList className="grid grid-cols-6 w-full md:w-auto">
+            <TabsTrigger value="notes">Notes</TabsTrigger>
             <TabsTrigger value="details">Details</TabsTrigger>
             <TabsTrigger value="time">Time</TabsTrigger>
             <TabsTrigger value="provider">Provider</TabsTrigger>
             <TabsTrigger value="car">Car Details</TabsTrigger>
-            <TabsTrigger value="notes">External Notes</TabsTrigger>
+            <TabsTrigger value="external-notes">External Notes</TabsTrigger>
           </TabsList>
+          
+          <TabsContent value="notes">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <MessageCircle className="h-5 w-5" />
+                  Internal Notes
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  <Textarea
+                    placeholder="Add internal notes about this order (not visible to customer)..."
+                    className="min-h-[100px]"
+                  />
+                  <div className="flex justify-end">
+                    <Button>
+                      Save Note
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
           
           <TabsContent value="details" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -497,7 +522,7 @@ const OrderDetails = () => {
             </Card>
           </TabsContent>
           
-          <TabsContent value="notes">
+          <TabsContent value="external-notes">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
