@@ -76,8 +76,10 @@ export function EmployeeSidebar() {
 
   return (
     <Sidebar side={language === 'ar' ? 'right' : 'left'}>
-      <SidebarHeader className="border-b p-4">
-        <h2 className="text-lg font-semibold">{t.employeePortal}</h2>
+      <SidebarHeader className="flex h-14 items-center border-b px-6">
+        <div className="flex flex-1 items-center gap-2 font-semibold">
+          {t.employeePortal}
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -89,6 +91,7 @@ export function EmployeeSidebar() {
                   <SidebarMenuButton
                     onClick={() => navigate(item.path)}
                     isActive={location.pathname === item.path}
+                    tooltip={item.title}
                   >
                     <item.icon className="h-4 w-4" />
                     <span>{item.title}</span>

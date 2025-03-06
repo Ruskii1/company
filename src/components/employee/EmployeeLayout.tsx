@@ -22,8 +22,8 @@ export function EmployeeLayout({ children }: EmployeeLayoutProps) {
   }
 
   return (
-    <SidebarProvider defaultOpen>
-      <div className={`min-h-screen w-full flex bg-gradient-to-b from-background to-background/80 ${language === 'ar' ? 'rtl' : 'ltr'}`}>
+    <SidebarProvider>
+      <div className={`min-h-screen w-full flex ${language === 'ar' ? 'rtl' : 'ltr'}`}>
         <EmployeeSidebar />
         
         <div className="flex-1 p-8">

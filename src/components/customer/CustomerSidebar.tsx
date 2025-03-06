@@ -17,7 +17,6 @@ import { CreditCard, Home, PlusCircle, Settings, Ticket } from 'lucide-react'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { LanguageToggle } from '@/components/LanguageToggle'
 import { Button } from '@/components/ui/button'
-import { LogOut } from 'lucide-react'
 
 export function CustomerSidebar() {
   const { language } = useLanguageStore()
@@ -52,13 +51,8 @@ export function CustomerSidebar() {
     },
   ]
 
-  const handleLogout = () => {
-    // Logout logic here
-    console.log('Logging out...')
-  }
-
   return (
-    <Sidebar>
+    <Sidebar side={language === 'ar' ? 'right' : 'left'}>
       <SidebarHeader className="flex h-14 items-center border-b px-6">
         <div className="flex flex-1 items-center gap-2 font-semibold">
           {t.customerPortal}
@@ -96,7 +90,6 @@ export function CustomerSidebar() {
           <Button
             variant="ghost"
             size="icon"
-            onClick={handleLogout}
             className="ml-auto"
           >
             <Settings />
