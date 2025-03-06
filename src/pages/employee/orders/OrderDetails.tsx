@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from 'react-router-dom'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -249,7 +248,7 @@ const OrderDetails = () => {
             <TabsTrigger value="time">Time</TabsTrigger>
             <TabsTrigger value="provider">Provider</TabsTrigger>
             <TabsTrigger value="car">Car Details</TabsTrigger>
-            <TabsTrigger value="notes">Notes</TabsTrigger>
+            <TabsTrigger value="notes">External Notes</TabsTrigger>
           </TabsList>
           
           <TabsContent value="details" className="space-y-6">

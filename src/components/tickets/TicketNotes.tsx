@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Ticket, TicketTag } from '@/types/ticket';
 import { Textarea } from '@/components/ui/textarea';
@@ -62,7 +61,6 @@ export const TicketNotes = ({
   };
 
   const getTagColor = (tag: string) => {
-    // Same implementation as in TicketCard
     const colors: Record<string, string> = {
       '#High Priority': 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300',
       '#IT': 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300',
@@ -128,7 +126,7 @@ export const TicketNotes = ({
       </div>
 
       <div>
-        <h3 className="text-md font-medium mb-2 dark:text-gray-200">Notes</h3>
+        <h3 className="text-md font-medium mb-2 dark:text-gray-200">External Notes</h3>
         <div className="space-y-3 mb-4">
           {ticket.notes.length === 0 ? (
             <p className="text-gray-500 dark:text-gray-400 italic">No notes yet</p>
