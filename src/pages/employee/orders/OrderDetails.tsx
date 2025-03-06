@@ -4,8 +4,10 @@ import { useLanguageStore, translations } from '@/lib/i18n'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { ArrowLeft, MapPin } from 'lucide-react'
+import { ArrowLeft, MapPin, Clock, Camera, Car, User, Calendar } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 
 interface Order {
   id: string
@@ -17,6 +19,31 @@ interface Order {
   dropoffLocation: string
   status: string
   notes?: string
+  timeTracking: {
+    acceptedAt: string
+    inRouteAt: string
+    inServiceAt: string
+    dropoffAt: string
+  }
+  provider: {
+    name: string
+    phone: string
+    rating: number
+    images: {
+      pickup: string[]
+      dropoff: string[]
+    }
+    location: {
+      lat: number
+      lng: number
+    }
+  }
+  car: {
+    plate: string
+    model: string
+    name: string
+    vin: string
+  }
 }
 
 const OrderDetails = () => {
@@ -26,6 +53,7 @@ const OrderDetails = () => {
   const t = translations[language]
   const [order, setOrder] = useState<Order | null>(null)
   const [loading, setLoading] = useState(true)
+  const [activeTab, setActiveTab] = useState('details')
 
   // Simulate data fetching
   useEffect(() => {
@@ -34,14 +62,49 @@ const OrderDetails = () => {
       // Mock data - in a real app, fetch from API using taskId
       const mockOrder = {
         id: '1001',
-        taskId: 'TASK-2023-001',
+        taskId: '2023-001', // Updated format: year-number
         customerName: 'Acme Corporation',
         serviceType: 'Package Delivery',
         pickupTime: '2023-06-15 09:00 AM',
         pickupLocation: '123 Business Ave, Tower A',
         dropoffLocation: '456 Commerce St, Suite 300',
         status: 'Completed',
-        notes: 'Handle with care. Fragile items inside.'
+        notes: 'Handle with care. Fragile items inside.',
+        timeTracking: {
+          acceptedAt: '2023-06-15 08:45 AM',
+          inRouteAt: '2023-06-15 08:50 AM',
+          inServiceAt: '2023-06-15 09:05 AM',
+          dropoffAt: '2023-06-15 10:00 AM'
+        },
+        provider: {
+          name: 'John Doe',
+          phone: '+1 (555) 123-4567',
+          rating: 4.8,
+          images: {
+            pickup: [
+              '/placeholder.svg',
+              '/placeholder.svg',
+              '/placeholder.svg',
+              '/placeholder.svg'
+            ],
+            dropoff: [
+              '/placeholder.svg',
+              '/placeholder.svg',
+              '/placeholder.svg',
+              '/placeholder.svg'
+            ]
+          },
+          location: {
+            lat: 37.7749,
+            lng: -122.4194
+          }
+        },
+        car: {
+          plate: 'ABC-1234',
+          model: 'Toyota Camry',
+          name: 'Sedan',
+          vin: '1HGCM82633A123456'
+        }
       }
       
       setOrder(mockOrder)
@@ -110,70 +173,229 @@ const OrderDetails = () => {
         </div>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <div>
-              <h3 className="text-lg font-semibold mb-1">{t.customerName}</h3>
-              <p>{order.customerName}</p>
-              <Button 
-                variant="link" 
-                className="p-0 h-auto mt-1"
-                onClick={() => navigate(`/employee/customers/${order.id}`)}
-              >
-                View Customer Details
-              </Button>
-            </div>
-            
-            <div>
-              <h3 className="text-lg font-semibold mb-1">{t.serviceType}</h3>
-              <p>{order.serviceType}</p>
-            </div>
-            
-            <div>
-              <h3 className="text-lg font-semibold mb-1">{t.pickupTime}</h3>
-              <p>{order.pickupTime}</p>
-            </div>
-          </div>
+        <Tabs defaultValue="details" value={activeTab} onValueChange={setActiveTab}>
+          <TabsList className="grid grid-cols-4 w-full md:w-auto">
+            <TabsTrigger value="details">Details</TabsTrigger>
+            <TabsTrigger value="time">Time</TabsTrigger>
+            <TabsTrigger value="provider">Provider</TabsTrigger>
+            <TabsTrigger value="car">Car Details</TabsTrigger>
+          </TabsList>
           
-          <div className="space-y-4">
-            <div>
-              <h3 className="text-lg font-semibold mb-1">{t.pickupLocation}</h3>
-              <div className="flex items-center gap-2">
-                <p>{order.pickupLocation}</p>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  onClick={() => openInGoogleMaps(order.pickupLocation)}
-                  className="h-8 w-8"
-                >
-                  <MapPin size={16} />
-                </Button>
+          <TabsContent value="details" className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-lg font-semibold mb-1">{t.customerName}</h3>
+                  <p>{order.customerName}</p>
+                  <Button 
+                    variant="link" 
+                    className="p-0 h-auto mt-1"
+                    onClick={() => navigate(`/employee/customers/${order.id}`)}
+                  >
+                    View Customer Details
+                  </Button>
+                </div>
+                
+                <div>
+                  <h3 className="text-lg font-semibold mb-1">{t.serviceType}</h3>
+                  <p>{order.serviceType}</p>
+                </div>
+                
+                <div>
+                  <h3 className="text-lg font-semibold mb-1">{t.pickupTime}</h3>
+                  <p>{order.pickupTime}</p>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-lg font-semibold mb-1">{t.pickupLocation}</h3>
+                  <div className="flex items-center gap-2">
+                    <p>{order.pickupLocation}</p>
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      onClick={() => openInGoogleMaps(order.pickupLocation)}
+                      className="h-8 w-8"
+                    >
+                      <MapPin size={16} />
+                    </Button>
+                  </div>
+                </div>
+                
+                <div>
+                  <h3 className="text-lg font-semibold mb-1">{t.dropoffLocation}</h3>
+                  <div className="flex items-center gap-2">
+                    <p>{order.dropoffLocation}</p>
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      onClick={() => openInGoogleMaps(order.dropoffLocation)}
+                      className="h-8 w-8"
+                    >
+                      <MapPin size={16} />
+                    </Button>
+                  </div>
+                </div>
+                
+                {order.notes && (
+                  <div>
+                    <h3 className="text-lg font-semibold mb-1">{t.notes}</h3>
+                    <p>{order.notes}</p>
+                  </div>
+                )}
               </div>
             </div>
-            
-            <div>
-              <h3 className="text-lg font-semibold mb-1">{t.dropoffLocation}</h3>
-              <div className="flex items-center gap-2">
-                <p>{order.dropoffLocation}</p>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  onClick={() => openInGoogleMaps(order.dropoffLocation)}
-                  className="h-8 w-8"
-                >
-                  <MapPin size={16} />
-                </Button>
-              </div>
-            </div>
-            
-            {order.notes && (
-              <div>
-                <h3 className="text-lg font-semibold mb-1">{t.notes}</h3>
-                <p>{order.notes}</p>
-              </div>
-            )}
-          </div>
-        </div>
+          </TabsContent>
+          
+          <TabsContent value="time">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Clock className="h-5 w-5" />
+                  Time Tracking
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Table>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell className="font-medium">Pickup Time</TableCell>
+                      <TableCell>{order.pickupTime}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-medium">Order Accepted</TableCell>
+                      <TableCell>{order.timeTracking.acceptedAt}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-medium">In Route</TableCell>
+                      <TableCell>{order.timeTracking.inRouteAt}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-medium">In Service</TableCell>
+                      <TableCell>{order.timeTracking.inServiceAt}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-medium">Dropoff Time</TableCell>
+                      <TableCell>{order.timeTracking.dropoffAt}</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </TabsContent>
+          
+          <TabsContent value="provider">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <User className="h-5 w-5" />
+                  Provider Information
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-sm font-semibold mb-1">Provider Name</p>
+                    <p>{order.provider.name}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold mb-1">Phone</p>
+                    <p>{order.provider.phone}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold mb-1">Rating</p>
+                    <p>{order.provider.rating} / 5.0</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                      <Camera className="h-5 w-5" />
+                      Pickup Photos
+                    </h3>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                      {order.provider.images.pickup.map((imageUrl, index) => (
+                        <div key={`pickup-${index}`} className="aspect-square relative border rounded-md overflow-hidden">
+                          <img 
+                            src={imageUrl} 
+                            alt={`Pickup ${index + 1}`}
+                            className="absolute inset-0 w-full h-full object-cover"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                      <Camera className="h-5 w-5" />
+                      Dropoff Photos
+                    </h3>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                      {order.provider.images.dropoff.map((imageUrl, index) => (
+                        <div key={`dropoff-${index}`} className="aspect-square relative border rounded-md overflow-hidden">
+                          <img 
+                            src={imageUrl} 
+                            alt={`Dropoff ${index + 1}`}
+                            className="absolute inset-0 w-full h-full object-cover"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                    <MapPin className="h-5 w-5" />
+                    Live Location
+                  </h3>
+                  <div className="border rounded-md h-64 bg-gray-100 flex items-center justify-center">
+                    <p className="text-gray-500">Live map location would display here</p>
+                    <p className="text-sm text-gray-400">
+                      Current position: {order.provider.location.lat}, {order.provider.location.lng}
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+          
+          <TabsContent value="car">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Car className="h-5 w-5" />
+                  Vehicle Information
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Table>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell className="font-medium">License Plate</TableCell>
+                      <TableCell>{order.car.plate}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-medium">Model</TableCell>
+                      <TableCell>{order.car.model}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-medium">Type</TableCell>
+                      <TableCell>{order.car.name}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-medium">VIN Number</TableCell>
+                      <TableCell className="font-mono">{order.car.vin}</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </CardContent>
     </Card>
   )
