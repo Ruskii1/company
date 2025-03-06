@@ -7,7 +7,8 @@ import {
   Building2,
   Users,
   Map,
-  Building
+  Building,
+  Settings
 } from 'lucide-react'
 import {
   Sidebar,
@@ -23,10 +24,17 @@ import {
 } from '@/components/ui/sidebar'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { ThemeToggle } from '@/components/ThemeToggle'
+import { useTheme } from '@/lib/theme'
+import { Button } from '@/components/ui/button'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger
+} from "@/components/ui/popover"
 
 export function EmployeeSidebar() {
-  const { language } = useLanguageStore()
+  const { language, setLanguage } = useLanguageStore()
+  const { theme, setTheme } = useTheme()
   const t = translations[language]
   const navigate = useNavigate()
   const location = useLocation()
@@ -98,12 +106,57 @@ export function EmployeeSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+              <SidebarMenuItem>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <SidebarMenuButton>
+                      <Settings className="h-4 w-4" />
+                      <span>{t.settings}</span>
+                    </SidebarMenuButton>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-56">
+                    <div className="grid gap-2">
+                      <h4 className="font-medium leading-none mb-2">{t.settings}</h4>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm">{t.theme}</span>
+                        <div className="ml-auto">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                            title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+                          >
+                            {theme === "dark" ? (
+                              <span className="text-xs">☀️</span>
+                            ) : (
+                              <span className="text-xs">🌙</span>
+                            )}
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm">{t.language}</span>
+                        <div className="ml-auto">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
+                            title={language === 'en' ? "Switch to Arabic" : "Switch to English"}
+                          >
+                            <span className="text-xs">{language === 'en' ? 'AR' : 'EN'}</span>
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="border-t p-4">
-        <ThemeToggle />
+        {/* Empty footer */}
       </SidebarFooter>
     </Sidebar>
   )
