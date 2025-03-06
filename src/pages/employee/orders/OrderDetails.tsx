@@ -1,3 +1,4 @@
+
 import { useParams, useNavigate } from 'react-router-dom'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -72,7 +73,7 @@ const OrderDetails = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      const mockOrder = {
+      const mockOrder: Order = {
         id: '1001',
         taskId: '2023-001',
         customerName: 'Acme Corporation',
