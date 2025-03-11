@@ -1,4 +1,3 @@
-
 import { useState } from "react"
 import { useLanguageStore, translations } from "@/lib/i18n"
 import { Button } from "@/components/ui/button"
@@ -12,9 +11,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { CreditCard, Bank, PlusCircle, Trash2, Edit } from "lucide-react"
+import { CreditCard, Building, PlusCircle, Trash2, Edit } from "lucide-react"
 
-// Mock data for payment methods
 const mockCreditCards = [
   { id: "1", type: "Visa", last4: "4242", expiry: "12/24", default: true },
   { id: "2", type: "Mastercard", last4: "5555", expiry: "09/25", default: false }
@@ -126,10 +124,9 @@ export function PaymentSettings() {
   }
   
   const onSubmitCreditCard = (data: CreditCardFormValues) => {
-    // Simulate adding a card
     const newCard = {
       id: Date.now().toString(),
-      type: "Visa", // Simplified for demo
+      type: "Visa",
       last4: data.cardNumber.slice(-4),
       expiry: data.expiryDate,
       default: creditCards.length === 0
@@ -145,11 +142,10 @@ export function PaymentSettings() {
   }
   
   const onSubmitBankAccount = (data: BankAccountFormValues) => {
-    // Simulate adding a bank account
     const newAccount = {
       id: Date.now().toString(),
       bankName: data.bankName,
-      accountType: "Checking", // Simplified for demo
+      accountType: "Checking",
       last4: data.accountNumber.slice(-4),
       default: bankAccounts.length === 0
     }
@@ -195,7 +191,7 @@ export function PaymentSettings() {
                     {t.creditCard}
                   </TabsTrigger>
                   <TabsTrigger value="bankAccount">
-                    <Bank className="mr-2 h-4 w-4" />
+                    <Building className="mr-2 h-4 w-4" />
                     {t.bankAccount}
                   </TabsTrigger>
                 </TabsList>
@@ -407,7 +403,7 @@ export function PaymentSettings() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Bank className="h-5 w-5" />
+            <Building className="h-5 w-5" />
             {t.bankAccounts}
           </CardTitle>
           <CardDescription>
@@ -428,7 +424,7 @@ export function PaymentSettings() {
                 >
                   <div className="flex items-center gap-4">
                     <div className="flex-shrink-0">
-                      <Bank className="h-10 w-10" />
+                      <Building className="h-10 w-10" />
                     </div>
                     <div>
                       <p className="font-medium">
@@ -471,3 +467,4 @@ export function PaymentSettings() {
     </div>
   )
 }
+
