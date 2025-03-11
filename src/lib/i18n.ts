@@ -1,4 +1,3 @@
-
 import { atom, useAtom } from 'jotai'
 
 type LanguageType = 'en' | 'ar'
@@ -119,6 +118,71 @@ const en = {
   yourCreditCardHasBeenRemoved: "Your credit card has been removed",
   bankAccountRemoved: "Bank Account Removed",
   yourBankAccountHasBeenRemoved: "Your bank account has been removed",
+
+  // Navigation
+  navigation: "Navigation",
+  theme: "Theme",
+  language: "Language",
+
+  // Order Management
+  orderManagement: "Order Management",
+  createNewRequest: "Create New Request",
+  serviceProviders: "Service Providers",
+  serviceProvidersMap: "Service Providers Map",
+  serviceProviderCompanies: "Service Provider Companies",
+  corporateAccounts: "Corporate Accounts",
+  customerId: "Customer ID",
+  customerName: "Customer Name",
+  
+  // Service Types
+  serviceType: "Service Type",
+  services: {
+    'standard-tow': 'Standard Tow',
+    'half-down-tow': 'Half Down Tow',
+    'full-down-tow': 'Full Down Tow',
+    'enclosed-tow': 'Enclosed Tow',
+    '4x4-tow': '4x4 Tow',
+    '8-wheel-tow': '8-Wheel Tow',
+    'intercity-standard-tow': 'Intercity Standard Tow',
+    'intercity-half-down-tow': 'Intercity Half Down Tow',
+    'intercity-full-down-tow': 'Intercity Full Down Tow',
+    'intercity-enclosed-tow': 'Intercity Enclosed Tow',
+    'intercity-4x4-tow': 'Intercity 4x4 Tow',
+    'intercity-8-wheel-tow': 'Intercity 8-Wheel Tow',
+    'mvpi-check': 'MVPI Check',
+    'battery-subscription': 'Battery Subscription',
+    'battery-change': 'Battery Change',
+    'tire-inflation': 'Tire Inflation',
+    'spare-tire-change': 'Spare Tire Change',
+    'new-tire-purchase': 'New Tire Purchase',
+  },
+  
+  // Request Details
+  id: "ID",
+  taskId: "Task ID",
+  enterRequestNumber: "Enter request number",
+  pickupDate: "Pickup Date",
+  selectDate: "Select Date",
+  pickupTime: "Pickup Time",
+  pickupLocation: "Pickup Location",
+  dropoffLocation: "Drop-off Location",
+  employeeName: "Employee Name",
+  notes: "Notes",
+  optional: "Optional",
+  placeOrder: "Place Order",
+  
+  // Request List
+  yourOrders: "Your Orders",
+  noOrders: "No orders found",
+  pastRequests: "Past Requests",
+  todaysRequests: "Today's Requests",
+  futureRequests: "Future Requests",
+  noPastRequests: "No past requests",
+  noTodayRequests: "No requests for today",
+  noFutureRequests: "No future requests",
+  viewDetails: "View Details",
+  escalateStatus: "Escalate Status",
+  requestNumber: "Request Number",
 }
 
 const ar = {
@@ -230,6 +294,71 @@ const ar = {
   yourCreditCardHasBeenRemoved: "تمت إزالة بطاقة الائتمان",
   bankAccountRemoved: "تمت إزالة الحساب المصرفي",
   yourBankAccountHasBeenRemoved: "تمت إزالة الحساب المصرفي",
+
+  // Navigation
+  navigation: "التنقل",
+  theme: "المظهر",
+  language: "اللغة",
+
+  // Order Management
+  orderManagement: "إدارة الطلبات",
+  createNewRequest: "إنشاء طلب جديد",
+  serviceProviders: "مقدمي الخدمة",
+  serviceProvidersMap: "خريطة مقدمي الخدمة",
+  serviceProviderCompanies: "شركات مقدمي الخدمة",
+  corporateAccounts: "الحسابات المؤسسية",
+  customerId: "رقم العميل",
+  customerName: "اسم العميل",
+  
+  // Service Types
+  serviceType: "نوع الخدمة",
+  services: {
+    'standard-tow': 'قطر قياسي',
+    'half-down-tow': 'قطر نصف منخفض',
+    'full-down-tow': 'قطر منخفض كامل',
+    'enclosed-tow': 'قطر مغلق',
+    '4x4-tow': 'قطر دفع رباعي',
+    '8-wheel-tow': 'قطر 8 عجلات',
+    'intercity-standard-tow': 'قطر قياسي بين المدن',
+    'intercity-half-down-tow': 'قطر نصف منخفض بين المدن',
+    'intercity-full-down-tow': 'قطر منخفض كامل بين المدن',
+    'intercity-enclosed-tow': 'قطر مغلق بين المدن',
+    'intercity-4x4-tow': 'قطر دفع رباعي بين المدن',
+    'intercity-8-wheel-tow': 'قطر 8 عجلات بين المدن',
+    'mvpi-check': 'فحص MVPI',
+    'battery-subscription': 'اشتراك البطارية',
+    'battery-change': 'تغيير البطارية',
+    'tire-inflation': 'نفخ الإطارات',
+    'spare-tire-change': 'تغيير الإطار الاحتياطي',
+    'new-tire-purchase': 'شراء إطار جديد',
+  },
+  
+  // Request Details
+  id: "المعرف",
+  taskId: "رقم المهمة",
+  enterRequestNumber: "أدخل رقم الطلب",
+  pickupDate: "تاريخ الاستلام",
+  selectDate: "اختر التاريخ",
+  pickupTime: "وقت الاستلام",
+  pickupLocation: "موقع الاستلام",
+  dropoffLocation: "موقع التسليم",
+  employeeName: "اسم الموظف",
+  notes: "ملاحظات",
+  optional: "اختياري",
+  placeOrder: "تقديم الطلب",
+  
+  // Request List
+  yourOrders: "طلباتك",
+  noOrders: "لا توجد طلبات",
+  pastRequests: "الطلبات السابقة",
+  todaysRequests: "طلبات اليوم",
+  futureRequests: "الطلبات المستقبلية",
+  noPastRequests: "لا توجد طلبات سابقة",
+  noTodayRequests: "لا توجد طلبات لليوم",
+  noFutureRequests: "لا توجد طلبات مستقبلية",
+  viewDetails: "عرض التفاصيل",
+  escalateStatus: "تصعيد الحالة",
+  requestNumber: "رقم الطلب",
 }
 
 export const translations = {
