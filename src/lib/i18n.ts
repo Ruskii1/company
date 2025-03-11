@@ -1,9 +1,13 @@
+
 import { atom, useAtom } from 'jotai'
 
-const languageAtom = atom<'en' | 'ar'>('en')
+type LanguageType = 'en' | 'ar'
+
+const languageAtom = atom<LanguageType>('en')
 
 export const useLanguageStore = () => {
-  return useAtom(languageAtom)
+  const [language, setLanguage] = useAtom(languageAtom)
+  return { language, setLanguage }
 }
 
 const en = {
