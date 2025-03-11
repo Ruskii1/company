@@ -23,10 +23,20 @@ import CustomerDetails from './pages/employee/customers/CustomerDetails'
 import { EmployeeLayout } from './components/employee/EmployeeLayout'
 import { CustomerLayout } from './components/customer/CustomerLayout'
 import { ThemeProvider } from './lib/theme'
+import CustomerSignIn from './pages/auth/CustomerSignIn'
+import EmployeeSignIn from './pages/auth/EmployeeSignIn'
 
 const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
+  {
+    path: '/signin/customer',
+    element: <CustomerSignIn />,
+  },
+  {
+    path: '/signin/employee',
+    element: <EmployeeSignIn />,
+  },
   {
     path: '/',
     element: <CustomerLayout><CustomerPortal /></CustomerLayout>,

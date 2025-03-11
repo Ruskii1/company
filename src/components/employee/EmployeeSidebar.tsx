@@ -1,5 +1,5 @@
 
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import {
   Sidebar,
@@ -33,12 +33,15 @@ import {
   PopoverContent,
   PopoverTrigger
 } from "@/components/ui/popover"
+import { useToast } from '@/hooks/use-toast'
 
 export function EmployeeSidebar() {
   const { language, setLanguage } = useLanguageStore()
   const { theme, setTheme } = useTheme()
   const t = translations[language]
   const location = useLocation()
+  const navigate = useNavigate()
+  const { toast } = useToast()
   
   const menuItems = [
     {
@@ -82,6 +85,19 @@ export function EmployeeSidebar() {
       icon: Store,
     },
   ]
+
+  const handleSignOut = () => {
+    // Remove authentication state
+    localStorage.removeItem("employeeAuthenticated")
+    
+    toast({
+      title: "Signed out",
+      description: "You have been signed out successfully.",
+    })
+    
+    // Redirect to employee sign in page
+    navigate("/signin/employee")
+  }
 
   return (
     <Sidebar side={language === 'ar' ? 'right' : 'left'}>
@@ -166,6 +182,7 @@ export function EmployeeSidebar() {
             variant="ghost"
             size="sm"
             className="w-full justify-start text-destructive hover:text-destructive"
+            onClick={handleSignOut}
           >
             <LogOut className="mr-2 h-4 w-4" />
             <span>{t.signOut}</span>
