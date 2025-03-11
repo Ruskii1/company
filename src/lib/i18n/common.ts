@@ -14,6 +14,7 @@ export const commonTranslations = {
     navigation: "Navigation",
     theme: "Theme",
     language: "Language",
+    manageYourAccountSettings: "Manage your account settings and preferences",
   },
   ar: {
     customerPortal: "بوابة العميل",
@@ -29,5 +30,6 @@ export const commonTranslations = {
     navigation: "التنقل",
     theme: "المظهر",
     language: "اللغة",
+    manageYourAccountSettings: "إدارة إعدادات وتفضيلات حسابك",
   }
 }

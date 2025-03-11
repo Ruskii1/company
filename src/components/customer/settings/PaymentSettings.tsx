@@ -1,68 +1,96 @@
 
 import { useState } from "react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useLanguageStore, translations } from "@/lib/i18n"
-import { useToast } from "@/hooks/use-toast"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { AddPaymentSheet } from "./payment/AddPaymentSheet"
 import { PaymentMethodList } from "./payment/PaymentMethodList"
 
-const mockCreditCards = [
-  { id: "1", type: "Visa", last4: "4242", expiry: "12/24", default: true },
-  { id: "2", type: "Mastercard", last4: "5555", expiry: "09/25", default: false }
-]
-
-const mockBankAccounts = [
-  { id: "1", bankName: "Bank of America", accountType: "Checking", last4: "1234", default: true }
-]
+// Define the PaymentMethod type
+interface PaymentMethod {
+  id: string;
+  type: 'card' | 'bank';
+  default: boolean;
+  // Card specific properties
+  cardType?: string;
+  last4?: string;
+  expiryDate?: string;
+  // Bank specific properties
+  bankName?: string;
+  accountType?: string;
+}
 
 export function PaymentSettings() {
   const { language } = useLanguageStore()
   const t = translations[language]
-  const { toast } = useToast()
-  const [creditCards, setCreditCards] = useState(mockCreditCards)
-  const [bankAccounts, setBankAccounts] = useState(mockBankAccounts)
+  const [activeTab, setActiveTab] = useState("cards")
   
-  const handleSetDefaultCreditCard = (id: string) => {
-    setCreditCards(prevCards => 
-      prevCards.map(card => ({ ...card, default: card.id === id }))
-    )
-    
-    toast({
-      title: t.defaultPaymentMethodUpdated,
-      description: t.yourDefaultPaymentMethodHasBeenUpdated,
-    })
+  // Mock data for credit cards
+  const [creditCards, setCreditCards] = useState<PaymentMethod[]>([
+    {
+      id: "card-1",
+      type: "card",
+      cardType: "visa", 
+      last4: "4242",
+      expiryDate: "12/2024",
+      default: true
+    },
+    {
+      id: "card-2",
+      type: "card",
+      cardType: "mastercard",
+      last4: "5678",
+      expiryDate: "09/2025",
+      default: false
+    }
+  ])
+  
+  // Mock data for bank accounts
+  const [bankAccounts, setBankAccounts] = useState<PaymentMethod[]>([
+    {
+      id: "bank-1",
+      type: "bank",
+      bankName: "National Bank",
+      accountType: "Checking",
+      last4: "1234",
+      default: false
+    },
+    {
+      id: "bank-2",
+      type: "bank",
+      bankName: "Global Bank",
+      accountType: "Savings",
+      last4: "5678",
+      default: true
+    }
+  ])
+  
+  const handleSetDefault = (id: string, type: 'card' | 'bank') => {
+    if (type === 'card') {
+      const updatedCards = creditCards.map(card => ({
+        ...card,
+        default: card.id === id
+      }))
+      setCreditCards(updatedCards)
+    } else {
+      const updatedAccounts = bankAccounts.map(account => ({
+        ...account,
+        default: account.id === id
+      }))
+      setBankAccounts(updatedAccounts)
+    }
   }
   
-  const handleSetDefaultBankAccount = (id: string) => {
-    setBankAccounts(prevAccounts => 
-      prevAccounts.map(account => ({ ...account, default: account.id === id }))
-    )
-    
-    toast({
-      title: t.defaultPaymentMethodUpdated,
-      description: t.yourDefaultPaymentMethodHasBeenUpdated,
-    })
-  }
-  
-  const handleDeleteCreditCard = (id: string) => {
-    setCreditCards(prevCards => prevCards.filter(card => card.id !== id))
-    
-    toast({
-      title: t.creditCardRemoved,
-      description: t.yourCreditCardHasBeenRemoved,
-    })
-  }
-  
-  const handleDeleteBankAccount = (id: string) => {
-    setBankAccounts(prevAccounts => prevAccounts.filter(account => account.id !== id))
-    
-    toast({
-      title: t.bankAccountRemoved,
-      description: t.yourBankAccountHasBeenRemoved,
-    })
+  const handleDelete = (id: string, type: 'card' | 'bank') => {
+    if (type === 'card') {
+      setCreditCards(creditCards.filter(card => card.id !== id))
+    } else {
+      setBankAccounts(bankAccounts.filter(account => account.id !== id))
+    }
   }
   
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div>
         <h3 className="text-lg font-medium">{t.paymentMethods}</h3>
         <p className="text-sm text-muted-foreground">
@@ -70,23 +98,47 @@ export function PaymentSettings() {
         </p>
       </div>
       
-      <div className="flex justify-end">
-        <AddPaymentSheet />
-      </div>
-      
-      <PaymentMethodList
-        type="creditCards"
-        items={creditCards}
-        onSetDefault={handleSetDefaultCreditCard}
-        onDelete={handleDeleteCreditCard}
-      />
-      
-      <PaymentMethodList
-        type="bankAccounts"
-        items={bankAccounts}
-        onSetDefault={handleSetDefaultBankAccount}
-        onDelete={handleDeleteBankAccount}
-      />
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <div>
+            <CardTitle className="text-lg">{t.paymentMethods}</CardTitle>
+            <CardDescription>
+              {activeTab === "cards" 
+                ? t.manageYourCreditCardsForPayments
+                : t.manageYourBankAccountsForPayments}
+            </CardDescription>
+          </div>
+          <AddPaymentSheet />
+        </CardHeader>
+        <CardContent>
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-6">
+              <TabsTrigger value="cards">{t.creditCards}</TabsTrigger>
+              <TabsTrigger value="accounts">{t.bankAccounts}</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="cards">
+              <PaymentMethodList 
+                paymentMethods={creditCards}
+                type="card"
+                onSetDefault={handleSetDefault}
+                onDelete={handleDelete}
+                emptyMessage={t.noCreditCardsAdded}
+              />
+            </TabsContent>
+            
+            <TabsContent value="accounts">
+              <PaymentMethodList 
+                paymentMethods={bankAccounts}
+                type="bank"
+                onSetDefault={handleSetDefault}
+                onDelete={handleDelete}
+                emptyMessage={t.noBankAccountsAdded}
+              />
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </Card>
     </div>
   )
 }
