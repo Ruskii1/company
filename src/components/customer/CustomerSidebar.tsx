@@ -13,7 +13,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { CreditCard, Home, LogOut, PlusCircle, Settings, Ticket } from 'lucide-react'
+import { CreditCard, Home, LogOut, PlusCircle, Settings, Ticket, UserCog } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTheme } from '@/lib/theme'
 import {
@@ -56,6 +56,11 @@ export function CustomerSidebar() {
       title: t.credit,
       url: '/credit',
       icon: CreditCard,
+    },
+    {
+      title: t.settings,
+      url: '/settings',
+      icon: UserCog,
     },
   ]
 
@@ -112,12 +117,12 @@ export function CustomerSidebar() {
                 className="w-full justify-start"
               >
                 <Settings className="mr-2 h-4 w-4" />
-                <span>{t.settings}</span>
+                <span>{t.preferences}</span>
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-56">
               <div className="grid gap-2">
-                <h4 className="font-medium leading-none mb-2">{t.settings}</h4>
+                <h4 className="font-medium leading-none mb-2">{t.preferences}</h4>
                 <div className="flex items-center justify-between">
                   <span className="text-sm">{t.theme}</span>
                   <div className="ml-auto">

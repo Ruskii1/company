@@ -25,6 +25,7 @@ import { CustomerLayout } from './components/customer/CustomerLayout'
 import { ThemeProvider } from './lib/theme'
 import CustomerSignIn from './pages/auth/CustomerSignIn'
 import EmployeeSignIn from './pages/auth/EmployeeSignIn'
+import { CustomerSettings } from './components/customer/settings/CustomerSettings'
 
 const queryClient = new QueryClient()
 
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
   {
     path: '/credit',
     element: <CustomerLayout><CustomerCredit /></CustomerLayout>,
+  },
+  {
+    path: '/settings',
+    element: <CustomerLayout><CustomerSettings /></CustomerLayout>,
   },
   {
     path: '/employee',
