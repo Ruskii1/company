@@ -36,6 +36,10 @@ export const CarDetailsComponent = ({ car }: CarDetailsComponentProps) => {
               <TableCell className="font-medium">Type</TableCell>
               <TableCell>{car.name}</TableCell>
             </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">VIN</TableCell>
+              <TableCell>{car.vin}</TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </CardContent>
