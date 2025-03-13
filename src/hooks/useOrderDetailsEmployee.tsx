@@ -72,7 +72,7 @@ export const useOrderDetailsEmployee = (taskId: string | undefined) => {
         id: '1001',
         taskId: '2023-001',
         customerName: 'Acme Corporation',
-        serviceType: 'Package Delivery',
+        serviceType: 'Standard Tow',
         pickupTime: '2023-06-15 09:00 AM',
         pickupLocation: '123 Business Ave, Tower A',
         dropoffLocation: '456 Commerce St, Suite 300',
@@ -168,20 +168,23 @@ export const useOrderDetailsEmployee = (taskId: string | undefined) => {
       if (taskId === '2023-002') {
         mockOrder.taskId = '2023-002'
         mockOrder.status = 'In route'
-        mockOrder.serviceType = 'Package Pickup'
+        mockOrder.serviceType = 'Battery Jumpstart'
       } else if (taskId === '2023-003') {
         mockOrder.taskId = '2023-003'
         mockOrder.status = 'Waiting for provider'
-        mockOrder.serviceType = 'Express Delivery'
+        mockOrder.serviceType = 'Fuel Delivery 95'
       } else if (taskId === '2023-004' || taskId === '2023-005') {
         mockOrder.taskId = taskId
         mockOrder.status = 'Completed'
+        mockOrder.serviceType = 'Tire-Repair on Site'
       } else if (taskId === '2023-006') {
         mockOrder.taskId = taskId
         mockOrder.status = 'In service'
+        mockOrder.serviceType = 'Lock Smith Service'
       } else if (taskId === '2023-007' || taskId === '2023-008') {
         mockOrder.taskId = taskId
         mockOrder.status = 'Waiting for provider'
+        mockOrder.serviceType = 'Half-Down Towing'
       }
       
       setOrder(mockOrder)
