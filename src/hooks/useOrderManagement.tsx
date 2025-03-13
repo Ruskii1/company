@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { FilterValues } from '@/components/employee/OrderManagementFilter'
 import { toast } from 'sonner'
 
@@ -83,29 +83,28 @@ export const useOrderManagement = () => {
   const [filteredOrders, setFilteredOrders] = useState<Order[]>(initialOrders)
   
   const handleStatusChange = (id: string, newStatus: string) => {
-    console.log(`Updating order ${id} to status ${newStatus}`)
+    console.log(`Starting status update for order ${id} to ${newStatus}`)
     
     // Create a completely new array with the updated order
-    const updatedOrders = allOrders.map((order) =>
-      order.id === id ? { ...order, status: newStatus } : order
+    const updatedOrders = allOrders.map((order) => {
+      if (order.id === id) {
+        console.log(`Found order ${id}, changing status from ${order.status} to ${newStatus}`)
+        return { ...order, status: newStatus }
+      }
+      return order
+    })
+    
+    // Update both state variables directly
+    setAllOrders(updatedOrders)
+    setFilteredOrders(
+      // Apply any current filtering
+      filteredOrders.map((order) => 
+        order.id === id ? { ...order, status: newStatus } : order
+      )
     )
     
-    // Update the state with the new array
-    setAllOrders(updatedOrders)
-    
-    // Apply current filtering to the updated orders
-    const searchValue = ''
-    if (searchValue) {
-      const filtered = updatedOrders.filter(order => 
-        order.taskId.toLowerCase().includes(searchValue) || 
-        order.customerName.toLowerCase().includes(searchValue)
-      )
-      setFilteredOrders(filtered)
-    } else {
-      setFilteredOrders(updatedOrders)
-    }
-    
     toast.success(`Order status updated to ${newStatus}`)
+    console.log(`Status update completed for order ${id}`)
   }
   
   const applyFilter = (data: FilterValues) => {

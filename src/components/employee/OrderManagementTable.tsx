@@ -13,7 +13,6 @@ import { useNavigate } from "react-router-dom"
 import { MapPin } from "lucide-react"
 import { StatusBadge } from "@/components/employee/orders/StatusBadge"
 import { toast } from "sonner"
-import { useEffect } from "react"
 
 interface Order {
   id: string
@@ -54,18 +53,18 @@ export const OrderManagementTable = ({ orders, onStatusChange }: OrderManagement
   }
 
   const escalateStatus = (id: string, currentStatus: string) => {
-    const newStatus = getNextStatus(currentStatus)
-    
+    // Skip for completed orders
     if (currentStatus === 'Completed') {
       toast.info("Order is already completed")
       return
     }
     
-    // Apply status change immediately
-    onStatusChange(id, newStatus)
+    // Get the next status
+    const newStatus = getNextStatus(currentStatus)
+    console.log(`Attempting to change order ${id} status from ${currentStatus} to ${newStatus}`)
     
-    // Debug helper
-    console.log(`Status changed from ${currentStatus} to ${newStatus} for order ${id}`)
+    // Apply status change immediately - no conditions
+    onStatusChange(id, newStatus)
   }
 
   const openInGoogleMaps = (location: string) => {
