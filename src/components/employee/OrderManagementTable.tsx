@@ -1,4 +1,3 @@
-
 import {
   Table,
   TableBody,
@@ -10,10 +9,9 @@ import {
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
-import { Badge } from "@/components/ui/badge"
-import { toast } from "sonner"
-import { useState } from "react"
 import { MapPin } from "lucide-react"
+import { StatusBadge } from "@/components/employee/orders/StatusBadge"
+import { toast } from "sonner"
 
 interface Order {
   id: string
@@ -36,47 +34,28 @@ export const OrderManagementTable = ({ orders, onStatusChange }: OrderManagement
   const t = translations[language]
   const navigate = useNavigate()
 
-  const getStatusBadge = (status: string) => {
-    switch (status) {
+  const getNextStatus = (currentStatus: string): string => {
+    switch (currentStatus) {
+      case 'Pending':
+        return 'Waiting for provider'
       case 'Waiting for provider':
-        return <Badge className="bg-yellow-500 text-black">{status}</Badge>
+        return 'In route'
       case 'In route':
-        return <Badge className="bg-blue-500">{status}</Badge>
+        return 'Arrived at the pick-up location'
       case 'Arrived at the pick-up location':
-        return <Badge className="bg-indigo-500">{status}</Badge>
+        return 'In service'
       case 'In service':
-        return <Badge className="bg-purple-500">{status}</Badge>
-      case 'Completed':
-        return <Badge className="bg-green-500">{status}</Badge>
+        return 'Completed'
       default:
-        return <Badge>{status}</Badge>
+        return currentStatus
     }
   }
 
   const escalateStatus = (id: string, currentStatus: string) => {
-    let newStatus: string
-    
-    switch (currentStatus) {
-      case 'Waiting for provider':
-        newStatus = 'In route'
-        break
-      case 'In route':
-        newStatus = 'Arrived at the pick-up location'
-        break
-      case 'Arrived at the pick-up location':
-        newStatus = 'In service'
-        break
-      case 'In service':
-        newStatus = 'Completed'
-        break
-      default:
-        newStatus = currentStatus
-        break
-    }
+    const newStatus = getNextStatus(currentStatus)
     
     if (newStatus !== currentStatus) {
       onStatusChange(id, newStatus)
-      toast.success(`Order status updated to ${newStatus}`)
     } else if (currentStatus === 'Completed') {
       toast.info("Order is already completed")
     }
@@ -156,7 +135,7 @@ export const OrderManagementTable = ({ orders, onStatusChange }: OrderManagement
                     </Button>
                   </div>
                 </TableCell>
-                <TableCell>{getStatusBadge(order.status)}</TableCell>
+                <TableCell><StatusBadge status={order.status} /></TableCell>
                 <TableCell>
                   <div className="flex gap-2">
                     <Button 
@@ -173,7 +152,7 @@ export const OrderManagementTable = ({ orders, onStatusChange }: OrderManagement
                         onClick={() => escalateStatus(order.id, order.status)}
                         className="bg-blue-500 text-white hover:bg-blue-600"
                       >
-                        {t.escalateStatus}
+                        {getNextStatus(order.status)}
                       </Button>
                     )}
                   </div>

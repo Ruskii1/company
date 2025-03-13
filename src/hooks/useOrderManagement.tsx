@@ -66,6 +66,16 @@ export const useOrderManagement = () => {
       pickupLocation: 'Distribution Center #3',
       dropoffLocation: 'Downtown Mall, Store 125',
       status: 'Arrived at the pick-up location'
+    },
+    {
+      id: '1006',
+      taskId: '2025-006',
+      customerName: 'New Startup Inc',
+      serviceType: 'Express Delivery',
+      pickupTime: '2025-06-18 09:30 AM',
+      pickupLocation: 'Tech Hub, Floor 3',
+      dropoffLocation: 'Innovation Center, Room 201',
+      status: 'Pending'
     }
   ]
   

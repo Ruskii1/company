@@ -13,6 +13,7 @@ export const StatusBadge = ({ status }: StatusBadgeProps) => {
     case 'In route':
       return <Badge className="bg-blue-500">{status}</Badge>
     case 'Pending':
+      return <Badge className="bg-orange-500 text-black">{status}</Badge>
     case 'Waiting for provider':
       return <Badge className="bg-yellow-500 text-black">{status}</Badge>
     case 'Scheduled':

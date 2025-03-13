@@ -7,6 +7,8 @@ interface StatusBadgeProps {
 
 export const StatusBadge = ({ status }: StatusBadgeProps) => {
   switch (status) {
+    case 'Pending':
+      return <Badge className="bg-orange-500 text-black">{status}</Badge>
     case 'Waiting for provider':
       return <Badge className="bg-yellow-500 text-black">{status}</Badge>
     case 'In route':
