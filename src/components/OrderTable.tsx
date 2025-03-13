@@ -8,6 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useLanguageStore, translations } from '@/lib/i18n'
+import { useNavigate } from 'react-router-dom'
 
 interface Order {
   id: string
@@ -19,6 +20,7 @@ interface Order {
   dropoffLocation: string
   notes: string
   status: string
+  taskId?: string
 }
 
 interface OrderTableProps {
@@ -28,13 +30,18 @@ interface OrderTableProps {
 export const OrderTable = ({ orders }: OrderTableProps) => {
   const { language } = useLanguageStore()
   const t = translations[language]
+  const navigate = useNavigate()
+
+  const handleOrderClick = (taskId: string) => {
+    navigate(`/order-details/${taskId}`)
+  }
 
   return (
     <div className="rounded-md border">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>{t.id}</TableHead>
+            <TableHead>{t.taskId}</TableHead>
             <TableHead>{t.companyName}</TableHead>
             <TableHead>{t.employeeName}</TableHead>
             <TableHead>{t.serviceType}</TableHead>
@@ -55,7 +62,14 @@ export const OrderTable = ({ orders }: OrderTableProps) => {
           ) : (
             orders.map((order) => (
               <TableRow key={order.id}>
-                <TableCell>{order.id}</TableCell>
+                <TableCell>
+                  <button 
+                    onClick={() => handleOrderClick(order.taskId || order.id)}
+                    className="text-blue-600 hover:underline"
+                  >
+                    {order.taskId || order.id}
+                  </button>
+                </TableCell>
                 <TableCell>{order.companyName}</TableCell>
                 <TableCell>{order.employeeName}</TableCell>
                 <TableCell>{order.serviceType}</TableCell>

@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster"
 import { Toaster as Sonner } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
@@ -9,6 +8,7 @@ import CustomerNewOrder from './pages/customer/NewOrder'
 import CustomerRequests from './pages/customer/Requests'
 import CustomerTickets from './pages/customer/Tickets'
 import CustomerCredit from './pages/customer/Credit'
+import CustomerOrderDetails from './pages/customer/OrderDetails'
 import EmployeePortal from './pages/employee/Index'
 import NotFound from './pages/NotFound'
 import TicketsPage from './pages/employee/tickets/Index'
@@ -62,6 +62,10 @@ const router = createBrowserRouter([
   {
     path: '/settings',
     element: <CustomerLayout><CustomerSettings /></CustomerLayout>,
+  },
+  {
+    path: '/order-details/:taskId',
+    element: <CustomerLayout><CustomerOrderDetails /></CustomerLayout>,
   },
   {
     path: '/employee',

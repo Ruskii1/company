@@ -9,10 +9,11 @@ const Index = () => {
   const { language } = useLanguageStore()
   const t = translations[language]
   
-  // Dummy orders data
+  // Dummy orders data with taskId in year-number format
   const [orders] = useState<any[]>([
     {
-      id: 'ORD-10001',
+      id: '1001',
+      taskId: '2023-001',
       companyName: 'TechCorp',
       employeeName: 'John Smith',
       serviceType: 'Document Delivery',
@@ -23,7 +24,8 @@ const Index = () => {
       status: 'Completed'
     },
     {
-      id: 'ORD-10002',
+      id: '1002',
+      taskId: '2023-002',
       companyName: 'GlobalTrade',
       employeeName: 'Sarah Johnson',
       serviceType: 'Package Pickup',
@@ -34,7 +36,8 @@ const Index = () => {
       status: 'In Progress'
     },
     {
-      id: 'ORD-10003',
+      id: '1003',
+      taskId: '2023-003',
       companyName: 'SmartSolutions',
       employeeName: 'Michael Brown',
       serviceType: 'Express Delivery',
