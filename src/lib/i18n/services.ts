@@ -4,6 +4,7 @@ export const serviceTranslations = {
     serviceType: "Service Type",
     services: {
       'regular-towing': 'Regular Towing',
+      'winch-towing': 'Winch Towing',
       'half-down-towing': 'Half-Down Towing',
       'full-down-towing': 'Full-Down Towing',
       'closed-towing': 'Closed Towing',
@@ -23,6 +24,7 @@ export const serviceTranslations = {
       'tire-inflation-site': 'Tire-Inflation on Site',
       'mvpi': 'MVPI (Motor Vehicle Periodic Inspection)',
       'between-cities-regular-towing': 'Between Cities Regular Towing',
+      'between-cities-winch-towing': 'Between Cities Winch Towing',
       'between-cities-half-down-towing': 'Between Cities Half-Down Towing',
       'between-cities-full-down-towing': 'Between Cities Full-Down Towing',
       'between-cities-closed-towing': 'Between Cities Closed Towing',
@@ -35,6 +37,7 @@ export const serviceTranslations = {
     serviceType: "نوع الخدمة",
     services: {
       'regular-towing': 'قطر عادي',
+      'winch-towing': 'قطر ونش',
       'half-down-towing': 'قطر نصف منخفض',
       'full-down-towing': 'قطر منخفض كامل',
       'closed-towing': 'قطر مغلق',
@@ -54,6 +57,7 @@ export const serviceTranslations = {
       'tire-inflation-site': 'نفخ الإطارات في الموقع',
       'mvpi': 'فحص MVPI (الفحص الدوري للمركبات)',
       'between-cities-regular-towing': 'قطر عادي بين المدن',
+      'between-cities-winch-towing': 'قطر ونش بين المدن',
       'between-cities-half-down-towing': 'قطر نصف منخفض بين المدن',
       'between-cities-full-down-towing': 'قطر منخفض كامل بين المدن',
       'between-cities-closed-towing': 'قطر مغلق بين المدن',

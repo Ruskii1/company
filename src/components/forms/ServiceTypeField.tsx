@@ -11,6 +11,7 @@ type ServiceTypeFieldProps = {
 
 export const serviceTypeValues = [
   'regular-towing',
+  'winch-towing',
   'half-down-towing',
   'full-down-towing',
   'closed-towing',
@@ -30,6 +31,7 @@ export const serviceTypeValues = [
   'tire-inflation-site',
   'mvpi',
   'between-cities-regular-towing',
+  'between-cities-winch-towing',
   'between-cities-half-down-towing',
   'between-cities-full-down-towing',
   'between-cities-closed-towing',
