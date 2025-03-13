@@ -1,3 +1,4 @@
+
 import {
   Table,
   TableBody,
@@ -55,6 +56,7 @@ export const OrderManagementTable = ({ orders, onStatusChange }: OrderManagement
     const newStatus = getNextStatus(currentStatus)
     
     if (newStatus !== currentStatus) {
+      // Apply the status change directly instead of showing a confirmation
       onStatusChange(id, newStatus)
     } else if (currentStatus === 'Completed') {
       toast.info("Order is already completed")
