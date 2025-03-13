@@ -33,7 +33,7 @@ const Index = () => {
       pickupLocation: '789 Market Blvd, Dubai',
       dropoffLocation: '321 Commerce St, Dubai',
       notes: 'Call before delivery',
-      status: 'In Progress'
+      status: 'In route'
     },
     {
       id: '1003',
@@ -45,7 +45,7 @@ const Index = () => {
       pickupLocation: '555 Tech Park, Dubai',
       dropoffLocation: '777 Innovation Center, Dubai',
       notes: '',
-      status: 'Pending'
+      status: 'Waiting for provider'
     }
   ]);
 

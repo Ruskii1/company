@@ -9,6 +9,9 @@ import {
 } from "@/components/ui/table"
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { useNavigate } from 'react-router-dom'
+import { MapPin } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 
 interface Order {
   id: string
@@ -34,6 +37,28 @@ export const OrderTable = ({ orders }: OrderTableProps) => {
 
   const handleOrderClick = (taskId: string) => {
     navigate(`/order-details/${taskId}`)
+  }
+
+  const openInGoogleMaps = (location: string) => {
+    const encodedLocation = encodeURIComponent(location)
+    window.open(`https://www.google.com/maps/search/?api=1&query=${encodedLocation}`, '_blank')
+  }
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'Waiting for provider':
+        return <Badge className="bg-yellow-500 text-black">{status}</Badge>
+      case 'In route':
+        return <Badge className="bg-blue-500">{status}</Badge>
+      case 'Arrived at the pick-up location':
+        return <Badge className="bg-indigo-500">{status}</Badge>
+      case 'In service':
+        return <Badge className="bg-purple-500">{status}</Badge>
+      case 'Completed':
+        return <Badge className="bg-green-500">{status}</Badge>
+      default:
+        return <Badge>{status}</Badge>
+    }
   }
 
   return (
@@ -74,10 +99,40 @@ export const OrderTable = ({ orders }: OrderTableProps) => {
                 <TableCell>{order.employeeName}</TableCell>
                 <TableCell>{order.serviceType}</TableCell>
                 <TableCell>{order.pickupTime}</TableCell>
-                <TableCell>{order.pickupLocation}</TableCell>
-                <TableCell>{order.dropoffLocation}</TableCell>
+                <TableCell>
+                  <div className="flex items-center gap-2">
+                    <span className="truncate max-w-44">{order.pickupLocation}</span>
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openInGoogleMaps(order.pickupLocation);
+                      }}
+                      className="h-8 w-8"
+                    >
+                      <MapPin size={16} />
+                    </Button>
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="flex items-center gap-2">
+                    <span className="truncate max-w-44">{order.dropoffLocation}</span>
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openInGoogleMaps(order.dropoffLocation);
+                      }}
+                      className="h-8 w-8"
+                    >
+                      <MapPin size={16} />
+                    </Button>
+                  </div>
+                </TableCell>
                 <TableCell>{order.notes}</TableCell>
-                <TableCell>{order.status}</TableCell>
+                <TableCell>{getStatusBadge(order.status)}</TableCell>
               </TableRow>
             ))
           )}

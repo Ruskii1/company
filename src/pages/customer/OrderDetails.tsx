@@ -32,6 +32,7 @@ interface Order {
   timeTracking: {
     acceptedAt: string
     inRouteAt: string
+    arrivedAt: string
     inServiceAt: string
     dropoffAt: string
   }
@@ -84,6 +85,7 @@ const CustomerOrderDetails = () => {
         timeTracking: {
           acceptedAt: '2023-06-15 08:45 AM',
           inRouteAt: '2023-06-15 08:50 AM',
+          arrivedAt: '2023-06-15 09:00 AM',
           inServiceAt: '2023-06-15 09:05 AM',
           dropoffAt: '2023-06-15 10:00 AM'
         },
@@ -152,12 +154,21 @@ const CustomerOrderDetails = () => {
       // Find the order that matches the taskId
       if (taskId === '2023-002') {
         mockOrder.taskId = '2023-002'
-        mockOrder.status = 'In Progress'
+        mockOrder.status = 'In route'
         mockOrder.serviceType = 'Package Pickup'
       } else if (taskId === '2023-003') {
         mockOrder.taskId = '2023-003'
-        mockOrder.status = 'Pending'
+        mockOrder.status = 'Waiting for provider'
         mockOrder.serviceType = 'Express Delivery'
+      } else if (taskId === '2023-004' || taskId === '2023-005') {
+        mockOrder.taskId = taskId
+        mockOrder.status = 'Completed'
+      } else if (taskId === '2023-006') {
+        mockOrder.taskId = taskId
+        mockOrder.status = 'In service'
+      } else if (taskId === '2023-007' || taskId === '2023-008') {
+        mockOrder.taskId = taskId
+        mockOrder.status = 'Waiting for provider'
       }
       
       setOrder(mockOrder)
@@ -167,14 +178,16 @@ const CustomerOrderDetails = () => {
 
   const getStatusBadge = (status: string) => {
     switch (status) {
+      case 'Waiting for provider':
+        return <Badge className="bg-yellow-500 text-black">{status}</Badge>
+      case 'In route':
+        return <Badge className="bg-blue-500">{status}</Badge>
+      case 'Arrived at the pick-up location':
+        return <Badge className="bg-indigo-500">{status}</Badge>
+      case 'In service':
+        return <Badge className="bg-purple-500">{status}</Badge>
       case 'Completed':
         return <Badge className="bg-green-500">{status}</Badge>
-      case 'In Progress':
-        return <Badge className="bg-blue-500">{status}</Badge>
-      case 'Pending':
-        return <Badge className="bg-yellow-500 text-black">{status}</Badge>
-      case 'Scheduled':
-        return <Badge className="bg-purple-500">{status}</Badge>
       default:
         return <Badge>{status}</Badge>
     }
@@ -251,11 +264,12 @@ const CustomerOrderDetails = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <Tabs defaultValue="details" value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid grid-cols-4 w-full md:w-auto">
+          <TabsList className="grid grid-cols-5 w-full md:w-auto">
             <TabsTrigger value="details">Details</TabsTrigger>
             <TabsTrigger value="time">Time</TabsTrigger>
             <TabsTrigger value="provider">Provider</TabsTrigger>
             <TabsTrigger value="car">Car Details</TabsTrigger>
+            <TabsTrigger value="external-notes">External Notes</TabsTrigger>
           </TabsList>
           
           <TabsContent value="details" className="space-y-6">
@@ -325,7 +339,7 @@ const CustomerOrderDetails = () => {
                 <Table>
                   <TableBody>
                     <TableRow>
-                      <TableCell className="font-medium">Pickup Time</TableCell>
+                      <TableCell className="font-medium">Pick-up Time</TableCell>
                       <TableCell>{order.pickupTime}</TableCell>
                     </TableRow>
                     <TableRow>
@@ -335,6 +349,10 @@ const CustomerOrderDetails = () => {
                     <TableRow>
                       <TableCell className="font-medium">In Route</TableCell>
                       <TableCell>{order.timeTracking.inRouteAt}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className="font-medium">Arrived at Pick-up</TableCell>
+                      <TableCell>{order.timeTracking.arrivedAt}</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell className="font-medium">In Service</TableCell>
@@ -439,50 +457,52 @@ const CustomerOrderDetails = () => {
               </CardContent>
             </Card>
           </TabsContent>
-        </Tabs>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <MessageCircle className="h-5 w-5" />
-              Conversation
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4 mb-6">
-              {order.conversation.map((note) => (
-                <div 
-                  key={note.id}
-                  className={`p-3 rounded-lg ${
-                    note.sender === 'customer' 
-                      ? 'bg-blue-50 dark:bg-blue-950 border-l-4 border-blue-500 ml-auto mr-0' 
-                      : 'bg-green-50 dark:bg-green-950 border-l-4 border-green-500 mr-auto ml-0'
-                  } max-w-[80%]`}
-                >
-                  <div className="flex justify-between items-start mb-1">
-                    <span className="font-semibold text-sm">{note.senderName}</span>
-                    <span className="text-xs text-gray-500">{note.timestamp}</span>
-                  </div>
-                  <p className="text-sm">{note.message}</p>
+          <TabsContent value="external-notes">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <MessageCircle className="h-5 w-5" />
+                  Conversation
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4 mb-6">
+                  {order.conversation.map((note) => (
+                    <div 
+                      key={note.id}
+                      className={`p-3 rounded-lg ${
+                        note.sender === 'customer' 
+                          ? 'bg-blue-50 dark:bg-blue-950 border-l-4 border-blue-500 ml-auto mr-0' 
+                          : 'bg-green-50 dark:bg-green-950 border-l-4 border-green-500 mr-auto ml-0'
+                      } max-w-[80%]`}
+                    >
+                      <div className="flex justify-between items-start mb-1">
+                        <span className="font-semibold text-sm">{note.senderName}</span>
+                        <span className="text-xs text-gray-500">{note.timestamp}</span>
+                      </div>
+                      <p className="text-sm">{note.message}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            
-            <div className="space-y-2">
-              <Textarea
-                placeholder="Add a note to this conversation..."
-                value={newNote}
-                onChange={(e) => setNewNote(e.target.value)}
-                className="min-h-[100px]"
-              />
-              <div className="flex justify-end">
-                <Button onClick={handleSendNote} disabled={!newNote.trim()}>
-                  Send Message
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+                
+                <div className="space-y-2">
+                  <Textarea
+                    placeholder="Add a note to this conversation..."
+                    value={newNote}
+                    onChange={(e) => setNewNote(e.target.value)}
+                    className="min-h-[100px]"
+                  />
+                  <div className="flex justify-end">
+                    <Button onClick={handleSendNote} disabled={!newNote.trim()}>
+                      Send Message
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </CardContent>
     </Card>
   )

@@ -11,8 +11,8 @@ export const orderTranslations = {
     taskId: "Task ID",
     pickupDate: "Pickup Date",
     selectDate: "Select Date",
-    pickupTime: "Pickup Time",
-    pickupLocation: "Pickup Location",
+    pickupTime: "Pick-up Time",
+    pickupLocation: "Pick-up Location",
     dropoffLocation: "Drop-off Location",
     employeeName: "Employee Name",
     notes: "Notes",
@@ -29,6 +29,7 @@ export const orderTranslations = {
     viewDetails: "View Details",
     escalateStatus: "Escalate Status",
     corporateAccounts: "Corporate Accounts",
+    actions: "Actions"
   },
   ar: {
     orderManagement: "إدارة الطلبات",
@@ -59,5 +60,6 @@ export const orderTranslations = {
     viewDetails: "عرض التفاصيل",
     escalateStatus: "تصعيد الحالة",
     corporateAccounts: "الحسابات المؤسسية",
+    actions: "إجراءات"
   }
 }
