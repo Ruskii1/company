@@ -10,26 +10,25 @@ import { useLanguageStore, translations } from "@/lib/i18n"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 const filterSchema = z.object({
-  taskId: z.string().optional(),
+  requestNumber: z.string().optional(),
   serviceType: z.string().optional()
 })
 
 export type FilterValues = z.infer<typeof filterSchema>
 
-interface OrderManagementFilterProps {
-  onSubmit: (data: FilterValues) => void
+interface RequestFilterProps {
   onFilterChange: (data: FilterValues) => void
   serviceTypeValues: string[]
 }
 
-export const OrderManagementFilter = ({ onSubmit, onFilterChange, serviceTypeValues }: OrderManagementFilterProps) => {
+export const RequestFilter = ({ onFilterChange, serviceTypeValues }: RequestFilterProps) => {
   const { language } = useLanguageStore()
   const t = translations[language]
   
   const form = useForm<FilterValues>({
     resolver: zodResolver(filterSchema),
     defaultValues: {
-      taskId: '',
+      requestNumber: '',
       serviceType: ''
     }
   })
@@ -41,13 +40,13 @@ export const OrderManagementFilter = ({ onSubmit, onFilterChange, serviceTypeVal
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col md:flex-row gap-4 md:items-end">
+      <form className="flex flex-col md:flex-row gap-4 md:items-end">
         <FormField
           control={form.control}
-          name="taskId"
+          name="requestNumber"
           render={({ field }) => (
             <FormItem className="flex-1">
-              <FormLabel>{t.taskId}</FormLabel>
+              <FormLabel>{t.requestNumber}</FormLabel>
               <FormControl>
                 <div className="relative">
                   <Input 
@@ -55,14 +54,7 @@ export const OrderManagementFilter = ({ onSubmit, onFilterChange, serviceTypeVal
                     className="pr-8" 
                     {...field} 
                   />
-                  <Button 
-                    type="submit" 
-                    variant="ghost" 
-                    size="icon" 
-                    className="absolute right-0 top-0 h-full"
-                  >
-                    <Search className="h-4 w-4" />
-                  </Button>
+                  <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
                 </div>
               </FormControl>
             </FormItem>

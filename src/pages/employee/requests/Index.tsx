@@ -3,81 +3,64 @@ import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useLanguageStore, translations } from '@/lib/i18n'
-import { Calendar, Clock, Filter, History, Search } from 'lucide-react'
-import { Input } from '@/components/ui/input'
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
-import { useForm } from 'react-hook-form'
-import { Button } from '@/components/ui/button'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { Calendar, Clock, History } from 'lucide-react'
 import { useRequestsData } from '@/hooks/useRequestsData'
 import { OrderTable } from '@/components/OrderTable'
-
-const requestFilterSchema = z.object({
-  requestNumber: z.string().optional()
-})
-
-type RequestFilterValues = z.infer<typeof requestFilterSchema>
+import { OrderManagementFilter, FilterValues } from '@/components/employee/OrderManagementFilter'
+import { serviceTypeValues } from '@/components/forms/ServiceTypeField'
 
 const AllRequestsPage = () => {
   const { language } = useLanguageStore()
   const t = translations[language]
   const [activeTab, setActiveTab] = useState('today')
   const { pastRequests, todayRequests, futureRequests } = useRequestsData()
-  
-  const form = useForm<RequestFilterValues>({
-    resolver: zodResolver(requestFilterSchema),
-    defaultValues: {
-      requestNumber: ''
-    }
+  const [filters, setFilters] = useState<FilterValues>({
+    taskId: '',
+    serviceType: ''
   })
 
-  const onSubmit = (data: RequestFilterValues) => {
-    console.log('Filtering by request number:', data.requestNumber)
-    // Here you would implement the actual filtering logic
+  // Filter requests based on current filters
+  const filterRequests = (requests: any[]) => {
+    return requests.filter(request => {
+      // Filter by task ID if provided
+      if (filters.taskId && !request.taskId.toLowerCase().includes(filters.taskId.toLowerCase())) {
+        return false
+      }
+      
+      // Filter by service type if provided
+      if (filters.serviceType && request.serviceType !== filters.serviceType) {
+        return false
+      }
+      
+      return true
+    })
   }
 
-  // Fallback for missing translations
-  const requestNumberLabel = t.requestNumber || "Request #"
-  const enterRequestNumberPlaceholder = t.enterRequestNumber || "Enter request number"
+  const filteredPastRequests = filterRequests(pastRequests)
+  const filteredTodayRequests = filterRequests(todayRequests)
+  const filteredFutureRequests = filterRequests(futureRequests)
+
+  const handleSubmit = (data: FilterValues) => {
+    setFilters(data)
+  }
+
+  const handleFilterChange = (data: FilterValues) => {
+    setFilters(data)
+  }
 
   return (
     <Card className="backdrop-blur-sm bg-white/80 dark:bg-gray-800/80">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>{t.allRequests}</CardTitle>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-center space-x-2">
-            <FormField
-              control={form.control}
-              name="requestNumber"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center space-x-2">
-                  <FormLabel className="whitespace-nowrap">{requestNumberLabel}:</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <Input 
-                        placeholder={enterRequestNumberPlaceholder} 
-                        className="pr-8" 
-                        {...field} 
-                      />
-                      <Button 
-                        type="submit" 
-                        variant="ghost" 
-                        size="icon" 
-                        className="absolute right-0 top-0 h-full"
-                      >
-                        <Search className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </form>
-        </Form>
       </CardHeader>
       <CardContent>
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <OrderManagementFilter 
+          onSubmit={handleSubmit} 
+          onFilterChange={handleFilterChange}
+          serviceTypeValues={serviceTypeValues} 
+        />
+        
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full mt-4">
           <TabsList className="w-full justify-start mb-4">
             <TabsTrigger value="past" className="flex items-center gap-2">
               <History className="h-4 w-4" />
@@ -94,8 +77,8 @@ const AllRequestsPage = () => {
           </TabsList>
           
           <TabsContent value="past" className="space-y-4">
-            {pastRequests.length > 0 ? (
-              <OrderTable orders={pastRequests.map(req => ({
+            {filteredPastRequests.length > 0 ? (
+              <OrderTable orders={filteredPastRequests.map(req => ({
                 id: req.id,
                 taskId: req.taskId,
                 companyName: 'Company ' + req.id,
@@ -116,8 +99,8 @@ const AllRequestsPage = () => {
           </TabsContent>
           
           <TabsContent value="today" className="space-y-4">
-            {todayRequests.length > 0 ? (
-              <OrderTable orders={todayRequests.map(req => ({
+            {filteredTodayRequests.length > 0 ? (
+              <OrderTable orders={filteredTodayRequests.map(req => ({
                 id: req.id,
                 taskId: req.taskId,
                 companyName: 'Company ' + req.id,
@@ -138,8 +121,8 @@ const AllRequestsPage = () => {
           </TabsContent>
           
           <TabsContent value="future" className="space-y-4">
-            {futureRequests.length > 0 ? (
-              <OrderTable orders={futureRequests.map(req => ({
+            {filteredFutureRequests.length > 0 ? (
+              <OrderTable orders={filteredFutureRequests.map(req => ({
                 id: req.id,
                 taskId: req.taskId,
                 companyName: 'Company ' + req.id,

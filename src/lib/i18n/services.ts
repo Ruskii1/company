@@ -2,6 +2,7 @@
 export const serviceTranslations = {
   en: {
     serviceType: "Service Type",
+    all: "All",
     services: {
       'regular-towing': 'Regular Towing',
       'winch-towing': 'Winch Towing',
@@ -35,6 +36,7 @@ export const serviceTranslations = {
   },
   ar: {
     serviceType: "نوع الخدمة",
+    all: "الكل",
     services: {
       'regular-towing': 'قطر عادي',
       'winch-towing': 'قطر ونش',
