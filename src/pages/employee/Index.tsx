@@ -5,6 +5,7 @@ import { useLanguageStore, translations } from '@/lib/i18n'
 import { OrderManagementTable } from '@/components/employee/OrderManagementTable'
 import { OrderManagementFilter, FilterValues } from '@/components/employee/OrderManagementFilter'
 import { useOrderManagement } from '@/hooks/useOrderManagement'
+import { serviceTypeValues } from '@/components/forms/ServiceTypeField'
 
 const EmployeePortal = () => {
   const { language } = useLanguageStore()
@@ -30,6 +31,7 @@ const EmployeePortal = () => {
           <OrderManagementFilter 
             onSubmit={handleFilterSubmit}
             onFilterChange={handleFilterChange}
+            serviceTypeValues={serviceTypeValues}
           />
         </CardHeader>
         <CardContent>
