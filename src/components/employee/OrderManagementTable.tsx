@@ -55,8 +55,8 @@ export const OrderManagementTable = ({ orders, onStatusChange }: OrderManagement
   const escalateStatus = (id: string, currentStatus: string) => {
     const newStatus = getNextStatus(currentStatus)
     
+    // Always apply the status change directly
     if (newStatus !== currentStatus) {
-      // Apply the status change directly instead of showing a confirmation
       onStatusChange(id, newStatus)
     } else if (currentStatus === 'Completed') {
       toast.info("Order is already completed")
