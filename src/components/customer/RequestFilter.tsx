@@ -77,7 +77,7 @@ export const RequestFilter = ({ onFilterChange, serviceTypeValues }: RequestFilt
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="">
+                  <SelectItem value="all">
                     {t.all}
                   </SelectItem>
                   {serviceTypeValues.map((type) => (

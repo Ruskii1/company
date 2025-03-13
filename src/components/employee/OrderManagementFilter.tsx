@@ -85,7 +85,7 @@ export const OrderManagementFilter = ({ onSubmit, onFilterChange, serviceTypeVal
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="">
+                  <SelectItem value="all">
                     {t.all}
                   </SelectItem>
                   {serviceTypeValues.map((type) => (
