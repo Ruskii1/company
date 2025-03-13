@@ -9,7 +9,7 @@ const Index = () => {
   const { language } = useLanguageStore()
   const t = translations[language]
   
-  // Dummy orders data with taskId in year-number format
+  // Updated orders data with consistent status
   const [orders] = useState<any[]>([
     {
       id: '1001',

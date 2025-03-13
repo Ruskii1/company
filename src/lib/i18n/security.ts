@@ -28,6 +28,14 @@ export const securityTranslations = {
     twoFactorDisabled: "Two-Factor Disabled",
     twoFactorAuthenticationIsNowEnabled: "Two-factor authentication is now enabled",
     twoFactorAuthenticationIsNowDisabled: "Two-factor authentication is now disabled",
+    preferences: "Preferences",
+    customizeYourUserExperience: "Customize your user experience",
+    appearance: "Appearance",
+    chooseHowTheApplicationLooks: "Choose how the application looks",
+    light: "Light",
+    dark: "Dark",
+    language: "Language",
+    selectYourPreferredLanguage: "Select your preferred language"
   },
   ar: {
     security: "الأمان",
@@ -57,5 +65,13 @@ export const securityTranslations = {
     twoFactorDisabled: "تم تعطيل المصادقة الثنائية",
     twoFactorAuthenticationIsNowEnabled: "تم تفعيل المصادقة الثنائية الآن",
     twoFactorAuthenticationIsNowDisabled: "تم تعطيل المصادقة الثنائية الآن",
+    preferences: "التفضيلات",
+    customizeYourUserExperience: "تخصيص تجربة المستخدم الخاصة بك",
+    appearance: "المظهر",
+    chooseHowTheApplicationLooks: "اختر كيف يبدو التطبيق",
+    light: "فاتح",
+    dark: "داكن",
+    language: "اللغة",
+    selectYourPreferredLanguage: "اختر لغتك المفضلة"
   }
 }
