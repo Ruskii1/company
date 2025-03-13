@@ -1,3 +1,4 @@
+
 import { useState } from 'react'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { NewOrderForm } from '@/components/NewOrderForm'
@@ -15,7 +16,7 @@ const Index = () => {
       taskId: '2025-001',
       companyName: 'TechCorp',
       employeeName: 'John Smith',
-      serviceType: 'Standard Tow',
+      serviceType: 'Regular Towing',
       pickupTime: '2025-09-15 14:30',
       pickupLocation: '123 Main St, Dubai',
       dropoffLocation: '456 Business Ave, Dubai',

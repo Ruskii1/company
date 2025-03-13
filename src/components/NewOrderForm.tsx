@@ -52,7 +52,7 @@ const orderFormSchema = z.object({
 type OrderFormValues = z.infer<typeof orderFormSchema>
 
 const serviceTypeValues = [
-  'standard-tow',
+  'regular-towing',
   'half-down-towing',
   'full-down-towing',
   'closed-towing',
@@ -70,7 +70,14 @@ const serviceTypeValues = [
   'tire-change-station',
   'tire-repair-site',
   'tire-inflation-site',
-  'mvpi'
+  'mvpi',
+  'between-cities-regular-towing',
+  'between-cities-half-down-towing',
+  'between-cities-full-down-towing',
+  'between-cities-closed-towing',
+  'between-cities-heavy-lifting-towing',
+  'between-cities-eight-cars-towing',
+  'between-cities-four-cars-towing'
 ]
 
 export const NewOrderForm = () => {

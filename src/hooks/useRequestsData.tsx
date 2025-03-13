@@ -28,7 +28,7 @@ export const useRequestsData = () => {
     {
       id: '9002',
       taskId: '2025-005',
-      serviceType: 'Standard Tow',
+      serviceType: 'Regular Towing',
       pickupTime: '2025-09-12 14:00',
       pickupLocation: '789 Market Blvd, Dubai',
       dropoffLocation: '321 Commerce St, Dubai',
@@ -66,7 +66,7 @@ export const useRequestsData = () => {
     {
       id: '10003',
       taskId: '2025-008',
-      serviceType: 'Fuel Delivery Diesel',
+      serviceType: 'Between Cities Regular Towing',
       pickupTime: '2025-09-22 13:45',
       pickupLocation: '111 Next Week Rd, Dubai',
       dropoffLocation: '222 Coming Soon Blvd, Dubai',

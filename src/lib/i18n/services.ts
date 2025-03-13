@@ -1,10 +1,9 @@
 
-
 export const serviceTranslations = {
   en: {
     serviceType: "Service Type",
     services: {
-      'standard-tow': 'Standard Tow',
+      'regular-towing': 'Regular Towing',
       'half-down-towing': 'Half-Down Towing',
       'full-down-towing': 'Full-Down Towing',
       'closed-towing': 'Closed Towing',
@@ -23,12 +22,19 @@ export const serviceTranslations = {
       'tire-repair-site': 'Tire-Repair on Site',
       'tire-inflation-site': 'Tire-Inflation on Site',
       'mvpi': 'MVPI (Motor Vehicle Periodic Inspection)',
+      'between-cities-regular-towing': 'Between Cities Regular Towing',
+      'between-cities-half-down-towing': 'Between Cities Half-Down Towing',
+      'between-cities-full-down-towing': 'Between Cities Full-Down Towing',
+      'between-cities-closed-towing': 'Between Cities Closed Towing',
+      'between-cities-heavy-lifting-towing': 'Between Cities Heavy-Lifting Towing',
+      'between-cities-eight-cars-towing': 'Between Cities Eight-Cars Towing',
+      'between-cities-four-cars-towing': 'Between Cities Four-Cars Towing',
     }
   },
   ar: {
     serviceType: "نوع الخدمة",
     services: {
-      'standard-tow': 'قطر قياسي',
+      'regular-towing': 'قطر عادي',
       'half-down-towing': 'قطر نصف منخفض',
       'full-down-towing': 'قطر منخفض كامل',
       'closed-towing': 'قطر مغلق',
@@ -47,6 +53,13 @@ export const serviceTranslations = {
       'tire-repair-site': 'إصلاح الإطارات في الموقع',
       'tire-inflation-site': 'نفخ الإطارات في الموقع',
       'mvpi': 'فحص MVPI (الفحص الدوري للمركبات)',
+      'between-cities-regular-towing': 'قطر عادي بين المدن',
+      'between-cities-half-down-towing': 'قطر نصف منخفض بين المدن',
+      'between-cities-full-down-towing': 'قطر منخفض كامل بين المدن',
+      'between-cities-closed-towing': 'قطر مغلق بين المدن',
+      'between-cities-heavy-lifting-towing': 'قطر رفع ثقيل بين المدن',
+      'between-cities-eight-cars-towing': 'قطر ثمانية سيارات بين المدن',
+      'between-cities-four-cars-towing': 'قطر أربع سيارات بين المدن',
     }
   }
 }
