@@ -38,14 +38,16 @@ export const OrderManagementTable = ({ orders, onStatusChange }: OrderManagement
 
   const getStatusBadge = (status: string) => {
     switch (status) {
+      case 'Waiting for provider':
+        return <Badge className="bg-yellow-500 text-black">{status}</Badge>
+      case 'In route':
+        return <Badge className="bg-blue-500">{status}</Badge>
+      case 'Arrived at the pick-up location':
+        return <Badge className="bg-indigo-500">{status}</Badge>
+      case 'In service':
+        return <Badge className="bg-purple-500">{status}</Badge>
       case 'Completed':
         return <Badge className="bg-green-500">{status}</Badge>
-      case 'In Progress':
-        return <Badge className="bg-blue-500">{status}</Badge>
-      case 'Pending':
-        return <Badge className="bg-yellow-500 text-black">{status}</Badge>
-      case 'Scheduled':
-        return <Badge className="bg-purple-500">{status}</Badge>
       default:
         return <Badge>{status}</Badge>
     }
@@ -55,13 +57,16 @@ export const OrderManagementTable = ({ orders, onStatusChange }: OrderManagement
     let newStatus: string
     
     switch (currentStatus) {
-      case 'Pending':
-        newStatus = 'Scheduled'
+      case 'Waiting for provider':
+        newStatus = 'In route'
         break
-      case 'Scheduled':
-        newStatus = 'In Progress'
+      case 'In route':
+        newStatus = 'Arrived at the pick-up location'
         break
-      case 'In Progress':
+      case 'Arrived at the pick-up location':
+        newStatus = 'In service'
+        break
+      case 'In service':
         newStatus = 'Completed'
         break
       default:

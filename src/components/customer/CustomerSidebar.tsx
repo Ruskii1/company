@@ -52,11 +52,6 @@ export function CustomerSidebar() {
       url: '/credit',
       icon: CreditCard,
     },
-    {
-      title: t.settings,
-      url: '/settings',
-      icon: Settings,
-    },
   ]
 
   const handleSignOut = () => {
@@ -104,6 +99,15 @@ export function CustomerSidebar() {
       </SidebarContent>
       <SidebarFooter className="border-t p-4">
         <div className="flex flex-col gap-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start"
+            onClick={() => navigate('/settings')}
+          >
+            <Settings className="mr-2 h-4 w-4" />
+            <span>{t.settings}</span>
+          </Button>
           <Button
             variant="ghost"
             size="sm"
