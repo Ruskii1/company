@@ -83,14 +83,27 @@ export const useOrderManagement = () => {
   const [filteredOrders, setFilteredOrders] = useState<Order[]>(initialOrders)
   
   const handleStatusChange = (id: string, newStatus: string) => {
+    console.log(`Updating order ${id} to status ${newStatus}`)
+    
+    // Create a completely new array with the updated order
     const updatedOrders = allOrders.map((order) =>
       order.id === id ? { ...order, status: newStatus } : order
     )
     
+    // Update the state with the new array
     setAllOrders(updatedOrders)
     
-    // Apply current filter to updated orders
-    applyFilter({ taskId: '' })
+    // Apply current filtering to the updated orders
+    const searchValue = ''
+    if (searchValue) {
+      const filtered = updatedOrders.filter(order => 
+        order.taskId.toLowerCase().includes(searchValue) || 
+        order.customerName.toLowerCase().includes(searchValue)
+      )
+      setFilteredOrders(filtered)
+    } else {
+      setFilteredOrders(updatedOrders)
+    }
     
     toast.success(`Order status updated to ${newStatus}`)
   }
