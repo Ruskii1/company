@@ -1,4 +1,3 @@
-
 export const providerTranslations = {
   en: {
     providers: "Providers",
