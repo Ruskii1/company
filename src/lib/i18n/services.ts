@@ -39,8 +39,7 @@ export const serviceTranslations = {
     documentDelivery: 'Document Delivery',
     medicalDelivery: 'Medical Delivery',
     furnatureDelivery: 'Furniture Delivery',
-    fragileCargo: 'Fragile Cargo',
-    all: 'All'
+    fragileCargo: 'Fragile Cargo'
   },
   ar: {
     serviceType: "نوع الخدمة",
@@ -81,8 +80,7 @@ export const serviceTranslations = {
     documentDelivery: 'توصيل المستندات',
     medicalDelivery: 'توصيل المستلزمات الطبية',
     furnatureDelivery: 'توصيل الأثاث',
-    fragileCargo: 'الشحن الهش',
-    all: 'الكل'
+    fragileCargo: 'الشحن الهش'
   }
 }
 
