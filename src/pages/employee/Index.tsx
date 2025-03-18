@@ -6,7 +6,6 @@ import { OrderManagementTable } from '@/components/employee/OrderManagementTable
 import { OrderManagementFilter, FilterValues } from '@/components/employee/OrderManagementFilter'
 import { useOrderManagement } from '@/hooks/useOrderManagement'
 import { serviceTypeValues } from '@/components/forms/ServiceTypeField'
-import { EmployeeDashboard } from '@/components/employee/dashboard/EmployeeDashboard'
 
 const EmployeePortal = () => {
   const { language } = useLanguageStore()
@@ -26,12 +25,6 @@ const EmployeePortal = () => {
       <Toaster />
       <h1 className="text-4xl font-bold text-center mb-12">{t.employeePortal}</h1>
       
-      {/* Employee Dashboard */}
-      <div className="mb-12">
-        <EmployeeDashboard />
-      </div>
-      
-      {/* Order Management */}
       <Card className="backdrop-blur-sm bg-white/80 dark:bg-gray-800/80">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>{t.orderManagement}</CardTitle>

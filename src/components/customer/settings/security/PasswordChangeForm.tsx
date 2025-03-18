@@ -11,29 +11,28 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { LockKeyhole } from "lucide-react"
 
+const passwordFormSchema = z.object({
+  currentPassword: z.string().min(8, {
+    message: "Password must be at least 8 characters.",
+  }),
+  newPassword: z.string().min(8, {
+    message: "Password must be at least 8 characters.",
+  }),
+  confirmPassword: z.string().min(8, {
+    message: "Password must be at least 8 characters.",
+  }),
+}).refine((data) => data.newPassword === data.confirmPassword, {
+  message: "Passwords do not match",
+  path: ["confirmPassword"],
+})
+
+type PasswordFormValues = z.infer<typeof passwordFormSchema>
+
 export function PasswordChangeForm() {
   const { language } = useLanguageStore()
   const t = translations[language]
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
-  
-  // Create schema with translated validation messages
-  const passwordFormSchema = z.object({
-    currentPassword: z.string().min(8, {
-      message: "Password must be at least 8 characters.",
-    }),
-    newPassword: z.string().min(8, {
-      message: "Password must be at least 8 characters.",
-    }),
-    confirmPassword: z.string().min(8, {
-      message: "Password must be at least 8 characters.",
-    }),
-  }).refine((data) => data.newPassword === data.confirmPassword, {
-    message: t.passwordsDoNotMatch,
-    path: ["confirmPassword"],
-  })
-  
-  type PasswordFormValues = z.infer<typeof passwordFormSchema>
   
   const defaultValues: Partial<PasswordFormValues> = {
     currentPassword: "",

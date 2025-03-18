@@ -32,14 +32,7 @@ export const serviceTranslations = {
       'between-cities-heavy-lifting-towing': 'Between Cities Heavy-Lifting Towing',
       'between-cities-eight-cars-towing': 'Between Cities Eight-Cars Towing',
       'between-cities-four-cars-towing': 'Between Cities Four-Cars Towing',
-    },
-    packageDelivery: 'Package Delivery',
-    foodDelivery: 'Food Delivery',
-    expressDelivery: 'Express Delivery',
-    documentDelivery: 'Document Delivery',
-    medicalDelivery: 'Medical Delivery',
-    furnatureDelivery: 'Furniture Delivery',
-    fragileCargo: 'Fragile Cargo'
+    }
   },
   ar: {
     serviceType: "نوع الخدمة",
@@ -73,16 +66,6 @@ export const serviceTranslations = {
       'between-cities-heavy-lifting-towing': 'قطر رفع ثقيل بين المدن',
       'between-cities-eight-cars-towing': 'قطر ثمانية سيارات بين المدن',
       'between-cities-four-cars-towing': 'قطر أربع سيارات بين المدن',
-    },
-    packageDelivery: 'توصيل الطرود',
-    foodDelivery: 'توصيل الطعام',
-    expressDelivery: 'توصيل سريع',
-    documentDelivery: 'توصيل المستندات',
-    medicalDelivery: 'توصيل المستلزمات الطبية',
-    furnatureDelivery: 'توصيل الأثاث',
-    fragileCargo: 'الشحن الهش'
+    }
   }
 }
-
-// Export as servicesTranslations for backward compatibility
-export const servicesTranslations = serviceTranslations;

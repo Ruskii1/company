@@ -12,21 +12,6 @@ export const profileTranslations = {
     yourProfileHasBeenSuccessfullyUpdated: "Your profile has been successfully updated",
     saving: "Saving...",
     saveChanges: "Save Changes",
-    
-    // Adding missing ProfileTranslations properties
-    personalInformation: "Personal Information",
-    contactInformation: "Contact Information",
-    address: "Address",
-    firstName: "First Name",
-    lastName: "Last Name",
-    email: "Email",
-    phone: "Phone",
-    company: "Company",
-    street: "Street",
-    city: "City",
-    state: "State",
-    zipCode: "ZIP Code",
-    country: "Country"
   },
   ar: {
     profile: "الملف الشخصي",
@@ -40,20 +25,5 @@ export const profileTranslations = {
     yourProfileHasBeenSuccessfullyUpdated: "تم تحديث ملفك الشخصي بنجاح",
     saving: "جاري الحفظ...",
     saveChanges: "حفظ التغييرات",
-    
-    // Adding missing ProfileTranslations properties
-    personalInformation: "المعلومات الشخصية",
-    contactInformation: "معلومات الاتصال",
-    address: "العنوان",
-    firstName: "الاسم الأول",
-    lastName: "اسم العائلة",
-    email: "البريد الإلكتروني",
-    phone: "الهاتف",
-    company: "الشركة",
-    street: "الشارع",
-    city: "المدينة",
-    state: "الولاية",
-    zipCode: "الرمز البريدي",
-    country: "البلد"
   }
 }
