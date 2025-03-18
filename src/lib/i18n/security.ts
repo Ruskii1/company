@@ -35,7 +35,19 @@ export const securityTranslations = {
     light: "Light",
     dark: "Dark",
     language: "Language",
-    selectYourPreferredLanguage: "Select your preferred language"
+    selectYourPreferredLanguage: "Select your preferred language",
+    
+    // Adding missing properties from SecurityTranslations interface
+    passwordsDoNotMatch: "Passwords do not match",
+    passwordChanged: "Password Changed",
+    sessionManagement: "Session Management",
+    activeSessions: "Active Sessions",
+    logoutAllDevices: "Logout All Devices",
+    loggedOutAllDevices: "Logged Out All Devices",
+    deviceName: "Device Name",
+    lastActive: "Last Active",
+    location: "Location",
+    ipAddress: "IP Address"
   },
   ar: {
     security: "الأمان",
@@ -72,6 +84,18 @@ export const securityTranslations = {
     light: "فاتح",
     dark: "داكن",
     language: "اللغة",
-    selectYourPreferredLanguage: "اختر لغتك المفضلة"
+    selectYourPreferredLanguage: "اختر لغتك المفضلة",
+    
+    // Adding missing properties from SecurityTranslations interface
+    passwordsDoNotMatch: "كلمات المرور غير متطابقة",
+    passwordChanged: "تم تغيير كلمة المرور",
+    sessionManagement: "إدارة الجلسات",
+    activeSessions: "الجلسات النشطة",
+    logoutAllDevices: "تسجيل الخروج من جميع الأجهزة",
+    loggedOutAllDevices: "تم تسجيل الخروج من جميع الأجهزة",
+    deviceName: "اسم الجهاز",
+    lastActive: "آخر نشاط",
+    location: "الموقع",
+    ipAddress: "عنوان IP"
   }
 }
