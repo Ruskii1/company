@@ -1,11 +1,69 @@
 
-import { atom, useAtom } from 'jotai'
+import { Translations } from './index'
 
-type LanguageType = 'en' | 'ar'
-
-const languageAtom = atom<LanguageType>('en')
-
-export const useLanguageStore = () => {
-  const [language, setLanguage] = useAtom(languageAtom)
-  return { language, setLanguage }
+export const coreTranslations: Pick<Translations, 'customerPortal' | 'employeePortal' | 'placeOrder' | 'availableInLaterVersion' | 'notFound' | 'notFoundDescription' | 'goBackHome' | 'serviceType' | 'serviceProvider' | 'settings' | 'language' | 'theme' | 'signOut' | 'scheduledOrders' | 'ongoingOrders' | 'completedOrders' | 'ticketsSummary' | 'notifications' | 'recentActions' | 'ordersWaitingForService' | 'ordersInProgress' | 'ordersCompleted' | 'openAndClosedTickets' | 'openTickets' | 'closedTickets' | 'manageTickets' | 'recentSystemNotifications' | 'mostRecentActionsBy' | 'viewAll'> = {
+  en: {
+    customerPortal: 'Customer Portal',
+    employeePortal: 'Employee Portal',
+    placeOrder: 'Place Order',
+    availableInLaterVersion: 'This feature will be available in a later version',
+    notFound: 'Not Found',
+    notFoundDescription: 'The page you are looking for does not exist.',
+    goBackHome: 'Go back home',
+    serviceType: 'Service Type',
+    serviceProvider: 'Service Provider',
+    settings: 'Settings',
+    language: 'Language',
+    theme: 'Theme',
+    signOut: 'Sign out',
+    // Dashboard translations
+    scheduledOrders: 'Scheduled Orders',
+    ongoingOrders: 'Ongoing Orders',
+    completedOrders: 'Completed Orders',
+    ordersWaitingForService: 'Orders waiting for service',
+    ordersInProgress: 'Orders in progress',
+    ordersCompleted: 'Orders completed today',
+    ticketsSummary: 'Tickets Summary',
+    openAndClosedTickets: 'Open and closed tickets',
+    openTickets: 'Open Tickets',
+    closedTickets: 'Closed Tickets',
+    manageTickets: 'Manage Tickets',
+    notifications: 'Notifications',
+    recentSystemNotifications: 'Recent system notifications',
+    recentActions: 'Recent Actions',
+    mostRecentActionsBy: 'Most recent actions by employees',
+    viewAll: 'View All',
+  },
+  ar: {
+    customerPortal: 'بوابة العميل',
+    employeePortal: 'بوابة الموظف',
+    placeOrder: 'تقديم طلب',
+    availableInLaterVersion: 'ستتوفر هذه الميزة في إصدار لاحق',
+    notFound: 'غير موجود',
+    notFoundDescription: 'الصفحة التي تبحث عنها غير موجودة.',
+    goBackHome: 'العودة إلى الصفحة الرئيسية',
+    serviceType: 'نوع الخدمة',
+    serviceProvider: 'مزود الخدمة',
+    settings: 'الإعدادات',
+    language: 'اللغة',
+    theme: 'السمة',
+    signOut: 'تسجيل الخروج',
+    // Dashboard translations
+    scheduledOrders: 'الطلبات المجدولة',
+    ongoingOrders: 'الطلبات الجارية',
+    completedOrders: 'الطلبات المكتملة',
+    ordersWaitingForService: 'طلبات في انتظار الخدمة',
+    ordersInProgress: 'طلبات قيد التنفيذ',
+    ordersCompleted: 'طلبات اكتملت اليوم',
+    ticketsSummary: 'ملخص التذاكر',
+    openAndClosedTickets: 'التذاكر المفتوحة والمغلقة',
+    openTickets: 'التذاكر المفتوحة',
+    closedTickets: 'التذاكر المغلقة',
+    manageTickets: 'إدارة التذاكر',
+    notifications: 'الإشعارات',
+    recentSystemNotifications: 'إشعارات النظام الأخيرة',
+    recentActions: 'الإجراءات الأخيرة',
+    mostRecentActionsBy: 'أحدث الإجراءات من قبل الموظفين',
+    viewAll: 'عرض الكل',
+  }
 }
