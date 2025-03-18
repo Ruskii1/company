@@ -1,7 +1,7 @@
 
 import { Translations } from './index'
 
-export const coreTranslations: Pick<Translations, 'customerPortal' | 'employeePortal' | 'placeOrder' | 'availableInLaterVersion' | 'notFound' | 'notFoundDescription' | 'goBackHome' | 'serviceType' | 'serviceProvider' | 'settings' | 'language' | 'theme' | 'signOut' | 'scheduledOrders' | 'ongoingOrders' | 'completedOrders' | 'ticketsSummary' | 'notifications' | 'recentActions' | 'ordersWaitingForService' | 'ordersInProgress' | 'ordersCompleted' | 'openAndClosedTickets' | 'openTickets' | 'closedTickets' | 'manageTickets' | 'recentSystemNotifications' | 'mostRecentActionsBy' | 'viewAll'> = {
+export const coreTranslations = {
   en: {
     customerPortal: 'Customer Portal',
     employeePortal: 'Employee Portal',
@@ -33,6 +33,15 @@ export const coreTranslations: Pick<Translations, 'customerPortal' | 'employeePo
     recentActions: 'Recent Actions',
     mostRecentActionsBy: 'Most recent actions by employees',
     viewAll: 'View All',
+    orderManagement: 'Order Management',
+    noOrders: 'No orders found',
+    actions: 'Actions',
+    viewDetails: 'View Details',
+    customerName: 'Customer Name',
+    yourOrders: 'Your Orders',
+    manageYourAccountSettings: 'Manage your account settings and preferences',
+    allRequests: 'All Requests',
+    credit: 'Credit',
   },
   ar: {
     customerPortal: 'بوابة العميل',
@@ -65,5 +74,14 @@ export const coreTranslations: Pick<Translations, 'customerPortal' | 'employeePo
     recentActions: 'الإجراءات الأخيرة',
     mostRecentActionsBy: 'أحدث الإجراءات من قبل الموظفين',
     viewAll: 'عرض الكل',
+    orderManagement: 'إدارة الطلبات',
+    noOrders: 'لا توجد طلبات',
+    actions: 'إجراءات',
+    viewDetails: 'عرض التفاصيل',
+    customerName: 'اسم العميل',
+    yourOrders: 'طلباتك',
+    manageYourAccountSettings: 'إدارة إعدادات وتفضيلات حسابك',
+    allRequests: 'جميع الطلبات',
+    credit: 'رصيد',
   }
 }

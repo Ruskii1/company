@@ -2,12 +2,13 @@
 import { create } from 'zustand'
 import { coreTranslations } from './core'
 import { orderTranslations } from './order'
-import { servicesTranslations } from './services'
+import { serviceTranslations } from './services'
 import { profileTranslations } from './profile'
 import { securityTranslations } from './security'
 import { paymentTranslations } from './payment'
 import { providerTranslations } from './providers'
 import { commonTranslations } from './common'
+import { settingsTranslations } from './settings'
 
 // Languages that the application supports
 export type SupportedLanguage = 'en' | 'ar'
@@ -44,6 +45,110 @@ export interface CoreTranslations {
   recentActions: string
   mostRecentActionsBy: string
   viewAll: string
+  orderManagement: string
+  noOrders: string
+  actions: string
+  viewDetails: string
+  customerName: string
+  yourOrders: string
+  manageYourAccountSettings: string
+  allRequests: string
+  credit: string
+}
+
+// Settings translations type
+export interface SettingsTranslations {
+  // Common settings
+  preferences: string
+  customizeYourUserExperience: string
+  appearance: string
+  chooseHowTheApplicationLooks: string
+  light: string
+  dark: string
+  selectYourPreferredLanguage: string
+  
+  // Profile settings
+  profileInformation: string
+  updateYourProfileInformation: string
+  fullName: string
+  emailAddress: string
+  phoneNumber: string
+  companyName: string
+  saving: string
+  saveChanges: string
+  yourProfileHasBeenSuccessfullyUpdated: string
+  
+  // Security settings
+  securitySettings: string
+  manageYourSecuritySettings: string
+  changePassword: string
+  updateYourPasswordToASecureOne: string
+  currentPassword: string
+  newPassword: string
+  confirmPassword: string
+  updating: string
+  updatePassword: string
+  passwordUpdated: string
+  yourPasswordHasBeenSuccessfullyUpdated: string
+  resetPassword: string
+  requestAPasswordResetEmail: string
+  resetPasswordDescription: string
+  emailSent: string
+  sendResetEmail: string
+  resetPasswordEmailSent: string
+  pleaseCheckYourEmailToResetYourPassword: string
+  twoFactorAuthentication: string
+  enhanceYourAccountSecurity: string
+  enableTwoFactor: string
+  twoFactorDescription: string
+  twoFactorEnabled: string
+  twoFactorDisabled: string
+  twoFactorAuthenticationIsNowEnabled: string
+  twoFactorAuthenticationIsNowDisabled: string
+  
+  // Payment settings
+  manageYourPaymentMethodsForBillingAndPayments: string
+  manageYourCreditCardsForPayments: string
+  manageYourBankAccountsForPayments: string
+  creditCards: string
+  bankAccounts: string
+  noCreditCardsAdded: string
+  noBankAccountsAdded: string
+  default: string
+  expires: string
+  setAsDefault: string
+  addCreditCard: string
+  addBankAccount: string
+  creditCardAdded: string
+  yourCreditCardHasBeenAddedSuccessfully: string
+  bankAccountAdded: string
+  yourBankAccountHasBeenAddedSuccessfully: string
+  bankName: string
+  accountHolderName: string
+  expiryDate: string
+  addANewPaymentMethodToYourAccount: string
+  
+  // Provider settings
+  manageProviders: string
+  configureServiceProvidersForYourAccount: string
+  addProvider: string
+  addNewProvider: string
+  connectToANewServiceProvider: string
+  providerSelectionInstructions: string
+  connectProvider: string
+  providerAdded: string
+  newProviderHasBeenAddedToYourAccount: string
+  connectedProviders: string
+  servicesYouveAuthorizedToAccessYourAccount: string
+  lastUsed: string
+  active: string
+  inactive: string
+  providerActivated: string
+  providerDeactivated: string
+  hasBeenActivated: string
+  hasBeenDeactivated: string
+  providerRemoved: string
+  hasBeenRemovedFromYourAccount: string
 }
 
 // Order translations type
@@ -89,6 +194,18 @@ export interface OrderTranslations {
   statusWaitingForProvider: string
   enterRequestNumber: string
   home: string
+  noOrders: string
+  customerName: string
+  employeeName: string
+  companyName: string
+  notes: string
+  optional: string
+  actions: string
+  viewDetails: string
+  customerId: string
+  pickupDate: string
+  selectDate: string
+  escalateStatus: string
 }
 
 // Service type translations
@@ -263,29 +380,32 @@ export interface ProviderTranslations {
 }
 
 // Combined translations type
-export type Translations = CoreTranslations & OrderTranslations & ServicesTranslations & CommonTranslations & ProfileTranslations & SecurityTranslations & PaymentTranslations & ProviderTranslations
+export type Translations = CoreTranslations & OrderTranslations & ServicesTranslations & CommonTranslations & 
+  ProfileTranslations & SecurityTranslations & PaymentTranslations & ProviderTranslations & SettingsTranslations
 
 // Use one object to store all translations by language
 export const translations: Record<SupportedLanguage, Translations> = {
   en: {
     ...coreTranslations.en,
     ...orderTranslations.en,
-    ...servicesTranslations.en,
+    ...serviceTranslations.en,
     ...commonTranslations.en,
     ...profileTranslations.en,
     ...securityTranslations.en,
     ...paymentTranslations.en,
     ...providerTranslations.en,
+    ...settingsTranslations.en,
   },
   ar: {
     ...coreTranslations.ar,
     ...orderTranslations.ar,
-    ...servicesTranslations.ar,
+    ...serviceTranslations.ar,
     ...commonTranslations.ar,
     ...profileTranslations.ar,
     ...securityTranslations.ar,
     ...paymentTranslations.ar,
     ...providerTranslations.ar,
+    ...settingsTranslations.ar,
   }
 }
 

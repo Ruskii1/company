@@ -29,7 +29,8 @@ export const orderTranslations = {
     viewDetails: "View Details",
     escalateStatus: "Escalate Status",
     corporateAccounts: "Corporate Accounts",
-    actions: "Actions"
+    actions: "Actions",
+    companyName: "Company Name"
   },
   ar: {
     orderManagement: "إدارة الطلبات",
@@ -60,6 +61,7 @@ export const orderTranslations = {
     viewDetails: "عرض التفاصيل",
     escalateStatus: "تصعيد الحالة",
     corporateAccounts: "الحسابات المؤسسية",
-    actions: "إجراءات"
+    actions: "إجراءات",
+    companyName: "اسم الشركة"
   }
 }
