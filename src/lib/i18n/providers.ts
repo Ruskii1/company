@@ -28,7 +28,7 @@ export const providerTranslations = {
     serviceProvidersMap: "Service Providers Map",
     serviceProviderCompanies: "Service Provider Companies",
     
-    // Adding missing properties from ProviderTranslations interface
+    // Properties from ProviderTranslations interface
     providerLocation: "Provider Location",
     providerPhone: "Provider Phone",
     providerEmail: "Provider Email",
