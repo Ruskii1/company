@@ -1,5 +1,5 @@
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FilterValues } from '@/components/employee/OrderManagementFilter'
 import { toast } from 'sonner'
 
@@ -81,6 +81,69 @@ export const useOrderManagement = () => {
   
   const [allOrders, setAllOrders] = useState<Order[]>(initialOrders)
   const [filteredOrders, setFilteredOrders] = useState<Order[]>(initialOrders)
+  const [pastOrders, setPastOrders] = useState<Order[]>([])
+  const [todayOrders, setTodayOrders] = useState<Order[]>([])
+  const [futureOrders, setFutureOrders] = useState<Order[]>([])
+  
+  // Function to categorize orders based on date and status
+  const categorizeOrders = () => {
+    const now = new Date()
+    const today = new Date(now)
+    today.setHours(0, 0, 0, 0)
+    const tomorrow = new Date(today)
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    
+    const past: Order[] = []
+    const current: Order[] = []
+    const future: Order[] = []
+    
+    allOrders.forEach(order => {
+      const pickupTime = new Date(order.pickupTime)
+      
+      // Update status based on time
+      let updatedOrder = { ...order }
+      
+      if (order.status === 'Completed') {
+        // Completed orders always go to past
+        past.push(updatedOrder)
+      } else if (pickupTime < now) {
+        // Past time, not completed - should be in progress
+        if (order.status === 'Pending') {
+          updatedOrder = { ...order, status: 'Waiting for provider' }
+        }
+        // Time has passed, but order is in progress
+        current.push(updatedOrder)
+      } else if (pickupTime < tomorrow) {
+        // Today but in the future
+        current.push(updatedOrder)
+      } else {
+        // Future days
+        future.push(updatedOrder)
+      }
+    })
+    
+    // Update state with categorized orders
+    setPastOrders(past)
+    setTodayOrders(current)
+    setFutureOrders(future)
+    
+    // Update allOrders if any status was changed
+    const updatedAllOrders = [...past, ...current, ...future]
+    if (JSON.stringify(updatedAllOrders) !== JSON.stringify(allOrders)) {
+      setAllOrders(updatedAllOrders)
+      setFilteredOrders(updatedAllOrders)
+    }
+  }
+  
+  // Categorize orders on initial load and when orders change
+  useEffect(() => {
+    categorizeOrders()
+    
+    // Set up interval to check for time-based status changes every minute
+    const intervalId = setInterval(categorizeOrders, 60000)
+    
+    return () => clearInterval(intervalId)
+  }, [allOrders])
   
   const handleStatusChange = (id: string, newStatus: string) => {
     console.log(`Starting status update for order ${id} to ${newStatus}`)
@@ -94,14 +157,8 @@ export const useOrderManagement = () => {
       return order
     })
     
-    // Update both state variables directly
+    // Update all orders which will trigger recategorization
     setAllOrders(updatedOrders)
-    setFilteredOrders(
-      // Apply any current filtering
-      filteredOrders.map((order) => 
-        order.id === id ? { ...order, status: newStatus } : order
-      )
-    )
     
     toast.success(`Order status updated to ${newStatus}`)
     console.log(`Status update completed for order ${id}`)
@@ -119,11 +176,17 @@ export const useOrderManagement = () => {
     } else {
       setFilteredOrders(allOrders)
     }
+    
+    // Recategorize after filtering
+    categorizeOrders()
   }
 
   return {
     orders: filteredOrders,
     allOrders,
+    pastOrders,
+    todayOrders,
+    futureOrders,
     handleStatusChange,
     applyFilter
   }
