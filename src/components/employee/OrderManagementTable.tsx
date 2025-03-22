@@ -28,9 +28,14 @@ interface Order {
 interface OrderManagementTableProps {
   orders: Order[]
   onStatusChange: (id: string, newStatus: string) => void
+  isFutureTab?: boolean
 }
 
-export const OrderManagementTable = ({ orders, onStatusChange }: OrderManagementTableProps) => {
+export const OrderManagementTable = ({ 
+  orders, 
+  onStatusChange,
+  isFutureTab = false 
+}: OrderManagementTableProps) => {
   const { language } = useLanguageStore()
   const t = translations[language]
   const navigate = useNavigate()
@@ -141,7 +146,14 @@ export const OrderManagementTable = ({ orders, onStatusChange }: OrderManagement
                     </Button>
                   </div>
                 </TableCell>
-                <TableCell><StatusBadge status={order.status} /></TableCell>
+                <TableCell>
+                  {/* Hide "Pending" word for future requests tab */}
+                  {isFutureTab && order.status === 'Pending' ? (
+                    <StatusBadge status="Scheduled" />
+                  ) : (
+                    <StatusBadge status={order.status} />
+                  )}
+                </TableCell>
                 <TableCell>
                   <div className="flex gap-2">
                     <Button 
@@ -151,7 +163,8 @@ export const OrderManagementTable = ({ orders, onStatusChange }: OrderManagement
                     >
                       {t.viewDetails}
                     </Button>
-                    {order.status !== 'Completed' && (
+                    {/* Do not show escalate button for future tab or completed orders */}
+                    {!isFutureTab && order.status !== 'Completed' && (
                       <Button 
                         variant="default"
                         size="sm"

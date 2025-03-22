@@ -94,7 +94,8 @@ const EmployeePortal = () => {
               {futureOrders.length > 0 ? (
                 <OrderManagementTable 
                   orders={futureOrders} 
-                  onStatusChange={handleStatusChange} 
+                  onStatusChange={handleStatusChange}
+                  isFutureTab={true}
                 />
               ) : (
                 <div className="border rounded-md p-4 bg-white dark:bg-gray-700">

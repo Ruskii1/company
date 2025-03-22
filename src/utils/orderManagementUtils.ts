@@ -29,6 +29,7 @@ export const categorizeOrders = (
     } else if (pickupTime < now) {
       // Past time, not completed - should be in progress
       if (order.status === 'Pending') {
+        // Automatically escalate status from Pending to Waiting for provider
         updatedOrder = { ...order, status: 'Waiting for provider' }
       }
       // Time has passed, but order is in progress
@@ -36,7 +37,7 @@ export const categorizeOrders = (
     } else if (pickupTime < tomorrow) {
       // Today but in the future
       if (pickupTime <= now) {
-        // Due now
+        // Due now - automatically escalate from Pending to Waiting for provider
         if (order.status === 'Pending') {
           updatedOrder = { ...order, status: 'Waiting for provider' }
         }
