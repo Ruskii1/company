@@ -35,7 +35,7 @@ const EmployeePortal = () => {
   return (
     <>
       <Toaster />
-      <h1 className="text-4xl font-bold text-center mb-12">{t.employeePortal}</h1>
+      <h1 className="text-4xl font-bold text-center mb-12">{t.orderManagement}</h1>
       
       <Card className="backdrop-blur-sm bg-white/80 dark:bg-gray-800/80">
         <CardHeader className="flex flex-row items-center justify-between">

@@ -1,4 +1,3 @@
-
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import {
@@ -17,7 +16,6 @@ import {
   Building2,
   Calendar,
   FileText,
-  Home,
   LogOut,
   Map,
   PlusCircle,
@@ -45,13 +43,8 @@ export function EmployeeSidebar() {
   
   const menuItems = [
     {
-      title: t.home,
-      url: '/employee',
-      icon: Home,
-    },
-    {
       title: t.orderManagement,
-      url: '/employee/requests',
+      url: '/employee',
       icon: Calendar,
     },
     {
@@ -87,7 +80,6 @@ export function EmployeeSidebar() {
   ]
 
   const handleSignOut = () => {
-    // Remove authentication state
     localStorage.removeItem("employeeAuthenticated")
     
     toast({
@@ -95,7 +87,6 @@ export function EmployeeSidebar() {
       description: "You have been signed out successfully.",
     })
     
-    // Redirect to employee sign in page
     navigate("/signin/employee")
   }
 
