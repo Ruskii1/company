@@ -1,3 +1,4 @@
+
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import {
@@ -16,6 +17,7 @@ import {
   Building2,
   Calendar,
   FileText,
+  Home,
   LogOut,
   Map,
   PlusCircle,
@@ -42,6 +44,11 @@ export function EmployeeSidebar() {
   const { toast } = useToast()
   
   const menuItems = [
+    {
+      title: t.home,
+      url: '/employee/home',
+      icon: Home,
+    },
     {
       title: t.orderManagement,
       url: '/employee',

@@ -10,7 +10,7 @@ import {
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
-import { MapPin } from "lucide-react"
+import { MapPin, ArrowUp } from "lucide-react"
 import { StatusBadge } from "@/components/employee/orders/StatusBadge"
 import { toast } from "sonner"
 
@@ -153,12 +153,13 @@ export const OrderManagementTable = ({ orders, onStatusChange }: OrderManagement
                     </Button>
                     {order.status !== 'Completed' && (
                       <Button 
-                        variant="outline" 
+                        variant="default"
                         size="sm"
                         onClick={() => escalateStatus(order.id, order.status)}
-                        className="bg-blue-500 text-white hover:bg-blue-600"
+                        className="flex items-center gap-1"
                       >
-                        {getNextStatus(order.status)}
+                        <ArrowUp size={14} />
+                        <span>{t.escalateStatus}</span>
                       </Button>
                     )}
                   </div>

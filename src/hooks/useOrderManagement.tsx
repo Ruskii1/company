@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react'
 import { FilterValues } from '@/components/employee/OrderManagementFilter'
 import { toast } from 'sonner'
@@ -75,6 +74,46 @@ export const useOrderManagement = () => {
       pickupTime: '2025-06-18 09:30 AM',
       pickupLocation: 'Tech Hub, Floor 3',
       dropoffLocation: 'Innovation Center, Room 201',
+      status: 'Pending'
+    },
+    {
+      id: '1007',
+      taskId: '2025-007',
+      customerName: 'Legal Partners LLP',
+      serviceType: 'Document Courier',
+      pickupTime: '2025-06-14 13:15 PM',
+      pickupLocation: 'Legal Tower, 15th Floor',
+      dropoffLocation: 'Courthouse, Records Department',
+      status: 'Completed'
+    },
+    {
+      id: '1008',
+      taskId: '2025-008',
+      customerName: 'Smart Electronics',
+      serviceType: 'Electronics Delivery',
+      pickupTime: '2025-06-15 15:45 PM',
+      pickupLocation: 'Electronics Warehouse, Bay 12',
+      dropoffLocation: 'Smart Home Exhibition, Booth 78',
+      status: 'In route'
+    },
+    {
+      id: '1009',
+      taskId: '2025-009',
+      customerName: 'Fresh Foods Inc',
+      serviceType: 'Refrigerated Transport',
+      pickupTime: '2025-06-16 06:00 AM',
+      pickupLocation: 'Fresh Foods Distribution Center',
+      dropoffLocation: 'Downtown Grocery Outlets',
+      status: 'Pending'
+    },
+    {
+      id: '1010',
+      taskId: '2025-010',
+      customerName: 'Education First',
+      serviceType: 'School Supplies',
+      pickupTime: '2025-06-17 08:30 AM',
+      pickupLocation: 'Education Warehouse',
+      dropoffLocation: 'Multiple School Districts',
       status: 'Pending'
     }
   ]

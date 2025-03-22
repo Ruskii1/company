@@ -29,7 +29,10 @@ export const orderTranslations = {
     viewDetails: "View Details",
     escalateStatus: "Escalate Status",
     corporateAccounts: "Corporate Accounts",
-    actions: "Actions"
+    actions: "Actions",
+    home: "Home",
+    welcomeToEmployeePortal: "Welcome to Employee Portal",
+    employeeHomeDescription: "This dashboard will soon show key performance metrics and quick access to important features."
   },
   ar: {
     orderManagement: "إدارة الطلبات",
@@ -60,6 +63,9 @@ export const orderTranslations = {
     viewDetails: "عرض التفاصيل",
     escalateStatus: "تصعيد الحالة",
     corporateAccounts: "الحسابات المؤسسية",
-    actions: "إجراءات"
+    actions: "إجراءات",
+    home: "الرئيسية",
+    welcomeToEmployeePortal: "مرحبًا بك في بوابة الموظفين",
+    employeeHomeDescription: "ستعرض هذه اللوحة قريبًا مقاييس الأداء الرئيسية والوصول السريع إلى الميزات المهمة."
   }
 }
