@@ -1,4 +1,3 @@
-
 import { Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
@@ -8,13 +7,12 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useLanguageStore, translations } from "@/lib/i18n"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { FilterValues } from "@/types/orderManagement"
 
 const filterSchema = z.object({
   taskId: z.string().optional(),
   serviceType: z.string().optional()
 })
-
-export type FilterValues = z.infer<typeof filterSchema>
 
 interface OrderManagementFilterProps {
   onSubmit: (data: FilterValues) => void
@@ -34,7 +32,6 @@ export const OrderManagementFilter = ({ onSubmit, onFilterChange, serviceTypeVal
     }
   })
   
-  // Watch for changes in the fields and filter as user types or selects
   form.watch((value) => {
     onFilterChange(value as FilterValues)
   })
