@@ -1,8 +1,10 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Toaster } from 'sonner'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { OrderManagementTable } from '@/components/employee/OrderManagementTable'
-import { OrderManagementFilter, FilterValues } from '@/components/employee/OrderManagementFilter'
+import { OrderManagementFilter } from '@/components/employee/OrderManagementFilter'
+import { FilterValues } from '@/types/orderManagement'
 import { useOrderManagement } from '@/hooks/useOrderManagement'
 import { serviceTypeValues } from '@/components/forms/ServiceTypeField'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'

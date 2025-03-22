@@ -6,7 +6,8 @@ import { useLanguageStore, translations } from '@/lib/i18n'
 import { Calendar, Clock, History } from 'lucide-react'
 import { useRequestsData } from '@/hooks/useRequestsData'
 import { OrderTable } from '@/components/OrderTable'
-import { OrderManagementFilter, FilterValues } from '@/components/employee/OrderManagementFilter'
+import { OrderManagementFilter } from '@/components/employee/OrderManagementFilter'
+import { FilterValues } from '@/types/orderManagement'
 import { serviceTypeValues } from '@/components/forms/ServiceTypeField'
 
 const AllRequestsPage = () => {
