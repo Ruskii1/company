@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react'
 import { FilterValues } from '@/components/employee/OrderManagementFilter'
 import { toast } from 'sonner'
@@ -136,7 +137,7 @@ export const useOrderManagement = () => {
     const current: Order[] = []
     const future: Order[] = []
     
-    allOrders.forEach(order => {
+    filteredOrders.forEach(order => {
       const pickupTime = new Date(order.pickupTime)
       
       // Update status based on time
@@ -154,10 +155,24 @@ export const useOrderManagement = () => {
         current.push(updatedOrder)
       } else if (pickupTime < tomorrow) {
         // Today but in the future
-        current.push(updatedOrder)
+        if (pickupTime <= now) {
+          // Due now
+          if (order.status === 'Pending') {
+            updatedOrder = { ...order, status: 'Waiting for provider' }
+          }
+          current.push(updatedOrder)
+        } else {
+          // Today but not due yet
+          current.push(updatedOrder)
+        }
       } else {
-        // Future days
-        future.push(updatedOrder)
+        // Future days - only include pending orders in future
+        if (order.status === 'Pending') {
+          future.push(updatedOrder)
+        } else {
+          // Non-pending future orders go to today's list
+          current.push(updatedOrder)
+        }
       }
     })
     
@@ -170,7 +185,6 @@ export const useOrderManagement = () => {
     const updatedAllOrders = [...past, ...current, ...future]
     if (JSON.stringify(updatedAllOrders) !== JSON.stringify(allOrders)) {
       setAllOrders(updatedAllOrders)
-      setFilteredOrders(updatedAllOrders)
     }
   }
   
