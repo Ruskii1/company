@@ -8,7 +8,8 @@ import {
   User,
   Store,
   Clock,
-  Building2
+  Building2,
+  LucideIcon
 } from 'lucide-react'
 
 type IconName = 'Calendar' | 'Ticket' | 'Check' | 'User' | 'Store' | 'Clock' | 'Building2'
@@ -45,7 +46,7 @@ export function EmployeeStatCard({ title, value, description, icon }: EmployeeSt
   )
 }
 
-function getIconComponent(iconName: IconName): ReactNode {
+function getIconComponent(iconName: IconName): LucideIcon {
   switch (iconName) {
     case 'Calendar':
       return Calendar

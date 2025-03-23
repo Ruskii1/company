@@ -15,6 +15,27 @@ export const commonTranslations = {
     theme: "Theme",
     language: "Language",
     manageYourAccountSettings: "Manage your account settings and preferences",
+    
+    // Added translations for employee home page
+    notifications: "Notifications",
+    totalRequests: "Total Requests",
+    pastTodayFutureRequests: "Past, today, and future requests",
+    openTickets: "Open Tickets",
+    ticketsNeedingAttention: "Tickets needing attention",
+    closedTickets: "Closed Tickets",
+    resolvedTickets: "Resolved tickets",
+    recentActivity: "Recent Activity",
+    noRecentActivity: "No recent activity to display",
+    todaysRequests: "Today's Requests",
+    viewAll: "View All",
+    andMore: "and more",
+    requests: "requests",
+    attentionRequired: "Attention Required",
+    providerIssues: "Provider Issues",
+    thereAre: "There are",
+    requestsWithoutProvider: "requests waiting for provider assignment",
+    reviewRequests: "Review Requests",
+    waitingForProvider: "Waiting for provider"
   },
   ar: {
     customerPortal: "بوابة العميل",
@@ -31,5 +52,26 @@ export const commonTranslations = {
     theme: "المظهر",
     language: "اللغة",
     manageYourAccountSettings: "إدارة إعدادات وتفضيلات حسابك",
+    
+    // Added translations for employee home page
+    notifications: "الإشعارات",
+    totalRequests: "مجموع الطلبات",
+    pastTodayFutureRequests: "الطلبات السابقة واليوم والمستقبلية",
+    openTickets: "التذاكر المفتوحة",
+    ticketsNeedingAttention: "التذاكر التي تحتاج إلى اهتمام",
+    closedTickets: "التذاكر المغلقة",
+    resolvedTickets: "التذاكر المحلولة",
+    recentActivity: "النشاط الأخير",
+    noRecentActivity: "لا يوجد نشاط حديث لعرضه",
+    todaysRequests: "طلبات اليوم",
+    viewAll: "عرض الكل",
+    andMore: "والمزيد",
+    requests: "طلبات",
+    attentionRequired: "يتطلب الاهتمام",
+    providerIssues: "مشاكل المزود",
+    thereAre: "هناك",
+    requestsWithoutProvider: "طلبات في انتظار تعيين مزود",
+    reviewRequests: "مراجعة الطلبات",
+    waitingForProvider: "في انتظار المزود"
   }
 }
