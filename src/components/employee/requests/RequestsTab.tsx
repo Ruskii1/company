@@ -15,24 +15,24 @@ export const RequestsTab = ({ requests, tabType }: RequestsTabProps) => {
   const getEmptyMessage = () => {
     switch (tabType) {
       case 'past':
-        return t.noPastRequests
+        return t.noPastRequests || 'No past requests'
       case 'today':
-        return t.noTodayRequests
+        return t.noTodayRequests || 'No requests for today'
       case 'future':
-        return t.noFutureRequests
+        return t.noFutureRequests || 'No future requests'
       default:
-        return t.noRequests
+        return t.noRequests || 'No requests'
     }
   }
 
   const getTabTitle = () => {
     switch (tabType) {
       case 'past':
-        return t.pastRequests
+        return t.pastRequests || 'Past Requests'
       case 'today':
-        return t.todaysRequests
+        return t.todaysRequests || 'Today\'s Requests'
       case 'future':
-        return t.futureRequests
+        return t.futureRequests || 'Future Requests'
       default:
         return ''
     }
