@@ -10,6 +10,7 @@ interface Request {
   dropoffLocation: string
   status: string
   notes: string
+  city?: string // Added city property as optional
 }
 
 export const useRequestsData = () => {
@@ -23,7 +24,8 @@ export const useRequestsData = () => {
       pickupLocation: '123 Main St, Dubai',
       dropoffLocation: '456 Business Ave, Dubai',
       status: 'Completed',
-      notes: 'Delivered on time'
+      notes: 'Delivered on time',
+      city: 'Dubai'
     },
     {
       id: '9002',
@@ -33,7 +35,8 @@ export const useRequestsData = () => {
       pickupLocation: '789 Market Blvd, Dubai',
       dropoffLocation: '321 Commerce St, Dubai',
       status: 'Completed',
-      notes: 'Picked up successfully'
+      notes: 'Picked up successfully',
+      city: 'Dubai'
     }
   ])
   
@@ -47,7 +50,8 @@ export const useRequestsData = () => {
       pickupLocation: '555 Tech Park, Dubai',
       dropoffLocation: '777 Innovation Center, Dubai',
       status: 'In service',
-      notes: 'Urgent delivery'
+      notes: 'Urgent delivery',
+      city: 'Dubai'
     }
   ])
   
@@ -61,7 +65,8 @@ export const useRequestsData = () => {
       pickupLocation: '888 Future Ave, Dubai',
       dropoffLocation: '999 Tomorrow St, Dubai',
       status: 'Waiting for provider',
-      notes: 'Schedule in advance'
+      notes: 'Schedule in advance',
+      city: 'Dubai'
     },
     {
       id: '10003',
@@ -69,9 +74,10 @@ export const useRequestsData = () => {
       serviceType: 'Between Cities Regular Towing',
       pickupTime: '2025-09-22 13:45',
       pickupLocation: '111 Next Week Rd, Dubai',
-      dropoffLocation: '222 Coming Soon Blvd, Dubai',
+      dropoffLocation: '222 Coming Soon Blvd, Abu Dhabi', // Note: Changed city to Abu Dhabi for variety
       status: 'Waiting for provider',
-      notes: 'Large package'
+      notes: 'Large package',
+      city: 'Abu Dhabi'
     }
   ])
 
