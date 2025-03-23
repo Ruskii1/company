@@ -10,6 +10,8 @@ import { PickupDateField } from './forms/PickupDateField'
 import { LocationFields } from './forms/LocationFields'
 import { NotesField } from './forms/NotesField'
 import { orderFormSchema, OrderFormValues } from './forms/types'
+import { createRequest } from '@/services/requestService'
+import { format } from 'date-fns'
 
 export const NewOrderForm = () => {
   const { language } = useLanguageStore()
@@ -28,12 +30,42 @@ export const NewOrderForm = () => {
   })
 
   const onSubmit = async (values: OrderFormValues) => {
-    console.log(values)
-    toast({
-      title: 'Order placed successfully',
-      description: 'Your order has been submitted and is being processed.',
-    })
-    form.reset()
+    try {
+      // Prepare the request object
+      const request = {
+        companyName: 'Company Name', // You would get this from user context
+        employeeName: 'Employee Name', // You would get this from user context
+        serviceType: values.serviceType,
+        pickupTime: format(values.pickupDate, "yyyy-MM-dd'T'HH:mm:ss"),
+        pickupLocation: values.pickupLocation,
+        dropoffLocation: values.dropoffLocation,
+        status: 'Pending',
+        notes: values.notes || '',
+      };
+      
+      const result = await createRequest(request);
+      
+      if (result) {
+        toast({
+          title: 'Order placed successfully',
+          description: `Your order has been submitted with Task ID: ${result.taskId}`,
+        });
+        form.reset();
+      } else {
+        toast({
+          title: 'Failed to place order',
+          description: 'There was an error submitting your order.',
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast({
+        title: 'Failed to place order',
+        description: 'An unexpected error occurred.',
+        variant: 'destructive',
+      });
+    }
   }
 
   return (

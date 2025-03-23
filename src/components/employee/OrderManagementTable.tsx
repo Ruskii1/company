@@ -1,4 +1,3 @@
-
 import {
   Table,
   TableBody,
@@ -13,6 +12,7 @@ import { useNavigate } from "react-router-dom"
 import { MapPin, ArrowUp } from "lucide-react"
 import { StatusBadge } from "@/components/employee/orders/StatusBadge"
 import { toast } from "sonner"
+import { updateRequestStatus } from "@/services/requestService"
 
 interface Order {
   id: string
@@ -60,19 +60,22 @@ export const OrderManagementTable = ({
     }
   }
 
-  const escalateStatus = (id: string, currentStatus: string) => {
-    // Skip for completed orders
+  const escalateStatus = async (id: string, currentStatus: string) => {
     if (currentStatus === 'Completed') {
       toast.info("Order is already completed")
       return
     }
     
-    // Get the next status
     const newStatus = getNextStatus(currentStatus)
     console.log(`Attempting to change order ${id} status from ${currentStatus} to ${newStatus}`)
     
-    // Apply status change immediately - no conditions
-    onStatusChange(id, newStatus)
+    const success = await updateRequestStatus(id, newStatus);
+    
+    if (success) {
+      onStatusChange(id, newStatus);
+    } else {
+      toast.error("Failed to update order status");
+    }
   }
 
   const openInGoogleMaps = (location: string) => {
@@ -150,7 +153,6 @@ export const OrderManagementTable = ({
                   </div>
                 </TableCell>
                 <TableCell>
-                  {/* Hide "Pending" word for future requests tab */}
                   {isFutureTab && order.status === 'Pending' ? (
                     <StatusBadge status="Scheduled" />
                   ) : (
@@ -166,7 +168,6 @@ export const OrderManagementTable = ({
                     >
                       {t.viewDetails}
                     </Button>
-                    {/* Do not show escalate button for future tab or completed orders */}
                     {!isFutureTab && order.status !== 'Completed' && (
                       <Button 
                         variant="default"

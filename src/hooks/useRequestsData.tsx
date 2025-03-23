@@ -1,89 +1,62 @@
-
-import { useState } from 'react'
-
-interface Request {
-  id: string
-  taskId: string
-  serviceType: string
-  pickupTime: string
-  pickupLocation: string
-  dropoffLocation: string
-  status: string
-  notes: string
-  city?: string // Added city property as optional
-}
+import { useState, useEffect } from 'react';
+import { Request } from '@/types/request';
+import { fetchAllRequests } from '@/services/requestService';
+import { toast } from 'sonner';
+import { categorizeRequestsByDate } from '@/utils/dateUtils';
+import { supabase } from "@/integrations/supabase/client";
 
 export const useRequestsData = () => {
-  // Updated data for past requests with the new service types
-  const [pastRequests] = useState<Request[]>([
-    {
-      id: '9001',
-      taskId: '2025-004',
-      serviceType: 'Tire-Repair in Station',
-      pickupTime: '2025-09-10 11:30',
-      pickupLocation: '123 Main St, Dubai',
-      dropoffLocation: '456 Business Ave, Dubai',
-      status: 'Completed',
-      notes: 'Delivered on time',
-      city: 'Dubai'
-    },
-    {
-      id: '9002',
-      taskId: '2025-005',
-      serviceType: 'Regular Towing',
-      pickupTime: '2025-09-12 14:00',
-      pickupLocation: '789 Market Blvd, Dubai',
-      dropoffLocation: '321 Commerce St, Dubai',
-      status: 'Completed',
-      notes: 'Picked up successfully',
-      city: 'Dubai'
-    }
-  ])
-  
-  // Updated data for today's requests
-  const [todayRequests] = useState<Request[]>([
-    {
-      id: '10001',
-      taskId: '2025-006',
-      serviceType: 'Battery Replacement',
-      pickupTime: '2025-09-15 10:15',
-      pickupLocation: '555 Tech Park, Dubai',
-      dropoffLocation: '777 Innovation Center, Dubai',
-      status: 'In service',
-      notes: 'Urgent delivery',
-      city: 'Dubai'
-    }
-  ])
-  
-  // Updated data for future requests
-  const [futureRequests] = useState<Request[]>([
-    {
-      id: '10002',
-      taskId: '2025-007',
-      serviceType: 'MVPI (Motor Vehicle Periodic Inspection)',
-      pickupTime: '2025-09-20 09:30',
-      pickupLocation: '888 Future Ave, Dubai',
-      dropoffLocation: '999 Tomorrow St, Dubai',
-      status: 'Waiting for provider',
-      notes: 'Schedule in advance',
-      city: 'Dubai'
-    },
-    {
-      id: '10003',
-      taskId: '2025-008',
-      serviceType: 'Between Cities Regular Towing',
-      pickupTime: '2025-09-22 13:45',
-      pickupLocation: '111 Next Week Rd, Dubai',
-      dropoffLocation: '222 Coming Soon Blvd, Abu Dhabi', // Note: Changed city to Abu Dhabi for variety
-      status: 'Waiting for provider',
-      notes: 'Large package',
-      city: 'Abu Dhabi'
-    }
-  ])
+  const [requests, setRequests] = useState<Request[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [pastRequests, setPastRequests] = useState<Request[]>([]);
+  const [todayRequests, setTodayRequests] = useState<Request[]>([]);
+  const [futureRequests, setFutureRequests] = useState<Request[]>([]);
+
+  useEffect(() => {
+    const loadRequests = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchAllRequests();
+        setRequests(data);
+        
+        // Categorize requests by date
+        const categorized = categorizeRequestsByDate(data);
+        setPastRequests(categorized.past);
+        setTodayRequests(categorized.today);
+        setFutureRequests(categorized.future);
+      } catch (error) {
+        console.error('Error loading requests:', error);
+        toast.error('Failed to load requests');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadRequests();
+
+    // Set up realtime subscription
+    const channel = supabase
+      .channel('public:requests')
+      .on('postgres_changes', { 
+        event: '*', 
+        schema: 'public', 
+        table: 'requests' 
+      }, () => {
+        // Reload data when changes occur
+        loadRequests();
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
 
   return {
+    requests,
+    loading,
     pastRequests,
     todayRequests,
     futureRequests
-  }
-}
+  };
+};
