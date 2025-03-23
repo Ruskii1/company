@@ -49,7 +49,10 @@ export const commonTranslations = {
     enterProviderId: "Enter provider ID",
     providerPhone: "Provider Phone",
     enterProviderPhone: "Enter provider phone number",
-    all: "All"
+    all: "All",
+    
+    // Added loading message
+    loadingRequests: "Loading requests..."
   },
   ar: {
     customerPortal: "بوابة العميل",
@@ -100,6 +103,9 @@ export const commonTranslations = {
     enterProviderId: "أدخل معرف المزود",
     providerPhone: "رقم هاتف المزود",
     enterProviderPhone: "أدخل رقم هاتف المزود",
-    all: "الكل"
+    all: "الكل",
+    
+    // Added loading message
+    loadingRequests: "جاري تحميل الطلبات..."
   }
 }

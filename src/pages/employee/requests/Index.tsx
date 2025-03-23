@@ -63,7 +63,7 @@ const AllRequestsPage = () => {
         {loading ? (
           <div className="flex justify-center p-8">
             <div className="text-center">
-              <p>{t.loadingRequests || 'Loading requests...'}</p>
+              <p>{t.loadingRequests}</p>
             </div>
           </div>
         ) : (
