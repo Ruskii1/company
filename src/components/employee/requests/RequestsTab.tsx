@@ -21,7 +21,7 @@ export const RequestsTab = ({ requests, tabType }: RequestsTabProps) => {
       case 'future':
         return t.noFutureRequests || 'No future requests'
       default:
-        return t.noRequests || 'No requests'
+        return t.noOrders || 'No requests'
     }
   }
 

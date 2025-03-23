@@ -1,15 +1,13 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Toaster } from 'sonner'
 import { useLanguageStore, translations } from '@/lib/i18n'
-import { OrderManagementTable } from '@/components/employee/OrderManagementTable'
-import { OrderManagementFilter } from '@/components/employee/OrderManagementFilter'
 import { FilterValues } from '@/types/orderManagement'
 import { useOrderManagement } from '@/hooks/useOrderManagement'
 import { serviceTypeValues } from '@/components/forms/ServiceTypeField'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useState } from 'react'
-import { Clock, Calendar, History } from 'lucide-react'
+import { FilterSection } from '@/components/employee/FilterSection'
+import { TabsSection } from '@/components/employee/TabsSection'
+import { EmployeeStats } from '@/components/employee/home/EmployeeStats'
 
 const EmployeePortal = () => {
   const { language } = useLanguageStore()
@@ -52,79 +50,33 @@ const EmployeePortal = () => {
       <Toaster />
       <h1 className="text-4xl font-bold text-center mb-12">{t.orderManagement}</h1>
       
-      <Card className="backdrop-blur-sm bg-white/80 dark:bg-gray-800/80">
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>{t.orderManagement}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <OrderManagementFilter 
-            onSubmit={handleFilterSubmit}
-            onFilterChange={handleFilterChange}
-            serviceTypeValues={serviceTypeValues}
-            statusValues={statusValues}
-            cityValues={cityValues}
-          />
-          
-          <div className="mt-6">
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="w-full justify-start mb-4">
-                <TabsTrigger value="past" className="flex items-center gap-2">
-                  <History className="h-4 w-4" />
-                  {t.pastRequests}
-                </TabsTrigger>
-                <TabsTrigger value="today" className="flex items-center gap-2">
-                  <Clock className="h-4 w-4" />
-                  {t.todaysRequests}
-                </TabsTrigger>
-                <TabsTrigger value="future" className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
-                  {t.futureRequests}
-                </TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="past">
-                {pastOrders.length > 0 ? (
-                  <OrderManagementTable 
-                    orders={pastOrders} 
-                    onStatusChange={handleStatusChange} 
-                  />
-                ) : (
-                  <div className="border rounded-md p-4 bg-white dark:bg-gray-700">
-                    <p className="text-gray-500 dark:text-gray-300">{t.noPastRequests}</p>
-                  </div>
-                )}
-              </TabsContent>
-              
-              <TabsContent value="today">
-                {todayOrders.length > 0 ? (
-                  <OrderManagementTable 
-                    orders={todayOrders} 
-                    onStatusChange={handleStatusChange} 
-                  />
-                ) : (
-                  <div className="border rounded-md p-4 bg-white dark:bg-gray-700">
-                    <p className="text-gray-500 dark:text-gray-300">{t.noTodayRequests}</p>
-                  </div>
-                )}
-              </TabsContent>
-              
-              <TabsContent value="future">
-                {futureOrders.length > 0 ? (
-                  <OrderManagementTable 
-                    orders={futureOrders} 
-                    onStatusChange={handleStatusChange}
-                    isFutureTab={true}
-                  />
-                ) : (
-                  <div className="border rounded-md p-4 bg-white dark:bg-gray-700">
-                    <p className="text-gray-500 dark:text-gray-300">{t.noFutureRequests}</p>
-                  </div>
-                )}
-              </TabsContent>
-            </Tabs>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Stats Overview */}
+      <EmployeeStats 
+        pastOrders={pastOrders}
+        todayOrders={todayOrders}
+        futureOrders={futureOrders}
+      />
+      
+      <div className="mt-8">
+        <FilterSection
+          handleFilterSubmit={handleFilterSubmit}
+          handleFilterChange={handleFilterChange}
+          serviceTypeValues={serviceTypeValues}
+          statusValues={statusValues}
+          cityValues={cityValues}
+        />
+      </div>
+      
+      <div className="mt-6">
+        <TabsSection
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          pastOrders={pastOrders}
+          todayOrders={todayOrders}
+          futureOrders={futureOrders}
+          handleStatusChange={handleStatusChange}
+        />
+      </div>
     </>
   )
 }
