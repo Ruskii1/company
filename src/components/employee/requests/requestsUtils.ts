@@ -4,9 +4,11 @@ import { Request } from '@/types/request'
 
 // Filter requests based on filters
 export const filterRequests = (requests: Request[], filters: FilterValues) => {
+  console.log("Filtering requests:", requests.length, "with filters:", filters)
+  
   return requests.filter(request => {
     // Filter by task ID if provided
-    if (filters.taskId && !request.taskId.toLowerCase().includes(filters.taskId.toLowerCase())) {
+    if (filters.taskId && !request.taskId?.toLowerCase().includes(filters.taskId.toLowerCase())) {
       return false
     }
     

@@ -15,7 +15,7 @@ const AllRequestsPage = () => {
   const { language } = useLanguageStore()
   const t = translations[language]
   const [activeTab, setActiveTab] = useState('today')
-  const { pastRequests, todayRequests, futureRequests } = useRequestsData()
+  const { pastRequests, todayRequests, futureRequests, loading } = useRequestsData()
   const [filters, setFilters] = useState<FilterValues>({
     taskId: '',
     serviceType: '',
@@ -37,6 +37,7 @@ const AllRequestsPage = () => {
 
   // Handle filter changes
   const handleFilterChange = (data: FilterValues) => {
+    console.log("Filter applied:", data) // Debug log
     setFilters(data)
   }
 
@@ -59,35 +60,45 @@ const AllRequestsPage = () => {
         <CardTitle>{t.allRequests}</CardTitle>
       </CardHeader>
       <CardContent>
-        <RequestsFilter 
-          onFilterChange={handleFilterChange}
-          serviceTypeValues={serviceTypeValues}
-          statusValues={statusValues}
-          requests={allRequests}
-        />
-        
-        <RequestsTabNavigation
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-          pastTabContent={
-            <RequestsTab 
-              requests={filteredPastRequests}
-              tabType="past"
+        {loading ? (
+          <div className="flex justify-center p-8">
+            <div className="text-center">
+              <p>{t.loadingRequests || 'Loading requests...'}</p>
+            </div>
+          </div>
+        ) : (
+          <>
+            <RequestsFilter 
+              onFilterChange={handleFilterChange}
+              serviceTypeValues={serviceTypeValues}
+              statusValues={statusValues}
+              requests={allRequests}
             />
-          }
-          todayTabContent={
-            <RequestsTab 
-              requests={filteredTodayRequests}
-              tabType="today"
+            
+            <RequestsTabNavigation
+              activeTab={activeTab}
+              onTabChange={setActiveTab}
+              pastTabContent={
+                <RequestsTab 
+                  requests={filteredPastRequests}
+                  tabType="past"
+                />
+              }
+              todayTabContent={
+                <RequestsTab 
+                  requests={filteredTodayRequests}
+                  tabType="today"
+                />
+              }
+              futureTabContent={
+                <RequestsTab 
+                  requests={filteredFutureRequests}
+                  tabType="future"
+                />
+              }
             />
-          }
-          futureTabContent={
-            <RequestsTab 
-              requests={filteredFutureRequests}
-              tabType="future"
-            />
-          }
-        />
+          </>
+        )}
       </CardContent>
     </Card>
   )

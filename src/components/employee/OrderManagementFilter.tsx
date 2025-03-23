@@ -6,7 +6,7 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useLanguageStore, translations } from "@/lib/i18n"
 import { FilterValues } from "@/types/orderManagement"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { BasicFilters } from "./filters/BasicFilters"
 import { AdvancedFilters } from "./filters/AdvancedFilters"
 import { FilterCollapsible } from "./filters/FilterCollapsible"
@@ -51,13 +51,23 @@ export const OrderManagementFilter = ({
     }
   })
   
-  form.watch((value) => {
-    onFilterChange(value as FilterValues)
-  })
+  // Watch for changes and trigger filter updates
+  useEffect(() => {
+    const subscription = form.watch((value) => {
+      onFilterChange(value as FilterValues)
+    })
+    return () => subscription.unsubscribe()
+  }, [form, onFilterChange])
+  
+  // Handle form submission
+  const handleSubmit = (data: FilterValues) => {
+    console.log("Form submitted with:", data) // Debug log
+    onSubmit(data)
+  }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
         {/* Basic filters */}
         <BasicFilters control={form.control} serviceTypeValues={serviceTypeValues} />
         
