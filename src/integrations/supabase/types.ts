@@ -9,7 +9,57 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      requests: {
+        Row: {
+          city: string | null
+          company_name: string | null
+          created_at: string | null
+          dropoff_location: string
+          employee_name: string | null
+          id: string
+          notes: string | null
+          pickup_location: string
+          pickup_time: string
+          provider_id: string | null
+          provider_phone: string | null
+          service_type: string
+          status: string
+          task_id: string | null
+        }
+        Insert: {
+          city?: string | null
+          company_name?: string | null
+          created_at?: string | null
+          dropoff_location: string
+          employee_name?: string | null
+          id?: string
+          notes?: string | null
+          pickup_location: string
+          pickup_time: string
+          provider_id?: string | null
+          provider_phone?: string | null
+          service_type: string
+          status?: string
+          task_id?: string | null
+        }
+        Update: {
+          city?: string | null
+          company_name?: string | null
+          created_at?: string | null
+          dropoff_location?: string
+          employee_name?: string | null
+          id?: string
+          notes?: string | null
+          pickup_location?: string
+          pickup_time?: string
+          provider_id?: string | null
+          provider_phone?: string | null
+          service_type?: string
+          status?: string
+          task_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

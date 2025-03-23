@@ -3,8 +3,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { Request } from "@/types/request";
 
 export async function fetchAllRequests(): Promise<Request[]> {
-  // Using @ts-ignore to bypass the type issue until types are updated
-  // @ts-ignore
   const { data, error } = await supabase
     .from('requests')
     .select('*')
@@ -34,7 +32,6 @@ export async function fetchAllRequests(): Promise<Request[]> {
 
 export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Promise<Request | null> {
   // Convert from camelCase to snake_case for database
-  // @ts-ignore - Bypass type checking for now
   const { data, error } = await supabase
     .from('requests')
     .insert({
@@ -79,7 +76,6 @@ export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Pr
 }
 
 export async function updateRequestStatus(id: string, status: string): Promise<boolean> {
-  // @ts-ignore
   const { error } = await supabase
     .from('requests')
     .update({ status })
