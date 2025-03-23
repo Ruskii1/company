@@ -65,17 +65,73 @@ export const categorizeOrders = (
  */
 export const filterOrders = (
   orders: Order[], 
-  searchValue: string
+  filters: { 
+    searchValue?: string,
+    status?: string,
+    serviceType?: string,
+    city?: string,
+    providerId?: string,
+    providerPhone?: string
+  }
 ): Order[] => {
-  if (!searchValue) {
-    return orders
+  let filteredOrders = [...orders];
+  
+  // Filter by search value (task ID or customer name)
+  if (filters.searchValue) {
+    const lowercaseSearch = filters.searchValue.toLowerCase();
+    filteredOrders = filteredOrders.filter(order => 
+      order.taskId.toLowerCase().includes(lowercaseSearch) || 
+      order.customerName.toLowerCase().includes(lowercaseSearch)
+    );
   }
   
-  const lowercaseSearch = searchValue.toLowerCase()
-  return orders.filter(order => 
-    order.taskId.toLowerCase().includes(lowercaseSearch) || 
-    order.customerName.toLowerCase().includes(lowercaseSearch)
-  )
+  // Filter by status
+  if (filters.status) {
+    filteredOrders = filteredOrders.filter(order => 
+      order.status === filters.status
+    );
+  }
+  
+  // Filter by service type
+  if (filters.serviceType && filters.serviceType !== 'all') {
+    filteredOrders = filteredOrders.filter(order => 
+      order.serviceType === filters.serviceType
+    );
+  }
+  
+  // Filter by city
+  if (filters.city) {
+    filteredOrders = filteredOrders.filter(order => {
+      const city = order.city || extractCityFromLocation(order.pickupLocation);
+      return city.toLowerCase().includes(filters.city!.toLowerCase());
+    });
+  }
+  
+  // Filter by provider ID
+  if (filters.providerId) {
+    filteredOrders = filteredOrders.filter(order => 
+      order.providerId?.toLowerCase().includes(filters.providerId!.toLowerCase())
+    );
+  }
+  
+  // Filter by provider phone
+  if (filters.providerPhone) {
+    filteredOrders = filteredOrders.filter(order => 
+      order.providerPhone?.toLowerCase().includes(filters.providerPhone!.toLowerCase())
+    );
+  }
+  
+  return filteredOrders;
+}
+
+/**
+ * Extract the city from a location string
+ * Example: "123 Main St, New York, NY 10001" -> "New York"
+ */
+export const extractCityFromLocation = (location: string): string => {
+  // Simple extraction - assumes format like "address, city, state zip"
+  const parts = location.split(',');
+  return parts.length > 1 ? parts[1].trim() : '';
 }
 
 /**

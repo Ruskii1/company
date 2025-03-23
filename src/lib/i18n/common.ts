@@ -35,7 +35,21 @@ export const commonTranslations = {
     thereAre: "There are",
     requestsWithoutProvider: "requests waiting for provider assignment",
     reviewRequests: "Review Requests",
-    waitingForProvider: "Waiting for provider"
+    waitingForProvider: "Waiting for provider",
+    
+    // Order management filters
+    advancedFilters: "Advanced Filters",
+    applyFilters: "Apply Filters",
+    status: "Status",
+    selectStatus: "Select Status",
+    city: "City",
+    selectCity: "Select City",
+    enterCity: "Enter city",
+    providerId: "Provider ID",
+    enterProviderId: "Enter provider ID",
+    providerPhone: "Provider Phone",
+    enterProviderPhone: "Enter provider phone number",
+    all: "All"
   },
   ar: {
     customerPortal: "بوابة العميل",
@@ -72,6 +86,20 @@ export const commonTranslations = {
     thereAre: "هناك",
     requestsWithoutProvider: "طلبات في انتظار تعيين مزود",
     reviewRequests: "مراجعة الطلبات",
-    waitingForProvider: "في انتظار المزود"
+    waitingForProvider: "في انتظار المزود",
+    
+    // Order management filters
+    advancedFilters: "تصفية متقدمة",
+    applyFilters: "تطبيق التصفية",
+    status: "الحالة",
+    selectStatus: "اختر الحالة",
+    city: "المدينة",
+    selectCity: "اختر المدينة",
+    enterCity: "أدخل المدينة",
+    providerId: "معرف المزود",
+    enterProviderId: "أدخل معرف المزود",
+    providerPhone: "رقم هاتف المزود",
+    enterProviderPhone: "أدخل رقم هاتف المزود",
+    all: "الكل"
   }
 }

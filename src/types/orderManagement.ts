@@ -8,9 +8,16 @@ export interface Order {
   pickupLocation: string
   dropoffLocation: string
   status: string
+  city?: string
+  providerId?: string
+  providerPhone?: string
 }
 
 export interface FilterValues {
   taskId?: string
   serviceType?: string
+  status?: string
+  city?: string
+  providerId?: string
+  providerPhone?: string
 }

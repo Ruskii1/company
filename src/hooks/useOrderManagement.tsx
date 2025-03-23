@@ -58,14 +58,27 @@ export const useOrderManagement = () => {
   }
   
   const applyFilter = (data: FilterValues) => {
-    const searchValue = data.taskId?.toLowerCase() || ''
-    
-    if (searchValue) {
-      const filtered = filterOrders(allOrders, searchValue)
-      setFilteredOrders(filtered)
-    } else {
-      setFilteredOrders(allOrders)
+    const filterCriteria = {
+      searchValue: data.taskId?.toLowerCase() || '',
+      status: data.status || '',
+      serviceType: data.serviceType || '',
+      city: data.city || '',
+      providerId: data.providerId || '',
+      providerPhone: data.providerPhone || ''
     }
+    
+    const filtered = filterOrders(allOrders, filterCriteria)
+    setFilteredOrders(filtered)
+  }
+  
+  // Extract unique cities from all orders for the city filter dropdown
+  const getCities = (): string[] => {
+    const citySet = new Set<string>();
+    allOrders.forEach(order => {
+      const city = order.city || extractCityFromLocation(order.pickupLocation);
+      if (city) citySet.add(city);
+    });
+    return Array.from(citySet).sort();
   }
 
   return {
@@ -75,6 +88,13 @@ export const useOrderManagement = () => {
     todayOrders,
     futureOrders,
     handleStatusChange,
-    applyFilter
+    applyFilter,
+    getCities
   }
+}
+
+// Helper function to extract city from location string
+const extractCityFromLocation = (location: string): string => {
+  const parts = location.split(',');
+  return parts.length > 1 ? parts[1].trim() : '';
 }

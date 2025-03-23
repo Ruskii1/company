@@ -20,7 +20,8 @@ const EmployeePortal = () => {
     todayOrders, 
     futureOrders, 
     handleStatusChange, 
-    applyFilter 
+    applyFilter,
+    getCities
   } = useOrderManagement()
   
   const [activeTab, setActiveTab] = useState('today')
@@ -33,6 +34,19 @@ const EmployeePortal = () => {
     applyFilter(data)
   }
 
+  // Get unique status values
+  const statusValues = [
+    "Pending", 
+    "Waiting for provider", 
+    "In route", 
+    "Arrived at the pick-up location", 
+    "In service", 
+    "Completed"
+  ]
+  
+  // Get unique cities
+  const cityValues = getCities()
+
   return (
     <>
       <Toaster />
@@ -41,69 +55,74 @@ const EmployeePortal = () => {
       <Card className="backdrop-blur-sm bg-white/80 dark:bg-gray-800/80">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>{t.orderManagement}</CardTitle>
+        </CardHeader>
+        <CardContent>
           <OrderManagementFilter 
             onSubmit={handleFilterSubmit}
             onFilterChange={handleFilterChange}
             serviceTypeValues={serviceTypeValues}
+            statusValues={statusValues}
+            cityValues={cityValues}
           />
-        </CardHeader>
-        <CardContent>
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="w-full justify-start mb-4">
-              <TabsTrigger value="past" className="flex items-center gap-2">
-                <History className="h-4 w-4" />
-                {t.pastRequests}
-              </TabsTrigger>
-              <TabsTrigger value="today" className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />
-                {t.todaysRequests}
-              </TabsTrigger>
-              <TabsTrigger value="future" className="flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
-                {t.futureRequests}
-              </TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="past">
-              {pastOrders.length > 0 ? (
-                <OrderManagementTable 
-                  orders={pastOrders} 
-                  onStatusChange={handleStatusChange} 
-                />
-              ) : (
-                <div className="border rounded-md p-4 bg-white dark:bg-gray-700">
-                  <p className="text-gray-500 dark:text-gray-300">{t.noPastRequests}</p>
-                </div>
-              )}
-            </TabsContent>
-            
-            <TabsContent value="today">
-              {todayOrders.length > 0 ? (
-                <OrderManagementTable 
-                  orders={todayOrders} 
-                  onStatusChange={handleStatusChange} 
-                />
-              ) : (
-                <div className="border rounded-md p-4 bg-white dark:bg-gray-700">
-                  <p className="text-gray-500 dark:text-gray-300">{t.noTodayRequests}</p>
-                </div>
-              )}
-            </TabsContent>
-            
-            <TabsContent value="future">
-              {futureOrders.length > 0 ? (
-                <OrderManagementTable 
-                  orders={futureOrders} 
-                  onStatusChange={handleStatusChange}
-                  isFutureTab={true}
-                />
-              ) : (
-                <div className="border rounded-md p-4 bg-white dark:bg-gray-700">
-                  <p className="text-gray-500 dark:text-gray-300">{t.noFutureRequests}</p>
-                </div>
-              )}
-            </TabsContent>
-          </Tabs>
+          
+          <div className="mt-6">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+              <TabsList className="w-full justify-start mb-4">
+                <TabsTrigger value="past" className="flex items-center gap-2">
+                  <History className="h-4 w-4" />
+                  {t.pastRequests}
+                </TabsTrigger>
+                <TabsTrigger value="today" className="flex items-center gap-2">
+                  <Clock className="h-4 w-4" />
+                  {t.todaysRequests}
+                </TabsTrigger>
+                <TabsTrigger value="future" className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4" />
+                  {t.futureRequests}
+                </TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="past">
+                {pastOrders.length > 0 ? (
+                  <OrderManagementTable 
+                    orders={pastOrders} 
+                    onStatusChange={handleStatusChange} 
+                  />
+                ) : (
+                  <div className="border rounded-md p-4 bg-white dark:bg-gray-700">
+                    <p className="text-gray-500 dark:text-gray-300">{t.noPastRequests}</p>
+                  </div>
+                )}
+              </TabsContent>
+              
+              <TabsContent value="today">
+                {todayOrders.length > 0 ? (
+                  <OrderManagementTable 
+                    orders={todayOrders} 
+                    onStatusChange={handleStatusChange} 
+                  />
+                ) : (
+                  <div className="border rounded-md p-4 bg-white dark:bg-gray-700">
+                    <p className="text-gray-500 dark:text-gray-300">{t.noTodayRequests}</p>
+                  </div>
+                )}
+              </TabsContent>
+              
+              <TabsContent value="future">
+                {futureOrders.length > 0 ? (
+                  <OrderManagementTable 
+                    orders={futureOrders} 
+                    onStatusChange={handleStatusChange}
+                    isFutureTab={true}
+                  />
+                ) : (
+                  <div className="border rounded-md p-4 bg-white dark:bg-gray-700">
+                    <p className="text-gray-500 dark:text-gray-300">{t.noFutureRequests}</p>
+                  </div>
+                )}
+              </TabsContent>
+            </Tabs>
+          </div>
         </CardContent>
       </Card>
     </>
