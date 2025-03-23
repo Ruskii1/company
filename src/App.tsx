@@ -10,6 +10,7 @@ import CustomerTickets from './pages/customer/Tickets'
 import CustomerCredit from './pages/customer/Credit'
 import CustomerOrderDetails from './pages/customer/OrderDetails'
 import EmployeePortal from './pages/employee/Index'
+import EmployeeHomePage from './pages/employee/home/Index'
 import NotFound from './pages/NotFound'
 import TicketsPage from './pages/employee/tickets/Index'
 import AllRequestsPage from './pages/employee/requests/Index'
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
   {
     path: '/employee',
     element: <EmployeeLayout><EmployeePortal /></EmployeeLayout>,
+  },
+  {
+    path: '/employee/home',
+    element: <EmployeeLayout><EmployeeHomePage /></EmployeeLayout>,
   },
   {
     path: '/employee/tickets',
