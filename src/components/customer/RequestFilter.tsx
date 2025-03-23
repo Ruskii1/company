@@ -81,8 +81,8 @@ export const RequestFilter = ({ onFilterChange, serviceTypeValues }: RequestFilt
                     {t.all}
                   </SelectItem>
                   {serviceTypeValues.map((type) => (
-                    <SelectItem key={type} value={t.services[type]}>
-                      {t.services[type]}
+                    <SelectItem key={type} value={type || "unknown"}>
+                      {t.services[type] || type || "Unknown"}
                     </SelectItem>
                   ))}
                 </SelectContent>

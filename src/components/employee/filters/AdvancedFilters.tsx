@@ -35,12 +35,12 @@ export const AdvancedFilters = ({ control, statusValues, cityValues }: AdvancedF
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                <SelectItem value="">
+                <SelectItem value="all">
                   {t.all}
                 </SelectItem>
                 {statusValues.map((status) => (
-                  <SelectItem key={status} value={status}>
-                    {status}
+                  <SelectItem key={status} value={status || "unknown"}>
+                    {status || "Unknown"}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -67,12 +67,12 @@ export const AdvancedFilters = ({ control, statusValues, cityValues }: AdvancedF
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="">
+                  <SelectItem value="all">
                     {t.all}
                   </SelectItem>
                   {cityValues.map((city) => (
-                    <SelectItem key={city} value={city}>
-                      {city}
+                    <SelectItem key={city} value={city || "unknown"}>
+                      {city || "Unknown"}
                     </SelectItem>
                   ))}
                 </SelectContent>
