@@ -10,6 +10,19 @@ import { OrderManagementFilter } from '@/components/employee/OrderManagementFilt
 import { FilterValues } from '@/types/orderManagement'
 import { serviceTypeValues } from '@/components/forms/ServiceTypeField'
 
+// Define the proper type for the requests with city property
+interface RequestWithCity {
+  id: string
+  taskId: string
+  serviceType: string
+  pickupTime: string
+  pickupLocation: string
+  dropoffLocation: string
+  status: string
+  notes: string
+  city?: string
+}
+
 const AllRequestsPage = () => {
   const { language } = useLanguageStore()
   const t = translations[language]
@@ -25,7 +38,7 @@ const AllRequestsPage = () => {
   })
 
   // Filter requests based on current filters
-  const filterRequests = (requests: any[]) => {
+  const filterRequests = (requests: RequestWithCity[]) => {
     return requests.filter(request => {
       // Filter by task ID if provided
       if (filters.taskId && !request.taskId.toLowerCase().includes(filters.taskId.toLowerCase())) {
@@ -64,9 +77,9 @@ const AllRequestsPage = () => {
     })
   }
 
-  const filteredPastRequests = filterRequests(pastRequests)
-  const filteredTodayRequests = filterRequests(todayRequests)
-  const filteredFutureRequests = filterRequests(futureRequests)
+  const filteredPastRequests = filterRequests(pastRequests as RequestWithCity[])
+  const filteredTodayRequests = filterRequests(todayRequests as RequestWithCity[])
+  const filteredFutureRequests = filterRequests(futureRequests as RequestWithCity[])
 
   const handleSubmit = (data: FilterValues) => {
     setFilters(data)
@@ -90,7 +103,7 @@ const AllRequestsPage = () => {
   const getCities = () => {
     const citySet = new Set<string>();
     [...pastRequests, ...todayRequests, ...futureRequests].forEach(request => {
-      const city = request.city || extractCityFromLocation(request.pickupLocation);
+      const city = (request as RequestWithCity).city || extractCityFromLocation(request.pickupLocation);
       if (city) citySet.add(city);
     });
     return Array.from(citySet).sort();
