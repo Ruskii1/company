@@ -43,14 +43,14 @@ export const RequestsTab = ({ requests, tabType }: RequestsTabProps) => {
       {requests.length > 0 ? (
         <OrderTable orders={requests.map(req => ({
           id: req.id,
-          taskId: req.taskId,
-          companyName: 'Company ' + req.id,
-          employeeName: 'Employee ' + req.id,
+          taskId: req.taskId || req.id,
+          companyName: req.companyName || 'Company ' + req.id,
+          employeeName: req.employeeName || 'Employee ' + req.id,
           serviceType: req.serviceType,
           pickupTime: req.pickupTime,
           pickupLocation: req.pickupLocation,
           dropoffLocation: req.dropoffLocation,
-          notes: req.notes,
+          notes: req.notes || '',
           status: req.status
         }))} />
       ) : (

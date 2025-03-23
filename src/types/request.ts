@@ -2,6 +2,8 @@
 export interface Request {
   id: string
   taskId: string
+  companyName?: string
+  employeeName?: string
   serviceType: string
   pickupTime: string
   pickupLocation: string

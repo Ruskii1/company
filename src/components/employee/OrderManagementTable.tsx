@@ -23,6 +23,9 @@ interface Order {
   pickupLocation: string
   dropoffLocation: string
   status: string
+  city?: string
+  providerId?: string
+  providerPhone?: string
 }
 
 interface OrderManagementTableProps {
