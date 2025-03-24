@@ -42,3 +42,22 @@ export interface CorporateAccount {
   requests: CorporateRequest[];
   tickets: CorporateTicket[];
 }
+
+export interface ProviderCompany {
+  id: string;
+  name: string;
+  contactPerson: string;
+  contactPosition: string;
+  contactPhone: string;
+  contactEmail: string;
+  email: string;
+  phone: string;
+  address: string;
+  registrationNumber: string;
+  taxNumber: string;
+  status: 'active' | 'pending' | 'expired';
+  contractStartDate: string;
+  contractEndDate: string;
+  commissionRate: number;
+  providers: any[]; // Will be filled with ServiceProvider objects
+}
