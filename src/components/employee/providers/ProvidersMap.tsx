@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useServiceProviders } from '@/hooks/useServiceProviders';
 import { ServiceProvider } from '@/types/provider';
-import { useLanguageStore, translations } from '@/lib/i18n';
 import MapControls from './map/MapControls';
 import MapLegend from './map/MapLegend';
 import MapContainer from './map/MapContainer';
@@ -16,8 +15,6 @@ const ProvidersMap = () => {
     search: '',
     serviceType: 'all',
   });
-  const { language } = useLanguageStore();
-  const t = translations[language];
 
   // Get unique service types from providers
   const serviceTypes = Array.from(
@@ -54,8 +51,8 @@ const ProvidersMap = () => {
   }, [allProviders, filter]);
 
   return (
-    <Card className="w-full h-[calc(100vh-150px)]">
-      <CardContent className="p-0 relative">
+    <Card className="w-full h-[calc(100vh-220px)] overflow-hidden">
+      <CardContent className="p-0 relative h-full">
         {/* Controls overlay */}
         <MapControls 
           filter={filter} 

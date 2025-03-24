@@ -36,6 +36,7 @@ const MapContainer: React.FC<MapContainerProps> = ({ filteredProviders }) => {
 
     map.current.on('load', () => {
       setMapLoaded(true);
+      console.log('Map loaded successfully');
     });
 
     return () => {
@@ -50,7 +51,7 @@ const MapContainer: React.FC<MapContainerProps> = ({ filteredProviders }) => {
   useMapMarkers(map, filteredProviders, mapLoaded);
 
   return (
-    <div ref={mapContainer} className="w-full h-full min-h-[600px]" />
+    <div ref={mapContainer} className="w-full h-full min-h-[600px] rounded-lg" />
   );
 };
 
