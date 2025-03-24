@@ -27,7 +27,13 @@ export async function fetchAllRequests(): Promise<Request[]> {
     city: item.city,
     providerId: item.provider_id,
     providerPhone: item.provider_phone,
-    car: item.car ? item.car : undefined
+    car: item.car ? {
+      model: item.car.model || '',
+      year: item.car.year || '',
+      licensePlate: item.car.licensePlate || '',
+      licensePlateArabic: item.car.licensePlateArabic || '',
+      vin: item.car.vin || ''
+    } : undefined
   })) || [];
 }
 
@@ -47,7 +53,13 @@ export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Pr
       city: request.city,
       provider_id: request.providerId,
       provider_phone: request.providerPhone,
-      car: request.car
+      car: request.car ? {
+        model: request.car.model,
+        year: request.car.year,
+        licensePlate: request.car.licensePlate,
+        licensePlateArabic: request.car.licensePlateArabic,
+        vin: request.car.vin
+      } : null
     })
     .select()
     .single();
@@ -74,7 +86,13 @@ export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Pr
     city: data.city,
     providerId: data.provider_id,
     providerPhone: data.provider_phone,
-    car: data.car
+    car: data.car ? {
+      model: data.car.model || '',
+      year: data.car.year || '',
+      licensePlate: data.car.licensePlate || '',
+      licensePlateArabic: data.car.licensePlateArabic || '',
+      vin: data.car.vin || ''
+    } : undefined
   };
 }
 

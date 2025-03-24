@@ -55,9 +55,17 @@ export const ProviderInfoTab = ({ provider, car }: ProviderInfoTabProps) => {
                 <p className="text-sm font-semibold mb-1">License Plate</p>
                 <p className="flex flex-col">
                   <span>{car.plate}</span>
-                  {language === 'ar' && car.plateArabic && 
-                    <span className="text-sm text-muted-foreground">{car.plateArabic}</span>
+                  {car.plateArabic && 
+                    <span className="text-sm text-muted-foreground" dir={language === 'ar' ? "rtl" : "ltr"}>
+                      {car.plateArabic}
+                    </span>
                   }
+                </p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold mb-1">License Plate (Arabic)</p>
+                <p className="flex flex-col">
+                  <span dir="rtl" className="font-arabic">{car.plateArabic || "N/A"}</span>
                 </p>
               </div>
               <div>
