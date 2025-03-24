@@ -23,7 +23,7 @@ export function ProvidersList({ providers, onSelectProvider }: ProvidersListProp
             <TableHead>Details</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Commission</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            <TableHead className="text-right">Details</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
