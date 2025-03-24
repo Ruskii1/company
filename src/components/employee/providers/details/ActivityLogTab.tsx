@@ -6,18 +6,26 @@ import { Clock } from 'lucide-react';
 
 interface ActivityLogTabProps {
   provider: ServiceProvider;
+  searchQuery?: string;
 }
 
-export function ActivityLogTab({ provider }: ActivityLogTabProps) {
+export function ActivityLogTab({ provider, searchQuery = '' }: ActivityLogTabProps) {
   return (
     <Card>
       <CardHeader>
         <CardTitle>Activity Log</CardTitle>
-        <CardDescription>Record of all actions on this provider account</CardDescription>
+        <CardDescription>
+          {searchQuery
+            ? `Showing ${provider.actionLog.length} matching activities`
+            : 'Record of all actions on this provider account'
+          }
+        </CardDescription>
       </CardHeader>
       <CardContent>
         {provider.actionLog.length === 0 ? (
-          <p className="text-center text-muted-foreground py-8">No activity records found</p>
+          <p className="text-center text-muted-foreground py-8">
+            {searchQuery ? 'No activities match your search' : 'No activity records found'}
+          </p>
         ) : (
           <div className="relative pl-6 border-l">
             {provider.actionLog.map((log, index) => (

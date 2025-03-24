@@ -8,9 +8,10 @@ import { formatCurrency } from '@/utils/formatters';
 
 interface TransactionsTabProps {
   provider: ServiceProvider;
+  searchQuery?: string;
 }
 
-export function TransactionsTab({ provider }: TransactionsTabProps) {
+export function TransactionsTab({ provider, searchQuery = '' }: TransactionsTabProps) {
   const getStatusClassName = (status: string) => {
     switch (status) {
       case 'verified':
@@ -30,11 +31,18 @@ export function TransactionsTab({ provider }: TransactionsTabProps) {
     <Card>
       <CardHeader>
         <CardTitle>Transactions</CardTitle>
-        <CardDescription>Financial transactions with this provider</CardDescription>
+        <CardDescription>
+          {searchQuery
+            ? `Showing ${provider.transactions.length} matching transactions`
+            : 'Financial transactions with this provider'
+          }
+        </CardDescription>
       </CardHeader>
       <CardContent>
         {provider.transactions.length === 0 ? (
-          <p className="text-center text-muted-foreground py-8">No transactions found</p>
+          <p className="text-center text-muted-foreground py-8">
+            {searchQuery ? 'No transactions match your search' : 'No transactions found'}
+          </p>
         ) : (
           <Table>
             <TableHeader>

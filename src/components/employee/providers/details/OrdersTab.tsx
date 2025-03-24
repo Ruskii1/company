@@ -8,18 +8,26 @@ import { formatCurrency } from '@/utils/formatters';
 
 interface OrdersTabProps {
   provider: ServiceProvider;
+  searchQuery?: string;
 }
 
-export function OrdersTab({ provider }: OrdersTabProps) {
+export function OrdersTab({ provider, searchQuery = '' }: OrdersTabProps) {
   return (
     <Card>
       <CardHeader>
         <CardTitle>Orders History</CardTitle>
-        <CardDescription>All orders associated with this provider</CardDescription>
+        <CardDescription>
+          {searchQuery 
+            ? `Showing ${provider.orders.length} matching orders` 
+            : 'All orders associated with this provider'
+          }
+        </CardDescription>
       </CardHeader>
       <CardContent>
         {provider.orders.length === 0 ? (
-          <p className="text-center text-muted-foreground py-8">No orders found</p>
+          <p className="text-center text-muted-foreground py-8">
+            {searchQuery ? 'No orders match your search' : 'No orders found'}
+          </p>
         ) : (
           <Table>
             <TableHeader>

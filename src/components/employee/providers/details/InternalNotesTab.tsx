@@ -11,9 +11,10 @@ import { Plus } from 'lucide-react';
 interface InternalNotesTabProps {
   provider: ServiceProvider;
   onAddNote: (providerId: string, note: InternalNote) => void;
+  searchQuery?: string;
 }
 
-export function InternalNotesTab({ provider, onAddNote }: InternalNotesTabProps) {
+export function InternalNotesTab({ provider, onAddNote, searchQuery = '' }: InternalNotesTabProps) {
   const [newNote, setNewNote] = useState('');
   const [isAddingNote, setIsAddingNote] = useState(false);
 
@@ -41,7 +42,9 @@ export function InternalNotesTab({ provider, onAddNote }: InternalNotesTabProps)
       <CardHeader className="flex flex-row items-center justify-between">
         <div>
           <CardTitle>Internal Notes</CardTitle>
-          <CardDescription>Internal notes about this provider</CardDescription>
+          <CardDescription>
+            {searchQuery ? `Showing ${provider.internalNotes.length} matching notes` : 'Internal notes about this provider'}
+          </CardDescription>
         </div>
         <Dialog open={isAddingNote} onOpenChange={setIsAddingNote}>
           <DialogTrigger asChild>
@@ -77,7 +80,9 @@ export function InternalNotesTab({ provider, onAddNote }: InternalNotesTabProps)
       </CardHeader>
       <CardContent>
         {provider.internalNotes.length === 0 ? (
-          <p className="text-center text-muted-foreground py-8">No internal notes found</p>
+          <p className="text-center text-muted-foreground py-8">
+            {searchQuery ? 'No notes match your search' : 'No internal notes found'}
+          </p>
         ) : (
           <div className="space-y-4">
             {provider.internalNotes.map((note) => (
