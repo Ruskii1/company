@@ -28,11 +28,11 @@ export async function fetchAllRequests(): Promise<Request[]> {
     providerId: item.provider_id,
     providerPhone: item.provider_phone,
     car: item.car ? {
-      model: item.car.model || '',
-      year: item.car.year || '',
-      licensePlate: item.car.licensePlate || '',
-      licensePlateArabic: item.car.licensePlateArabic || '',
-      vin: item.car.vin || ''
+      model: typeof item.car === 'object' && item.car !== null ? (item.car.model || '') : '',
+      year: typeof item.car === 'object' && item.car !== null ? (item.car.year || '') : '',
+      licensePlate: typeof item.car === 'object' && item.car !== null ? (item.car.licensePlate || '') : '',
+      licensePlateArabic: typeof item.car === 'object' && item.car !== null ? (item.car.licensePlateArabic || '') : '',
+      vin: typeof item.car === 'object' && item.car !== null ? (item.car.vin || '') : ''
     } : undefined
   })) || [];
 }
@@ -87,11 +87,11 @@ export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Pr
     providerId: data.provider_id,
     providerPhone: data.provider_phone,
     car: data.car ? {
-      model: data.car.model || '',
-      year: data.car.year || '',
-      licensePlate: data.car.licensePlate || '',
-      licensePlateArabic: data.car.licensePlateArabic || '',
-      vin: data.car.vin || ''
+      model: typeof data.car === 'object' && data.car !== null ? (data.car.model || '') : '',
+      year: typeof data.car === 'object' && data.car !== null ? (data.car.year || '') : '',
+      licensePlate: typeof data.car === 'object' && data.car !== null ? (data.car.licensePlate || '') : '',
+      licensePlateArabic: typeof data.car === 'object' && data.car !== null ? (data.car.licensePlateArabic || '') : '',
+      vin: typeof data.car === 'object' && data.car !== null ? (data.car.vin || '') : ''
     } : undefined
   };
 }
