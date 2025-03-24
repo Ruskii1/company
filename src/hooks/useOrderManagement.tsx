@@ -1,9 +1,85 @@
-
 import { useState, useEffect } from 'react'
 import { toast } from 'sonner'
 import { Order, FilterValues } from '@/types/orderManagement'
 import { initialOrders } from '@/data/mockOrders'
 import { categorizeOrders, filterOrders } from '@/utils/orderManagementUtils'
+
+// Predefined list of Saudi Arabian cities in alphabetical order
+const saudiCities = [
+  "Abha",
+  "Abqaiq",
+  "Abu Arish",
+  "Afif",
+  "Ahad Rafidah",
+  "Al Ardah",
+  "Al Baha",
+  "Al Badayea",
+  "Al Bukayriyah",
+  "Al Dayer",
+  "Al Hanakiyah",
+  "Al Hariq",
+  "Al Hofuf",
+  "Al Jubail",
+  "Al Kharj",
+  "Al Khafji",
+  "Al Khurmah",
+  "Al Lith",
+  "Al Mahd",
+  "Al Majma'ah",
+  "Al Mubarraz",
+  "Al Muzahimiyah",
+  "Al Namas",
+  "Al Qassim",
+  "Al Qunfudhah",
+  "Al Qurayyat",
+  "Al Ula",
+  "Al Wajh",
+  "Al Zulfi",
+  "Arar",
+  "As Sulayyil",
+  "Bariq",
+  "Billasmar",
+  "Bisha",
+  "Buraidah",
+  "Dammam",
+  "Dawadmi",
+  "Dhahran",
+  "Diriyah",
+  "Duba",
+  "Hafar Al-Batin",
+  "Hail",
+  "Hotat Bani Tamim",
+  "Jazan",
+  "Jeddah",
+  "Khamis Mushait",
+  "Khobar",
+  "Layla",
+  "Mecca",
+  "Medina",
+  "Muhayil Asir",
+  "Najran",
+  "Qatif",
+  "Rabigh",
+  "Rafha",
+  "Ranyah",
+  "Riyadh",
+  "Sabya",
+  "Sakaka",
+  "Samitah",
+  "Sharurah",
+  "Shaqra",
+  "Tabuk",
+  "Taif",
+  "Tanomah",
+  "Tayma",
+  "Thadiq",
+  "Turaif",
+  "Turubah",
+  "Unaizah",
+  "Uyaynah",
+  "Wadi ad-Dawasir",
+  "Yanbu"
+];
 
 export const useOrderManagement = () => {
   const [allOrders, setAllOrders] = useState<Order[]>(initialOrders)
@@ -71,14 +147,9 @@ export const useOrderManagement = () => {
     setFilteredOrders(filtered)
   }
   
-  // Extract unique cities from all orders for the city filter dropdown
+  // Return the predefined list of cities instead of extracting from orders
   const getCities = (): string[] => {
-    const citySet = new Set<string>();
-    allOrders.forEach(order => {
-      const city = order.city || extractCityFromLocation(order.pickupLocation);
-      if (city) citySet.add(city);
-    });
-    return Array.from(citySet).sort();
+    return saudiCities;
   }
 
   return {
@@ -93,7 +164,7 @@ export const useOrderManagement = () => {
   }
 }
 
-// Helper function to extract city from location string
+// Helper function to extract city from location string (keeping for reference)
 const extractCityFromLocation = (location: string): string => {
   const parts = location.split(',');
   return parts.length > 1 ? parts[1].trim() : '';

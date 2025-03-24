@@ -4,6 +4,83 @@ import { FilterValues } from '@/types/orderManagement'
 import { Request } from '@/types/request'
 import { useState, useEffect } from 'react'
 
+// Predefined list of Saudi Arabian cities in alphabetical order
+const saudiCities = [
+  "Abha",
+  "Abqaiq",
+  "Abu Arish",
+  "Afif",
+  "Ahad Rafidah",
+  "Al Ardah",
+  "Al Baha",
+  "Al Badayea",
+  "Al Bukayriyah",
+  "Al Dayer",
+  "Al Hanakiyah",
+  "Al Hariq",
+  "Al Hofuf",
+  "Al Jubail",
+  "Al Kharj",
+  "Al Khafji",
+  "Al Khurmah",
+  "Al Lith",
+  "Al Mahd",
+  "Al Majma'ah",
+  "Al Mubarraz",
+  "Al Muzahimiyah",
+  "Al Namas",
+  "Al Qassim",
+  "Al Qunfudhah",
+  "Al Qurayyat",
+  "Al Ula",
+  "Al Wajh",
+  "Al Zulfi",
+  "Arar",
+  "As Sulayyil",
+  "Bariq",
+  "Billasmar",
+  "Bisha",
+  "Buraidah",
+  "Dammam",
+  "Dawadmi",
+  "Dhahran",
+  "Diriyah",
+  "Duba",
+  "Hafar Al-Batin",
+  "Hail",
+  "Hotat Bani Tamim",
+  "Jazan",
+  "Jeddah",
+  "Khamis Mushait",
+  "Khobar",
+  "Layla",
+  "Mecca",
+  "Medina",
+  "Muhayil Asir",
+  "Najran",
+  "Qatif",
+  "Rabigh",
+  "Rafha",
+  "Ranyah",
+  "Riyadh",
+  "Sabya",
+  "Sakaka",
+  "Samitah",
+  "Sharurah",
+  "Shaqra",
+  "Tabuk",
+  "Taif",
+  "Tanomah",
+  "Tayma",
+  "Thadiq",
+  "Turaif",
+  "Turubah",
+  "Unaizah",
+  "Uyaynah",
+  "Wadi ad-Dawasir",
+  "Yanbu"
+];
+
 interface RequestsFilterProps {
   onFilterChange: (filters: FilterValues) => void
   serviceTypeValues: string[]
@@ -17,21 +94,8 @@ export const RequestsFilter = ({
   statusValues,
   requests
 }: RequestsFilterProps) => {
-  const [cities, setCities] = useState<string[]>([])
-  
-  // Extract cities from all requests
-  useEffect(() => {
-    const getCities = () => {
-      const citySet = new Set<string>();
-      requests.forEach(request => {
-        const city = request.city || extractCityFromLocation(request.pickupLocation);
-        if (city) citySet.add(city);
-      });
-      return Array.from(citySet).sort();
-    }
-    
-    setCities(getCities())
-  }, [requests])
+  // Use the predefined list of cities instead of extracting from requests
+  const cities = saudiCities;
   
   // Handle filter submission
   const handleFilterSubmit = (filters: FilterValues) => {
