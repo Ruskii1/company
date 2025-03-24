@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { ServiceProvider, InternalNote, BankAccount } from '@/types/provider';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -76,9 +75,9 @@ export function ProviderDetails({ provider, onBack, onAddNote, onAddBankAccount 
   const getStatusBadgeVariant = (status: string) => {
     switch (status) {
       case 'active':
-        return 'success';
+        return 'default';
       case 'pending_review':
-        return 'warning';
+        return 'secondary';
       case 'suspended':
       case 'blacklisted':
         return 'destructive';
@@ -107,6 +106,21 @@ export function ProviderDetails({ provider, onBack, onAddNote, onAddBankAccount 
         return 'Deleted';
       default:
         return status;
+    }
+  };
+
+  const getStatusClassName = (status: string) => {
+    switch (status) {
+      case 'verified':
+      case 'completed':
+        return 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100';
+      case 'pending':
+        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100';
+      case 'rejected':
+      case 'failed':
+        return 'bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100';
+      default:
+        return '';
     }
   };
 
@@ -362,7 +376,10 @@ export function ProviderDetails({ provider, onBack, onAddNote, onAddBankAccount 
                           <div className="font-medium capitalize">
                             {document.type.replace('_', ' ')}
                           </div>
-                          <Badge variant={document.status === 'verified' ? 'success' : (document.status === 'rejected' ? 'destructive' : 'warning')}>
+                          <Badge 
+                            variant={document.status === 'verified' ? 'default' : (document.status === 'rejected' ? 'destructive' : 'secondary')} 
+                            className={getStatusClassName(document.status)}
+                          >
                             {document.status}
                           </Badge>
                         </div>
@@ -408,7 +425,10 @@ export function ProviderDetails({ provider, onBack, onAddNote, onAddBankAccount 
                         <TableCell>{order.serviceType}</TableCell>
                         <TableCell>{order.customerName}</TableCell>
                         <TableCell>
-                          <Badge variant={order.status === 'Completed' ? 'success' : 'default'}>
+                          <Badge 
+                            variant={order.status === 'Completed' ? 'default' : 'secondary'}
+                            className={order.status === 'Completed' ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100' : ''}
+                          >
                             {order.status}
                           </Badge>
                         </TableCell>
@@ -451,7 +471,10 @@ export function ProviderDetails({ provider, onBack, onAddNote, onAddBankAccount 
                         <TableCell>{transaction.description}</TableCell>
                         <TableCell>{transaction.reference}</TableCell>
                         <TableCell>
-                          <Badge variant={transaction.status === 'completed' ? 'success' : (transaction.status === 'failed' ? 'destructive' : 'warning')}>
+                          <Badge 
+                            variant={transaction.status === 'completed' ? 'default' : (transaction.status === 'failed' ? 'destructive' : 'secondary')}
+                            className={getStatusClassName(transaction.status)}
+                          >
                             {transaction.status}
                           </Badge>
                         </TableCell>
@@ -499,3 +522,4 @@ export function ProviderDetails({ provider, onBack, onAddNote, onAddBankAccount 
     </div>
   );
 }
+
