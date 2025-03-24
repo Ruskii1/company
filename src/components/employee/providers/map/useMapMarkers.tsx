@@ -3,6 +3,29 @@ import { useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import { ServiceProvider } from '@/types/provider';
 
+// Bright background colors for provider markers
+const markerColors = {
+  online: [
+    '#F2FCE2', // Soft Green 
+    '#FEF7CD', // Soft Yellow
+    '#FFDEE2', // Soft Pink
+    '#E5DEFF', // Soft Purple
+    '#D3E4FD', // Soft Blue
+  ],
+  offline: [
+    '#FDE1D3', // Soft Peach
+    '#FEC6A1', // Soft Orange
+    '#E5E7EB', // Light Gray
+  ]
+};
+
+// Get a random bright color based on provider status
+const getMarkerColor = (status: string): string => {
+  const colorArray = status === 'online' ? markerColors.online : markerColors.offline;
+  const randomIndex = Math.floor(Math.random() * colorArray.length);
+  return colorArray[randomIndex];
+};
+
 export const useMapMarkers = (
   map: React.MutableRefObject<mapboxgl.Map | null>,
   filteredProviders: ServiceProvider[],
@@ -58,6 +81,9 @@ export const useMapMarkers = (
         cityCoordinates[1] + randomOffset()
       ] as [number, number];
 
+      // Get bright background color for marker
+      const markerBgColor = getMarkerColor(provider.availabilityStatus);
+
       // Create HTML element for marker
       const markerEl = document.createElement('div');
       markerEl.className = 'provider-marker';
@@ -67,11 +93,9 @@ export const useMapMarkers = (
       markerEl.style.display = 'flex';
       markerEl.style.alignItems = 'center';
       markerEl.style.justifyContent = 'center';
-      markerEl.style.backgroundColor = provider.availabilityStatus === 'online' 
-        ? 'rgba(34, 197, 94, 0.95)' // green for online
-        : 'rgba(100, 116, 139, 0.95)'; // darker gray for offline
+      markerEl.style.backgroundColor = markerBgColor;
       markerEl.style.border = '3px solid white';
-      markerEl.style.boxShadow = '0 3px 8px rgba(0,0,0,0.5)';
+      markerEl.style.boxShadow = '0 3px 8px rgba(0,0,0,0.2)';
       markerEl.style.cursor = 'pointer';
       
       // Fix: Apply transform to the content inside the marker element, not the marker itself
@@ -88,12 +112,12 @@ export const useMapMarkers = (
       // Add hover effect to the inner content, not the marker container
       markerEl.onmouseover = () => {
         markerContent.style.transform = 'scale(1.2)';
-        markerEl.style.boxShadow = '0 5px 12px rgba(0,0,0,0.6)';
+        markerEl.style.boxShadow = '0 5px 12px rgba(0,0,0,0.4)';
       };
       
       markerEl.onmouseout = () => {
         markerContent.style.transform = 'scale(1)';
-        markerEl.style.boxShadow = '0 3px 8px rgba(0,0,0,0.5)';
+        markerEl.style.boxShadow = '0 3px 8px rgba(0,0,0,0.2)';
       };
       
       // Add initials
@@ -101,9 +125,9 @@ export const useMapMarkers = (
         .map(name => name.charAt(0))
         .slice(0, 2)
         .join('');
-      markerContent.innerHTML = `<span style="color: white; font-weight: bold; font-size: 16px; text-shadow: 1px 1px 2px rgba(0,0,0,0.7);">${initials}</span>`;
+      markerContent.innerHTML = `<span style="color: #222222; font-weight: bold; font-size: 16px;">${initials}</span>`;
 
-      // Create popup for the marker with improved contrast for dark mode visibility
+      // Create popup for the marker with improved contrast for visibility
       const popup = new mapboxgl.Popup({ 
         offset: 25, 
         closeButton: true,
@@ -112,7 +136,7 @@ export const useMapMarkers = (
       })
       .setHTML(`
         <div style="padding: 16px; min-width: 250px; font-family: system-ui, sans-serif;">
-          <h3 style="margin-bottom: 12px; font-weight: bold; font-size: 18px; color: #111827; background-color: #f3f4f6; padding: 8px; border-radius: 6px; text-align: center;">
+          <h3 style="margin-bottom: 12px; font-weight: bold; font-size: 18px; color: #111827; background-color: ${markerBgColor}; padding: 8px; border-radius: 6px; text-align: center;">
             ${provider.fullName}
           </h3>
           <div style="display: flex; flex-direction: column; gap: 10px; background-color: white; padding: 12px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">

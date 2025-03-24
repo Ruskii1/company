@@ -64,31 +64,31 @@ const MapContainer: React.FC<MapContainerProps> = ({ filteredProviders }) => {
       }
       
       .dark .mapboxgl-popup-content {
-        background-color: #1f2937;
-        color: #f3f4f6;
+        background-color: white;
+        color: #1f2937;
       }
       
       .dark .mapboxgl-popup-content h3 {
-        color: #f3f4f6;
-        background-color: #374151;
+        color: #111827;
+        background-color: #f3f4f6;
       }
       
       .dark .mapboxgl-popup-content .provider-info {
-        background-color: #1f2937;
+        background-color: white;
       }
       
       .dark .mapboxgl-popup-content span[style*="background-color: #f3f4f6"] {
-        background-color: #374151 !important;
-        color: #f3f4f6 !important;
+        background-color: #f3f4f6 !important;
+        color: #111827 !important;
       }
       
       .dark .mapboxgl-popup-close-button {
-        color: #f3f4f6;
-        background: rgba(31, 41, 55, 0.8);
+        color: #4b5563;
+        background: rgba(255, 255, 255, 0.8);
       }
       
       .dark .mapboxgl-popup-close-button:hover {
-        background: rgba(31, 41, 55, 1);
+        background: rgba(255, 255, 255, 1);
       }
       
       .mapboxgl-ctrl-logo {
@@ -112,9 +112,7 @@ const MapContainer: React.FC<MapContainerProps> = ({ filteredProviders }) => {
 
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
-        style: theme === 'dark' 
-          ? 'mapbox://styles/mapbox/dark-v11'
-          : 'mapbox://styles/mapbox/streets-v12',
+        style: 'mapbox://styles/mapbox/streets-v12', // Always use light map style
         center: [45.0792, 23.8859], // Center on Saudi Arabia
         zoom: 5,
         attributionControl: false
@@ -143,18 +141,7 @@ const MapContainer: React.FC<MapContainerProps> = ({ filteredProviders }) => {
         map.current = null;
       }
     }
-  }, [theme]); // Add theme dependency to update map style when theme changes
-
-  // Update map style when theme changes
-  useEffect(() => {
-    if (map.current && mapLoaded) {
-      map.current.setStyle(
-        theme === 'dark'
-          ? 'mapbox://styles/mapbox/dark-v11'
-          : 'mapbox://styles/mapbox/streets-v12'
-      );
-    }
-  }, [theme, mapLoaded]);
+  }, []); // Remove theme dependency since we always want the light style
 
   // Handle markers
   useMapMarkers(map, filteredProviders, mapLoaded);
