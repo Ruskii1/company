@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { InfoIcon, Plus, UsersIcon } from 'lucide-react';
 import { useServiceProviders } from '@/hooks/useServiceProviders';
-import { ProviderStatus, ServiceProvider, InternalNote, BankAccount } from '@/types/provider';
+import { ServiceProvider, InternalNote, BankAccount } from '@/types/provider';
 import { ProvidersList } from '@/components/employee/providers/ProvidersList';
 import { ProviderDetails } from '@/components/employee/providers/ProviderDetails';
 import { ProviderFilter } from '@/components/employee/providers/ProviderFilter';
@@ -14,8 +14,7 @@ import { useToast } from '@/hooks/use-toast';
 const ServiceProvidersPage = () => {
   const { 
     providers, 
-    allProviders, 
-    updateProviderStatus, 
+    allProviders,
     addInternalNote, 
     addBankAccount, 
     filterProviders, 
@@ -25,15 +24,6 @@ const ServiceProvidersPage = () => {
   const { toast } = useToast();
   
   const selectedProvider = providers.find(provider => provider.id === selectedProviderId);
-  
-  const handleToggleStatus = (providerId: string, status: ProviderStatus) => {
-    updateProviderStatus(providerId, status);
-    
-    toast({
-      title: `Provider ${status === 'active' ? 'Activated' : 'Deactivated'}`,
-      description: `The provider account has been ${status === 'active' ? 'activated' : 'deactivated'} successfully.`,
-    });
-  };
   
   const handleAddNote = (providerId: string, note: InternalNote) => {
     addInternalNote(providerId, note);
@@ -97,7 +87,6 @@ const ServiceProvidersPage = () => {
             <ProvidersList 
               providers={providers}
               onSelectProvider={setSelectedProviderId}
-              onToggleStatus={handleToggleStatus}
             />
           </div>
         ) : selectedProvider ? (

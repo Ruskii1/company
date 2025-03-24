@@ -1,12 +1,11 @@
 
 import { ProviderFilters, useProviderActions } from './providers/providerActions';
-import { ServiceProvider, ProviderStatus, InternalNote, BankAccount } from '@/types/provider';
+import { ServiceProvider, InternalNote, BankAccount } from '@/types/provider';
 
 export const useServiceProviders = () => {
   const {
     providers,
     allProviders,
-    updateProviderStatus,
     addInternalNote,
     addBankAccount,
     filterProviders,
@@ -16,7 +15,6 @@ export const useServiceProviders = () => {
   return {
     providers,
     allProviders,
-    updateProviderStatus,
     addInternalNote,
     addBankAccount,
     filterProviders,

@@ -1,19 +1,17 @@
 
-import { ServiceProvider, ProviderStatus } from '@/types/provider';
+import { ServiceProvider } from '@/types/provider';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { formatCurrency } from '@/utils/formatters';
-import { StatusBadge } from './list/StatusBadge';
-import { AvailabilityBadge } from './list/AvailabilityBadge';
 import { ServiceTypeBadges } from './list/ServiceTypeBadges';
+import { StatusBadge } from './list/StatusBadge';
 import { ProviderActions } from './list/ProviderActions';
+import { DetailsBadge } from './list/DetailsBadge';
 
 interface ProvidersListProps {
   providers: ServiceProvider[];
   onSelectProvider: (id: string) => void;
-  onToggleStatus: (id: string, status: ProviderStatus) => void;
 }
 
-export function ProvidersList({ providers, onSelectProvider, onToggleStatus }: ProvidersListProps) {
+export function ProvidersList({ providers, onSelectProvider }: ProvidersListProps) {
   return (
     <div className="rounded-md border">
       <Table>
@@ -22,7 +20,7 @@ export function ProvidersList({ providers, onSelectProvider, onToggleStatus }: P
             <TableHead>Name</TableHead>
             <TableHead>Region</TableHead>
             <TableHead>Service Types</TableHead>
-            <TableHead>Availability</TableHead>
+            <TableHead>Details</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Commission</TableHead>
             <TableHead className="text-right">Actions</TableHead>
@@ -44,10 +42,7 @@ export function ProvidersList({ providers, onSelectProvider, onToggleStatus }: P
                   <ServiceTypeBadges serviceTypes={provider.serviceTypes} />
                 </TableCell>
                 <TableCell>
-                  <AvailabilityBadge 
-                    status={provider.availabilityStatus} 
-                    lastSeen={provider.lastSeen} 
-                  />
+                  <DetailsBadge provider={provider} />
                 </TableCell>
                 <TableCell>
                   <StatusBadge status={provider.status} />
@@ -57,7 +52,6 @@ export function ProvidersList({ providers, onSelectProvider, onToggleStatus }: P
                   <ProviderActions 
                     provider={provider}
                     onSelectProvider={onSelectProvider}
-                    onToggleStatus={onToggleStatus}
                   />
                 </TableCell>
               </TableRow>
