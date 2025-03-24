@@ -15,11 +15,11 @@ const MapLegend: React.FC<MapLegendProps> = ({ filteredProviders }) => {
       <div className="flex flex-col gap-2">
         <div className="text-sm font-medium">Map Legend:</div>
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-green-500"></div>
+          <div className="w-3 h-3 rounded-full bg-green-600"></div>
           <span className="text-sm">Online Providers ({filteredProviders.filter(p => p.availabilityStatus === 'online').length})</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-slate-400"></div>
+          <div className="w-3 h-3 rounded-full bg-slate-500"></div>
           <span className="text-sm">Offline Providers ({filteredProviders.filter(p => p.availabilityStatus === 'offline').length})</span>
         </div>
       </div>
@@ -31,11 +31,11 @@ const MapLegend: React.FC<MapLegendProps> = ({ filteredProviders }) => {
         </Badge>
         <div className="flex gap-1">
           <Badge variant="outline" className="flex items-center gap-1 text-xs">
-            <CircleDot className="h-3 w-3 text-green-500" />
+            <CircleDot className="h-3 w-3 text-green-600" />
             {filteredProviders.filter(p => p.availabilityStatus === 'online').length}
           </Badge>
           <Badge variant="outline" className="flex items-center gap-1 text-xs">
-            <CircleOff className="h-3 w-3 text-slate-400" />
+            <CircleOff className="h-3 w-3 text-slate-500" />
             {filteredProviders.filter(p => p.availabilityStatus === 'offline').length}
           </Badge>
         </div>
