@@ -14,7 +14,7 @@ const initialTickets: Ticket[] = [
     title: 'System Login Issue',
     description: 'Users are experiencing intermittent login failures on the provider portal.',
     status: 'open',
-    tags: ['#IT', '#High Priority'],
+    tags: ['#IT', '#Urgent'],
     notes: [
       {
         id: '101',
@@ -32,7 +32,7 @@ const initialTickets: Ticket[] = [
       },
       {
         id: '202',
-        tag: '#High Priority',
+        tag: '#Urgent',
         addedAt: new Date(Date.now() - 86400000), // 1 day ago
         addedBy: 'Jane Smith'
       }

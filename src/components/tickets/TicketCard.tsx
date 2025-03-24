@@ -38,7 +38,7 @@ export const TicketCard = ({
 
   const getTagColor = (tag: string) => {
     const colors: Record<string, string> = {
-      '#High Priority': 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300',
+      '#Urgent': 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300',
       '#IT': 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300',
       '#Finance': 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
       '#Operations': 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300',

@@ -10,7 +10,7 @@ export type TicketTag =
   | '#IT' 
   | '#SP Comapnies' 
   | '#quality' 
-  | '#High Priority' 
+  | '#Urgent' 
   | '#NULL';
 
 export type TicketStatus = 'open' | 'closed';
