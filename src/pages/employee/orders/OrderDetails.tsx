@@ -12,7 +12,6 @@ import { ProviderInfoTab } from '@/components/employee/orders/ProviderInfoTab'
 import { InternalNotesTab } from '@/components/employee/orders/InternalNotesTab'
 import { ConversationTab } from '@/components/employee/orders/ConversationTab'
 import { useOrderDetailsEmployee } from '@/hooks/useOrderDetailsEmployee'
-import { CarDetailsComponent } from '@/components/customer/CarDetailsComponent'
 import { TimeTrackingComponent } from '@/components/customer/TimeTrackingComponent'
 
 const OrderDetails = () => {
@@ -76,12 +75,11 @@ const OrderDetails = () => {
       </CardHeader>
       <CardContent className="space-y-6">
         <Tabs defaultValue="notes" value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid grid-cols-6 w-full md:w-auto">
+          <TabsList className="grid grid-cols-5 w-full md:w-auto">
             <TabsTrigger value="notes">Notes</TabsTrigger>
             <TabsTrigger value="details">Details</TabsTrigger>
             <TabsTrigger value="time">Time</TabsTrigger>
             <TabsTrigger value="provider">Provider</TabsTrigger>
-            <TabsTrigger value="car">Car Details</TabsTrigger>
             <TabsTrigger value="external-notes">External Notes</TabsTrigger>
           </TabsList>
           
@@ -104,11 +102,10 @@ const OrderDetails = () => {
           </TabsContent>
           
           <TabsContent value="provider">
-            <ProviderInfoTab provider={order.provider} />
-          </TabsContent>
-          
-          <TabsContent value="car">
-            <CarDetailsComponent car={order.car} />
+            <ProviderInfoTab 
+              provider={order.provider} 
+              car={order.car}
+            />
           </TabsContent>
           
           <TabsContent value="external-notes">

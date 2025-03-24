@@ -50,9 +50,11 @@ export interface Order {
   }
   car: {
     plate: string
+    plateArabic?: string
     model: string
     name: string
     vin: string
+    year?: string
   }
   conversation: Note[]
   internalNotes: InternalNote[]

@@ -33,7 +33,13 @@ export const orderTranslations = {
     home: "Home",
     allRequests: "All Requests",
     welcomeToEmployeePortal: "Welcome to Employee Portal",
-    employeeHomeDescription: "This dashboard will soon show key performance metrics and quick access to important features."
+    employeeHomeDescription: "This dashboard will soon show key performance metrics and quick access to important features.",
+    vehicleDetails: "Vehicle Details",
+    licensePlate: "License Plate",
+    model: "Model",
+    type: "Type",
+    modelYear: "Model Year",
+    vin: "VIN"
   },
   ar: {
     orderManagement: "إدارة الطلبات",
@@ -68,6 +74,12 @@ export const orderTranslations = {
     home: "الرئيسية",
     allRequests: "جميع الطلبات",
     welcomeToEmployeePortal: "مرحبًا بك في بوابة الموظفين",
-    employeeHomeDescription: "ستعرض هذه اللوحة قريبًا مقاييس الأداء الرئيسية والوصول السريع إلى الميزات المهمة."
+    employeeHomeDescription: "ستعرض هذه اللوحة قريبًا مقاييس الأداء الرئيسية والوصول السريع إلى الميزات المهمة.",
+    vehicleDetails: "تفاصيل المركبة",
+    licensePlate: "رقم اللوحة",
+    model: "الطراز",
+    type: "النوع",
+    modelYear: "سنة الصنع",
+    vin: "رقم الهيكل"
   }
 }

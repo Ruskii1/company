@@ -1,14 +1,18 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { User, Briefcase, Camera, MapPin } from "lucide-react"
+import { User, Briefcase, Camera, MapPin, Car } from "lucide-react"
 import { Order } from "@/hooks/useOrderDetailsEmployee"
 import { ProviderLiveMap } from "@/components/customer/ProviderLiveMap"
+import { useLanguageStore } from "@/lib/i18n"
 
 interface ProviderInfoTabProps {
   provider: Order['provider']
+  car: Order['car']
 }
 
-export const ProviderInfoTab = ({ provider }: ProviderInfoTabProps) => {
+export const ProviderInfoTab = ({ provider, car }: ProviderInfoTabProps) => {
+  const { language } = useLanguageStore()
+  
   return (
     <div className="space-y-6">
       <Card>
@@ -38,6 +42,40 @@ export const ProviderInfoTab = ({ provider }: ProviderInfoTabProps) => {
                 Corporation
               </p>
               <p>{provider.corporationName}</p>
+            </div>
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+              <Car className="h-5 w-5" />
+              Vehicle Details
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm font-semibold mb-1">License Plate</p>
+                <p className="flex flex-col">
+                  <span>{car.plate}</span>
+                  {language === 'ar' && car.plateArabic && 
+                    <span className="text-sm text-muted-foreground">{car.plateArabic}</span>
+                  }
+                </p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold mb-1">Model</p>
+                <p>{car.model}</p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold mb-1">Type</p>
+                <p>{car.name}</p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold mb-1">Model Year</p>
+                <p>{car.year || "N/A"}</p>
+              </div>
+              <div className="col-span-1 md:col-span-2">
+                <p className="text-sm font-semibold mb-1">VIN</p>
+                <p className="font-mono text-sm">{car.vin}</p>
+              </div>
             </div>
           </div>
           
