@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { ProviderStatus } from '@/types/provider';
 import { Button } from '@/components/ui/button';
@@ -30,7 +29,6 @@ export function ProviderFilter({ onFilter, onReset, regions, serviceTypes }: Pro
   const { language } = useLanguageStore();
   const t = translations[language];
   
-  // Use provided serviceTypes or default to the imported ones
   const types = serviceTypes || defaultServiceTypeValues;
 
   const handleFilter = () => {
