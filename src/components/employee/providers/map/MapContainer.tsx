@@ -6,6 +6,7 @@ import { ServiceProvider } from '@/types/provider';
 import { useMapMarkers } from './useMapMarkers';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { InfoIcon } from 'lucide-react';
+import { useTheme } from '@/lib/theme';
 
 // Use the token provided by the user
 const MAPBOX_TOKEN = 'pk.eyJ1IjoibWVzaGFyaXNoIiwiYSI6ImNtOG1mMzBtMzE4Z2kyaXNlbnFkamtyOGIifQ.iOVBnnIexOXqR8oHq2H00w';
@@ -19,6 +20,7 @@ const MapContainer: React.FC<MapContainerProps> = ({ filteredProviders }) => {
   const map = useRef<mapboxgl.Map | null>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [mapError, setMapError] = useState<string | null>(null);
+  const { theme } = useTheme();
 
   // Add custom CSS for mapbox popups
   useEffect(() => {
@@ -35,6 +37,8 @@ const MapContainer: React.FC<MapContainerProps> = ({ filteredProviders }) => {
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
         overflow: hidden;
         border: 1px solid rgba(0, 0, 0, 0.1);
+        background-color: white;
+        color: #111827;
       }
       
       .mapboxgl-popup-close-button {
@@ -64,6 +68,20 @@ const MapContainer: React.FC<MapContainerProps> = ({ filteredProviders }) => {
         color: #f3f4f6;
       }
       
+      .dark .mapboxgl-popup-content h3 {
+        color: #f3f4f6;
+        background-color: #374151;
+      }
+      
+      .dark .mapboxgl-popup-content .provider-info {
+        background-color: #1f2937;
+      }
+      
+      .dark .mapboxgl-popup-content span[style*="background-color: #f3f4f6"] {
+        background-color: #374151 !important;
+        color: #f3f4f6 !important;
+      }
+      
       .dark .mapboxgl-popup-close-button {
         color: #f3f4f6;
         background: rgba(31, 41, 55, 0.8);
@@ -82,7 +100,7 @@ const MapContainer: React.FC<MapContainerProps> = ({ filteredProviders }) => {
     return () => {
       document.head.removeChild(style);
     };
-  }, []);
+  }, [theme]); // Add theme dependency to update styles when theme changes
 
   // Initialize the map
   useEffect(() => {
@@ -94,7 +112,9 @@ const MapContainer: React.FC<MapContainerProps> = ({ filteredProviders }) => {
 
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
-        style: 'mapbox://styles/mapbox/streets-v12',
+        style: theme === 'dark' 
+          ? 'mapbox://styles/mapbox/dark-v11'
+          : 'mapbox://styles/mapbox/streets-v12',
         center: [45.0792, 23.8859], // Center on Saudi Arabia
         zoom: 5,
         attributionControl: false
@@ -123,7 +143,18 @@ const MapContainer: React.FC<MapContainerProps> = ({ filteredProviders }) => {
         map.current = null;
       }
     }
-  }, []);
+  }, [theme]); // Add theme dependency to update map style when theme changes
+
+  // Update map style when theme changes
+  useEffect(() => {
+    if (map.current && mapLoaded) {
+      map.current.setStyle(
+        theme === 'dark'
+          ? 'mapbox://styles/mapbox/dark-v11'
+          : 'mapbox://styles/mapbox/streets-v12'
+      );
+    }
+  }, [theme, mapLoaded]);
 
   // Handle markers
   useMapMarkers(map, filteredProviders, mapLoaded);
@@ -132,7 +163,7 @@ const MapContainer: React.FC<MapContainerProps> = ({ filteredProviders }) => {
     <div className="relative w-full h-full min-h-[600px]">
       {/* Show error message if map fails to load */}
       {mapError && (
-        <div className="absolute top-0 left-0 z-20 w-full p-4 bg-white/90 backdrop-blur-sm rounded-t-lg">
+        <div className="absolute top-0 left-0 z-20 w-full p-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-t-lg">
           <Alert className="mb-4">
             <InfoIcon className="h-4 w-4" />
             <AlertDescription>
