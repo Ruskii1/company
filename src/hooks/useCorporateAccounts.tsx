@@ -58,7 +58,7 @@ const mockCorporateAccounts: CorporateAccount[] = [
       {
         id: 'ticket-001',
         title: 'Billing Discrepancy',
-        description: 'We noticed a discrepancy in our last month's invoice. Some of the trips appear to be charged twice.',
+        description: "We noticed a discrepancy in our last month's invoice. Some of the trips appear to be charged twice.",
         status: 'open',
         createdAt: '2023-10-10T11:20:00',
         createdBy: 'Mohammed Al-Fahad',
@@ -109,7 +109,7 @@ const mockCorporateAccounts: CorporateAccount[] = [
       {
         id: 'ticket-002',
         title: 'Service Quality Concern',
-        description: 'We've had several complaints about the punctuality of drivers for our executive transportation service.',
+        description: "We've had several complaints about the punctuality of drivers for our executive transportation service.",
         status: 'open',
         createdAt: '2023-10-14T09:15:00',
         createdBy: 'Layla Mahmoud',
