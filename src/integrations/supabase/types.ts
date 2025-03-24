@@ -11,6 +11,7 @@ export type Database = {
     Tables: {
       requests: {
         Row: {
+          car: Json | null
           city: string | null
           company_name: string | null
           created_at: string | null
@@ -27,6 +28,7 @@ export type Database = {
           task_id: string | null
         }
         Insert: {
+          car?: Json | null
           city?: string | null
           company_name?: string | null
           created_at?: string | null
@@ -43,6 +45,7 @@ export type Database = {
           task_id?: string | null
         }
         Update: {
+          car?: Json | null
           city?: string | null
           company_name?: string | null
           created_at?: string | null
