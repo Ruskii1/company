@@ -1,6 +1,24 @@
 
 import { supabase } from "@/integrations/supabase/client";
 import { Request } from "@/types/request";
+import { Json } from "@/integrations/supabase/types";
+
+// Helper function to safely extract car data
+function extractCarInfo(carData: Json | null): Request['car'] | undefined {
+  if (!carData || typeof carData !== 'object' || Array.isArray(carData)) {
+    return undefined;
+  }
+  
+  const car = carData as Record<string, Json>;
+  
+  return {
+    model: typeof car.model === 'string' ? car.model : '',
+    year: typeof car.year === 'string' ? car.year : '',
+    licensePlate: typeof car.licensePlate === 'string' ? car.licensePlate : '',
+    licensePlateArabic: typeof car.licensePlateArabic === 'string' ? car.licensePlateArabic : '',
+    vin: typeof car.vin === 'string' ? car.vin : ''
+  };
+}
 
 export async function fetchAllRequests(): Promise<Request[]> {
   const { data, error } = await supabase
@@ -27,13 +45,7 @@ export async function fetchAllRequests(): Promise<Request[]> {
     city: item.city,
     providerId: item.provider_id,
     providerPhone: item.provider_phone,
-    car: item.car ? {
-      model: typeof item.car === 'object' && item.car !== null ? (item.car.model || '') : '',
-      year: typeof item.car === 'object' && item.car !== null ? (item.car.year || '') : '',
-      licensePlate: typeof item.car === 'object' && item.car !== null ? (item.car.licensePlate || '') : '',
-      licensePlateArabic: typeof item.car === 'object' && item.car !== null ? (item.car.licensePlateArabic || '') : '',
-      vin: typeof item.car === 'object' && item.car !== null ? (item.car.vin || '') : ''
-    } : undefined
+    car: extractCarInfo(item.car)
   })) || [];
 }
 
@@ -86,13 +98,7 @@ export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Pr
     city: data.city,
     providerId: data.provider_id,
     providerPhone: data.provider_phone,
-    car: data.car ? {
-      model: typeof data.car === 'object' && data.car !== null ? (data.car.model || '') : '',
-      year: typeof data.car === 'object' && data.car !== null ? (data.car.year || '') : '',
-      licensePlate: typeof data.car === 'object' && data.car !== null ? (data.car.licensePlate || '') : '',
-      licensePlateArabic: typeof data.car === 'object' && data.car !== null ? (data.car.licensePlateArabic || '') : '',
-      vin: typeof data.car === 'object' && data.car !== null ? (data.car.vin || '') : ''
-    } : undefined
+    car: extractCarInfo(data.car)
   };
 }
 
