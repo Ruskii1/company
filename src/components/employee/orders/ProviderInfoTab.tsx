@@ -80,7 +80,7 @@ export const ProviderInfoTab = ({ provider, car }: ProviderInfoTabProps) => {
                 <p className="text-sm font-semibold mb-1">Model Year</p>
                 <p>{car.year || "N/A"}</p>
               </div>
-              <div className="col-span-1 md:col-span-2">
+              <div>
                 <p className="text-sm font-semibold mb-1">VIN</p>
                 <p className="font-mono text-sm">{car.vin}</p>
               </div>
