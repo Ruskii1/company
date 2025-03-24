@@ -1,5 +1,5 @@
 
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -19,10 +19,24 @@ interface CustomerDetails {
 const CustomerDetails = () => {
   const { customerId } = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
   const { language } = useLanguageStore()
   const t = translations[language]
   const [customer, setCustomer] = useState<CustomerDetails | null>(null)
   const [loading, setLoading] = useState(true)
+
+  // Check if we came from an order details page
+  const fromOrderDetails = location.state?.from?.includes('/employee/orders/')
+  
+  const handleBack = () => {
+    if (fromOrderDetails && location.state?.from) {
+      // Navigate back to the order details page we came from
+      navigate(location.state.from)
+    } else {
+      // Default fallback to order management
+      navigate('/employee')
+    }
+  }
 
   // Simulate data fetching
   useEffect(() => {
@@ -62,8 +76,8 @@ const CustomerDetails = () => {
         <CardContent className="p-6">
           <div className="text-center">
             <p>Customer not found</p>
-            <Button variant="outline" className="mt-4" onClick={() => navigate('/employee')}>
-              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Order Management
+            <Button variant="outline" className="mt-4" onClick={handleBack}>
+              <ArrowLeft className="mr-2 h-4 w-4" /> Back
             </Button>
           </div>
         </CardContent>
@@ -74,8 +88,8 @@ const CustomerDetails = () => {
   return (
     <Card className="backdrop-blur-sm bg-white/80 dark:bg-gray-800/80">
       <CardHeader className="flex flex-row items-center gap-4">
-        <Button variant="outline" onClick={() => navigate('/employee')}>
-          <ArrowLeft className="mr-2 h-4 w-4" /> Back to Order Management
+        <Button variant="outline" onClick={handleBack}>
+          <ArrowLeft className="mr-2 h-4 w-4" /> {fromOrderDetails ? 'Back to Order Details' : 'Back to Order Management'}
         </Button>
         <CardTitle className="text-2xl">{t.customerName}: {customer.name}</CardTitle>
       </CardHeader>
