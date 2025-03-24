@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { ProviderStatus } from '@/types/provider';
 import { Button } from '@/components/ui/button';
@@ -25,7 +26,6 @@ export function ProviderFilter({ onFilter, onReset, regions, serviceTypes }: Pro
   const [region, setRegion] = useState('');
   const [phone, setPhone] = useState('');
   const [serviceType, setServiceType] = useState('');
-  const [status, setStatus] = useState<ProviderStatus | ''>('');
   const { language } = useLanguageStore();
   const t = translations[language];
   
@@ -44,7 +44,6 @@ export function ProviderFilter({ onFilter, onReset, regions, serviceTypes }: Pro
     if (region) filters.region = region;
     if (phone) filters.phone = phone;
     if (serviceType) filters.serviceType = serviceType;
-    if (status) filters.status = status as ProviderStatus;
     
     onFilter(filters);
   };
@@ -54,7 +53,6 @@ export function ProviderFilter({ onFilter, onReset, regions, serviceTypes }: Pro
     setRegion('');
     setPhone('');
     setServiceType('');
-    setStatus('');
     onReset();
   };
 
@@ -113,24 +111,6 @@ export function ProviderFilter({ onFilter, onReset, regions, serviceTypes }: Pro
                   {t.services[type] || type}
                 </SelectItem>
               ))}
-            </SelectContent>
-          </Select>
-        </div>
-        
-        <div>
-          <label className="text-sm font-medium mb-1 block">Status</label>
-          <Select value={status} onValueChange={(value) => setStatus(value as ProviderStatus | '')}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all_statuses">All Statuses</SelectItem>
-              <SelectItem value="active">Active</SelectItem>
-              <SelectItem value="pending_review">Pending Review</SelectItem>
-              <SelectItem value="suspended">Suspended</SelectItem>
-              <SelectItem value="paused">Paused</SelectItem>
-              <SelectItem value="blacklisted">Blacklisted</SelectItem>
-              <SelectItem value="deleted">Deleted</SelectItem>
             </SelectContent>
           </Select>
         </div>
