@@ -1,12 +1,11 @@
 
 import mapboxgl from 'mapbox-gl';
 import { ServiceProvider } from '@/types/provider';
-import { useLanguageStore, translations } from '@/lib/i18n';
+import { translations } from '@/lib/i18n';
 
 // Create popup for a provider marker
-export const createProviderPopup = (provider: ServiceProvider): mapboxgl.Popup => {
-  // Get language for service type translation
-  const language = useLanguageStore.getState().language;
+export const createProviderPopup = (provider: ServiceProvider, language: 'en' | 'ar'): mapboxgl.Popup => {
+  // Get translations for the current language
   const t = translations[language];
 
   return new mapboxgl.Popup({ 

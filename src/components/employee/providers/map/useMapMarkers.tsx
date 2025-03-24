@@ -5,6 +5,7 @@ import { ServiceProvider } from '@/types/provider';
 import { createMarkerElement, getCityCoordinates } from './mapMarkerUtils';
 import { createProviderPopup } from './popupUtils';
 import { fitMapToMarkers } from './mapViewUtils';
+import { useLanguageStore } from '@/lib/i18n';
 
 export const useMapMarkers = (
   map: React.MutableRefObject<mapboxgl.Map | null>,
@@ -12,6 +13,7 @@ export const useMapMarkers = (
   mapLoaded: boolean
 ) => {
   const markersRef = useRef<{ [key: string]: mapboxgl.Marker }>({});
+  const { language } = useLanguageStore();
 
   useEffect(() => {
     if (!map.current || !mapLoaded) {
@@ -33,8 +35,8 @@ export const useMapMarkers = (
       // Create the marker element
       const markerEl = createMarkerElement(provider);
 
-      // Create popup for the marker
-      const popup = createProviderPopup(provider);
+      // Create popup for the marker with current language
+      const popup = createProviderPopup(provider, language);
 
       // Create and add the marker
       const marker = new mapboxgl.Marker(markerEl)
@@ -64,7 +66,7 @@ export const useMapMarkers = (
     if (map.current) {
       fitMapToMarkers(map.current, markersRef.current);
     }
-  }, [filteredProviders, mapLoaded]);
+  }, [filteredProviders, mapLoaded, language]);
 
   return markersRef;
 };
