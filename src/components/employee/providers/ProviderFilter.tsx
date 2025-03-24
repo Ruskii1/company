@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search, X } from 'lucide-react';
-import { serviceTypeValues } from '@/components/forms/ServiceTypeField';
+import { serviceTypeValues as defaultServiceTypeValues } from '@/components/forms/ServiceTypeField';
 import { useLanguageStore, translations } from '@/lib/i18n';
 
 interface ProviderFilterProps {
@@ -18,9 +18,10 @@ interface ProviderFilterProps {
   }) => void;
   onReset: () => void;
   regions: string[];
+  serviceTypes?: string[];
 }
 
-export function ProviderFilter({ onFilter, onReset, regions }: ProviderFilterProps) {
+export function ProviderFilter({ onFilter, onReset, regions, serviceTypes }: ProviderFilterProps) {
   const [name, setName] = useState('');
   const [region, setRegion] = useState('');
   const [phone, setPhone] = useState('');
@@ -28,6 +29,9 @@ export function ProviderFilter({ onFilter, onReset, regions }: ProviderFilterPro
   const [status, setStatus] = useState<ProviderStatus | ''>('');
   const { language } = useLanguageStore();
   const t = translations[language];
+  
+  // Use provided serviceTypes or default to the imported ones
+  const types = serviceTypes || defaultServiceTypeValues;
 
   const handleFilter = () => {
     const filters: {
@@ -106,7 +110,7 @@ export function ProviderFilter({ onFilter, onReset, regions }: ProviderFilterPro
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all_services">All Service Types</SelectItem>
-              {serviceTypeValues.map((type) => (
+              {types.map((type) => (
                 <SelectItem key={type} value={type}>
                   {t.services[type] || type}
                 </SelectItem>

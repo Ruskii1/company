@@ -3,11 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { OrderManagementFilter } from '@/components/employee/OrderManagementFilter'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { FilterValues } from '@/types/orderManagement'
+import { serviceTypeValues } from '@/components/forms/ServiceTypeField'
 
 interface FilterSectionProps {
   handleFilterSubmit: (data: FilterValues) => void
   handleFilterChange: (data: FilterValues) => void
-  serviceTypeValues: string[]
   statusValues: string[]
   cityValues: string[]
 }
@@ -15,7 +15,6 @@ interface FilterSectionProps {
 export const FilterSection = ({
   handleFilterSubmit,
   handleFilterChange,
-  serviceTypeValues,
   statusValues,
   cityValues
 }: FilterSectionProps) => {

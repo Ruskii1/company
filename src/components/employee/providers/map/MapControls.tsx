@@ -19,11 +19,15 @@ interface MapControlsProps {
     search: string;
     serviceType: string;
   }>>;
+  serviceTypes?: string[]; // Add this prop to the interface
 }
 
-const MapControls: React.FC<MapControlsProps> = ({ filter, setFilter }) => {
+const MapControls: React.FC<MapControlsProps> = ({ filter, setFilter, serviceTypes }) => {
   const { language } = useLanguageStore();
   const t = translations[language];
+  
+  // Use provided serviceTypes or default to serviceTypeValues
+  const types = serviceTypes || serviceTypeValues;
   
   return (
     <div className="absolute top-4 left-4 z-10 bg-white/90 p-4 rounded-lg shadow-md w-72 space-y-3 backdrop-blur-sm">
@@ -75,7 +79,7 @@ const MapControls: React.FC<MapControlsProps> = ({ filter, setFilter }) => {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">{t.all}</SelectItem>
-            {serviceTypeValues.map((type) => (
+            {types.map((type) => (
               <SelectItem key={type} value={type}>
                 {t.services[type] || type}
               </SelectItem>

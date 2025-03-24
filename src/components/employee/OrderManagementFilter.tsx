@@ -25,13 +25,15 @@ interface OrderManagementFilterProps {
   onFilterChange: (data: FilterValues) => void
   statusValues?: string[]
   cityValues?: string[]
+  serviceTypeValues?: string[] // Add this prop
 }
 
 export const OrderManagementFilter = ({ 
   onSubmit, 
   onFilterChange, 
   statusValues = ["Pending", "Waiting for provider", "In route", "Arrived at the pick-up location", "In service", "Completed"],
-  cityValues = []
+  cityValues = [],
+  serviceTypeValues // Add this prop
 }: OrderManagementFilterProps) => {
   const { language } = useLanguageStore()
   const t = translations[language]
@@ -67,7 +69,7 @@ export const OrderManagementFilter = ({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
         {/* Basic filters */}
-        <BasicFilters control={form.control} />
+        <BasicFilters control={form.control} serviceTypeValues={serviceTypeValues} />
         
         {/* Advanced filters */}
         <FilterCollapsible 

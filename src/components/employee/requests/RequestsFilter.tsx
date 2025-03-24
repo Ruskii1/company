@@ -3,6 +3,7 @@ import { OrderManagementFilter } from '@/components/employee/OrderManagementFilt
 import { FilterValues } from '@/types/orderManagement'
 import { Request } from '@/types/request'
 import { useState, useEffect } from 'react'
+import { serviceTypeValues as defaultServiceTypeValues } from '@/components/forms/ServiceTypeField'
 
 // Predefined list of Saudi Arabian cities in alphabetical order
 const saudiCities = [
@@ -83,19 +84,22 @@ const saudiCities = [
 
 interface RequestsFilterProps {
   onFilterChange: (filters: FilterValues) => void
-  serviceTypeValues: string[]
+  serviceTypeValues?: string[]
   statusValues: string[]
   requests: Request[]
 }
 
 export const RequestsFilter = ({ 
   onFilterChange, 
-  serviceTypeValues, 
+  serviceTypeValues,
   statusValues,
   requests
 }: RequestsFilterProps) => {
   // Use the predefined list of cities instead of extracting from requests
   const cities = saudiCities;
+  
+  // Use provided serviceTypeValues or default to the imported ones
+  const types = serviceTypeValues || defaultServiceTypeValues;
   
   // Handle filter submission
   const handleFilterSubmit = (filters: FilterValues) => {
@@ -113,7 +117,7 @@ export const RequestsFilter = ({
     <OrderManagementFilter 
       onSubmit={handleFilterSubmit} 
       onFilterChange={handleFilterChange}
-      serviceTypeValues={serviceTypeValues}
+      serviceTypeValues={types}
       statusValues={statusValues}
       cityValues={cities}
     />
