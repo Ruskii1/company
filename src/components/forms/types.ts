@@ -15,6 +15,21 @@ export const orderFormSchema = z.object({
     message: "Drop-off location is required",
   }),
   notes: z.string().optional(),
+  carModel: z.string().min(1, {
+    message: "Car model is required",
+  }),
+  carYear: z.string().min(1, {
+    message: "Model year is required",
+  }),
+  licensePlate: z.string().min(1, {
+    message: "License plate is required",
+  }),
+  licensePlateArabic: z.string().min(1, {
+    message: "Arabic license plate is required",
+  }),
+  vin: z.string().min(1, {
+    message: "VIN number is required",
+  }),
 })
 
 export type OrderFormValues = z.infer<typeof orderFormSchema>

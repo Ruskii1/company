@@ -9,6 +9,7 @@ import { ServiceTypeField } from './forms/ServiceTypeField'
 import { PickupDateField } from './forms/PickupDateField'
 import { LocationFields } from './forms/LocationFields'
 import { NotesField } from './forms/NotesField'
+import { CarDetailsFields } from './forms/CarDetailsFields'
 import { orderFormSchema, OrderFormValues } from './forms/types'
 import { createRequest } from '@/services/requestService'
 import { format } from 'date-fns'
@@ -26,6 +27,11 @@ export const NewOrderForm = () => {
       pickupLocation: '',
       dropoffLocation: '',
       notes: '',
+      carModel: '',
+      carYear: '',
+      licensePlate: '',
+      licensePlateArabic: '',
+      vin: '',
     },
   })
 
@@ -41,6 +47,13 @@ export const NewOrderForm = () => {
         dropoffLocation: values.dropoffLocation,
         status: 'Pending',
         notes: values.notes || '',
+        car: {
+          model: values.carModel,
+          year: values.carYear,
+          licensePlate: values.licensePlate,
+          licensePlateArabic: values.licensePlateArabic,
+          vin: values.vin
+        }
       };
       
       const result = await createRequest(request);
@@ -74,6 +87,7 @@ export const NewOrderForm = () => {
         <ServiceTypeField control={form.control} />
         <PickupDateField control={form.control} />
         <LocationFields control={form.control} />
+        <CarDetailsFields control={form.control} />
         <NotesField control={form.control} />
 
         <Button type="submit" className="w-full">

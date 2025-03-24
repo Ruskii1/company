@@ -26,7 +26,8 @@ export async function fetchAllRequests(): Promise<Request[]> {
     notes: item.notes || '',
     city: item.city,
     providerId: item.provider_id,
-    providerPhone: item.provider_phone
+    providerPhone: item.provider_phone,
+    car: item.car
   })) || [];
 }
 
@@ -45,7 +46,8 @@ export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Pr
       notes: request.notes,
       city: request.city,
       provider_id: request.providerId,
-      provider_phone: request.providerPhone
+      provider_phone: request.providerPhone,
+      car: request.car
     })
     .select()
     .single();
@@ -71,7 +73,8 @@ export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Pr
     notes: data.notes || '',
     city: data.city,
     providerId: data.provider_id,
-    providerPhone: data.provider_phone
+    providerPhone: data.provider_phone,
+    car: data.car
   };
 }
 

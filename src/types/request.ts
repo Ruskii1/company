@@ -13,4 +13,11 @@ export interface Request {
   city?: string
   providerId?: string
   providerPhone?: string
+  car?: {
+    model: string
+    year: string
+    licensePlate: string
+    licensePlateArabic: string
+    vin: string
+  }
 }
