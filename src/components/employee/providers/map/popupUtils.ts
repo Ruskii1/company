@@ -1,9 +1,14 @@
 
 import mapboxgl from 'mapbox-gl';
 import { ServiceProvider } from '@/types/provider';
+import { useLanguageStore, translations } from '@/lib/i18n';
 
 // Create popup for a provider marker
 export const createProviderPopup = (provider: ServiceProvider): mapboxgl.Popup => {
+  // Get language for service type translation
+  const language = useLanguageStore.getState().language;
+  const t = translations[language];
+
   return new mapboxgl.Popup({ 
     offset: 25, 
     closeButton: true,
@@ -34,7 +39,7 @@ export const createProviderPopup = (provider: ServiceProvider): mapboxgl.Popup =
           <span style="font-weight: 600; color: #4b5563; display: block; margin-bottom: 6px; font-size: 14px;">Services:</span>
           <div style="display: flex; flex-wrap: wrap; gap: 4px;">
             ${provider.serviceTypes.map(service => 
-              `<span style="color: #111827; background-color: #f3f4f6; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">${service}</span>`
+              `<span style="color: #111827; background-color: #f3f4f6; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">${t.services[service] || service}</span>`
             ).join('')}
           </div>
         </div>

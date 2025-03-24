@@ -16,7 +16,7 @@ export const createMockProvider = (props: Partial<ServiceProvider>): ServiceProv
     nationalId: '1000000000',
     company: null,
     region: 'Riyadh',
-    serviceTypes: ['Airport Transfer'],
+    serviceTypes: ['regular-towing', 'battery-jumpstart'],
     status: 'active',
     availabilityStatus: 'offline',
     lastSeen: new Date().toISOString(),
