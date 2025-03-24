@@ -20,6 +20,70 @@ const MapContainer: React.FC<MapContainerProps> = ({ filteredProviders }) => {
   const [mapLoaded, setMapLoaded] = useState(false);
   const [mapError, setMapError] = useState<string | null>(null);
 
+  // Add custom CSS for mapbox popups
+  useEffect(() => {
+    // Add custom styles for Mapbox popups
+    const style = document.createElement('style');
+    style.textContent = `
+      .mapboxgl-popup {
+        z-index: 1;
+      }
+      
+      .mapboxgl-popup-content {
+        padding: 0;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      
+      .mapboxgl-popup-close-button {
+        top: 8px;
+        right: 8px;
+        padding: 6px;
+        color: #4b5563;
+        font-size: 20px;
+        font-weight: bold;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 0;
+      }
+      
+      .mapboxgl-popup-close-button:hover {
+        background: rgba(255, 255, 255, 1);
+        color: #1f2937;
+      }
+      
+      .dark .mapboxgl-popup-content {
+        background-color: #1f2937;
+        color: #f3f4f6;
+      }
+      
+      .dark .mapboxgl-popup-close-button {
+        color: #f3f4f6;
+        background: rgba(31, 41, 55, 0.8);
+      }
+      
+      .dark .mapboxgl-popup-close-button:hover {
+        background: rgba(31, 41, 55, 1);
+      }
+      
+      .mapboxgl-ctrl-logo {
+        margin: 0 !important;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
   // Initialize the map
   useEffect(() => {
     if (map.current) return; // Don't initialize if map already exists
