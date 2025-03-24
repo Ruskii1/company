@@ -27,7 +27,7 @@ export async function fetchAllRequests(): Promise<Request[]> {
     city: item.city,
     providerId: item.provider_id,
     providerPhone: item.provider_phone,
-    car: item.car
+    car: item.car ? item.car : undefined
   })) || [];
 }
 
