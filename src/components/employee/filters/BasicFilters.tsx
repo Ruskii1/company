@@ -66,7 +66,7 @@ export const BasicFilters = ({ control, serviceTypeValues = [] }: BasicFiltersPr
                   {t.all}
                 </SelectItem>
                 {serviceTypeValues.map((type) => (
-                  <SelectItem key={type} value={type || "unknown"}>
+                  <SelectItem key={type} value={type || "unknown_service"}>
                     {t.services[type] || type || "Unknown"}
                   </SelectItem>
                 ))}

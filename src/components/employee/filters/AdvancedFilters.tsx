@@ -39,7 +39,7 @@ export const AdvancedFilters = ({ control, statusValues, cityValues }: AdvancedF
                   {t.all}
                 </SelectItem>
                 {statusValues.map((status) => (
-                  <SelectItem key={status} value={status || "unknown"}>
+                  <SelectItem key={status} value={status || "unknown_status"}>
                     {status || "Unknown"}
                   </SelectItem>
                 ))}
@@ -71,7 +71,7 @@ export const AdvancedFilters = ({ control, statusValues, cityValues }: AdvancedF
                     {t.all}
                   </SelectItem>
                   {cityValues.map((city) => (
-                    <SelectItem key={city} value={city || "unknown"}>
+                    <SelectItem key={city} value={city || "unknown_city"}>
                       {city || "Unknown"}
                     </SelectItem>
                   ))}

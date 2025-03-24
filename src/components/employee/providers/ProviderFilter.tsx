@@ -78,9 +78,9 @@ export function ProviderFilter({ onFilter, onReset, regions, serviceTypes }: Pro
               <SelectValue placeholder="Select region" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Regions</SelectItem>
+              <SelectItem value="all_regions">All Regions</SelectItem>
               {regions.map((r) => (
-                <SelectItem key={r} value={r}>{r}</SelectItem>
+                <SelectItem key={r} value={r || "unknown_region"}>{r || "Unknown"}</SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -102,9 +102,9 @@ export function ProviderFilter({ onFilter, onReset, regions, serviceTypes }: Pro
               <SelectValue placeholder="Select service type" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Service Types</SelectItem>
+              <SelectItem value="all_services">All Service Types</SelectItem>
               {serviceTypes.map((type) => (
-                <SelectItem key={type} value={type}>{type}</SelectItem>
+                <SelectItem key={type} value={type || "unknown_service"}>{type || "Unknown"}</SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -117,7 +117,7 @@ export function ProviderFilter({ onFilter, onReset, regions, serviceTypes }: Pro
               <SelectValue placeholder="Select status" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Statuses</SelectItem>
+              <SelectItem value="all_statuses">All Statuses</SelectItem>
               <SelectItem value="active">Active</SelectItem>
               <SelectItem value="pending_review">Pending Review</SelectItem>
               <SelectItem value="suspended">Suspended</SelectItem>
