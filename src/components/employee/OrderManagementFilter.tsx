@@ -23,7 +23,6 @@ const filterSchema = z.object({
 interface OrderManagementFilterProps {
   onSubmit: (data: FilterValues) => void
   onFilterChange: (data: FilterValues) => void
-  serviceTypeValues: string[]
   statusValues?: string[]
   cityValues?: string[]
 }
@@ -31,7 +30,6 @@ interface OrderManagementFilterProps {
 export const OrderManagementFilter = ({ 
   onSubmit, 
   onFilterChange, 
-  serviceTypeValues,
   statusValues = ["Pending", "Waiting for provider", "In route", "Arrived at the pick-up location", "In service", "Completed"],
   cityValues = []
 }: OrderManagementFilterProps) => {
@@ -69,7 +67,7 @@ export const OrderManagementFilter = ({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
         {/* Basic filters */}
-        <BasicFilters control={form.control} serviceTypeValues={serviceTypeValues} />
+        <BasicFilters control={form.control} />
         
         {/* Advanced filters */}
         <FilterCollapsible 

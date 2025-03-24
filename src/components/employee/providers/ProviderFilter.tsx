@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search, X } from 'lucide-react';
+import { serviceTypeValues } from '@/components/forms/ServiceTypeField';
+import { useLanguageStore, translations } from '@/lib/i18n';
 
 interface ProviderFilterProps {
   onFilter: (filters: {
@@ -16,15 +18,16 @@ interface ProviderFilterProps {
   }) => void;
   onReset: () => void;
   regions: string[];
-  serviceTypes: string[];
 }
 
-export function ProviderFilter({ onFilter, onReset, regions, serviceTypes }: ProviderFilterProps) {
+export function ProviderFilter({ onFilter, onReset, regions }: ProviderFilterProps) {
   const [name, setName] = useState('');
   const [region, setRegion] = useState('');
   const [phone, setPhone] = useState('');
   const [serviceType, setServiceType] = useState('');
   const [status, setStatus] = useState<ProviderStatus | ''>('');
+  const { language } = useLanguageStore();
+  const t = translations[language];
 
   const handleFilter = () => {
     const filters: {
@@ -103,8 +106,10 @@ export function ProviderFilter({ onFilter, onReset, regions, serviceTypes }: Pro
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all_services">All Service Types</SelectItem>
-              {serviceTypes.map((type) => (
-                <SelectItem key={type} value={type || "unknown_service"}>{type || "Unknown"}</SelectItem>
+              {serviceTypeValues.map((type) => (
+                <SelectItem key={type} value={type}>
+                  {t.services[type] || type}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>

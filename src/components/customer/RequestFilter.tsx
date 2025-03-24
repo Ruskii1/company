@@ -8,6 +8,7 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useLanguageStore, translations } from "@/lib/i18n"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { serviceTypeValues } from "@/components/forms/ServiceTypeField"
 
 const filterSchema = z.object({
   requestNumber: z.string().optional(),
@@ -18,10 +19,9 @@ export type FilterValues = z.infer<typeof filterSchema>
 
 interface RequestFilterProps {
   onFilterChange: (data: FilterValues) => void
-  serviceTypeValues: string[]
 }
 
-export const RequestFilter = ({ onFilterChange, serviceTypeValues }: RequestFilterProps) => {
+export const RequestFilter = ({ onFilterChange }: RequestFilterProps) => {
   const { language } = useLanguageStore()
   const t = translations[language]
   
@@ -81,8 +81,8 @@ export const RequestFilter = ({ onFilterChange, serviceTypeValues }: RequestFilt
                     {t.all}
                   </SelectItem>
                   {serviceTypeValues.map((type) => (
-                    <SelectItem key={type} value={type || "unknown"}>
-                      {t.services[type] || type || "Unknown"}
+                    <SelectItem key={type} value={type}>
+                      {t.services[type] || type}
                     </SelectItem>
                   ))}
                 </SelectContent>

@@ -7,13 +7,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useLanguageStore, translations } from "@/lib/i18n"
 import { Control } from "react-hook-form"
 import { FilterValues } from "@/types/orderManagement"
+import { serviceTypeValues } from "@/components/forms/ServiceTypeField"
 
 interface BasicFiltersProps {
   control: Control<FilterValues>
-  serviceTypeValues?: string[]
 }
 
-export const BasicFilters = ({ control, serviceTypeValues = [] }: BasicFiltersProps) => {
+export const BasicFilters = ({ control }: BasicFiltersProps) => {
   const { language } = useLanguageStore()
   const t = translations[language]
 
@@ -66,8 +66,8 @@ export const BasicFilters = ({ control, serviceTypeValues = [] }: BasicFiltersPr
                   {t.all}
                 </SelectItem>
                 {serviceTypeValues.map((type) => (
-                  <SelectItem key={type} value={type || "unknown_service"}>
-                    {t.services[type] || type || "Unknown"}
+                  <SelectItem key={type} value={type}>
+                    {t.services[type] || type}
                   </SelectItem>
                 ))}
               </SelectContent>
