@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ServiceProvider } from '@/types/provider';
-import { serviceTypeValues } from '@/components/forms/ServiceTypeField';
+import { serviceTypeValues as defaultServiceTypeValues } from '@/components/forms/ServiceTypeField';
 import { useLanguageStore, translations } from '@/lib/i18n';
 
 interface MapControlsProps {
@@ -19,7 +19,7 @@ interface MapControlsProps {
     search: string;
     serviceType: string;
   }>>;
-  serviceTypes?: string[]; // Add this prop to the interface
+  serviceTypes?: string[];
 }
 
 const MapControls: React.FC<MapControlsProps> = ({ filter, setFilter, serviceTypes }) => {
@@ -27,7 +27,7 @@ const MapControls: React.FC<MapControlsProps> = ({ filter, setFilter, serviceTyp
   const t = translations[language];
   
   // Use provided serviceTypes or default to serviceTypeValues
-  const types = serviceTypes || serviceTypeValues;
+  const types = serviceTypes || defaultServiceTypeValues;
   
   return (
     <div className="absolute top-4 left-4 z-10 bg-white/90 p-4 rounded-lg shadow-md w-72 space-y-3 backdrop-blur-sm">

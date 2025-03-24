@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useServiceProviders } from '@/hooks/useServiceProviders';
@@ -6,6 +5,7 @@ import { ServiceProvider } from '@/types/provider';
 import MapControls from './map/MapControls';
 import MapLegend from './map/MapLegend';
 import MapContainer from './map/MapContainer';
+import { serviceTypeValues } from '@/components/forms/ServiceTypeField';
 
 const ProvidersMap = () => {
   const { allProviders } = useServiceProviders();
@@ -16,10 +16,8 @@ const ProvidersMap = () => {
     serviceType: 'all',
   });
 
-  // Get unique service types from providers
-  const serviceTypes = Array.from(
-    new Set(allProviders.flatMap(provider => provider.serviceTypes))
-  );
+  // Use standardized service types from ServiceTypeField
+  const serviceTypes = serviceTypeValues;
 
   // Filter providers based on user selections
   useEffect(() => {

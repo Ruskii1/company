@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,6 +9,7 @@ import { ProvidersList } from '@/components/employee/providers/ProvidersList';
 import { ProviderDetails } from '@/components/employee/providers/ProviderDetails';
 import { ProviderFilter } from '@/components/employee/providers/ProviderFilter';
 import { useToast } from '@/hooks/use-toast';
+import { serviceTypeValues } from '@/components/forms/ServiceTypeField';
 
 const ServiceProvidersPage = () => {
   const { 
@@ -46,10 +46,8 @@ const ServiceProvidersPage = () => {
   // Get unique regions from providers
   const regions = Array.from(new Set(allProviders.map(provider => provider.region)));
   
-  // Get unique service types from providers
-  const serviceTypes = Array.from(
-    new Set(allProviders.flatMap(provider => provider.serviceTypes))
-  );
+  // Use standardized service types from ServiceTypeField instead of extracting from providers
+  const standardServiceTypes = serviceTypeValues;
 
   return (
     <Card className="backdrop-blur-sm bg-white/80 dark:bg-gray-800/80">
@@ -81,7 +79,7 @@ const ServiceProvidersPage = () => {
               onFilter={filterProviders}
               onReset={resetFilters}
               regions={regions}
-              serviceTypes={serviceTypes}
+              serviceTypes={standardServiceTypes}
             />
             
             <ProvidersList 
