@@ -10,7 +10,7 @@ interface MapLegendProps {
 
 const MapLegend: React.FC<MapLegendProps> = ({ filteredProviders }) => {
   return (
-    <div className="absolute bottom-4 left-4 z-10 bg-white/90 p-4 rounded-lg shadow-md w-72 space-y-3 backdrop-blur-sm">
+    <div className="absolute bottom-4 right-4 z-10 bg-white/90 p-4 rounded-lg shadow-md w-72 space-y-3 backdrop-blur-sm">
       {/* Status indicators */}
       <div className="flex flex-col gap-2">
         <div className="text-sm font-medium">Map Legend:</div>
