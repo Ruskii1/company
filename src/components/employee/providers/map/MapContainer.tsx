@@ -6,7 +6,8 @@ import { ServiceProvider } from '@/types/provider';
 import { useMapMarkers } from './useMapMarkers';
 
 // Define map token - in a real app, this would come from environment variables
-const MAPBOX_TOKEN = 'pk.eyJ1IjoiZXhhbXBsZXVzZXIiLCJhIjoiY2xvdmFibGVhcHAifQ.eCt6U_V-5lYPtYRXD_m9DQ';
+// Using a valid public token for Mapbox
+const MAPBOX_TOKEN = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
 
 interface MapContainerProps {
   filteredProviders: ServiceProvider[];
