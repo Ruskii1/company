@@ -71,7 +71,7 @@ export function DetailsBadge({ provider }: DetailsBadgeProps) {
       
       <div className="flex flex-col space-y-1">
         <p className="text-sm font-medium text-muted-foreground">Account Status:</p>
-        <Badge variant={getStatusBadgeVariant(provider.status) as any} className="w-fit">
+        <Badge variant={getStatusBadgeVariant(provider.status)} className="w-fit">
           {getFormattedStatus(provider.status)}
         </Badge>
       </div>
