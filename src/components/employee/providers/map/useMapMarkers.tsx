@@ -103,51 +103,62 @@ export const useMapMarkers = (
         .join('');
       markerContent.innerHTML = `<span style="color: white; font-weight: bold; font-size: 16px; text-shadow: 1px 1px 2px rgba(0,0,0,0.7);">${initials}</span>`;
 
+      // Create popup for the marker
+      const popup = new mapboxgl.Popup({ 
+        offset: 25, 
+        closeButton: true,
+        closeOnClick: false,
+        maxWidth: '300px'
+      })
+      .setHTML(`
+        <div style="padding: 16px; min-width: 250px; font-family: system-ui, sans-serif;">
+          <h3 style="margin-bottom: 12px; font-weight: bold; font-size: 18px; color: #111827; border-bottom: 1px solid #e5e7eb; padding-bottom: 8px;">
+            ${provider.fullName}
+          </h3>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <p style="margin: 0; display: flex; justify-content: space-between;">
+              <span style="font-weight: 600; color: #4b5563;">Phone:</span>
+              <span style="color: #111827;">${provider.phoneNumber}</span>
+            </p>
+            <p style="margin: 0; display: flex; justify-content: space-between;">
+              <span style="font-weight: 600; color: #4b5563;">Status:</span>
+              <span style="color: ${provider.availabilityStatus === 'online' ? '#16a34a' : '#64748b'}; font-weight: bold;">
+                ${provider.availabilityStatus === 'online' ? 'Online' : 'Offline'}
+              </span>
+            </p>
+            <p style="margin: 0; display: flex; justify-content: space-between;">
+              <span style="font-weight: 600; color: #4b5563;">Region:</span>
+              <span style="color: #111827;">${provider.region}</span>
+            </p>
+            <p style="margin: 0; margin-top: 4px; border-top: 1px solid #e5e7eb; padding-top: 8px;">
+              <span style="font-weight: 600; color: #4b5563; display: block; margin-bottom: 6px;">Services:</span>
+              <span style="color: #111827; display: block; line-height: 1.5;">
+                ${provider.serviceTypes.join(', ')}
+              </span>
+            </p>
+          </div>
+        </div>
+      `);
+
       // Create and add the marker
       const marker = new mapboxgl.Marker(markerEl)
         .setLngLat(lngLat)
-        .setPopup(
-          new mapboxgl.Popup({ 
-            offset: 25, 
-            closeButton: true,
-            closeOnClick: false,
-            maxWidth: '300px'
-          })
-            .setHTML(`
-              <div style="padding: 16px; min-width: 250px; font-family: system-ui, sans-serif;">
-                <h3 style="margin-bottom: 12px; font-weight: bold; font-size: 18px; color: #111827; border-bottom: 1px solid #e5e7eb; padding-bottom: 8px;">
-                  ${provider.fullName}
-                </h3>
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                  <p style="margin: 0; display: flex; justify-content: space-between;">
-                    <span style="font-weight: 600; color: #4b5563;">Phone:</span>
-                    <span style="color: #111827;">${provider.phoneNumber}</span>
-                  </p>
-                  <p style="margin: 0; display: flex; justify-content: space-between;">
-                    <span style="font-weight: 600; color: #4b5563;">Status:</span>
-                    <span style="color: ${provider.availabilityStatus === 'online' ? '#16a34a' : '#64748b'}; font-weight: bold;">
-                      ${provider.availabilityStatus === 'online' ? 'Online' : 'Offline'}
-                    </span>
-                  </p>
-                  <p style="margin: 0; display: flex; justify-content: space-between;">
-                    <span style="font-weight: 600; color: #4b5563;">Region:</span>
-                    <span style="color: #111827;">${provider.region}</span>
-                  </p>
-                  <p style="margin: 0; margin-top: 4px; border-top: 1px solid #e5e7eb; padding-top: 8px;">
-                    <span style="font-weight: 600; color: #4b5563; display: block; margin-bottom: 6px;">Services:</span>
-                    <span style="color: #111827; display: block; line-height: 1.5;">
-                      ${provider.serviceTypes.join(', ')}
-                    </span>
-                  </p>
-                </div>
-              </div>
-            `)
-        )
+        .setPopup(popup)
         .addTo(map.current!);
 
-      // Open popup on marker click
-      markerEl.addEventListener('click', () => {
-        marker.togglePopup();
+      // Fix: Open popup on marker click with proper event handling
+      markerEl.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent event bubbling
+        
+        // Close all other popups first
+        Object.values(markersRef.current).forEach(m => {
+          if (m !== marker) {
+            m.getPopup().remove();
+          }
+        });
+        
+        // Open this marker's popup
+        popup.addTo(map.current!);
       });
 
       markersRef.current[provider.id] = marker;
