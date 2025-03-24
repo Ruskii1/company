@@ -4,8 +4,6 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { ServiceProvider } from '@/types/provider';
 import { useMapMarkers } from './useMapMarkers';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { InfoIcon } from 'lucide-react';
 
@@ -22,16 +20,9 @@ const MapContainer: React.FC<MapContainerProps> = ({ filteredProviders }) => {
   const [mapLoaded, setMapLoaded] = useState(false);
   const [mapError, setMapError] = useState<string | null>(null);
 
-  // Initialize the map using the provided token
+  // Initialize the map
   useEffect(() => {
-    // First clean up any existing map instance
-    if (map.current) {
-      map.current.remove();
-      map.current = null;
-      setMapLoaded(false);
-      setMapError(null);
-    }
-
+    if (map.current) return; // Don't initialize if map already exists
     if (!mapContainer.current) return;
 
     try {

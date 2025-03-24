@@ -306,5 +306,278 @@ export const mockServiceProviders: ServiceProvider[] = [
       }
     ],
     createdAt: '2023-10-15T13:00:00'
+  },
+  {
+    id: 'prov-004',
+    fullName: 'Khalid Al-Otaibi',
+    profilePhoto: '/placeholder.svg',
+    phoneNumber: '+966 55 789 1234',
+    email: 'khalid.o@provider.com',
+    nationalId: '1062347895',
+    company: 'Saudi Drivers Co.',
+    region: 'Mecca',
+    serviceTypes: ['Religious Tours', 'Airport Transfer', 'Hajj Service'],
+    status: 'active',
+    availabilityStatus: 'online',
+    lastSeen: new Date().toISOString(),
+    commissionPercentage: 3.2,
+    bankAccounts: [
+      {
+        id: 'bank-004',
+        bankName: 'Bank Albilad',
+        accountNumber: '9876543210',
+        iban: 'SA88 1500 0000 9876 5432 1098',
+        isPrimary: true
+      }
+    ],
+    documents: [
+      {
+        id: 'doc-009',
+        type: 'national_id',
+        url: '/placeholder.svg',
+        description: 'National ID documents',
+        uploadedAt: '2023-08-05T09:30:00',
+        status: 'verified'
+      }
+    ],
+    orders: [],
+    transactions: [],
+    actionLog: [],
+    internalNotes: [],
+    createdAt: '2023-08-05T09:00:00'
+  },
+  {
+    id: 'prov-005',
+    fullName: 'Aisha Al-Harbi',
+    profilePhoto: '/placeholder.svg',
+    phoneNumber: '+966 55 234 5678',
+    email: 'aisha.h@provider.com',
+    nationalId: '1078923456',
+    company: null,
+    region: 'Medina',
+    serviceTypes: ['Religious Tours', 'Women-only Service', 'Airport Transfer'],
+    status: 'active',
+    availabilityStatus: 'online',
+    lastSeen: new Date().toISOString(),
+    commissionPercentage: 3.0,
+    bankAccounts: [
+      {
+        id: 'bank-005',
+        bankName: 'Arab National Bank',
+        accountNumber: '1357924680',
+        iban: 'SA71 3000 0000 1357 9246 8013',
+        isPrimary: true
+      }
+    ],
+    documents: [
+      {
+        id: 'doc-010',
+        type: 'national_id',
+        url: '/placeholder.svg',
+        description: 'National ID documents',
+        uploadedAt: '2023-07-25T10:30:00',
+        status: 'verified'
+      }
+    ],
+    orders: [],
+    transactions: [],
+    actionLog: [],
+    internalNotes: [],
+    createdAt: '2023-07-25T10:00:00'
+  },
+  {
+    id: 'prov-006',
+    fullName: 'Fahad Al-Shehri',
+    profilePhoto: '/placeholder.svg',
+    phoneNumber: '+966 55 567 8901',
+    email: 'fahad.s@provider.com',
+    nationalId: '1085674321',
+    company: 'Premium Rides LLC',
+    region: 'Taif',
+    serviceTypes: ['Mountain Tours', 'Airport Transfer', 'City Tour'],
+    status: 'active',
+    availabilityStatus: 'offline',
+    lastSeen: '2023-10-16T18:30:00',
+    commissionPercentage: 3.5,
+    bankAccounts: [
+      {
+        id: 'bank-006',
+        bankName: 'Saudi Investment Bank',
+        accountNumber: '2468013579',
+        iban: 'SA94 6000 0000 2468 0135 7924',
+        isPrimary: true
+      }
+    ],
+    documents: [
+      {
+        id: 'doc-011',
+        type: 'national_id',
+        url: '/placeholder.svg',
+        description: 'National ID documents',
+        uploadedAt: '2023-09-10T14:30:00',
+        status: 'verified'
+      }
+    ],
+    orders: [],
+    transactions: [],
+    actionLog: [],
+    internalNotes: [],
+    createdAt: '2023-09-10T14:00:00'
+  },
+  {
+    id: 'prov-007',
+    fullName: 'Abdullah Al-Zahrani',
+    profilePhoto: '/placeholder.svg',
+    phoneNumber: '+966 55 890 1234',
+    email: 'abdullah.z@provider.com',
+    nationalId: '1092345678',
+    company: null,
+    region: 'Abha',
+    serviceTypes: ['Mountain Tours', 'Sightseeing', 'Airport Transfer'],
+    status: 'active',
+    availabilityStatus: 'online',
+    lastSeen: new Date().toISOString(),
+    commissionPercentage: 3.2,
+    bankAccounts: [
+      {
+        id: 'bank-007',
+        bankName: 'Alinma Bank',
+        accountNumber: '3579124680',
+        iban: 'SA17 0500 0000 3579 1246 8035',
+        isPrimary: true
+      }
+    ],
+    documents: [
+      {
+        id: 'doc-012',
+        type: 'national_id',
+        url: '/placeholder.svg',
+        description: 'National ID documents',
+        uploadedAt: '2023-08-20T11:30:00',
+        status: 'verified'
+      }
+    ],
+    orders: [],
+    transactions: [],
+    actionLog: [],
+    internalNotes: [],
+    createdAt: '2023-08-20T11:00:00'
+  },
+  {
+    id: 'prov-008',
+    fullName: 'Saleh Al-Dosari',
+    profilePhoto: '/placeholder.svg',
+    phoneNumber: '+966 55 123 7890',
+    email: 'saleh.d@provider.com',
+    nationalId: '1104567890',
+    company: 'Desert Expedition Co.',
+    region: 'Tabuk',
+    serviceTypes: ['Desert Safari', 'Airport Transfer', 'City Tour'],
+    status: 'active',
+    availabilityStatus: 'online',
+    lastSeen: new Date().toISOString(),
+    commissionPercentage: 4.0,
+    bankAccounts: [
+      {
+        id: 'bank-008',
+        bankName: 'Bank AlJazira',
+        accountNumber: '9081726354',
+        iban: 'SA62 8000 0000 9081 7263 5409',
+        isPrimary: true
+      }
+    ],
+    documents: [
+      {
+        id: 'doc-013',
+        type: 'national_id',
+        url: '/placeholder.svg',
+        description: 'National ID documents',
+        uploadedAt: '2023-10-01T13:30:00',
+        status: 'verified'
+      }
+    ],
+    orders: [],
+    transactions: [],
+    actionLog: [],
+    internalNotes: [],
+    createdAt: '2023-10-01T13:00:00'
+  },
+  {
+    id: 'prov-009',
+    fullName: 'Hanan Al-Yami',
+    profilePhoto: '/placeholder.svg',
+    phoneNumber: '+966 55 456 2301',
+    email: 'hanan.y@provider.com',
+    nationalId: '1118901234',
+    company: null,
+    region: 'Buraidah',
+    serviceTypes: ['Farm Tours', 'City Tour', 'Airport Transfer'],
+    status: 'active',
+    availabilityStatus: 'offline',
+    lastSeen: '2023-10-17T09:45:00',
+    commissionPercentage: 3.0,
+    bankAccounts: [
+      {
+        id: 'bank-009',
+        bankName: 'Al Rajhi Bank',
+        accountNumber: '8172635490',
+        iban: 'SA39 8000 0000 8172 6354 9081',
+        isPrimary: true
+      }
+    ],
+    documents: [
+      {
+        id: 'doc-014',
+        type: 'national_id',
+        url: '/placeholder.svg',
+        description: 'National ID documents',
+        uploadedAt: '2023-09-15T10:30:00',
+        status: 'verified'
+      }
+    ],
+    orders: [],
+    transactions: [],
+    actionLog: [],
+    internalNotes: [],
+    createdAt: '2023-09-15T10:00:00'
+  },
+  {
+    id: 'prov-010',
+    fullName: 'Omar Al-Shamrani',
+    profilePhoto: '/placeholder.svg',
+    phoneNumber: '+966 55 789 4560',
+    email: 'omar.s@provider.com',
+    nationalId: '1125678901',
+    company: 'Coastal Rides LLC',
+    region: 'Khobar',
+    serviceTypes: ['Beach Tours', 'Airport Transfer', 'Inter-city Travel'],
+    status: 'active',
+    availabilityStatus: 'online',
+    lastSeen: new Date().toISOString(),
+    commissionPercentage: 3.8,
+    bankAccounts: [
+      {
+        id: 'bank-010',
+        bankName: 'Riyad Bank',
+        accountNumber: '6354908172',
+        iban: 'SA05 2000 0000 6354 9081 7263',
+        isPrimary: true
+      }
+    ],
+    documents: [
+      {
+        id: 'doc-015',
+        type: 'national_id',
+        url: '/placeholder.svg',
+        description: 'National ID documents',
+        uploadedAt: '2023-08-10T15:30:00',
+        status: 'verified'
+      }
+    ],
+    orders: [],
+    transactions: [],
+    actionLog: [],
+    internalNotes: [],
+    createdAt: '2023-08-10T15:00:00'
   }
 ];
