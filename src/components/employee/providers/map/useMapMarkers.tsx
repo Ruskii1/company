@@ -73,15 +73,26 @@ export const useMapMarkers = (
       markerEl.style.border = '3px solid white';
       markerEl.style.boxShadow = '0 3px 8px rgba(0,0,0,0.5)';
       markerEl.style.cursor = 'pointer';
-      markerEl.style.transition = 'transform 0.2s, box-shadow 0.2s';
       
-      // Add hover effect
+      // Fix: Apply transform to the content inside the marker element, not the marker itself
+      // This prevents the marker from moving positions on hover
+      const markerContent = document.createElement('div');
+      markerContent.style.width = '100%';
+      markerContent.style.height = '100%';
+      markerContent.style.display = 'flex';
+      markerContent.style.alignItems = 'center';
+      markerContent.style.justifyContent = 'center';
+      markerContent.style.transition = 'transform 0.2s';
+      markerEl.appendChild(markerContent);
+      
+      // Add hover effect to the inner content, not the marker container
       markerEl.onmouseover = () => {
-        markerEl.style.transform = 'scale(1.2)';
+        markerContent.style.transform = 'scale(1.2)';
         markerEl.style.boxShadow = '0 5px 12px rgba(0,0,0,0.6)';
       };
+      
       markerEl.onmouseout = () => {
-        markerEl.style.transform = 'scale(1)';
+        markerContent.style.transform = 'scale(1)';
         markerEl.style.boxShadow = '0 3px 8px rgba(0,0,0,0.5)';
       };
       
@@ -90,7 +101,7 @@ export const useMapMarkers = (
         .map(name => name.charAt(0))
         .slice(0, 2)
         .join('');
-      markerEl.innerHTML = `<span style="color: white; font-weight: bold; font-size: 16px; text-shadow: 1px 1px 2px rgba(0,0,0,0.7);">${initials}</span>`;
+      markerContent.innerHTML = `<span style="color: white; font-weight: bold; font-size: 16px; text-shadow: 1px 1px 2px rgba(0,0,0,0.7);">${initials}</span>`;
 
       // Create and add the marker
       const marker = new mapboxgl.Marker(markerEl)
