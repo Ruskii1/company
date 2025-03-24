@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Phone, Mail, MapPin, Calendar, FileText, AlertTriangle } from 'lucide-react';
+import { DetailsBadge } from '../list/DetailsBadge';
 
 interface ProviderHeaderProps {
   provider: ServiceProvider;
@@ -99,6 +100,11 @@ export function ProviderHeader({ provider, onBack }: ProviderHeaderProps) {
               <AlertTriangle className="h-4 w-4 text-muted-foreground" />
               <span>Commission: {provider.commissionPercentage}%</span>
             </div>
+          </div>
+          
+          {/* Add the detailed status information */}
+          <div className="mt-4">
+            <DetailsBadge provider={provider} />
           </div>
         </div>
       </div>
