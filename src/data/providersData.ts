@@ -64,7 +64,7 @@ export const providersData = [
         id: 'ord-001',
         taskId: 'T100123',
         date: '2023-10-15T09:30:00',
-        serviceType: 'Airport Transfer',
+        serviceType: 'regular-towing',
         status: 'Completed',
         amount: 150.00,
         customerName: 'Sarah Johnson'
@@ -73,7 +73,7 @@ export const providersData = [
         id: 'ord-002',
         taskId: 'T100125',
         date: '2023-10-17T13:00:00',
-        serviceType: 'City Tour',
+        serviceType: 'winch-towing',
         status: 'In service',
         amount: 300.00,
         customerName: 'Mohammed Al-Fahad'
@@ -183,7 +183,7 @@ export const providersData = [
         id: 'ord-003',
         taskId: 'T100124',
         date: '2023-10-16T14:00:00',
-        serviceType: 'VIP Service',
+        serviceType: 'battery-replacement',
         status: 'Completed',
         amount: 500.00,
         customerName: 'Abdullah Al-Shahrani'
