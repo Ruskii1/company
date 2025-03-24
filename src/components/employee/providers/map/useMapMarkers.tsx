@@ -41,7 +41,7 @@ export const useMapMarkers = (
       // Assign providers to cities based on region or randomly if region doesn't match
       let cityCoordinates;
       const cityMatch = saudiCities.find(city => 
-        provider.region.toLowerCase().includes(city.name.toLowerCase())
+        provider.region?.toLowerCase().includes(city.name.toLowerCase())
       );
       
       if (cityMatch) {

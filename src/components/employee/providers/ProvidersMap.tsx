@@ -51,7 +51,7 @@ const ProvidersMap = () => {
   }, [allProviders, filter]);
 
   return (
-    <Card className="w-full h-[calc(100vh-220px)] overflow-hidden">
+    <Card className="w-full h-full overflow-hidden border-0 bg-transparent shadow-none">
       <CardContent className="p-0 relative h-full">
         {/* Controls overlay */}
         <MapControls 
