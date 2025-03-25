@@ -51,7 +51,7 @@ export const RequestsTab = ({ requests, tabType }: RequestsTabProps) => {
           pickupLocation: req.pickupLocation,
           dropoffLocation: req.dropoffLocation,
           notes: req.notes || '',
-          status: req.status
+          status: tabType === 'future' && req.status === 'Pending' ? 'Scheduled' : req.status
         }))} />
       ) : (
         <div className="border rounded-md p-4 bg-white dark:bg-gray-700">

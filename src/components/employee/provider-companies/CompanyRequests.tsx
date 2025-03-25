@@ -126,11 +126,12 @@ export function CompanyRequests({ company }: CompanyRequestsProps) {
                     <Badge
                       variant={
                         request.status === 'Completed' ? 'default' :
+                        request.status === 'Scheduled' ? 'secondary' :
                         request.status === 'Pending' ? 'secondary' :
                         request.status === 'In service' ? 'outline' : 'destructive'
                       }
                     >
-                      {request.status}
+                      {request.status === 'Pending' && isFutureDate(request.date) ? 'Scheduled' : request.status}
                     </Badge>
                   </TableCell>
                   <TableCell>${request.amount.toFixed(2)}</TableCell>
@@ -147,4 +148,12 @@ export function CompanyRequests({ company }: CompanyRequestsProps) {
       </div>
     </div>
   )
+}
+
+// Helper function to determine if a date is in the future
+function isFutureDate(dateString: string): boolean {
+  const date = new Date(dateString);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return date > today;
 }
