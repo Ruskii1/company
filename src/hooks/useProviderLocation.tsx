@@ -58,6 +58,12 @@ export function useProviderLocation(providerId: string | undefined) {
       } catch (err) {
         console.error('Unexpected error:', err);
         setError('Failed to fetch provider location');
+        
+        // Fallback to default location
+        setLocation({
+          lat: 24.7136,
+          lng: 46.6753,
+        });
       } finally {
         setLoading(false);
       }

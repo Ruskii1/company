@@ -27,29 +27,37 @@ export const ProviderLiveMap = ({ providerLocation: initialLocation, providerId,
   const [mapInitialized, setMapInitialized] = useState(false);
   const [mapError, setMapError] = useState<string | null>(null);
   
-  // Use our custom hook if we have a providerId, otherwise use the prop
+  // Only use our custom hook if we have a providerId
   const { 
     location: realtimeLocation, 
     loading: locationLoading, 
     error: locationError 
   } = useProviderLocation(providerId);
   
-  // Determine which location to use
+  // Determine which location to use - realtime or provided static location
   const location = providerId ? realtimeLocation : initialLocation;
 
   // Initialize the map once when the component mounts
   useEffect(() => {
-    if (!mapContainer.current || mapInitialized) return;
-
+    if (!mapContainer.current || map.current) return;
+    
+    console.log('Initializing map with Mapbox token:', MAPBOX_TOKEN ? 'Token provided' : 'No token');
+    
     try {
       // Initialize Mapbox with token
       mapboxgl.accessToken = MAPBOX_TOKEN;
       
       // Create map instance
+      const initialCenter = location 
+        ? [location.lng, location.lat] 
+        : [46.6753, 24.7136]; // Default to Riyadh, Saudi Arabia
+      
+      console.log('Creating map with center:', initialCenter);
+      
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/streets-v12',
-        center: location ? [location.lng, location.lat] : [46.6753, 24.7136], // Default to Riyadh, Saudi Arabia
+        center: initialCenter as [number, number],
         zoom: 13,
         attributionControl: false
       });
@@ -68,26 +76,26 @@ export const ProviderLiveMap = ({ providerLocation: initialLocation, providerId,
         console.error('Map error:', e);
         setMapError('Failed to load map. Please check your internet connection.');
       });
-      
-      // Clean up on unmount
-      return () => {
-        if (map.current) {
-          map.current.remove();
-          map.current = null;
-        }
-      };
     } catch (error) {
       console.error('Error initializing map:', error);
       setMapError('Failed to initialize map. Please check your console for details.');
     }
+    
+    // Clean up on unmount
+    return () => {
+      if (map.current) {
+        map.current.remove();
+        map.current = null;
+      }
+    };
   }, [mapContainer.current]); // Only run once when mapContainer is available
 
   // Update marker position when location changes
   useEffect(() => {
-    if (!mapInitialized || !map.current || !location) {
-      console.log('Cannot update marker, map not ready or no location', {
-        mapInitialized,
-        mapCurrent: !!map.current,
+    if (!map.current || !mapInitialized || !location) {
+      console.log('Cannot update marker:', {
+        map: !!map.current,
+        initialized: mapInitialized,
         location
       });
       return;
@@ -95,93 +103,89 @@ export const ProviderLiveMap = ({ providerLocation: initialLocation, providerId,
     
     console.log('Updating marker position to:', location);
     
-    // If the marker doesn't exist yet, create it
-    if (!marker.current) {
-      // Create custom marker element
-      const el = document.createElement('div');
-      el.className = 'provider-marker';
-      el.style.width = '24px';
-      el.style.height = '24px';
-      el.style.borderRadius = '50%';
-      el.style.backgroundColor = '#4338ca';
-      el.style.border = '3px solid white';
-      el.style.boxShadow = '0 3px 8px rgba(0,0,0,0.3)';
-      
-      // Create marker at location
-      marker.current = new mapboxgl.Marker(el)
-        .setLngLat([location.lng, location.lat])
-        .addTo(map.current);
+    const lngLat: [number, number] = [location.lng, location.lat];
+    
+    try {
+      // If the marker doesn't exist yet, create it
+      if (!marker.current) {
+        // Create custom marker element
+        const el = document.createElement('div');
+        el.className = 'provider-marker';
+        el.style.width = '24px';
+        el.style.height = '24px';
+        el.style.borderRadius = '50%';
+        el.style.backgroundColor = '#4338ca';
+        el.style.border = '3px solid white';
+        el.style.boxShadow = '0 3px 8px rgba(0,0,0,0.3)';
         
-      // Add popup with provider name
-      new mapboxgl.Popup({ offset: 25 })
-        .setLngLat([location.lng, location.lat])
-        .setHTML(`<p style="margin: 0; font-weight: bold;">${providerName}</p>`)
-        .addTo(map.current);
-    } else {
-      // Update marker position
-      marker.current.setLngLat([location.lng, location.lat]);
+        // Create marker at location
+        marker.current = new mapboxgl.Marker(el)
+          .setLngLat(lngLat)
+          .addTo(map.current);
+          
+        // Add popup with provider name
+        new mapboxgl.Popup({ offset: 25 })
+          .setLngLat(lngLat)
+          .setHTML(`<p style="margin: 0; font-weight: bold;">${providerName}</p>`)
+          .addTo(map.current);
+      } else {
+        // Update marker position
+        marker.current.setLngLat(lngLat);
+      }
+      
+      // Animate to the new location
+      map.current.flyTo({
+        center: lngLat,
+        essential: true,
+        speed: 0.5
+      });
+    } catch (error) {
+      console.error('Error updating marker:', error);
     }
-    
-    // Animate to the new location
-    map.current.flyTo({
-      center: [location.lng, location.lat],
-      essential: true,
-      speed: 0.5
-    });
-    
   }, [location, mapInitialized, providerName]);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <MapPin className="h-5 w-5" />
-          Live Provider Location
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        {locationError && (
-          <Alert variant="destructive" className="mb-4">
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription>
-              Error loading provider location: {locationError}
-            </AlertDescription>
-          </Alert>
-        )}
+    <div className="w-full">
+      {locationError && (
+        <Alert variant="destructive" className="mb-4">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>
+            Error loading provider location: {locationError}
+          </AlertDescription>
+        </Alert>
+      )}
 
-        {mapError && (
-          <Alert variant="destructive" className="mb-4">
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription>
-              {mapError}
-            </AlertDescription>
-          </Alert>
-        )}
-        
-        <div 
-          ref={mapContainer} 
-          className="h-64 rounded-md border overflow-hidden"
-          style={{ position: 'relative' }}
-        />
-        
-        {locationLoading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-background/50">
-            <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-primary"></div>
-          </div>
-        )}
-        
-        {location && (
-          <div className="mt-2 text-sm text-muted-foreground">
-            <p>Provider: {providerName}</p>
-            {location.updated_at && (
-              <p>Last updated: {new Date(location.updated_at).toLocaleTimeString()}</p>
-            )}
-            <p className="text-xs mt-1">
-              Coordinates: {location.lat.toFixed(6)}, {location.lng.toFixed(6)}
-            </p>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+      {mapError && (
+        <Alert variant="destructive" className="mb-4">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>
+            {mapError}
+          </AlertDescription>
+        </Alert>
+      )}
+      
+      <div 
+        ref={mapContainer} 
+        className="h-64 rounded-md border overflow-hidden relative"
+      />
+      
+      {locationLoading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-background/50">
+          <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-primary"></div>
+        </div>
+      )}
+      
+      {location && (
+        <div className="mt-2 text-sm text-muted-foreground">
+          <p>Provider: {providerName}</p>
+          {location.updated_at && (
+            <p>Last updated: {new Date(location.updated_at).toLocaleTimeString()}</p>
+          )}
+          <p className="text-xs mt-1">
+            Coordinates: {location.lat.toFixed(6)}, {location.lng.toFixed(6)}
+          </p>
+        </div>
+      )}
+    </div>
   );
 };
