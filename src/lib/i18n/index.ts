@@ -5,6 +5,7 @@ import {
   Translations,
   baseTranslations,
   arabicTranslations,
+  locales,
 } from './core';
 
 // Define language type
@@ -30,13 +31,34 @@ export const useLanguageStore = create<LanguageState>()(
   )
 );
 
-// Create translations object with all translations
-export const translations: Record<Language, Translations> = {
-  en: baseTranslations,
-  ar: {
+// Import all translation files
+import { commonTranslations } from './common';
+import { orderTranslations } from './order';
+import { securityTranslations } from './security';
+import { profileTranslations } from './profile';
+import { paymentTranslations } from './payment';
+import { providersTranslations } from './providers';
+import { servicesTranslations } from './services';
+
+// Merge all translations
+const mergeTranslations = (language: Language) => {
+  return {
     ...baseTranslations,
-    ...arabicTranslations,
-  },
+    ...commonTranslations[language],
+    ...orderTranslations[language],
+    ...securityTranslations?.[language] || {},
+    ...profileTranslations?.[language] || {},
+    ...paymentTranslations?.[language] || {},
+    ...providersTranslations?.[language] || {},
+    ...servicesTranslations?.[language] || {},
+    ...(language === 'ar' ? arabicTranslations : {}),
+  };
+};
+
+// Create translations object with all translations
+export const translations: Record<Language, any> = {
+  en: mergeTranslations('en'),
+  ar: mergeTranslations('ar'),
 };
 
 // Make the translations available globally

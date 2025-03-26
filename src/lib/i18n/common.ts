@@ -1,3 +1,4 @@
+
 export const commonTranslations = {
   en: {
     customerPortal: "Customer Portal",
@@ -36,6 +37,16 @@ export const commonTranslations = {
     requestsWithoutProvider: "requests waiting for provider assignment",
     reviewRequests: "Review Requests",
     waitingForProvider: "Waiting for provider",
+    pastRequests: "Past Requests",
+    futureRequests: "Future Requests",
+    noPastRequests: "No past requests",
+    noTodayRequests: "No requests for today",
+    noFutureRequests: "No future requests",
+    recentActivities: "Recent Activities",
+    noRecentActivities: "No recent activities",
+    attention: "Attention",
+    soon: "Soon",
+    upcomingRequest: "Upcoming request",
     
     // Order management filters
     advancedFilters: "Advanced Filters",
@@ -91,6 +102,16 @@ export const commonTranslations = {
     requestsWithoutProvider: "طلبات في انتظار تعيين مزود",
     reviewRequests: "مراجعة الطلبات",
     waitingForProvider: "في انتظار المزود",
+    pastRequests: "الطلبات السابقة",
+    futureRequests: "الطلبات المستقبلية",
+    noPastRequests: "لا توجد طلبات سابقة",
+    noTodayRequests: "لا توجد طلبات لليوم",
+    noFutureRequests: "لا توجد طلبات مستقبلية",
+    recentActivities: "الأنشطة الأخيرة",
+    noRecentActivities: "لا توجد أنشطة حديثة",
+    attention: "انتباه",
+    soon: "قريباً",
+    upcomingRequest: "طلب قادم",
     
     // Order management filters
     advancedFilters: "تصفية متقدمة",
@@ -109,4 +130,4 @@ export const commonTranslations = {
     // Added loading message
     loadingRequests: "جاري تحميل الطلبات..."
   }
-}
+};

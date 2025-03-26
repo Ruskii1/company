@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLanguageStore, translations } from "@/lib/i18n";
-import { Activity, TicketSquare, Calendar } from "lucide-react";
+import { Activity, Ticket, Calendar } from "lucide-react";
 import { format } from "date-fns";
 import { Request } from "@/types/request";
 import { useRequestsData } from "@/hooks/useRequestsData";
@@ -68,7 +68,7 @@ export function RecentActivities() {
                   {activity.type === 'request' ? (
                     <Calendar className="h-4 w-4" />
                   ) : (
-                    <TicketSquare className="h-4 w-4" />
+                    <Ticket className="h-4 w-4" />
                   )}
                 </div>
                 <div className="flex-1">
@@ -92,7 +92,7 @@ export function RecentActivities() {
                       <p className="text-sm text-muted-foreground">
                         {activity.type === 'request' 
                           ? `${activity.data.pickupLocation} → ${activity.data.dropoffLocation}`
-                          : t.ticketStatus + ': ' + activity.data.status
+                          : t.status + ': ' + activity.data.status
                         }
                       </p>
                     </div>

@@ -232,7 +232,7 @@ export const arabicTranslations: Partial<Translations> = {
     recentActivities: 'الأنشطة الأخيرة',
     notifications: 'الإشعارات',
     requestsNeedAttention: 'طلبات تحتاج اهتمام',
-    youHave: '��ديك',
+    youHave: 'لديك',
     requestsNeedingUpdate: 'طلبات تحتاج إلى اهتمامك.',
     viewRequests: 'عرض الطلبات',
     upcomingRequests: 'الطلبات القادمة',

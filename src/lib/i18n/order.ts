@@ -50,7 +50,15 @@ export const orderTranslations = {
     uploadPdfsOrImages: "Upload PDFs or Images",
     maximumFileSize: "Maximum file size: 5MB",
     allowedFileTypes: "Allowed file types: PDF, JPG, PNG",
-    dropFilesHere: "Drop files here or click to browse"
+    dropFilesHere: "Drop files here or click to browse",
+    services: {
+      "Regular Towing": "Regular Towing",
+      "Luxury Towing": "Luxury Towing",
+      "Battery Jumpstart": "Battery Jumpstart",
+      "Tire Change": "Tire Change",
+      "Fuel Delivery 95": "Fuel Delivery 95",
+      "Fuel Delivery 91": "Fuel Delivery 91"
+    }
   },
   ar: {
     orderManagement: "إدارة الطلبات",
@@ -102,6 +110,14 @@ export const orderTranslations = {
     uploadPdfsOrImages: "تحميل ملفات PDF أو صور",
     maximumFileSize: "الحد الأقصى لحجم الملف: 5 ميجابايت",
     allowedFileTypes: "أنواع الملفات المسموح بها: PDF، JPG، PNG",
-    dropFilesHere: "قم بإسقاط الملفات هنا أو انقر للتصفح"
+    dropFilesHere: "قم بإسقاط الملفات هنا أو انقر للتصفح",
+    services: {
+      "Regular Towing": "سحب عادي",
+      "Luxury Towing": "سحب فاخر",
+      "Battery Jumpstart": "تشغيل البطارية",
+      "Tire Change": "تغيير الإطارات",
+      "Fuel Delivery 95": "توصيل وقود 95",
+      "Fuel Delivery 91": "توصيل وقود 91"
+    }
   }
-}
+};
