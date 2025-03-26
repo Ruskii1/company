@@ -1,4 +1,3 @@
-
 import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
@@ -9,6 +8,7 @@ import { Link } from 'react-router-dom'
 import { EmployeeStatCard } from '@/components/employee/home/EmployeeStatCard'
 import { RecentActivityList } from '@/components/employee/home/RecentActivityList'
 import { NotificationPanel } from '@/components/employee/home/NotificationPanel'
+import { Activity } from '@/types/activity'
 
 const EmployeeHomePage = () => {
   const { language } = useLanguageStore()
@@ -57,42 +57,52 @@ const EmployeeHomePage = () => {
   
   const hasNotifications = providerIssues.length > 0
   
-  // Dummy data for recent activities
-  const recentActivities = [
+  // Updated dummy data for recent activities to match the Activity type
+  const recentActivities: Activity[] = [
     {
       id: "act-001",
-      type: "request_created",
+      type: "request",
       description: "New request created by TechCorp LLC",
       timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString(), // 30 minutes ago
-      relatedId: "TASK-1001"
+      entityType: "Request",
+      entityId: "TASK-1001",
+      userId: "emp-001"
     },
     {
       id: "act-002",
-      type: "provider_assigned",
+      type: "edit",
       description: "Provider assigned to GlobalTrade Inc. request",
       timestamp: new Date(Date.now() - 1.5 * 60 * 60 * 1000).toISOString(), // 1.5 hours ago
-      relatedId: "TASK-1002"
+      entityType: "Order",
+      entityId: "TASK-1002",
+      userId: "emp-002"
     },
     {
       id: "act-003",
-      type: "request_completed",
+      type: "edit",
       description: "Request for SmartSolutions SA marked as completed",
       timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
-      relatedId: "TASK-1003"
+      entityType: "Order",
+      entityId: "TASK-1003",
+      userId: "emp-001"
     },
     {
       id: "act-004",
-      type: "ticket_created",
+      type: "ticket",
       description: "New support ticket opened by InnovateX Ltd",
       timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(), // 3 hours ago
-      relatedId: "TICKET-001"
+      entityType: "Ticket",
+      entityId: "TICKET-001",
+      userId: "emp-003"
     },
     {
       id: "act-005",
-      type: "ticket_resolved",
+      type: "ticket",
       description: "Support ticket for QualityServices LLC resolved",
       timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(), // 4 hours ago
-      relatedId: "TICKET-002"
+      entityType: "Ticket",
+      entityId: "TICKET-002",
+      userId: "emp-001"
     }
   ]
   
