@@ -61,7 +61,7 @@ export function useProviderLocation(providerId: string | undefined) {
               loading: false
             }));
           } else {
-            // No data found, use default location
+            // No data found, use default location in Riyadh, Saudi Arabia
             setState(prev => ({
               ...prev,
               location: {
@@ -93,7 +93,7 @@ export function useProviderLocation(providerId: string | undefined) {
           ...prev,
           error: 'Failed to fetch provider location',
           loading: false,
-          // Fallback to default location
+          // Fallback to default location in Riyadh, Saudi Arabia
           location: {
             lat: 24.7136,
             lng: 46.6753,

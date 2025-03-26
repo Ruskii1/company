@@ -24,9 +24,9 @@ export const getMockOrder = (taskId: string | undefined): Order => {
     },
     provider: {
       name: 'John Doe',
-      phone: '+1 (555) 123-4567',
+      phone: '+966 55 123 4567',
       rating: 4.8,
-      corporationName: 'Express Delivery Inc.',
+      corporationName: 'Saudi Express Delivery',
       images: {
         pickup: [
           '/placeholder.svg',
@@ -42,8 +42,8 @@ export const getMockOrder = (taskId: string | undefined): Order => {
         ]
       },
       location: {
-        lat: 37.7749,
-        lng: -122.4194
+        lat: 24.7136,
+        lng: 46.6753 
       }
     },
     car: {
@@ -103,22 +103,47 @@ export const getMockOrder = (taskId: string | undefined): Order => {
     mockOrder.taskId = '2023-002';
     mockOrder.status = 'In route';
     mockOrder.serviceType = 'Battery Jumpstart';
+    // Jeddah coordinates
+    mockOrder.provider.location = {
+      lat: 21.4858,
+      lng: 39.1925
+    };
   } else if (taskId === '2023-003') {
     mockOrder.taskId = '2023-003';
     mockOrder.status = 'Waiting for provider';
     mockOrder.serviceType = 'Fuel Delivery 95';
+    // Mecca coordinates
+    mockOrder.provider.location = {
+      lat: 21.3891,
+      lng: 39.8579
+    };
   } else if (taskId === '2023-004' || taskId === '2023-005') {
     mockOrder.taskId = taskId;
     mockOrder.status = 'Completed';
     mockOrder.serviceType = 'Tire-Repair on Site';
+    // Dammam coordinates
+    mockOrder.provider.location = {
+      lat: 26.4207,
+      lng: 50.1033
+    };
   } else if (taskId === '2023-006') {
     mockOrder.taskId = taskId;
     mockOrder.status = 'In service';
     mockOrder.serviceType = 'Lock Smith Service';
+    // Medina coordinates
+    mockOrder.provider.location = {
+      lat: 24.5247,
+      lng: 39.6142
+    };
   } else if (taskId === '2023-007' || taskId === '2023-008') {
     mockOrder.taskId = taskId;
     mockOrder.status = 'Waiting for provider';
     mockOrder.serviceType = 'Half-Down Towing';
+    // Tabuk coordinates
+    mockOrder.provider.location = {
+      lat: 28.3998,
+      lng: 36.5841
+    };
   }
 
   return mockOrder;
