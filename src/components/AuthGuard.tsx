@@ -1,6 +1,6 @@
 
 import { ReactNode, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from '@/lib/auth'
 
 interface AuthGuardProps {
@@ -9,18 +9,21 @@ interface AuthGuardProps {
 }
 
 export function AuthGuard({ children, type }: AuthGuardProps) {
-  const navigate = useNavigate()
+  const location = useLocation()
   const { user } = useAuth()
   
-  useEffect(() => {
+  // Check if customer is authenticated for customer routes
+  if (type === 'customer') {
     const isCustomerAuthenticated = localStorage.getItem('customerAuthenticated') === 'true'
-    
-    if (type === 'customer' && !isCustomerAuthenticated) {
-      navigate('/signin/customer')
-    } else if (type === 'employee' && !user?.isAuthenticated) {
-      navigate('/signin/employee')
+    if (!isCustomerAuthenticated) {
+      return <Navigate to="/signin/customer" state={{ from: location }} replace />
     }
-  }, [navigate, type, user])
+  }
+  
+  // Check if employee is authenticated for employee routes
+  if (type === 'employee' && !user?.isAuthenticated) {
+    return <Navigate to="/signin/employee" state={{ from: location }} replace />
+  }
   
   return <>{children}</>
 }
