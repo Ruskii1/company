@@ -56,7 +56,7 @@ export async function fetchAllRequests(): Promise<Request[]> {
     pickupPhotos: item.pickup_photos || [],
     dropoffPhotos: item.dropoff_photos || [],
     manualAssignment: item.manual_assignment || false,
-    attachments: item.attachments || []
+    attachments: Array.isArray(item.attachments) ? item.attachments : [] // Handle attachments field safely
   })) || [];
 }
 
@@ -127,7 +127,7 @@ export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Pr
     pickupPhotos: data.pickup_photos || [],
     dropoffPhotos: data.dropoff_photos || [],
     manualAssignment: data.manual_assignment || false,
-    attachments: data.attachments || [] // Include attachments in response
+    attachments: Array.isArray(data.attachments) ? data.attachments : [] // Include attachments in response
   };
 }
 
