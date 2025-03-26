@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { CreditCard, SlidersHorizontal, ChevronUp, ChevronDown } from 'lucide-react'
+import { CreditCard, SlidersHorizontal, ChevronUp, ChevronDown, Download } from 'lucide-react'
 import { addDays } from 'date-fns'
 import { DateRange } from 'react-day-picker'
 import { Transaction, TransactionFilterState } from '@/types/transaction'
@@ -100,7 +100,7 @@ const Credit = () => {
   ]
   
   // Transaction management
-  const { transactions, handleUploadReceipt, handleDownloadReceipt } = useTransactions(initialTransactions)
+  const { transactions, handleDownloadTransaction, handleDownloadAllTransactions } = useTransactions(initialTransactions)
   
   // Filtering state
   const [filters, setFilters] = useState<TransactionFilterState>({
@@ -148,16 +148,27 @@ const Credit = () => {
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <span>Transaction History</span>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={toggleFilters}
-              className="flex items-center gap-1"
-            >
-              <SlidersHorizontal className="h-4 w-4" />
-              {showFilters ? "Hide Filters" : "Show Filters"}
-              {showFilters ? <ChevronUp className="h-4 w-4 ml-1" /> : <ChevronDown className="h-4 w-4 ml-1" />}
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleDownloadAllTransactions}
+                className="flex items-center gap-1"
+              >
+                <Download className="h-4 w-4" />
+                Export All
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={toggleFilters}
+                className="flex items-center gap-1"
+              >
+                <SlidersHorizontal className="h-4 w-4" />
+                {showFilters ? "Hide Filters" : "Show Filters"}
+                {showFilters ? <ChevronUp className="h-4 w-4 ml-1" /> : <ChevronDown className="h-4 w-4 ml-1" />}
+              </Button>
+            </div>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -179,8 +190,7 @@ const Credit = () => {
                 <TransactionItem 
                   key={transaction.id}
                   transaction={transaction}
-                  onUploadReceipt={handleUploadReceipt}
-                  onDownloadReceipt={handleDownloadReceipt}
+                  onDownloadTransaction={handleDownloadTransaction}
                 />
               ))
             )}

@@ -1,22 +1,17 @@
 
-import { useState } from 'react'
 import { format } from 'date-fns'
 import { Transaction } from '@/types/transaction'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogTrigger } from '@/components/ui/dialog'
-import { Calendar, Clock, DollarSign, Download, FileUp } from 'lucide-react'
-import { ReceiptUploadDialog } from './ReceiptUploadDialog'
+import { Calendar, Clock, DollarSign, Download } from 'lucide-react'
 
 interface TransactionItemProps {
   transaction: Transaction
-  onUploadReceipt: (transactionId: string, file: File | null) => void
-  onDownloadReceipt: (transaction: Transaction) => void
+  onDownloadTransaction: (transaction: Transaction) => void
 }
 
 export const TransactionItem = ({ 
   transaction, 
-  onUploadReceipt, 
-  onDownloadReceipt 
+  onDownloadTransaction 
 }: TransactionItemProps) => {
   return (
     <div 
@@ -40,19 +35,6 @@ export const TransactionItem = ({
             <Calendar className="h-3 w-3" />
             {format(transaction.date, 'PPP')}
           </div>
-          {transaction.receipt && (
-            <div className="mt-1">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="text-xs flex items-center gap-1"
-                onClick={() => onDownloadReceipt(transaction)}
-              >
-                <Download className="h-3 w-3" />
-                Receipt
-              </Button>
-            </div>
-          )}
         </div>
       </div>
       <div className="flex flex-col items-end gap-2">
@@ -64,18 +46,15 @@ export const TransactionItem = ({
           {transaction.type === 'credit' ? '+' : '-'} 
           ${transaction.amount.toFixed(2)}
         </div>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="ghost" size="sm" className="text-xs flex gap-1">
-              <FileUp className="h-3 w-3" />
-              {transaction.receipt ? 'Update Receipt' : 'Upload Receipt'}
-            </Button>
-          </DialogTrigger>
-          <ReceiptUploadDialog 
-            transaction={transaction}
-            onUploadReceipt={onUploadReceipt}
-          />
-        </Dialog>
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="text-xs flex gap-1"
+          onClick={() => onDownloadTransaction(transaction)}
+        >
+          <Download className="h-3 w-3" />
+          Download
+        </Button>
       </div>
     </div>
   )
