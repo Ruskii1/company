@@ -33,7 +33,8 @@ import { AuthProvider } from './lib/auth'
 
 const queryClient = new QueryClient()
 
-// Create the router configuration
+// Create the router configuration with AuthProvider wrapped INSIDE each route component
+// This ensures the AuthProvider is inside the Router context, not outside it
 const router = createBrowserRouter([
   {
     path: '/signin/customer',

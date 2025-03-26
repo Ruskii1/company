@@ -87,7 +87,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       description: "You have been logged out successfully",
     });
     
-    // Use window.location for logout
+    // Use window.location for logout as it's outside router context
     window.location.href = '/signin/employee';
   };
 
