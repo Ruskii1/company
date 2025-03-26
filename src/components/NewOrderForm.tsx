@@ -9,6 +9,7 @@ import { ServiceTypeField } from './forms/ServiceTypeField'
 import { PickupDateField } from './forms/PickupDateField'
 import { LocationFields } from './forms/LocationFields'
 import { NotesField } from './forms/NotesField'
+import { FileUploadField } from './forms/FileUploadField'
 import { CarDetailsFields } from './forms/CarDetailsFields'
 import { orderFormSchema, OrderFormValues } from './forms/types'
 import { createRequest } from '@/services/requestService'
@@ -32,11 +33,22 @@ export const NewOrderForm = () => {
       licensePlate: '',
       licensePlateArabic: '',
       vin: '',
+      attachments: []
     },
   })
 
   const onSubmit = async (values: OrderFormValues) => {
     try {
+      // Handle file uploads if any
+      let attachmentUrls: string[] = [];
+      
+      if (values.attachments && values.attachments.length > 0) {
+        // In a real implementation, this would upload files to storage
+        // and collect URLs. For now, we'll just collect names for demo
+        attachmentUrls = Array.from(values.attachments as File[]).map(file => file.name);
+        console.log("Attachments to upload:", attachmentUrls);
+      }
+      
       // Prepare the request object
       const request = {
         companyName: 'Company Name', // You would get this from user context
@@ -53,7 +65,8 @@ export const NewOrderForm = () => {
           licensePlate: values.licensePlate,
           licensePlateArabic: values.licensePlateArabic,
           vin: values.vin
-        }
+        },
+        attachments: attachmentUrls
       };
       
       const result = await createRequest(request);
@@ -89,6 +102,7 @@ export const NewOrderForm = () => {
         <LocationFields control={form.control} />
         <CarDetailsFields control={form.control} />
         <NotesField control={form.control} />
+        <FileUploadField control={form.control} />
 
         <Button type="submit" className="w-full">
           {t.placeOrder}

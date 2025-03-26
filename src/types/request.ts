@@ -30,4 +30,5 @@ export interface Request {
   pickupPhotos?: any[]
   dropoffPhotos?: any[]
   manualAssignment?: boolean
+  attachments?: string[] // Added attachments field
 }

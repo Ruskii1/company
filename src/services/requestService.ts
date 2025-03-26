@@ -55,7 +55,8 @@ export async function fetchAllRequests(): Promise<Request[]> {
     cancellationReason: item.cancellation_reason || '',
     pickupPhotos: item.pickup_photos || [],
     dropoffPhotos: item.dropoff_photos || [],
-    manualAssignment: item.manual_assignment || false
+    manualAssignment: item.manual_assignment || false,
+    attachments: item.attachments || []
   })) || [];
 }
 
@@ -88,7 +89,8 @@ export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Pr
         vin: request.car.vin
       } : null,
       auto_launch_time: autoLaunchTime.toISOString(),
-      manual_assignment: request.manualAssignment || false
+      manual_assignment: request.manualAssignment || false,
+      attachments: request.attachments || [] // Add attachments
     })
     .select()
     .single();
@@ -124,7 +126,8 @@ export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Pr
     cancellationReason: data.cancellation_reason || '',
     pickupPhotos: data.pickup_photos || [],
     dropoffPhotos: data.dropoff_photos || [],
-    manualAssignment: data.manual_assignment || false
+    manualAssignment: data.manual_assignment || false,
+    attachments: data.attachments || [] // Include attachments in response
   };
 }
 

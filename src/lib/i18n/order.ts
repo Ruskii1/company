@@ -44,7 +44,13 @@ export const orderTranslations = {
     companyName: "Company Name",
     noProviderAccepted: "No Provider Accepted",
     noProviderFound: "No Provider Found",
-    serviceType: "Service Type"
+    serviceType: "Service Type",
+    attachments: "Attachments",
+    addAttachments: "Add Attachments",
+    uploadPdfsOrImages: "Upload PDFs or Images",
+    maximumFileSize: "Maximum file size: 5MB",
+    allowedFileTypes: "Allowed file types: PDF, JPG, PNG",
+    dropFilesHere: "Drop files here or click to browse"
   },
   ar: {
     orderManagement: "إدارة الطلبات",
@@ -90,6 +96,12 @@ export const orderTranslations = {
     companyName: "اسم الشركة",
     noProviderAccepted: "لم يقبل أي مزود",
     noProviderFound: "لم يتم العثور على مزود",
-    serviceType: "نوع الخدمة"
+    serviceType: "نوع الخدمة",
+    attachments: "المرفقات",
+    addAttachments: "إضافة مرفقات",
+    uploadPdfsOrImages: "تحميل ملفات PDF أو صور",
+    maximumFileSize: "الحد الأقصى لحجم الملف: 5 ميجابايت",
+    allowedFileTypes: "أنواع الملفات المسموح بها: PDF، JPG، PNG",
+    dropFilesHere: "قم بإسقاط الملفات هنا أو انقر للتصفح"
   }
 }

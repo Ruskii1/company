@@ -30,6 +30,7 @@ export const orderFormSchema = z.object({
   vin: z.string().min(1, {
     message: "VIN number is required",
   }),
+  attachments: z.instanceof(Array).optional()
 })
 
 export type OrderFormValues = z.infer<typeof orderFormSchema>
