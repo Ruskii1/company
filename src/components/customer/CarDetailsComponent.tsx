@@ -2,10 +2,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table"
 import { Car } from "lucide-react"
+import { useLanguageStore } from "@/lib/i18n"
 
 interface CarDetailsComponentProps {
   car: {
     plate: string
+    plateArabic?: string
     model: string
     name: string
     vin: string
@@ -13,6 +15,8 @@ interface CarDetailsComponentProps {
 }
 
 export const CarDetailsComponent = ({ car }: CarDetailsComponentProps) => {
+  const { language } = useLanguageStore()
+  
   return (
     <Card>
       <CardHeader>
@@ -27,6 +31,12 @@ export const CarDetailsComponent = ({ car }: CarDetailsComponentProps) => {
             <TableRow>
               <TableCell className="font-medium">License Plate</TableCell>
               <TableCell>{car.plate}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">License Plate (Arabic)</TableCell>
+              <TableCell dir={language === 'ar' ? "rtl" : "ltr"} className="font-arabic">
+                {car.plateArabic || "N/A"}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">Model</TableCell>
