@@ -3,9 +3,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLanguageStore, translations } from "@/lib/i18n";
 import { Activity, Ticket, Calendar } from "lucide-react";
 import { format } from "date-fns";
-import { Request } from "@/types/request";
-import { useRequestsData } from "@/hooks/useRequestsData";
 import { Link } from "react-router-dom";
+
+// Mock request data
+interface Request {
+  id: string;
+  taskId: string;
+  serviceType: string;
+  pickupTime: string;
+  pickupLocation: string;
+  dropoffLocation: string;
+  status: string;
+}
 
 // Mock ticket data structure
 interface Ticket {
@@ -23,9 +32,39 @@ type CustomerActivity =
 export function RecentActivities() {
   const { language } = useLanguageStore();
   const t = translations[language];
-  const { requests } = useRequestsData();
   
-  // Mock tickets data (in a real app, this would come from an API)
+  // Mock requests data
+  const requests: Request[] = [
+    {
+      id: "req-001",
+      taskId: "TASK-1001",
+      serviceType: "Regular Towing",
+      pickupTime: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(), // Yesterday
+      pickupLocation: "123 Main St, Riyadh",
+      dropoffLocation: "456 Market Ave, Riyadh",
+      status: "Completed"
+    },
+    {
+      id: "req-002",
+      taskId: "TASK-1002",
+      serviceType: "Battery Jumpstart",
+      pickupTime: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
+      pickupLocation: "789 Business Blvd, Jeddah",
+      dropoffLocation: "321 Commerce St, Jeddah",
+      status: "Completed"
+    },
+    {
+      id: "req-003",
+      taskId: "TASK-1003",
+      serviceType: "Tire Change",
+      pickupTime: new Date(Date.now() + 1 * 60 * 60 * 1000).toISOString(), // In 1 hour
+      pickupLocation: "555 Park Dr, Dammam",
+      dropoffLocation: "777 Garden Rd, Dammam",
+      status: "Scheduled"
+    }
+  ];
+  
+  // Mock tickets data
   const mockTickets: Ticket[] = [
     {
       id: 'T001',
@@ -76,14 +115,14 @@ export function RecentActivities() {
                     <div>
                       {activity.type === 'request' ? (
                         <Link 
-                          to={`/customer/requests/${activity.data.id}`}
+                          to={`/order-details/${activity.data.taskId}`}
                           className="font-medium hover:underline"
                         >
                           {activity.data.serviceType}
                         </Link>
                       ) : (
                         <Link 
-                          to={`/customer/tickets/${activity.data.id}`}
+                          to={`/tickets/${activity.data.id}`}
                           className="font-medium hover:underline"
                         >
                           {activity.data.title}

@@ -3,8 +3,6 @@ import { useLanguageStore, translations } from '@/lib/i18n'
 import { CustomerOverview } from '@/components/customer/dashboard/CustomerOverview'
 import { CustomerNotifications } from '@/components/customer/dashboard/CustomerNotifications'
 import { RecentActivities } from '@/components/customer/dashboard/RecentActivities'
-import { NewOrderDashboard } from '@/components/customer/dashboard/NewOrderDashboard'
-import { OrdersDashboard } from '@/components/customer/dashboard/OrdersDashboard'
 
 const Index = () => {
   const { language } = useLanguageStore()
@@ -22,12 +20,6 @@ const Index = () => {
       
       {/* Recent Activities */}
       <RecentActivities />
-      
-      {/* Place New Order Section */}
-      <NewOrderDashboard />
-      
-      {/* Orders Dashboard */}
-      <OrdersDashboard />
     </div>
   )
 }

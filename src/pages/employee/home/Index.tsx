@@ -1,11 +1,8 @@
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 import { useLanguageStore, translations } from '@/lib/i18n'
-import { useOrderManagement } from '@/hooks/useOrderManagement'
-import { useTickets } from '@/hooks/useTickets'
-import { useRecentActivity } from '@/hooks/useRecentActivity'
 import { Bell } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
@@ -16,23 +13,88 @@ import { NotificationPanel } from '@/components/employee/home/NotificationPanel'
 const EmployeeHomePage = () => {
   const { language } = useLanguageStore()
   const t = translations[language]
-  const { pastOrders, todayOrders, futureOrders } = useOrderManagement()
-  const { tickets } = useTickets()
-  const { recentActivities } = useRecentActivity()
   const [showNotifications, setShowNotifications] = useState(false)
   
-  // Calculate statistics
-  const totalRequests = pastOrders.length + todayOrders.length + futureOrders.length
-  const openTickets = tickets.filter(ticket => ticket.status === 'open').length
-  const closedTickets = tickets.filter(ticket => ticket.status === 'closed').length
+  // Dummy data for statistics
+  const totalRequests = 42
+  const openTickets = 7
+  const closedTickets = 35
   
-  // Get provider-related issues
-  const providerIssues = todayOrders.filter(
-    order => order.status === 'Waiting for provider' && 
-    new Date(order.pickupTime) < new Date()
-  )
+  // Dummy data for today's orders
+  const todayOrders = [
+    {
+      id: "ord-001",
+      customerName: "TechCorp LLC",
+      serviceType: "Regular Towing",
+      pickupTime: new Date().setHours(10, 30),
+      status: "In route"
+    },
+    {
+      id: "ord-002",
+      customerName: "GlobalTrade Inc.",
+      serviceType: "Battery Jumpstart",
+      pickupTime: new Date().setHours(13, 15),
+      status: "Waiting for provider"
+    },
+    {
+      id: "ord-003",
+      customerName: "SmartSolutions SA",
+      serviceType: "Fuel Delivery",
+      pickupTime: new Date().setHours(15, 0),
+      status: "Completed"
+    },
+    {
+      id: "ord-004",
+      customerName: "InnovateX Ltd",
+      serviceType: "Tire Change",
+      pickupTime: new Date().setHours(16, 45),
+      status: "Waiting for provider"
+    }
+  ]
+  
+  // Dummy data for provider issues
+  const providerIssues = todayOrders.filter(order => order.status === 'Waiting for provider')
   
   const hasNotifications = providerIssues.length > 0
+  
+  // Dummy data for recent activities
+  const recentActivities = [
+    {
+      id: "act-001",
+      type: "request_created",
+      description: "New request created by TechCorp LLC",
+      timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString(), // 30 minutes ago
+      relatedId: "TASK-1001"
+    },
+    {
+      id: "act-002",
+      type: "provider_assigned",
+      description: "Provider assigned to GlobalTrade Inc. request",
+      timestamp: new Date(Date.now() - 1.5 * 60 * 60 * 1000).toISOString(), // 1.5 hours ago
+      relatedId: "TASK-1002"
+    },
+    {
+      id: "act-003",
+      type: "request_completed",
+      description: "Request for SmartSolutions SA marked as completed",
+      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
+      relatedId: "TASK-1003"
+    },
+    {
+      id: "act-004",
+      type: "ticket_created",
+      description: "New support ticket opened by InnovateX Ltd",
+      timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(), // 3 hours ago
+      relatedId: "TICKET-001"
+    },
+    {
+      id: "act-005",
+      type: "ticket_resolved",
+      description: "Support ticket for QualityServices LLC resolved",
+      timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(), // 4 hours ago
+      relatedId: "TICKET-002"
+    }
+  ]
   
   return (
     <>
@@ -55,10 +117,7 @@ const EmployeeHomePage = () => {
           </Button>
           
           {showNotifications && hasNotifications && (
-            <NotificationPanel 
-              notifications={providerIssues}
-              onClose={() => setShowNotifications(false)}
-            />
+            <NotificationPanel onClose={() => setShowNotifications(false)} />
           )}
         </div>
       </div>
@@ -92,7 +151,7 @@ const EmployeeHomePage = () => {
             <CardTitle>{t.recentActivity}</CardTitle>
           </CardHeader>
           <CardContent>
-            <RecentActivityList activities={recentActivities.slice(0, 5)} />
+            <RecentActivityList activities={recentActivities} />
             
             {recentActivities.length === 0 && (
               <p className="text-muted-foreground text-center py-4">

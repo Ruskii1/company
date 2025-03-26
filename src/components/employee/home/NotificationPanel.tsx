@@ -1,18 +1,50 @@
 
-import { Order } from '@/types/orderManagement'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
 import { X } from 'lucide-react'
 
+// Using a simpler interface for notifications
+interface Notification {
+  id: string
+  taskId: string
+  customerName: string
+  pickupTime: string
+  serviceType: string
+}
+
 interface NotificationPanelProps {
-  notifications: Order[]
   onClose: () => void
 }
 
-export function NotificationPanel({ notifications, onClose }: NotificationPanelProps) {
+export function NotificationPanel({ onClose }: NotificationPanelProps) {
   const { language } = useLanguageStore()
   const t = translations[language]
+  
+  // Dummy notification data
+  const notifications: Notification[] = [
+    {
+      id: "not-001",
+      taskId: "TASK-2001",
+      customerName: "TechCorp LLC",
+      pickupTime: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
+      serviceType: "Regular Towing"
+    },
+    {
+      id: "not-002",
+      taskId: "TASK-2002",
+      customerName: "GlobalTrade Inc.",
+      pickupTime: new Date(Date.now() - 45 * 60 * 1000).toISOString(),
+      serviceType: "Battery Jumpstart"
+    },
+    {
+      id: "not-003",
+      taskId: "TASK-2003",
+      customerName: "SmartSolutions SA",
+      pickupTime: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
+      serviceType: "Fuel Delivery"
+    }
+  ];
   
   return (
     <div className="absolute top-full right-0 mt-2 w-80 bg-background border rounded-md shadow-lg z-50">

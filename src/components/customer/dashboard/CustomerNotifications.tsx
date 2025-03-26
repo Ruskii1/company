@@ -1,45 +1,49 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { useLanguageStore, translations } from "@/lib/i18n";
 import { Bell, Clock, AlertTriangle } from "lucide-react";
-import { useRequestsData } from "@/hooks/useRequestsData";
-import { Request } from "@/types/request";
 import { Link } from "react-router-dom";
 
 export function CustomerNotifications() {
   const { language } = useLanguageStore();
   const t = translations[language];
-  const { todayRequests, futureRequests } = useRequestsData();
-  const [notifications, setNotifications] = useState<{
-    needsUpdating: Request[];
-    upcoming: Request[];
-  }>({
-    needsUpdating: [],
-    upcoming: []
-  });
   
-  // Find requests that need updating (those in 'Waiting for Provider' state)
-  useEffect(() => {
-    const needsUpdating = [...todayRequests, ...futureRequests].filter(
-      request => request.status === 'Waiting for Provider'
-    );
-    
-    // Find requests that are upcoming (scheduled to start within the next 2 hours)
-    const now = new Date();
-    const twoHoursFromNow = new Date(now.getTime() + 2 * 60 * 60 * 1000);
-    
-    const upcoming = futureRequests.filter(request => {
-      const pickupTime = new Date(request.pickupTime);
-      return pickupTime > now && pickupTime < twoHoursFromNow;
-    });
-    
-    setNotifications({
-      needsUpdating,
-      upcoming
-    });
-  }, [todayRequests, futureRequests]);
+  // Dummy notifications data
+  const notifications = {
+    needsUpdating: [
+      {
+        id: "req-001",
+        taskId: "TASK-1001",
+        serviceType: "Regular Towing",
+        status: "Waiting for Provider",
+        pickupTime: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
+        pickupLocation: "123 Main St, Riyadh",
+        dropoffLocation: "456 Market Ave, Riyadh"
+      },
+      {
+        id: "req-002",
+        taskId: "TASK-1002",
+        serviceType: "Battery Jumpstart",
+        status: "Waiting for Provider",
+        pickupTime: new Date(Date.now() + 45 * 60 * 1000).toISOString(),
+        pickupLocation: "789 Business Blvd, Jeddah",
+        dropoffLocation: "321 Commerce St, Jeddah"
+      }
+    ],
+    upcoming: [
+      {
+        id: "req-003",
+        taskId: "TASK-1003",
+        serviceType: "Tire Change",
+        status: "Scheduled",
+        pickupTime: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
+        pickupLocation: "555 Park Dr, Dammam",
+        dropoffLocation: "777 Garden Rd, Dammam"
+      }
+    ]
+  };
   
   // If there are no notifications, don't render the component
   if (notifications.needsUpdating.length === 0 && notifications.upcoming.length === 0) {
@@ -61,7 +65,7 @@ export function CustomerNotifications() {
             <AlertTitle>{t.requestsNeedAttention}</AlertTitle>
             <AlertDescription>
               {t.youHave} {notifications.needsUpdating.length} {t.requestsNeedingUpdate}
-              <Link to="/customer/requests" className="block mt-2 text-sm underline">
+              <Link to="/requests" className="block mt-2 text-sm underline">
                 {t.viewRequests}
               </Link>
             </AlertDescription>
@@ -78,7 +82,7 @@ export function CustomerNotifications() {
                 {notifications.upcoming.map(request => (
                   <Link 
                     key={request.id} 
-                    to={`/customer/requests/${request.id}`}
+                    to={`/order-details/${request.taskId}`}
                     className="block text-sm hover:underline"
                   >
                     {new Date(request.pickupTime).toLocaleTimeString()} - {request.serviceType}
