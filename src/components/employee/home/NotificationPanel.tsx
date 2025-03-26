@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
 import { X } from 'lucide-react'
 
-// Using a simpler interface for notifications
 interface Notification {
   id: string
   taskId: string

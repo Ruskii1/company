@@ -5,8 +5,16 @@ import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
 
+interface ProviderIssue {
+  id: string
+  customerName: string
+  serviceType: string
+  pickupTime: number
+  status: string
+}
+
 interface AttentionRequiredCardProps {
-  providerIssues: any[]
+  providerIssues: ProviderIssue[]
 }
 
 export function AttentionRequiredCard({ providerIssues }: AttentionRequiredCardProps) {
