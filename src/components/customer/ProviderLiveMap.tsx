@@ -1,6 +1,6 @@
 
 import { AlertCircle, Navigation } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useProviderLocation } from "@/hooks/useProviderLocation";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import mapboxgl from 'mapbox-gl';
@@ -55,7 +55,7 @@ export const ProviderLiveMap = ({
   const location = providerId ? realtimeLocation : initialLocation;
 
   // Initialize the map once when the component mounts
-  useState(() => {
+  useEffect(() => {
     if (!mapContainer.current || map.current) return;
     
     try {

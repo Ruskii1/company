@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { RealtimeChannel } from '@supabase/supabase-js';
 
 export interface ProviderLocation {
   lat: number;
@@ -37,6 +38,7 @@ export function useProviderLocation(providerId: string | undefined) {
     }
 
     console.log(`Fetching location data for provider: ${providerId}`);
+    let channel: RealtimeChannel;
 
     // Initial fetch function
     const fetchInitialLocation = async () => {
@@ -105,7 +107,7 @@ export function useProviderLocation(providerId: string | undefined) {
 
     // Set up real-time subscription
     console.log(`Setting up real-time subscription for provider: ${providerId}`);
-    const channel = supabase
+    channel = supabase
       .channel(`provider-location-${providerId}`)
       .on(
         'postgres_changes',
@@ -136,7 +138,10 @@ export function useProviderLocation(providerId: string | undefined) {
       )
       .subscribe((status) => {
         console.log(`Subscription status: ${status}`);
-        if (status === 'SUBSCRIPTION_ERROR') {
+        // Fix: This is the corrected way to check subscription error
+        if (status === 'SUBSCRIBED') {
+          console.log('Successfully subscribed to location updates');
+        } else if (status === 'CHANNEL_ERROR') {
           setState(prev => ({
             ...prev,
             error: 'Failed to subscribe to location updates'
