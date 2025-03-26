@@ -5,6 +5,7 @@ import { ProviderLiveMap } from "./ProviderLiveMap"
 
 interface ProviderInfoComponentProps {
   provider: {
+    id?: string
     name: string
     phone: string
     rating: number
@@ -83,6 +84,7 @@ export const ProviderInfoComponent = ({ provider }: ProviderInfoComponentProps) 
       </Card>
       
       <ProviderLiveMap 
+        providerId={provider.id}
         providerLocation={provider.location} 
         providerName={provider.name} 
       />

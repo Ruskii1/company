@@ -128,6 +128,7 @@ export const ProviderInfoTab = ({ provider, car }: ProviderInfoTabProps) => {
       </Card>
       
       <ProviderLiveMap 
+        providerId={provider.id}
         providerLocation={provider.location} 
         providerName={provider.name} 
       />

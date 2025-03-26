@@ -9,6 +9,33 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      providers_location: {
+        Row: {
+          heading: number | null
+          lat: number
+          lng: number
+          provider_id: string
+          speed: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          heading?: number | null
+          lat: number
+          lng: number
+          provider_id: string
+          speed?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          heading?: number | null
+          lat?: number
+          lng?: number
+          provider_id?: string
+          speed?: number | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       requests: {
         Row: {
           arrived_at: string | null
@@ -95,7 +122,30 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_admin_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      generate_customer_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      generate_employee_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      generate_provider_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      generate_request_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      generate_ticket_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
     }
     Enums: {
       request_status:
