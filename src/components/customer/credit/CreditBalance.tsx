@@ -1,6 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { CreditCard } from 'lucide-react'
+import { formatCurrency } from '@/utils/formatters'
 
 interface CreditBalanceProps {
   currentBalance: number
@@ -17,7 +18,7 @@ export const CreditBalance = ({ currentBalance }: CreditBalanceProps) => {
       </CardHeader>
       <CardContent>
         <div className="text-4xl font-bold text-primary">
-          ${currentBalance.toFixed(2)}
+          {formatCurrency(currentBalance)}
         </div>
       </CardContent>
     </Card>
