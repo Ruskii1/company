@@ -107,6 +107,8 @@ const OrderDetails = () => {
             <ProviderInfoTab 
               provider={order.provider} 
               car={order.car}
+              pickupLocation={order.pickupLocation}
+              dropoffLocation={order.dropoffLocation}
             />
           </TabsContent>
           

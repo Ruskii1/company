@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { User, Briefcase, Camera, MapPin, Car } from "lucide-react";
+import { User, Briefcase, Camera, MapPin, Car, Navigation } from "lucide-react";
 import { Order } from "@/hooks/useOrderDetailsEmployee";
 import { ProviderLiveMap } from "@/components/customer/ProviderLiveMap";
 import { useLanguageStore } from "@/lib/i18n";
@@ -8,10 +8,26 @@ import { useLanguageStore } from "@/lib/i18n";
 interface ProviderInfoTabProps {
   provider: Order['provider'];
   car: Order['car'];
+  pickupLocation?: string;
+  dropoffLocation?: string;
 }
 
-export const ProviderInfoTab = ({ provider, car }: ProviderInfoTabProps) => {
+export const ProviderInfoTab = ({ provider, car, pickupLocation, dropoffLocation }: ProviderInfoTabProps) => {
   const { language } = useLanguageStore();
+  
+  // Convert address strings to coordinates for the map
+  // In a real app, you would use geocoding here or get coordinates from backend
+  const pickupCoordinates = pickupLocation ? {
+    lat: 24.7136 + (Math.random() * 0.04 - 0.02), // Add small random offset for demo
+    lng: 46.6753 + (Math.random() * 0.04 - 0.02),
+    address: pickupLocation
+  } : undefined;
+  
+  const dropoffCoordinates = dropoffLocation ? {
+    lat: 24.7236 + (Math.random() * 0.04 - 0.02), // Add small random offset for demo
+    lng: 46.6853 + (Math.random() * 0.04 - 0.02),
+    address: dropoffLocation
+  } : undefined;
   
   return (
     <div className="space-y-6">
@@ -127,10 +143,22 @@ export const ProviderInfoTab = ({ provider, car }: ProviderInfoTabProps) => {
         </CardContent>
       </Card>
       
-      <ProviderLiveMap 
-        providerLocation={provider.location} 
-        providerName={provider.name} 
-      />
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Navigation className="h-5 w-5" />
+            Provider Live Location
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ProviderLiveMap 
+            providerId={provider.id}
+            providerName={provider.name}
+            pickupLocation={pickupCoordinates}
+            dropoffLocation={dropoffCoordinates}
+          />
+        </CardContent>
+      </Card>
     </div>
   );
 };

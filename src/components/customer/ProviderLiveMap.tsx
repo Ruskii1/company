@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MapPin, AlertCircle } from "lucide-react";
+import { MapPin, AlertCircle, Navigation } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useProviderLocation } from "@/hooks/useProviderLocation";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -14,16 +14,37 @@ interface ProviderLiveMapProps {
   providerLocation?: {
     lat: number;
     lng: number;
+    heading?: number;
+    speed?: number;
     updated_at?: string;
   };
   providerId?: string;
   providerName: string;
+  pickupLocation?: {
+    lat: number;
+    lng: number;
+    address: string;
+  };
+  dropoffLocation?: {
+    lat: number;
+    lng: number;
+    address: string;
+  };
 }
 
-export const ProviderLiveMap = ({ providerLocation: initialLocation, providerId, providerName }: ProviderLiveMapProps) => {
+export const ProviderLiveMap = ({ 
+  providerLocation: initialLocation, 
+  providerId, 
+  providerName,
+  pickupLocation,
+  dropoffLocation
+}: ProviderLiveMapProps) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
-  const marker = useRef<mapboxgl.Marker | null>(null);
+  const providerMarker = useRef<mapboxgl.Marker | null>(null);
+  const pickupMarker = useRef<mapboxgl.Marker | null>(null);
+  const dropoffMarker = useRef<mapboxgl.Marker | null>(null);
+  const routeLine = useRef<any>(null);
   const [mapInitialized, setMapInitialized] = useState(false);
   const [mapError, setMapError] = useState<string | null>(null);
   
@@ -70,6 +91,38 @@ export const ProviderLiveMap = ({ providerLocation: initialLocation, providerId,
       map.current.on('load', () => {
         console.log('Map loaded successfully');
         setMapInitialized(true);
+        
+        // Add route source when map loads
+        if (map.current) {
+          map.current.addSource('route', {
+            type: 'geojson',
+            data: {
+              type: 'Feature',
+              properties: {},
+              geometry: {
+                type: 'LineString',
+                coordinates: []
+              }
+            }
+          });
+          
+          map.current.addLayer({
+            id: 'route',
+            type: 'line',
+            source: 'route',
+            layout: {
+              'line-join': 'round',
+              'line-cap': 'round'
+            },
+            paint: {
+              'line-color': '#4338ca',
+              'line-width': 4,
+              'line-opacity': 0.8
+            }
+          });
+          
+          routeLine.current = map.current.getSource('route');
+        }
       });
       
       map.current.on('error', (e) => {
@@ -90,59 +143,192 @@ export const ProviderLiveMap = ({ providerLocation: initialLocation, providerId,
     };
   }, [mapContainer.current]); // Only run once when mapContainer is available
 
-  // Update marker position when location changes
+  // Update markers and route when locations change
   useEffect(() => {
-    if (!map.current || !mapInitialized || !location) {
-      console.log('Cannot update marker:', {
+    if (!map.current || !mapInitialized) {
+      console.log('Cannot update map elements:', {
         map: !!map.current,
-        initialized: mapInitialized,
-        location
+        initialized: mapInitialized
       });
       return;
     }
     
-    console.log('Updating marker position to:', location);
-    
-    const lngLat: [number, number] = [location.lng, location.lat];
-    
-    try {
-      // If the marker doesn't exist yet, create it
-      if (!marker.current) {
-        // Create custom marker element
-        const el = document.createElement('div');
-        el.className = 'provider-marker';
-        el.style.width = '24px';
-        el.style.height = '24px';
-        el.style.borderRadius = '50%';
-        el.style.backgroundColor = '#4338ca';
-        el.style.border = '3px solid white';
-        el.style.boxShadow = '0 3px 8px rgba(0,0,0,0.3)';
-        
-        // Create marker at location
-        marker.current = new mapboxgl.Marker(el)
-          .setLngLat(lngLat)
-          .addTo(map.current);
-          
-        // Add popup with provider name
-        new mapboxgl.Popup({ offset: 25 })
-          .setLngLat(lngLat)
-          .setHTML(`<p style="margin: 0; font-weight: bold;">${providerName}</p>`)
-          .addTo(map.current);
-      } else {
-        // Update marker position
-        marker.current.setLngLat(lngLat);
-      }
+    // Update provider marker
+    if (location) {
+      console.log('Updating provider marker position to:', location);
+      const lngLat: [number, number] = [location.lng, location.lat];
       
-      // Animate to the new location
-      map.current.flyTo({
-        center: lngLat,
-        essential: true,
-        speed: 0.5
-      });
-    } catch (error) {
-      console.error('Error updating marker:', error);
+      try {
+        // If the marker doesn't exist yet, create it
+        if (!providerMarker.current) {
+          // Create custom marker element
+          const el = document.createElement('div');
+          el.className = 'provider-marker';
+          el.style.width = '24px';
+          el.style.height = '24px';
+          el.style.borderRadius = '50%';
+          el.style.backgroundColor = '#4338ca';
+          el.style.border = '3px solid white';
+          el.style.boxShadow = '0 3px 8px rgba(0,0,0,0.3)';
+          
+          if (location.heading !== undefined) {
+            // Add direction indicator if heading is available
+            const arrow = document.createElement('div');
+            arrow.style.position = 'absolute';
+            arrow.style.top = '-12px';
+            arrow.style.left = '50%';
+            arrow.style.transform = `translateX(-50%) rotate(${location.heading}deg)`;
+            arrow.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 5L19 12L12 19M19 12H5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>`;
+            el.appendChild(arrow);
+          }
+          
+          // Create marker at location
+          providerMarker.current = new mapboxgl.Marker(el)
+            .setLngLat(lngLat)
+            .addTo(map.current);
+            
+          // Add popup with provider name
+          new mapboxgl.Popup({ offset: 25 })
+            .setLngLat(lngLat)
+            .setHTML(`<p style="margin: 0; font-weight: bold;">${providerName}</p>`)
+            .addTo(map.current);
+        } else {
+          // Update marker position
+          providerMarker.current.setLngLat(lngLat);
+          
+          // Update rotation based on heading if available
+          if (location.heading !== undefined) {
+            const el = providerMarker.current.getElement();
+            const arrow = el.querySelector('div');
+            if (arrow) {
+              arrow.style.transform = `translateX(-50%) rotate(${location.heading}deg)`;
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error updating provider marker:', error);
+      }
     }
-  }, [location, mapInitialized, providerName]);
+    
+    // Handle pickup location marker
+    if (pickupLocation) {
+      try {
+        const pickupLngLat: [number, number] = [pickupLocation.lng, pickupLocation.lat];
+        
+        if (!pickupMarker.current) {
+          // Create pickup marker with custom element
+          const el = document.createElement('div');
+          el.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="#10b981" stroke="white" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>`;
+          
+          pickupMarker.current = new mapboxgl.Marker(el)
+            .setLngLat(pickupLngLat)
+            .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<p style="margin: 0;"><strong>Pickup:</strong> ${pickupLocation.address}</p>`))
+            .addTo(map.current);
+        } else {
+          pickupMarker.current.setLngLat(pickupLngLat);
+        }
+      } catch (error) {
+        console.error('Error updating pickup marker:', error);
+      }
+    } else if (pickupMarker.current) {
+      pickupMarker.current.remove();
+      pickupMarker.current = null;
+    }
+    
+    // Handle dropoff location marker
+    if (dropoffLocation) {
+      try {
+        const dropoffLngLat: [number, number] = [dropoffLocation.lng, dropoffLocation.lat];
+        
+        if (!dropoffMarker.current) {
+          // Create dropoff marker with custom element
+          const el = document.createElement('div');
+          el.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="#ef4444" stroke="white" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>`;
+          
+          dropoffMarker.current = new mapboxgl.Marker(el)
+            .setLngLat(dropoffLngLat)
+            .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<p style="margin: 0;"><strong>Dropoff:</strong> ${dropoffLocation.address}</p>`))
+            .addTo(map.current);
+        } else {
+          dropoffMarker.current.setLngLat(dropoffLngLat);
+        }
+      } catch (error) {
+        console.error('Error updating dropoff marker:', error);
+      }
+    } else if (dropoffMarker.current) {
+      dropoffMarker.current.remove();
+      dropoffMarker.current = null;
+    }
+    
+    // Update route line if we have both pickup and provider locations
+    if (routeLine.current && location && (pickupLocation || dropoffLocation)) {
+      try {
+        const coordinates = [];
+        
+        // Add provider location
+        coordinates.push([location.lng, location.lat]);
+        
+        // Add pickup location if exists
+        if (pickupLocation) {
+          coordinates.push([pickupLocation.lng, pickupLocation.lat]);
+        }
+        
+        // Add dropoff location if exists
+        if (dropoffLocation) {
+          coordinates.push([dropoffLocation.lng, dropoffLocation.lat]);
+        }
+        
+        // Update the route line
+        routeLine.current.setData({
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'LineString',
+            coordinates: coordinates
+          }
+        });
+      } catch (error) {
+        console.error('Error updating route line:', error);
+      }
+    }
+    
+    // Fit bounds to include all markers
+    if (map.current && mapInitialized && (location || pickupLocation || dropoffLocation)) {
+      try {
+        const bounds = new mapboxgl.LngLatBounds();
+        
+        if (location) {
+          bounds.extend([location.lng, location.lat]);
+        }
+        
+        if (pickupLocation) {
+          bounds.extend([pickupLocation.lng, pickupLocation.lat]);
+        }
+        
+        if (dropoffLocation) {
+          bounds.extend([dropoffLocation.lng, dropoffLocation.lat]);
+        }
+        
+        if (!bounds.isEmpty()) {
+          map.current.fitBounds(bounds, {
+            padding: 50,
+            maxZoom: 15,
+            duration: 500
+          });
+        }
+      } catch (error) {
+        console.error('Error fitting bounds:', error);
+      }
+    }
+  }, [location, pickupLocation, dropoffLocation, mapInitialized, providerName]);
 
   return (
     <div className="w-full">
@@ -183,6 +369,8 @@ export const ProviderLiveMap = ({ providerLocation: initialLocation, providerId,
           )}
           <p className="text-xs mt-1">
             Coordinates: {location.lat.toFixed(6)}, {location.lng.toFixed(6)}
+            {location.speed !== undefined && ` • Speed: ${Math.round(location.speed)} km/h`}
+            {location.heading !== undefined && ` • Heading: ${Math.round(location.heading)}°`}
           </p>
         </div>
       )}
