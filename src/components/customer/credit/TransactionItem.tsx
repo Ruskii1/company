@@ -3,6 +3,7 @@ import { format } from 'date-fns'
 import { Transaction } from '@/types/transaction'
 import { Button } from '@/components/ui/button'
 import { Calendar, Clock, DollarSign, Download } from 'lucide-react'
+import { formatCurrency } from '@/utils/formatters'
 
 interface TransactionItemProps {
   transaction: Transaction
@@ -44,7 +45,7 @@ export const TransactionItem = ({
             : 'text-red-600 dark:text-red-400'
         }`}>
           {transaction.type === 'credit' ? '+' : '-'} 
-          ${transaction.amount.toFixed(2)}
+          {formatCurrency(transaction.amount)}
         </div>
         <Button 
           variant="ghost" 
