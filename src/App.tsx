@@ -3,7 +3,8 @@ import { Toaster } from "@/components/ui/toaster"
 import { Toaster as Sonner } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
+import { RouterProvider } from 'react-router-dom'
+import { createBrowserRouter } from 'react-router-dom'
 import CustomerPortal from './pages/customer/Index'
 import CustomerNewOrder from './pages/customer/NewOrder'
 import CustomerRequests from './pages/customer/Requests'
@@ -32,7 +33,7 @@ import { AuthProvider } from './lib/auth'
 
 const queryClient = new QueryClient()
 
-// Create the router outside of the App component
+// Create the router configuration
 const router = createBrowserRouter([
   {
     path: '/signin/customer',

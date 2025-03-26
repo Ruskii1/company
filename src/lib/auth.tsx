@@ -1,6 +1,5 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 
 // Define the user roles
@@ -36,11 +35,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const { toast } = useToast();
-  const location = useLocation();
   
-  // Navigate is not available at the top level with this structure
-  // We'll handle redirects differently
-
   // Check for existing user session on mount
   useEffect(() => {
     const isAuthenticated = localStorage.getItem('employeeAuthenticated') === 'true';
@@ -92,7 +87,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       description: "You have been logged out successfully",
     });
     
-    // Instead of navigate, we'll use window.location for logout
+    // Use window.location for logout
     window.location.href = '/signin/employee';
   };
 
