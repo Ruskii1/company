@@ -23,6 +23,85 @@ const filterSchema = z.object({
 
 export type FilterValues = z.infer<typeof filterSchema>
 
+// Saudi Arabian cities in alphabetical order
+export const saudiCities = [
+  "Abha",
+  "Abqaiq",
+  "Abu Arish",
+  "Afif",
+  "Ahad Rafidah",
+  "Al Aflaj",
+  "Al Ardah",
+  "Al Badayea",
+  "Al Baha",
+  "Al Bukayriyah",
+  "Al Dayer",
+  "Al Hanakiyah",
+  "Al Hariq",
+  "Al Hofuf",
+  "Al Jubail",
+  "Al Kharj",
+  "Al Khafji",
+  "Al Khurmah",
+  "Al Lith",
+  "Al Mahd",
+  "Al Majma'ah",
+  "Al Mubarraz",
+  "Al Muzahimiyah",
+  "Al Namas",
+  "Al Qassim",
+  "Al Qunfudhah",
+  "Al Qurayyat",
+  "Al Ula",
+  "Al Wajh",
+  "Al Zulfi",
+  "Arar",
+  "As Sulayyil",
+  "Bariq",
+  "Baljurashi",
+  "Billasmar",
+  "Bisha",
+  "Buraidah",
+  "Dammam",
+  "Dawadmi",
+  "Dhahran",
+  "Diriyah",
+  "Duba",
+  "Hafar Al-Batin",
+  "Hail",
+  "Hotat Bani Tamim",
+  "Jazan",
+  "Jeddah",
+  "Khamis Mushait",
+  "Khobar",
+  "Layla",
+  "Mecca",
+  "Medina",
+  "Muhayil Asir",
+  "Najran",
+  "Qatif",
+  "Rabigh",
+  "Rafha",
+  "Ranyah",
+  "Riyadh",
+  "Sabya",
+  "Sakaka",
+  "Samitah",
+  "Sharurah",
+  "Shaqra",
+  "Tabuk",
+  "Taif",
+  "Tanomah",
+  "Tayma",
+  "Thadiq",
+  "Turaif",
+  "Turubah",
+  "Unaizah",
+  "Uyaynah",
+  "Wadi ad-Dawasir",
+  "Yanbu"
+]
+
 interface RequestFilterProps {
   onFilterChange: (data: FilterValues) => void
   serviceTypeValues?: string[]
@@ -148,37 +227,26 @@ export const RequestFilter = ({ onFilterChange, serviceTypeValues, cityValues = 
           render={({ field }) => (
             <FormItem className="flex-1">
               <FormLabel>{t.city}</FormLabel>
-              {cityValues.length > 0 ? (
-                <Select 
-                  onValueChange={field.onChange} 
-                  value={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder={t.selectCity} />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="all">
-                      {t.all}
+              <Select 
+                onValueChange={field.onChange} 
+                value={field.value}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder={t.selectCity} />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="all">
+                    {t.all}
+                  </SelectItem>
+                  {saudiCities.map((city) => (
+                    <SelectItem key={city} value={city}>
+                      {city}
                     </SelectItem>
-                    {cityValues.map((city) => (
-                      <SelectItem key={city} value={city}>
-                        {city}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              ) : (
-                <div className="relative">
-                  <Input 
-                    placeholder={t.enterCity}
-                    className="pr-8"
-                    {...field} 
-                  />
-                  <MapPin className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
-                </div>
-              )}
+                  ))}
+                </SelectContent>
+              </Select>
             </FormItem>
           )}
         />

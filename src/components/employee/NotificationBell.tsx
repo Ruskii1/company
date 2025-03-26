@@ -13,10 +13,60 @@ export function NotificationBell() {
   const { language } = useLanguageStore()
   const t = translations[language]
   
-  // Filter orders with NPA or NPF status
-  const criticalOrders = allOrders.filter(
-    order => order.status === 'NPA' || order.status === 'NPF'
-  )
+  // Dummy critical notifications data (more comprehensive)
+  const dummyCriticalNotifications = [
+    {
+      id: "notif-001",
+      taskId: "TASK-4523",
+      customerName: "Saudi Telecom Company",
+      status: "NPA",
+      serviceType: "Flatbed Towing",
+      pickupTime: new Date(Date.now() - 35 * 60 * 1000).toISOString(), // 35 min ago
+      city: "Riyadh"
+    },
+    {
+      id: "notif-002",
+      taskId: "TASK-4589",
+      customerName: "Aramco",
+      status: "NPF", 
+      serviceType: "Battery Jumpstart",
+      pickupTime: new Date(Date.now() - 45 * 60 * 1000).toISOString(), // 45 min ago
+      city: "Dammam"
+    },
+    {
+      id: "notif-003",
+      taskId: "TASK-4602",
+      customerName: "SABIC",
+      status: "NPA",
+      serviceType: "Fuel Delivery",
+      pickupTime: new Date(Date.now() - 60 * 60 * 1000).toISOString(), // 60 min ago
+      city: "Jubail"
+    },
+    {
+      id: "notif-004",
+      taskId: "TASK-4617",
+      customerName: "Al Rajhi Bank",
+      status: "NPF",
+      serviceType: "Tire Change",
+      pickupTime: new Date(Date.now() - 75 * 60 * 1000).toISOString(), // 75 min ago
+      city: "Jeddah"
+    },
+    {
+      id: "notif-005",
+      taskId: "TASK-4625",
+      customerName: "Saudi Airlines",
+      status: "NPA",
+      serviceType: "Key Lockout",
+      pickupTime: new Date(Date.now() - 90 * 60 * 1000).toISOString(), // 90 min ago
+      city: "Medina"
+    }
+  ];
+  
+  // Merge real critical orders with dummy notifications for demonstration
+  const criticalOrders = [
+    ...dummyCriticalNotifications,
+    ...allOrders.filter(order => order.status === 'NPA' || order.status === 'NPF')
+  ]
   
   const hasNotifications = criticalOrders.length > 0
   
@@ -43,7 +93,7 @@ export function NotificationBell() {
       >
         <BellRing className="h-5 w-5" />
         {hasNotifications && (
-          <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-white text-xs">
+          <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-white text-xs">
             {criticalOrders.length}
           </span>
         )}
@@ -70,7 +120,10 @@ export function NotificationBell() {
                   <p className="text-sm">
                     {order.customerName} - {order.serviceType}
                   </p>
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-xs mt-1">
+                    {order.city || ""}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-0.5">
                     {new Date(order.pickupTime).toLocaleString()}
                   </p>
                 </Link>

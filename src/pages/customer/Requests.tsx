@@ -7,7 +7,7 @@ import { Calendar, Clock, History } from 'lucide-react'
 import { RequestsTable } from '@/components/customer/RequestsTable'
 import { NoRequestsMessage } from '@/components/customer/NoRequestsMessage'
 import { useRequestsData } from '@/hooks/useRequestsData'
-import { RequestFilter, FilterValues } from '@/components/customer/RequestFilter'
+import { RequestFilter, FilterValues, saudiCities } from '@/components/customer/RequestFilter'
 import { serviceTypeValues } from '@/components/forms/ServiceTypeField'
 import { useLocation } from 'react-router-dom'
 import { parseISO, isSameDay } from 'date-fns'
@@ -33,14 +33,6 @@ const Requests = () => {
     date: undefined,
     city: ''
   })
-
-  // Extract unique cities from all requests
-  const allRequests = [...pastRequests, ...todayRequests, ...futureRequests]
-  const uniqueCities = Array.from(new Set(
-    allRequests.map(request => 
-      request.city || extractCityFromLocation(request.pickupLocation)
-    ).filter(Boolean)
-  )).sort()
 
   // Update the active tab when the URL query parameter changes
   useEffect(() => {
@@ -100,7 +92,7 @@ const Requests = () => {
           <RequestFilter 
             onFilterChange={handleFilterChange} 
             serviceTypeValues={serviceTypeValues}
-            cityValues={uniqueCities}
+            cityValues={saudiCities}
           />
           
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full mt-4">
