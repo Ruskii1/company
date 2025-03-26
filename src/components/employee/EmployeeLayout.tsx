@@ -7,6 +7,7 @@ import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { useNavigate } from 'react-router-dom'
 import { ReactNode } from 'react'
 import { AuthGuard } from '../AuthGuard'
+import { useAuth } from '@/lib/auth'
 
 interface EmployeeLayoutProps {
   children: ReactNode
@@ -15,6 +16,7 @@ interface EmployeeLayoutProps {
 export function EmployeeLayout({ children }: EmployeeLayoutProps) {
   const { language } = useLanguageStore()
   const navigate = useNavigate()
+  const { user } = useAuth()
   const t = translations[language]
 
   return (
@@ -44,6 +46,11 @@ export function EmployeeLayout({ children }: EmployeeLayoutProps) {
             </div>
             
             <div className="max-w-7xl mx-auto space-y-8 pt-16">
+              {user && (
+                <div className="bg-muted/50 p-2 rounded text-sm text-center">
+                  Logged in as: <span className="font-semibold">{user.username}</span> | Role: <span className="font-semibold capitalize">{user.role}</span>
+                </div>
+              )}
               {children}
             </div>
           </div>

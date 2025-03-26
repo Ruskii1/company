@@ -1,3 +1,4 @@
+
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import {
@@ -23,6 +24,7 @@ import {
   Store,
   Ticket,
   User,
+  ShieldCheck,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTheme } from '@/lib/theme'
@@ -32,6 +34,7 @@ import {
   PopoverTrigger
 } from "@/components/ui/popover"
 import { useToast } from '@/hooks/use-toast'
+import { useAuth } from '@/lib/auth'
 
 export function EmployeeSidebar() {
   const { language, setLanguage } = useLanguageStore()
@@ -40,8 +43,10 @@ export function EmployeeSidebar() {
   const location = useLocation()
   const navigate = useNavigate()
   const { toast } = useToast()
+  const { user, logout, isAdmin } = useAuth()
   
-  const menuItems = [
+  // Common menu items for both roles
+  const commonMenuItems = [
     {
       title: t.home,
       url: '/employee/home',
@@ -63,11 +68,6 @@ export function EmployeeSidebar() {
       icon: Ticket,
     },
     {
-      title: t.corporateAccounts,
-      url: '/employee/corporate',
-      icon: Building2,
-    },
-    {
       title: t.serviceProviders,
       url: '/employee/providers',
       icon: User,
@@ -77,29 +77,41 @@ export function EmployeeSidebar() {
       url: '/employee/providers-map',
       icon: Map,
     },
+  ]
+  
+  // Admin-only menu items
+  const adminMenuItems = [
+    {
+      title: t.corporateAccounts,
+      url: '/employee/corporate',
+      icon: Building2,
+      adminOnly: true,
+    },
     {
       title: t.serviceProviderCompanies,
       url: '/employee/provider-companies',
       icon: Store,
+      adminOnly: true,
     },
   ]
-
-  const handleSignOut = () => {
-    localStorage.removeItem("employeeAuthenticated")
-    
-    toast({
-      title: "Signed out",
-      description: "You have been signed out successfully.",
-    })
-    
-    navigate("/signin/employee")
-  }
+  
+  // Combine menu items based on user role
+  const menuItems = [
+    ...commonMenuItems,
+    ...(isAdmin() ? adminMenuItems : [])
+  ]
 
   return (
     <Sidebar side={language === 'ar' ? 'right' : 'left'}>
       <SidebarHeader className="flex h-14 items-center border-b px-6">
         <div className="flex flex-1 items-center gap-2 font-semibold">
           {t.employeePortal}
+          {isAdmin() && (
+            <span className="bg-primary/10 text-primary text-xs rounded-full px-2 py-0.5 flex items-center">
+              <ShieldCheck className="h-3 w-3 mr-1" />
+              Admin
+            </span>
+          )}
         </div>
       </SidebarHeader>
       <SidebarContent>
@@ -178,7 +190,7 @@ export function EmployeeSidebar() {
             variant="ghost"
             size="sm"
             className="w-full justify-start text-destructive hover:text-destructive"
-            onClick={handleSignOut}
+            onClick={logout}
           >
             <LogOut className="mr-2 h-4 w-4" />
             <span>{t.signOut}</span>

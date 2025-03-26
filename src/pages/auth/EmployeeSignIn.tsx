@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
+import { useAuth } from "@/lib/auth"
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -33,6 +34,7 @@ export default function EmployeeSignIn() {
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
   const { toast } = useToast()
+  const { login } = useAuth()
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -43,20 +45,31 @@ export default function EmployeeSignIn() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true)
     
-    // This would normally call an API to authenticate
-    setTimeout(() => {
-      setIsLoading(false)
-      // Mock authentication success
-      localStorage.setItem("employeeAuthenticated", "true")
+    try {
+      const success = await login(values.username, values.password, values.idNumber)
+      
+      if (success) {
+        navigate("/employee")
+      } else {
+        toast({
+          title: "Authentication failed",
+          description: "Invalid username, password, or ID number",
+          variant: "destructive"
+        })
+      }
+    } catch (error) {
+      console.error("Login error:", error)
       toast({
-        title: "Sign in successful",
-        description: "Welcome to the Employee Portal!",
+        title: "Error",
+        description: "An unexpected error occurred",
+        variant: "destructive"
       })
-      navigate("/employee")
-    }, 1000)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -123,10 +136,15 @@ export default function EmployeeSignIn() {
             </form>
           </Form>
         </CardContent>
-        <CardFooter className="flex justify-center">
+        <CardFooter className="flex flex-col space-y-2">
           <p className="text-sm text-muted-foreground">
             Employee Portal Authentication
           </p>
+          <div className="text-xs text-muted-foreground border-t pt-2 w-full text-center">
+            <p className="mb-1">Demo Credentials:</p>
+            <p>Admin: username: admin, password: admin123, ID: A-1234</p>
+            <p>Employee: username: employee1, password: emp123, ID: E-1001</p>
+          </div>
         </CardFooter>
       </Card>
     </div>

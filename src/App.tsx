@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster"
 import { Toaster as Sonner } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
@@ -27,92 +28,99 @@ import { ThemeProvider } from './lib/theme'
 import CustomerSignIn from './pages/auth/CustomerSignIn'
 import EmployeeSignIn from './pages/auth/EmployeeSignIn'
 import { CustomerSettings } from './components/customer/settings/CustomerSettings'
+import { AuthProvider } from './lib/auth'
+import { BrowserRouter } from 'react-router-dom'
 
 const queryClient = new QueryClient()
 
-const router = createBrowserRouter([
-  {
-    path: '/signin/customer',
-    element: <CustomerSignIn />,
-  },
-  {
-    path: '/signin/employee',
-    element: <EmployeeSignIn />,
-  },
-  {
-    path: '/',
-    element: <CustomerLayout><CustomerPortal /></CustomerLayout>,
-    errorElement: <NotFound />
-  },
-  {
-    path: '/new-order',
-    element: <CustomerLayout><CustomerNewOrder /></CustomerLayout>,
-  },
-  {
-    path: '/requests',
-    element: <CustomerLayout><CustomerRequests /></CustomerLayout>,
-  },
-  {
-    path: '/tickets',
-    element: <CustomerLayout><CustomerTickets /></CustomerLayout>,
-  },
-  {
-    path: '/credit',
-    element: <CustomerLayout><CustomerCredit /></CustomerLayout>,
-  },
-  {
-    path: '/settings',
-    element: <CustomerLayout><CustomerSettings /></CustomerLayout>,
-  },
-  {
-    path: '/order-details/:taskId',
-    element: <CustomerLayout><CustomerOrderDetails /></CustomerLayout>,
-  },
-  {
-    path: '/employee',
-    element: <EmployeeLayout><EmployeePortal /></EmployeeLayout>,
-  },
-  {
-    path: '/employee/home',
-    element: <EmployeeLayout><EmployeeHomePage /></EmployeeLayout>,
-  },
-  {
-    path: '/employee/tickets',
-    element: <EmployeeLayout><TicketsPage /></EmployeeLayout>,
-  },
-  {
-    path: '/employee/requests',
-    element: <EmployeeLayout><AllRequestsPage /></EmployeeLayout>,
-  },
-  {
-    path: '/employee/new-request',
-    element: <EmployeeLayout><CreateRequestPage /></EmployeeLayout>,
-  },
-  {
-    path: '/employee/corporate',
-    element: <EmployeeLayout><CorporateAccountsPage /></EmployeeLayout>,
-  },
-  {
-    path: '/employee/providers',
-    element: <EmployeeLayout><ServiceProvidersPage /></EmployeeLayout>,
-  },
-  {
-    path: '/employee/providers-map',
-    element: <EmployeeLayout><ServiceProvidersMapPage /></EmployeeLayout>,
-  },
-  {
-    path: '/employee/provider-companies',
-    element: <EmployeeLayout><ServiceProviderCompaniesPage /></EmployeeLayout>,
-  },
-  {
-    path: '/employee/orders/:taskId',
-    element: <EmployeeLayout><OrderDetails /></EmployeeLayout>,
-  },
-  {
-    path: '/employee/customers/:customerId',
-    element: <EmployeeLayout><CustomerDetails /></EmployeeLayout>,
-  }
-])
+// Inner router that will be wrapped by AuthProvider
+const AppRoutes = () => {
+  const router = createBrowserRouter([
+    {
+      path: '/signin/customer',
+      element: <CustomerSignIn />,
+    },
+    {
+      path: '/signin/employee',
+      element: <EmployeeSignIn />,
+    },
+    {
+      path: '/',
+      element: <CustomerLayout><CustomerPortal /></CustomerLayout>,
+      errorElement: <NotFound />
+    },
+    {
+      path: '/new-order',
+      element: <CustomerLayout><CustomerNewOrder /></CustomerLayout>,
+    },
+    {
+      path: '/requests',
+      element: <CustomerLayout><CustomerRequests /></CustomerLayout>,
+    },
+    {
+      path: '/tickets',
+      element: <CustomerLayout><CustomerTickets /></CustomerLayout>,
+    },
+    {
+      path: '/credit',
+      element: <CustomerLayout><CustomerCredit /></CustomerLayout>,
+    },
+    {
+      path: '/settings',
+      element: <CustomerLayout><CustomerSettings /></CustomerLayout>,
+    },
+    {
+      path: '/order-details/:taskId',
+      element: <CustomerLayout><CustomerOrderDetails /></CustomerLayout>,
+    },
+    {
+      path: '/employee',
+      element: <EmployeeLayout><EmployeePortal /></EmployeeLayout>,
+    },
+    {
+      path: '/employee/home',
+      element: <EmployeeLayout><EmployeeHomePage /></EmployeeLayout>,
+    },
+    {
+      path: '/employee/tickets',
+      element: <EmployeeLayout><TicketsPage /></EmployeeLayout>,
+    },
+    {
+      path: '/employee/requests',
+      element: <EmployeeLayout><AllRequestsPage /></EmployeeLayout>,
+    },
+    {
+      path: '/employee/new-request',
+      element: <EmployeeLayout><CreateRequestPage /></EmployeeLayout>,
+    },
+    {
+      path: '/employee/corporate',
+      element: <EmployeeLayout><CorporateAccountsPage /></EmployeeLayout>,
+    },
+    {
+      path: '/employee/providers',
+      element: <EmployeeLayout><ServiceProvidersPage /></EmployeeLayout>,
+    },
+    {
+      path: '/employee/providers-map',
+      element: <EmployeeLayout><ServiceProvidersMapPage /></EmployeeLayout>,
+    },
+    {
+      path: '/employee/provider-companies',
+      element: <EmployeeLayout><ServiceProviderCompaniesPage /></EmployeeLayout>,
+    },
+    {
+      path: '/employee/orders/:taskId',
+      element: <EmployeeLayout><OrderDetails /></EmployeeLayout>,
+    },
+    {
+      path: '/employee/customers/:customerId',
+      element: <EmployeeLayout><CustomerDetails /></EmployeeLayout>,
+    }
+  ]);
+
+  return <RouterProvider router={router} />;
+};
 
 function App() {
   return (
@@ -121,7 +129,11 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <RouterProvider router={router} />
+          <BrowserRouter>
+            <AuthProvider>
+              <AppRoutes />
+            </AuthProvider>
+          </BrowserRouter>
         </TooltipProvider>
       </ThemeProvider>
     </QueryClientProvider>

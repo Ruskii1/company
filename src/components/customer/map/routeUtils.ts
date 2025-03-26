@@ -2,6 +2,15 @@
 import mapboxgl from 'mapbox-gl';
 import { calculateRoutes } from './directionsApi';
 
+interface GeoJSONFeature {
+  type: 'Feature';
+  properties: Record<string, any>;
+  geometry: {
+    type: 'LineString';
+    coordinates: [number, number][];
+  };
+}
+
 /**
  * Updates the route lines between points using the Mapbox Directions API
  */
@@ -23,7 +32,7 @@ export const updateRouteLine = async (
     // Update the provider-to-pickup route source
     const providerToPickupSource = map.getSource('route-provider-to-pickup') as mapboxgl.GeoJSONSource;
     if (providerToPickupSource && providerToPickup) {
-      providerToPickupSource.setData(providerToPickup);
+      providerToPickupSource.setData(providerToPickup as any);
     } else if (providerToPickupSource) {
       // If API failed but we have coordinates, fallback to straight line
       providerToPickupSource.setData({
@@ -42,7 +51,7 @@ export const updateRouteLine = async (
     // Update the pickup-to-dropoff route source
     const pickupToDropoffSource = map.getSource('route-pickup-to-dropoff') as mapboxgl.GeoJSONSource;
     if (pickupToDropoffSource && pickupToDropoff && validLocations.length >= 3) {
-      pickupToDropoffSource.setData(pickupToDropoff);
+      pickupToDropoffSource.setData(pickupToDropoff as any);
     } else if (pickupToDropoffSource && validLocations.length >= 3) {
       // If API failed but we have coordinates, fallback to straight line
       pickupToDropoffSource.setData({

@@ -1,12 +1,21 @@
 
 import mapboxgl from 'mapbox-gl';
 
+interface GeoJSONFeature {
+  type: 'Feature';
+  properties: Record<string, any>;
+  geometry: {
+    type: 'LineString';
+    coordinates: [number, number][];
+  };
+}
+
 // Get directions between two points using Mapbox Directions API
 export const getDirections = async (
   start: [number, number],
   end: [number, number],
   mapboxToken: string
-): Promise<GeoJSON.Feature<GeoJSON.LineString> | null> => {
+): Promise<GeoJSONFeature | null> => {
   try {
     // Build request URL - using the Mapbox Directions API
     const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&access_token=${mapboxToken}`;
@@ -35,8 +44,8 @@ export const calculateRoutes = async (
   locations: Array<{ lng: number; lat: number } | undefined>,
   mapboxToken: string
 ): Promise<{
-  providerToPickup: GeoJSON.Feature<GeoJSON.LineString> | null;
-  pickupToDropoff: GeoJSON.Feature<GeoJSON.LineString> | null;
+  providerToPickup: GeoJSONFeature | null;
+  pickupToDropoff: GeoJSONFeature | null;
 }> => {
   const validLocations = locations.filter(Boolean) as { lng: number; lat: number }[];
   
