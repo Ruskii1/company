@@ -37,8 +37,8 @@ import { orderTranslations } from './order';
 import { securityTranslations } from './security';
 import { profileTranslations } from './profile';
 import { paymentTranslations } from './payment';
-import { providersTranslations } from './providers';
-import { servicesTranslations } from './services';
+import { providerTranslations } from './providers';
+import { serviceTranslations } from './services';
 
 // Merge all translations
 const mergeTranslations = (language: Language) => {
@@ -49,8 +49,8 @@ const mergeTranslations = (language: Language) => {
     ...securityTranslations?.[language] || {},
     ...profileTranslations?.[language] || {},
     ...paymentTranslations?.[language] || {},
-    ...providersTranslations?.[language] || {},
-    ...servicesTranslations?.[language] || {},
+    ...providerTranslations?.[language] || {},
+    ...serviceTranslations?.[language] || {},
     ...(language === 'ar' ? arabicTranslations : {}),
   };
 };
