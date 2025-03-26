@@ -49,7 +49,7 @@ export const ProviderLiveMap = ({ providerLocation: initialLocation, providerId,
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/streets-v12',
-        center: location ? [location.lng, location.lat] : [45.0792, 23.8859], // Default to Saudi Arabia
+        center: location ? [location.lng, location.lat] : [46.6753, 24.7136], // Default to Riyadh, Saudi Arabia
         zoom: 13,
         attributionControl: false
       });

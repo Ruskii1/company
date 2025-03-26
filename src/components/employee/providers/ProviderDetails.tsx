@@ -107,7 +107,6 @@ export function ProviderDetails({
                     <ProviderLiveMap 
                       providerId={provider.id}
                       providerName={provider.fullName}
-                      providerLocation={{lat: 24.7136, lng: 46.6753}}
                     />
                   </CardContent>
                 </Card>
@@ -131,7 +130,6 @@ export function ProviderDetails({
                 <ProviderLiveMap 
                   providerId={provider.id}
                   providerName={provider.fullName}
-                  providerLocation={{lat: 24.7136, lng: 46.6753}}
                 />
               </CardContent>
             </Card>

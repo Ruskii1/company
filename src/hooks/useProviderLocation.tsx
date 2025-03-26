@@ -40,7 +40,7 @@ export function useProviderLocation(providerId: string | undefined) {
             setError(error.message);
           }
           
-          // Default location if none exists (center of Saudi Arabia)
+          // Default location if none exists (Riyadh, Saudi Arabia)
           setLocation({
             lat: 24.7136,
             lng: 46.6753,
