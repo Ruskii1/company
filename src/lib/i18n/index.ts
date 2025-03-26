@@ -1,5 +1,5 @@
 
-import { useLanguageStore } from './core'
+import { translations, useLanguageStore } from './core'
 import { commonTranslations } from './common'
 import { profileTranslations } from './profile'
 import { securityTranslations } from './security'
@@ -32,5 +32,5 @@ const mergeTranslations = () => {
   }
 }
 
-export const translations = mergeTranslations()
-export { useLanguageStore }
+export { translations, useLanguageStore }
+export const mergedTranslations = mergeTranslations()

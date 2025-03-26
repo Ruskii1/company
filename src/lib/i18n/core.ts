@@ -1,4 +1,5 @@
-import { en as enUS, ar as arDZ, Locale } from "date-fns/locale";
+import { enUS, arDZ } from "date-fns/locale";
+import { create } from 'zustand';
 
 export type Language = "en" | "ar";
 
@@ -50,6 +51,7 @@ export interface Translation {
   noProviderAccepted: string;
   noProviderFound: string;
   waitingForProvider: string;
+  serviceProviderCompanies: string;
 }
 
 export interface TranslationCore {
@@ -57,7 +59,7 @@ export interface TranslationCore {
   ar: Translation;
 }
 
-export const locales: Record<Language, Locale> = {
+export const locales = {
   en: enUS,
   ar: arDZ,
 };
@@ -113,6 +115,7 @@ export const translations: TranslationCore = {
     noProviderAccepted: "No Provider Accepted",
     noProviderFound: "No Provider Found",
     waitingForProvider: "Waiting for provider",
+    serviceProviderCompanies: "Service Provider Companies",
   },
   ar: {
     home: "الرئيسية",
@@ -162,5 +165,14 @@ export const translations: TranslationCore = {
     noProviderAccepted: "لم يقبل أي مزود",
     noProviderFound: "لم يتم العثور على مزود",
     waitingForProvider: "في انتظار المورد",
+    serviceProviderCompanies: "شركات مقدمي الخدمات",
   },
 };
+
+export const useLanguageStore = create<{
+  language: Language;
+  setLanguage: (language: Language) => void;
+}>((set) => ({
+  language: "en",
+  setLanguage: (language) => set(() => ({ language })),
+}));
