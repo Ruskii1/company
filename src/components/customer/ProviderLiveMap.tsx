@@ -1,6 +1,4 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MapPin, AlertCircle, Navigation } from "lucide-react";
+import { AlertCircle, Navigation } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useProviderLocation } from "@/hooks/useProviderLocation";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -62,8 +60,6 @@ export const ProviderLiveMap = ({
   useEffect(() => {
     if (!mapContainer.current || map.current) return;
     
-    console.log('Initializing map with Mapbox token:', MAPBOX_TOKEN ? 'Token provided' : 'No token');
-    
     try {
       // Initialize Mapbox with token
       mapboxgl.accessToken = MAPBOX_TOKEN;
@@ -73,23 +69,31 @@ export const ProviderLiveMap = ({
         ? [location.lng, location.lat] 
         : [46.6753, 24.7136]; // Default to Riyadh, Saudi Arabia
       
-      console.log('Creating map with center:', initialCenter);
-      
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/streets-v12',
         center: initialCenter as [number, number],
-        zoom: 13,
-        attributionControl: false
+        zoom: 15, // Start with a closer zoom level
+        attributionControl: false,
+        dragRotate: false, // Disable 3D rotation for simpler UI
+        pitchWithRotate: false // Disable pitch with rotate
       });
 
-      // Add navigation controls
-      map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
-      map.current.addControl(new mapboxgl.AttributionControl({ compact: true }));
+      // Add minimal controls - only zoom
+      map.current.addControl(
+        new mapboxgl.NavigationControl({ showCompass: false }), 
+        'top-right'
+      );
+      map.current.addControl(
+        new mapboxgl.AttributionControl({ compact: true })
+      );
+      
+      // Disable map rotation to keep UI simple
+      map.current.dragRotate.disable();
+      map.current.touchZoomRotate.disableRotation();
       
       // Set up event listeners
       map.current.on('load', () => {
-        console.log('Map loaded successfully');
         setMapInitialized(true);
         
         // Add route source when map loads
@@ -145,17 +149,10 @@ export const ProviderLiveMap = ({
 
   // Update markers and route when locations change
   useEffect(() => {
-    if (!map.current || !mapInitialized) {
-      console.log('Cannot update map elements:', {
-        map: !!map.current,
-        initialized: mapInitialized
-      });
-      return;
-    }
+    if (!map.current || !mapInitialized) return;
     
     // Update provider marker
     if (location) {
-      console.log('Updating provider marker position to:', location);
       const lngLat: [number, number] = [location.lng, location.lat];
       
       try {
@@ -190,7 +187,7 @@ export const ProviderLiveMap = ({
             .addTo(map.current);
             
           // Add popup with provider name
-          new mapboxgl.Popup({ offset: 25 })
+          new mapboxgl.Popup({ offset: 25, closeButton: false })
             .setLngLat(lngLat)
             .setHTML(`<p style="margin: 0; font-weight: bold;">${providerName}</p>`)
             .addTo(map.current);
@@ -227,7 +224,7 @@ export const ProviderLiveMap = ({
           
           pickupMarker.current = new mapboxgl.Marker(el)
             .setLngLat(pickupLngLat)
-            .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<p style="margin: 0;"><strong>Pickup:</strong> ${pickupLocation.address}</p>`))
+            .setPopup(new mapboxgl.Popup({ offset: 25, closeButton: false }).setHTML(`<p style="margin: 0;"><strong>Pickup:</strong> ${pickupLocation.address}</p>`))
             .addTo(map.current);
         } else {
           pickupMarker.current.setLngLat(pickupLngLat);
@@ -255,7 +252,7 @@ export const ProviderLiveMap = ({
           
           dropoffMarker.current = new mapboxgl.Marker(el)
             .setLngLat(dropoffLngLat)
-            .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`<p style="margin: 0;"><strong>Dropoff:</strong> ${dropoffLocation.address}</p>`))
+            .setPopup(new mapboxgl.Popup({ offset: 25, closeButton: false }).setHTML(`<p style="margin: 0;"><strong>Dropoff:</strong> ${dropoffLocation.address}</p>`))
             .addTo(map.current);
         } else {
           dropoffMarker.current.setLngLat(dropoffLngLat);
@@ -268,7 +265,7 @@ export const ProviderLiveMap = ({
       dropoffMarker.current = null;
     }
     
-    // Update route line if we have both pickup and provider locations
+    // Update route line if we have provider location and destination points
     if (routeLine.current && location && (pickupLocation || dropoffLocation)) {
       try {
         const coordinates = [];
@@ -276,7 +273,7 @@ export const ProviderLiveMap = ({
         // Add provider location
         coordinates.push([location.lng, location.lat]);
         
-        // Add pickup location if exists
+        // Add pickup location if exists and not yet reached
         if (pickupLocation) {
           coordinates.push([pickupLocation.lng, pickupLocation.lat]);
         }
@@ -300,7 +297,7 @@ export const ProviderLiveMap = ({
       }
     }
     
-    // Fit bounds to include all markers
+    // Auto-fit the map to show only relevant markers
     if (map.current && mapInitialized && (location || pickupLocation || dropoffLocation)) {
       try {
         const bounds = new mapboxgl.LngLatBounds();
@@ -319,8 +316,8 @@ export const ProviderLiveMap = ({
         
         if (!bounds.isEmpty()) {
           map.current.fitBounds(bounds, {
-            padding: 50,
-            maxZoom: 15,
+            padding: { top: 40, bottom: 40, left: 40, right: 40 },
+            maxZoom: 16,
             duration: 500
           });
         }
@@ -363,15 +360,22 @@ export const ProviderLiveMap = ({
       
       {location && (
         <div className="mt-2 text-sm text-muted-foreground">
-          <p>Provider: {providerName}</p>
+          <div className="flex items-center gap-1">
+            <Navigation className="h-4 w-4" />
+            <p className="font-medium">{providerName}</p>
+          </div>
+          
           {location.updated_at && (
-            <p>Last updated: {new Date(location.updated_at).toLocaleTimeString()}</p>
+            <p className="text-xs">Last updated: {new Date(location.updated_at).toLocaleTimeString()}</p>
           )}
-          <p className="text-xs mt-1">
-            Coordinates: {location.lat.toFixed(6)}, {location.lng.toFixed(6)}
-            {location.speed !== undefined && ` • Speed: ${Math.round(location.speed)} km/h`}
-            {location.heading !== undefined && ` • Heading: ${Math.round(location.heading)}°`}
-          </p>
+          
+          {(location.speed !== undefined || location.heading !== undefined) && (
+            <p className="text-xs mt-1">
+              {location.speed !== undefined && `Speed: ${Math.round(location.speed)} km/h`}
+              {location.speed !== undefined && location.heading !== undefined && ' • '}
+              {location.heading !== undefined && `Heading: ${Math.round(location.heading)}°`}
+            </p>
+          )}
         </div>
       )}
     </div>
