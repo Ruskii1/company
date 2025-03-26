@@ -31,33 +31,38 @@ export async function fetchAllRequests(): Promise<Request[]> {
     return [];
   }
 
-  return data?.map(item => ({
-    id: item.id,
-    taskId: item.task_id,
-    companyName: item.company_name,
-    employeeName: item.employee_name,
-    serviceType: item.service_type,
-    pickupTime: new Date(item.pickup_time).toISOString(),
-    pickupLocation: item.pickup_location,
-    dropoffLocation: item.dropoff_location,
-    status: item.status,
-    notes: item.notes || '',
-    city: item.city,
-    providerId: item.provider_id,
-    providerPhone: item.provider_phone,
-    car: extractCarInfo(item.car),
-    // Add new metadata fields
-    autoLaunchTime: item.auto_launch_time ? new Date(item.auto_launch_time).toISOString() : null,
-    assignedAt: item.assigned_at ? new Date(item.assigned_at).toISOString() : null,
-    arrivedAt: item.arrived_at ? new Date(item.arrived_at).toISOString() : null,
-    completedAt: item.completed_at ? new Date(item.completed_at).toISOString() : null,
-    cancelledAt: item.cancelled_at ? new Date(item.cancelled_at).toISOString() : null,
-    cancellationReason: item.cancellation_reason || '',
-    pickupPhotos: item.pickup_photos || [],
-    dropoffPhotos: item.dropoff_photos || [],
-    manualAssignment: item.manual_assignment || false,
-    attachments: Array.isArray(item.attachments) ? item.attachments : [] // Handle attachments field safely
-  })) || [];
+  return data?.map(item => {
+    // Cast the data to include attachments with a type assertion
+    const dbItem = item as any;
+    
+    return {
+      id: item.id,
+      taskId: item.task_id,
+      companyName: item.company_name,
+      employeeName: item.employee_name,
+      serviceType: item.service_type,
+      pickupTime: new Date(item.pickup_time).toISOString(),
+      pickupLocation: item.pickup_location,
+      dropoffLocation: item.dropoff_location,
+      status: item.status,
+      notes: item.notes || '',
+      city: item.city,
+      providerId: item.provider_id,
+      providerPhone: item.provider_phone,
+      car: extractCarInfo(item.car),
+      // Add new metadata fields
+      autoLaunchTime: item.auto_launch_time ? new Date(item.auto_launch_time).toISOString() : null,
+      assignedAt: item.assigned_at ? new Date(item.assigned_at).toISOString() : null,
+      arrivedAt: item.arrived_at ? new Date(item.arrived_at).toISOString() : null,
+      completedAt: item.completed_at ? new Date(item.completed_at).toISOString() : null,
+      cancelledAt: item.cancelled_at ? new Date(item.cancelled_at).toISOString() : null,
+      cancellationReason: item.cancellation_reason || '',
+      pickupPhotos: item.pickup_photos || [],
+      dropoffPhotos: item.dropoff_photos || [],
+      manualAssignment: item.manual_assignment || false,
+      attachments: Array.isArray(dbItem.attachments) ? dbItem.attachments : [] // Safely handle attachments
+    }
+  }) || [];
 }
 
 export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Promise<Request | null> {
@@ -103,6 +108,9 @@ export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Pr
   // Convert from snake_case back to camelCase for frontend
   if (!data) return null;
   
+  // Cast the data to include attachments with a type assertion
+  const dbData = data as any;
+  
   return {
     id: data.id,
     taskId: data.task_id,
@@ -127,7 +135,7 @@ export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Pr
     pickupPhotos: data.pickup_photos || [],
     dropoffPhotos: data.dropoff_photos || [],
     manualAssignment: data.manual_assignment || false,
-    attachments: Array.isArray(data.attachments) ? data.attachments : [] // Include attachments in response
+    attachments: Array.isArray(dbData.attachments) ? dbData.attachments : [] // Safely handle attachments
   };
 }
 
