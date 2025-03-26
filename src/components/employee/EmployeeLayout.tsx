@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { ReactNode } from 'react'
 import { AuthGuard } from '../AuthGuard'
 import { useAuth } from '@/lib/auth'
+import { NotificationBell } from '@/components/employee/NotificationBell'
 
 interface EmployeeLayoutProps {
   children: ReactNode
@@ -27,6 +28,7 @@ export function EmployeeLayout({ children }: EmployeeLayoutProps) {
           
           <div className="flex-1 p-8">
             <div className={`fixed ${language === 'ar' ? 'left-4' : 'right-4'} top-4 z-50 flex items-center gap-4 dir-ltr`}>
+              <NotificationBell />
               <Button
                 variant="outline"
                 size="icon"
