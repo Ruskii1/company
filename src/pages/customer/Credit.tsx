@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { CreditCard } from 'lucide-react'
+import { CreditCard, SlidersHorizontal, ChevronUp, ChevronDown } from 'lucide-react'
 import { addDays } from 'date-fns'
 import { DateRange } from 'react-day-picker'
 import { Transaction, TransactionFilterState } from '@/types/transaction'
@@ -10,11 +10,13 @@ import { TransactionItem } from '@/components/customer/credit/TransactionItem'
 import { TransactionFilters } from '@/components/customer/credit/TransactionFilters'
 import { useTransactions } from '@/hooks/useTransactions'
 import { filterTransactions } from '@/utils/transactionUtils'
+import { Button } from '@/components/ui/button'
 
 const Credit = () => {
   const { language } = useLanguageStore()
   const t = translations[language]
   const [currentBalance] = useState(845.75)
+  const [showFilters, setShowFilters] = useState(false)
   
   // Enhanced transactions data with a variety of entries
   const initialTransactions: Transaction[] = [
@@ -115,11 +117,14 @@ const Credit = () => {
   }
   
   // Get filtered transactions
-  const filteredTransactions = filterTransactions(
-    transactions, 
-    filters.dateRange, 
-    filters.transactionType
-  )
+  const filteredTransactions = showFilters 
+    ? filterTransactions(transactions, filters.dateRange, filters.transactionType)
+    : transactions
+
+  // Toggle filters visibility
+  const toggleFilters = () => {
+    setShowFilters(prev => !prev)
+  }
 
   return (
     <div className="space-y-6">
@@ -143,13 +148,27 @@ const Credit = () => {
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <span>Transaction History</span>
-            <TransactionFilters 
-              filters={filters}
-              onFilterChange={handleFilterChange}
-            />
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={toggleFilters}
+              className="flex items-center gap-1"
+            >
+              <SlidersHorizontal className="h-4 w-4" />
+              {showFilters ? "Hide Filters" : "Show Filters"}
+              {showFilters ? <ChevronUp className="h-4 w-4 ml-1" /> : <ChevronDown className="h-4 w-4 ml-1" />}
+            </Button>
           </CardTitle>
         </CardHeader>
         <CardContent>
+          {showFilters && (
+            <div className="mb-4">
+              <TransactionFilters 
+                filters={filters}
+                onFilterChange={handleFilterChange}
+              />
+            </div>
+          )}
           <div className="space-y-4">
             {filteredTransactions.length === 0 ? (
               <div className="text-center py-6 text-muted-foreground">
