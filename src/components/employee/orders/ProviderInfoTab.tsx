@@ -152,8 +152,8 @@ export const ProviderInfoTab = ({ provider, car, pickupLocation, dropoffLocation
         </CardHeader>
         <CardContent>
           <ProviderLiveMap 
-            providerId={provider.id}
             providerName={provider.name}
+            providerLocation={provider.location}
             pickupLocation={pickupCoordinates}
             dropoffLocation={dropoffCoordinates}
           />
