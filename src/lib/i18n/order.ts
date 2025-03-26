@@ -41,7 +41,10 @@ export const orderTranslations = {
     modelYear: "Model Year",
     vin: "VIN",
     status: "Status",
-    companyName: "Company Name"
+    companyName: "Company Name",
+    noProviderAccepted: "No Provider Accepted",
+    noProviderFound: "No Provider Found",
+    serviceType: "Service Type"
   },
   ar: {
     orderManagement: "إدارة الطلبات",
@@ -84,6 +87,9 @@ export const orderTranslations = {
     modelYear: "سنة الصنع",
     vin: "رقم الهيكل",
     status: "الحالة",
-    companyName: "اسم الشركة"
+    companyName: "اسم الشركة",
+    noProviderAccepted: "لم يقبل أي مزود",
+    noProviderFound: "لم يتم العثور على مزود",
+    serviceType: "نوع الخدمة"
   }
 }

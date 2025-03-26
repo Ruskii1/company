@@ -1,4 +1,3 @@
-
 export const commonTranslations = {
   en: {
     customerPortal: "Customer Portal",
@@ -18,6 +17,7 @@ export const commonTranslations = {
     
     // Added translations for employee home page
     notifications: "Notifications",
+    criticalAlerts: "Critical Alerts",
     totalRequests: "Total Requests",
     pastTodayFutureRequests: "Past, today, and future requests",
     openTickets: "Open Tickets",
@@ -72,6 +72,7 @@ export const commonTranslations = {
     
     // Added translations for employee home page
     notifications: "الإشعارات",
+    criticalAlerts: "تنبيهات حرجة",
     totalRequests: "مجموع الطلبات",
     pastTodayFutureRequests: "الطلبات السابقة واليوم والمستقبلية",
     openTickets: "التذاكر المفتوحة",
