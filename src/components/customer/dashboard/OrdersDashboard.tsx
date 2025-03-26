@@ -8,7 +8,7 @@ export const OrdersDashboard = () => {
   const { language } = useLanguageStore()
   const t = translations[language]
   
-  // Sample orders data
+  // Sample orders data with standardized task IDs
   const [orders] = useState<any[]>([
     {
       id: '1001',

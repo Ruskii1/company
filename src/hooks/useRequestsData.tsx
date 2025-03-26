@@ -16,11 +16,11 @@ export const useRequestsData = () => {
       try {
         setLoading(true);
         
-        // Mock requests data
+        // Mock requests data with standardized task IDs
         const mockRequests: Request[] = [
           {
             id: "req-001",
-            taskId: "TASK-1001",
+            taskId: "2025-001",
             companyName: "TechCorp LLC",
             employeeName: "Ahmed Al-Rashid",
             serviceType: "Regular Towing",
@@ -35,7 +35,7 @@ export const useRequestsData = () => {
           },
           {
             id: "req-002",
-            taskId: "TASK-1002",
+            taskId: "2025-002",
             companyName: "GlobalTrade Inc.",
             employeeName: "Mohammed Al-Qahtani",
             serviceType: "Battery Jumpstart",
@@ -50,7 +50,7 @@ export const useRequestsData = () => {
           },
           {
             id: "req-003",
-            taskId: "TASK-1003",
+            taskId: "2025-003",
             companyName: "SmartSolutions SA",
             employeeName: "Khalid Al-Harbi",
             serviceType: "Tire Change",
@@ -65,7 +65,7 @@ export const useRequestsData = () => {
           },
           {
             id: "req-004",
-            taskId: "TASK-1004",
+            taskId: "2025-004",
             companyName: "InnovateX Ltd",
             employeeName: "Samir Al-Otaibi",
             serviceType: "Fuel Delivery",
@@ -80,7 +80,7 @@ export const useRequestsData = () => {
           },
           {
             id: "req-005",
-            taskId: "TASK-1005",
+            taskId: "2025-005",
             companyName: "QualityServices LLC",
             employeeName: "Faisal Al-Ghamdi",
             serviceType: "Key Lockout",
@@ -95,7 +95,7 @@ export const useRequestsData = () => {
           },
           {
             id: "req-006",
-            taskId: "TASK-1006",
+            taskId: "2025-006",
             companyName: "Desert Enterprises",
             employeeName: "Omar Al-Shamrani",
             serviceType: "Flatbed Towing",

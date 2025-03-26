@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLanguageStore, translations } from "@/lib/i18n";
 import { Activity, Ticket, Calendar, Clock } from "lucide-react";
@@ -33,11 +32,11 @@ export function RecentActivities() {
   const { language } = useLanguageStore();
   const t = translations[language];
   
-  // Mock requests data
+  // Mock requests data with standardized task IDs
   const requests: Request[] = [
     {
       id: "req-001",
-      taskId: "TASK-1001",
+      taskId: "2025-001",
       serviceType: "Regular Towing",
       pickupTime: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(), // Yesterday
       pickupLocation: "123 Main St, Riyadh",
@@ -46,7 +45,7 @@ export function RecentActivities() {
     },
     {
       id: "req-002",
-      taskId: "TASK-1002",
+      taskId: "2025-002",
       serviceType: "Battery Jumpstart",
       pickupTime: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
       pickupLocation: "789 Business Blvd, Jeddah",
@@ -55,7 +54,7 @@ export function RecentActivities() {
     },
     {
       id: "req-003",
-      taskId: "TASK-1003",
+      taskId: "2025-003",
       serviceType: "Tire Change",
       pickupTime: new Date(Date.now() + 1 * 60 * 60 * 1000).toISOString(), // In 1 hour
       pickupLocation: "555 Park Dr, Dammam",
