@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { Badge } from "@/components/ui/badge"
 
 interface Request {
   id: string
@@ -54,12 +55,13 @@ export const RequestsTable = ({ requests }: RequestsTableProps) => {
           {requests.map((request) => (
             <TableRow key={request.id}>
               <TableCell>
-                <button 
+                <Badge 
+                  variant="outline" 
+                  className="font-mono text-xs cursor-pointer hover:bg-accent"
                   onClick={() => handleRequestClick(request.taskId)}
-                  className="text-blue-600 hover:underline"
                 >
                   {request.taskId}
-                </button>
+                </Badge>
               </TableCell>
               <TableCell>{request.serviceType}</TableCell>
               <TableCell>{request.pickupTime}</TableCell>
