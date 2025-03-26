@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLanguageStore, translations } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Clock, CalendarCheck, CalendarX, Wallet } from "lucide-react";
+import { ChevronRight, Clock, Calendar, History, Wallet } from "lucide-react";
 import { useRequestsData } from "@/hooks/useRequestsData";
 import { Link } from "react-router-dom";
 
@@ -26,7 +26,7 @@ export function CustomerOverview() {
           <CardContent>
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <CalendarX className="h-4 w-4 text-muted-foreground" />
+                <History className="h-4 w-4 text-muted-foreground" />
                 <span className="text-2xl font-bold">{pastRequests.length}</span>
               </div>
               <Button variant="ghost" size="icon" asChild>
@@ -68,7 +68,7 @@ export function CustomerOverview() {
           <CardContent>
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <CalendarCheck className="h-4 w-4 text-muted-foreground" />
+                <Calendar className="h-4 w-4 text-muted-foreground" />
                 <span className="text-2xl font-bold">{futureRequests.length}</span>
               </div>
               <Button variant="ghost" size="icon" asChild>

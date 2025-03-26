@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLanguageStore, translations } from "@/lib/i18n";
-import { Activity, Ticket, Calendar } from "lucide-react";
+import { Activity, Ticket, Calendar, Clock } from "lucide-react";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 
@@ -94,7 +94,7 @@ export function RecentActivities() {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center">
-          <Activity className="mr-2 h-5 w-5" />
+          <Clock className="mr-2 h-5 w-5" />
           {t.recentActivities}
         </CardTitle>
       </CardHeader>
