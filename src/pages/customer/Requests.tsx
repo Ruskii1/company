@@ -1,5 +1,5 @@
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useLanguageStore, translations } from '@/lib/i18n'
@@ -9,16 +9,31 @@ import { NoRequestsMessage } from '@/components/customer/NoRequestsMessage'
 import { useRequestsData } from '@/hooks/useRequestsData'
 import { RequestFilter } from '@/components/customer/RequestFilter'
 import { serviceTypeValues } from '@/components/forms/ServiceTypeField'
+import { useLocation } from 'react-router-dom'
 
 const Requests = () => {
   const { language } = useLanguageStore()
   const t = translations[language]
-  const [activeTab, setActiveTab] = useState('today')
+  const location = useLocation()
+  
+  // Get the tab from URL query parameters
+  const getInitialTab = () => {
+    const searchParams = new URLSearchParams(location.search)
+    const tab = searchParams.get('tab')
+    return tab === 'past' || tab === 'today' || tab === 'future' ? tab : 'today'
+  }
+  
+  const [activeTab, setActiveTab] = useState(getInitialTab)
   const { pastRequests, todayRequests, futureRequests } = useRequestsData()
   const [filters, setFilters] = useState({
     requestNumber: '',
     serviceType: ''
   })
+
+  // Update the active tab when the URL query parameter changes
+  useEffect(() => {
+    setActiveTab(getInitialTab())
+  }, [location.search])
 
   // Filter requests based on current filters
   const filterRequests = (requests) => {
