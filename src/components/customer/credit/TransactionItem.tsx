@@ -53,7 +53,7 @@ export const TransactionItem = ({
           onClick={() => onDownloadTransaction(transaction)}
         >
           <Download className="h-3 w-3" />
-          Download
+          Download PDF
         </Button>
       </div>
     </div>
