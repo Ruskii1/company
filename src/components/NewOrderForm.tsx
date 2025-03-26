@@ -45,7 +45,7 @@ export const NewOrderForm = () => {
         pickupTime: format(values.pickupDate, "yyyy-MM-dd'T'HH:mm:ss"),
         pickupLocation: values.pickupLocation,
         dropoffLocation: values.dropoffLocation,
-        status: 'Pending',
+        status: 'Scheduled', // Updated to use the enum value directly
         notes: values.notes || '',
         car: {
           model: values.carModel,

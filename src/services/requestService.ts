@@ -74,7 +74,8 @@ export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Pr
       pickup_time: request.pickupTime,
       pickup_location: request.pickupLocation,
       dropoff_location: request.dropoffLocation,
-      status: request.status || 'Scheduled', // Default to Scheduled if not specified
+      // Cast the status string to the enum type
+      status: 'Scheduled', // Default to Scheduled for new requests
       notes: request.notes,
       city: request.city,
       provider_id: request.providerId,
