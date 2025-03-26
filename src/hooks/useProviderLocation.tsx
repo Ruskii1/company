@@ -138,7 +138,7 @@ export function useProviderLocation(providerId: string | undefined) {
       )
       .subscribe((status) => {
         console.log(`Subscription status: ${status}`);
-        // Fix: This is the corrected way to check subscription error
+        // Fixed: This is the corrected way to check subscription status
         if (status === 'SUBSCRIBED') {
           console.log('Successfully subscribed to location updates');
         } else if (status === 'CHANNEL_ERROR') {

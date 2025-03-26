@@ -37,15 +37,7 @@ export const useMapMarkers = ({
   const providerMarker = useRef<mapboxgl.Marker | null>(null);
   const pickupMarker = useRef<mapboxgl.Marker | null>(null);
   const dropoffMarker = useRef<mapboxgl.Marker | null>(null);
-  const routeLine = useRef<mapboxgl.GeoJSONSource | null>(null);
-
-  // Initialize route source reference
-  useEffect(() => {
-    if (!map || !mapInitialized) return;
-
-    routeLine.current = map.getSource('route') as mapboxgl.GeoJSONSource;
-  }, [mapInitialized, map]);
-
+  
   // Update markers and route when locations change
   useEffect(() => {
     if (!map || !mapInitialized) return;
@@ -66,9 +58,9 @@ export const useMapMarkers = ({
           // Update rotation based on heading if available
           if (providerLocation.heading !== undefined) {
             const el = providerMarker.current.getElement();
-            const arrow = el.querySelector('div');
+            const arrow = el.querySelector('div:nth-child(2)');
             if (arrow) {
-              arrow.style.transform = `translateX(-50%) rotate(${providerLocation.heading}deg)`;
+              arrow.setAttribute('style', `position: absolute; top: -15px; left: 50%; transform: translateX(-50%) rotate(${providerLocation.heading}deg);`);
             }
           }
         }
@@ -111,10 +103,10 @@ export const useMapMarkers = ({
       dropoffMarker.current = null;
     }
     
-    // Update route line if we have provider location and destination points
-    if (routeLine.current && providerLocation) {
+    // Update route lines if we have provider location and destination points
+    if (map && providerLocation) {
       updateRouteLine(
-        routeLine.current, 
+        map, 
         [providerLocation, pickupLocation, dropoffLocation]
       );
     }

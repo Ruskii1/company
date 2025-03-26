@@ -1,53 +1,32 @@
+
 import mapboxgl from 'mapbox-gl';
 
-// Use the Mapbox token from our code
-const MAPBOX_TOKEN = 'pk.eyJ1IjoibWVzaGFyaXNoIiwiYSI6ImNtOG1mMzBtMzE4Z2kyaXNlbnFkamtyOGIifQ.iOVBnnIexOXqR8oHq2H00w';
-
 /**
- * Initializes a Mapbox map instance with default settings
+ * Initialize a new mapbox map
  */
-export const initializeMap = (
-  container: HTMLDivElement,
-  initialCenter: [number, number]
-): mapboxgl.Map => {
-  // Initialize Mapbox with token
-  mapboxgl.accessToken = MAPBOX_TOKEN;
+export const initializeMap = (container: HTMLDivElement, center: [number, number]) => {
+  mapboxgl.accessToken = 'pk.eyJ1IjoibWVzaGFyaXNoIiwiYSI6ImNtOG1mMzBtMzE4Z2kyaXNlbnFkamtyOGIifQ.iOVBnnIexOXqR8oHq2H00w';
   
-  // Create map instance
   const map = new mapboxgl.Map({
-    container: container,
+    container,
     style: 'mapbox://styles/mapbox/streets-v12',
-    center: initialCenter,
-    zoom: 15, // Start with a closer zoom level
-    attributionControl: false,
-    dragRotate: false, // Disable 3D rotation for simpler UI
-    pitchWithRotate: false // Disable pitch with rotate
+    center,
+    zoom: 10,
   });
-
-  // Add minimal controls - only zoom
-  map.addControl(
-    new mapboxgl.NavigationControl({ showCompass: false }), 
-    'top-right'
-  );
-  map.addControl(
-    new mapboxgl.AttributionControl({ compact: true })
-  );
   
-  // Disable map rotation to keep UI simple
-  map.dragRotate.disable();
-  map.touchZoomRotate.disableRotation();
+  // Add navigation controls
+  map.addControl(new mapboxgl.NavigationControl(), 'top-right');
   
   return map;
 };
 
 /**
- * Sets up map event listeners and sources
+ * Set up map sources and layers for routing
  */
-export const setupMapSources = (map: mapboxgl.Map, onMapLoad: () => void): void => {
-  // Set up event listeners
+export const setupMapSources = (map: mapboxgl.Map, onComplete: () => void) => {
   map.on('load', () => {
-    // Add route source when map loads
-    map.addSource('route', {
+    // Add source for provider-to-pickup route
+    map.addSource('route-provider-to-pickup', {
       type: 'geojson',
       data: {
         type: 'Feature',
@@ -59,51 +38,76 @@ export const setupMapSources = (map: mapboxgl.Map, onMapLoad: () => void): void 
       }
     });
     
+    // Add source for pickup-to-dropoff route
+    map.addSource('route-pickup-to-dropoff', {
+      type: 'geojson',
+      data: {
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'LineString',
+          coordinates: []
+        }
+      }
+    });
+    
+    // Add layer for provider-to-pickup route (blue)
     map.addLayer({
-      id: 'route',
+      id: 'route-provider-to-pickup-line',
       type: 'line',
-      source: 'route',
+      source: 'route-provider-to-pickup',
       layout: {
         'line-join': 'round',
         'line-cap': 'round'
       },
       paint: {
-        'line-color': '#4338ca',
+        'line-color': '#1EAEDB', // Blue
         'line-width': 4,
-        'line-opacity': 0.8
+        'line-opacity': 0.75
       }
     });
     
-    onMapLoad();
+    // Add layer for pickup-to-dropoff route (red)
+    map.addLayer({
+      id: 'route-pickup-to-dropoff-line',
+      type: 'line',
+      source: 'route-pickup-to-dropoff',
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'round'
+      },
+      paint: {
+        'line-color': '#ea384c', // Red
+        'line-width': 4,
+        'line-opacity': 0.75
+      }
+    });
+    
+    onComplete();
   });
 };
 
 /**
- * Fits the map bounds to show all markers
+ * Fit the map bounds to include all relevant markers
  */
 export const fitMapBounds = (
   map: mapboxgl.Map,
-  locations: Array<{ lng: number; lat: number } | undefined>
-): void => {
-  try {
-    const validLocations = locations.filter(Boolean) as { lng: number; lat: number }[];
-    
-    if (validLocations.length === 0) return;
-    
-    const bounds = new mapboxgl.LngLatBounds();
-    
-    validLocations.forEach(location => {
-      bounds.extend([location.lng, location.lat]);
-    });
-    
-    if (!bounds.isEmpty()) {
-      map.fitBounds(bounds, {
-        padding: { top: 40, bottom: 40, left: 40, right: 40 },
-        maxZoom: 16,
-        duration: 500
-      });
-    }
-  } catch (error) {
-    console.error('Error fitting bounds:', error);
-  }
+  points: Array<{ lng: number; lat: number } | undefined>
+) => {
+  const validPoints = points.filter(Boolean) as Array<{ lng: number; lat: number }>;
+  
+  if (validPoints.length === 0) return;
+  
+  const bounds = new mapboxgl.LngLatBounds();
+  
+  // Add all points to bounds
+  validPoints.forEach(point => {
+    bounds.extend([point.lng, point.lat]);
+  });
+  
+  // Add padding around bounds
+  map.fitBounds(bounds, {
+    padding: { top: 50, bottom: 50, left: 50, right: 50 },
+    maxZoom: 14
+  });
 };
