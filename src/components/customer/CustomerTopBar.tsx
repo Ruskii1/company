@@ -1,7 +1,6 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Bell, Home, UserCircle2 } from "lucide-react";
+import { Bell, Home } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useLanguageStore, translations } from "@/lib/i18n";
 import { Link } from "react-router-dom";
@@ -66,18 +65,6 @@ export function CustomerTopBar() {
       >
         <Link to="/">
           <Home className="h-5 w-5" />
-        </Link>
-      </Button>
-      
-      <Button
-        variant="outline"
-        size="icon"
-        asChild
-        className="bg-background hover:bg-accent"
-        title="Go to Employee Portal"
-      >
-        <Link to="/employee">
-          <UserCircle2 className="h-5 w-5" />
         </Link>
       </Button>
       
