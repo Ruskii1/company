@@ -15,7 +15,7 @@ import {
 
 interface DateRangePickerProps {
   date: DateRange | undefined
-  onDateChange: (date: DateRange) => void
+  onDateChange: (date: DateRange | undefined) => void
   className?: string
 }
 
@@ -57,12 +57,9 @@ export function DateRangePicker({
             mode="range"
             defaultMonth={date?.from}
             selected={date}
-            onSelect={(selectedDate) => {
-              if (selectedDate) {
-                onDateChange(selectedDate)
-              }
-            }}
+            onSelect={onDateChange}
             numberOfMonths={2}
+            className="pointer-events-auto"
           />
         </PopoverContent>
       </Popover>

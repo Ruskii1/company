@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { format } from 'date-fns'
 import { DateRangePicker } from '@/components/ui/date-range-picker'
 import { addDays } from 'date-fns'
+import { DateRange } from 'react-day-picker'
 
 interface Transaction {
   id: string
@@ -51,8 +52,8 @@ const Credit = () => {
   const { toast } = useToast()
   const fileInputRef = useRef<HTMLInputElement>(null)
   
-  // Filtering state
-  const [dateRange, setDateRange] = useState({
+  // Filtering state - modified to use DateRange type
+  const [dateRange, setDateRange] = useState<DateRange>({
     from: addDays(new Date(), -30),
     to: new Date(),
   })
@@ -113,7 +114,7 @@ const Credit = () => {
   // Filter transactions based on date range and type
   const filteredTransactions = transactions.filter(transaction => {
     const dateMatches = (!dateRange.from || transaction.date >= dateRange.from) && 
-                        (!dateRange.to || transaction.date <= dateRange.to)
+                       (!dateRange.to || transaction.date <= dateRange.to)
     const typeMatches = transactionType === 'all' || transaction.type === transactionType
     
     return dateMatches && typeMatches
