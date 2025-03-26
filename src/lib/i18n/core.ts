@@ -176,3 +176,72 @@ export const useLanguageStore = create<{
   language: "en",
   setLanguage: (language) => set(() => ({ language })),
 }));
+
+export type Translations = {
+  dashboard: {
+    previousRequests: string;
+    currentRequests: string;
+    scheduledRequests: string;
+    companyBalance: string;
+    recentActivities: string;
+    notifications: string;
+    requestsNeedAttention: string;
+    youHave: string;
+    requestsNeedingUpdate: string;
+    viewRequests: string;
+    upcomingRequests: string;
+    requestsInNextTwoHours: string;
+    noRecentActivities: string;
+    ticketStatus: string;
+    attention: string;
+    soon: string;
+    waitingForProvider: string;
+    upcomingRequest: string;
+  };
+};
+
+export const baseTranslations: Translations = {
+  dashboard: {
+    previousRequests: 'Previous Requests',
+    currentRequests: 'Current Requests',
+    scheduledRequests: 'Scheduled Requests',
+    companyBalance: 'Company Balance',
+    recentActivities: 'Recent Activities',
+    notifications: 'Notifications',
+    requestsNeedAttention: 'Requests Need Attention',
+    youHave: 'You have',
+    requestsNeedingUpdate: 'requests that need your attention.',
+    viewRequests: 'View Requests',
+    upcomingRequests: 'Upcoming Requests',
+    requestsInNextTwoHours: 'requests scheduled in the next 2 hours.',
+    noRecentActivities: 'No recent activities',
+    ticketStatus: 'Status',
+    attention: 'Attention',
+    soon: 'Soon',
+    waitingForProvider: 'Waiting for provider',
+    upcomingRequest: 'Upcoming soon',
+  },
+};
+
+export const arabicTranslations: Partial<Translations> = {
+  dashboard: {
+    previousRequests: 'الطلبات السابقة',
+    currentRequests: 'الطلبات الحالية',
+    scheduledRequests: 'الطلبات المجدولة',
+    companyBalance: 'رصيد الشركة',
+    recentActivities: 'الأنشطة الأخيرة',
+    notifications: 'الإشعارات',
+    requestsNeedAttention: 'طلبات تحتاج اهتمام',
+    youHave: '��ديك',
+    requestsNeedingUpdate: 'طلبات تحتاج إلى اهتمامك.',
+    viewRequests: 'عرض الطلبات',
+    upcomingRequests: 'الطلبات القادمة',
+    requestsInNextTwoHours: 'طلبات مجدولة في الساعتين القادمتين.',
+    noRecentActivities: 'لا توجد أنشطة حديثة',
+    ticketStatus: 'الحالة',
+    attention: 'انتباه',
+    soon: 'قريباً',
+    waitingForProvider: 'في انتظار المزود',
+    upcomingRequest: 'قادم قريباً',
+  },
+};

@@ -1,37 +1,50 @@
 
-import { useLanguageStore } from './core'
-import { commonTranslations } from './common'
-import { profileTranslations } from './profile'
-import { securityTranslations } from './security'
-import { providerTranslations } from './providers'
-import { paymentTranslations } from './payment'
-import { orderTranslations } from './order'
-import { serviceTranslations } from './services'
+import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
+import {
+  Translations,
+  baseTranslations,
+  arabicTranslations,
+} from './core';
 
-// Merge all translations into a single object
-const mergeTranslations = () => {
-  return {
-    en: {
-      ...commonTranslations.en,
-      ...profileTranslations.en,
-      ...securityTranslations.en,
-      ...providerTranslations.en,
-      ...paymentTranslations.en,
-      ...orderTranslations.en,
-      ...serviceTranslations.en,
-    },
-    ar: {
-      ...commonTranslations.ar,
-      ...profileTranslations.ar,
-      ...securityTranslations.ar,
-      ...providerTranslations.ar,
-      ...paymentTranslations.ar,
-      ...orderTranslations.ar,
-      ...serviceTranslations.ar,
+// Define language type
+export type Language = 'en' | 'ar';
+
+// Define language store state
+type LanguageState = {
+  language: Language;
+  setLanguage: (language: Language) => void;
+};
+
+// Create language store
+export const useLanguageStore = create<LanguageState>()(
+  persist(
+    (set) => ({
+      language: 'en',
+      setLanguage: (language) => set({ language }),
+    }),
+    {
+      name: 'language-storage',
+      storage: createJSONStorage(() => localStorage),
     }
-  }
-}
+  )
+);
 
-// Export the merged translations as the main translations object
-export const translations = mergeTranslations()
-export { useLanguageStore }
+// Create translations object with all translations
+export const translations: Record<Language, Translations> = {
+  en: baseTranslations,
+  ar: {
+    ...baseTranslations,
+    ...arabicTranslations,
+  },
+};
+
+// Make the translations available globally
+export * from './core';
+export * from './common';
+export * from './services';
+export * from './security';
+export * from './order';
+export * from './profile';
+export * from './payment';
+export * from './providers';
