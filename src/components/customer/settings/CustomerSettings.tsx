@@ -23,7 +23,7 @@ export function CustomerSettings() {
         <TabsList className="grid grid-cols-2 w-full max-w-2xl">
           <TabsTrigger value="security" className="flex items-center gap-2">
             <Lock className="h-4 w-4" />
-            <span>{t.security}</span>
+            <span>Security Settings</span>
           </TabsTrigger>
           <TabsTrigger value="preferences" className="flex items-center gap-2">
             <Settings className="h-4 w-4" />
