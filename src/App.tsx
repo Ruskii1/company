@@ -2,7 +2,6 @@
 import { Toaster } from "@/components/ui/toaster"
 import { Toaster as Sonner } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { RouterProvider } from 'react-router-dom'
 import { createBrowserRouter } from 'react-router-dom'
 import CustomerPortal from './pages/customer/Index'
@@ -29,12 +28,8 @@ import { ThemeProvider } from './lib/theme'
 import CustomerSignIn from './pages/auth/CustomerSignIn'
 import EmployeeSignIn from './pages/auth/EmployeeSignIn'
 import { CustomerSettings } from './components/customer/settings/CustomerSettings'
-import { AuthProvider } from './lib/auth'
 
-const queryClient = new QueryClient()
-
-// Create the router configuration with AuthProvider wrapped INSIDE each route component
-// This ensures the AuthProvider is inside the Router context, not outside it
+// Create the router configuration with components that need router context
 const router = createBrowserRouter([
   {
     path: '/signin/customer',
@@ -121,17 +116,13 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <AuthProvider>
-            <RouterProvider router={router} />
-          </AuthProvider>
-        </TooltipProvider>
-      </ThemeProvider>
-    </QueryClientProvider>
+    <ThemeProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <RouterProvider router={router} />
+      </TooltipProvider>
+    </ThemeProvider>
   )
 }
 
