@@ -39,7 +39,9 @@ export const orderTranslations = {
     model: "Model",
     type: "Type",
     modelYear: "Model Year",
-    vin: "VIN"
+    vin: "VIN",
+    status: "Status",
+    companyName: "Company Name"
   },
   ar: {
     orderManagement: "إدارة الطلبات",
@@ -80,6 +82,8 @@ export const orderTranslations = {
     model: "الطراز",
     type: "النوع",
     modelYear: "سنة الصنع",
-    vin: "رقم الهيكل"
+    vin: "رقم الهيكل",
+    status: "الحالة",
+    companyName: "اسم الشركة"
   }
 }
