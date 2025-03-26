@@ -6,15 +6,20 @@ import { TicketsList } from '@/components/customer/tickets/TicketsList'
 import { TicketDetail } from '@/components/customer/tickets/TicketDetail'
 import { TicketForm } from '@/components/customer/tickets/TicketForm'
 import { useCustomerTickets } from '@/hooks/useCustomerTickets'
+import { CustomerTicket } from '@/types/customerTicket'
 
 const Tickets = () => {
   const { language } = useLanguageStore()
   const t = translations[language]
   const { tickets, addTicket, addReply } = useCustomerTickets()
-  const [activeTicket, setActiveTicket] = useState(null)
+  const [activeTicket, setActiveTicket] = useState<CustomerTicket | null>(null)
 
-  const viewTicket = (ticket) => {
+  const viewTicket = (ticket: CustomerTicket) => {
     setActiveTicket(ticket)
+  }
+
+  const handleSubmitTicket = (title: string, description: string, attachments: File[]) => {
+    addTicket(title, description, attachments)
   }
 
   return (
@@ -42,7 +47,7 @@ const Tickets = () => {
           </TabsContent>
           
           <TabsContent value="new-ticket" className="space-y-4 pt-4">
-            <TicketForm onSubmit={addTicket} />
+            <TicketForm onSubmit={handleSubmitTicket} />
           </TabsContent>
         </Tabs>
       )}

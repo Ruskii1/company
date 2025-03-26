@@ -1,7 +1,8 @@
 
 import { useState } from 'react'
-import { CustomerTicket, TicketReply } from '@/types/customerTicket'
+import { CustomerTicket, TicketReply, TicketAttachment } from '@/types/customerTicket'
 import { useToast } from '@/hooks/use-toast'
+import { v4 as uuidv4 } from 'uuid'
 
 // Initial mock tickets
 const initialTickets: CustomerTicket[] = [
@@ -45,18 +46,51 @@ const initialTickets: CustomerTicket[] = [
   }
 ]
 
+// Mock function to simulate file uploads
+const uploadFile = async (file: File): Promise<TicketAttachment> => {
+  // In a real implementation, this would upload to a server or storage service
+  return new Promise((resolve) => {
+    // Simulate network delay
+    setTimeout(() => {
+      resolve({
+        id: uuidv4(),
+        fileName: file.name,
+        fileType: file.type,
+        fileUrl: URL.createObjectURL(file), // This creates a temporary URL for preview
+        uploadedAt: new Date()
+      })
+    }, 500)
+  })
+}
+
 export function useCustomerTickets() {
   const [tickets, setTickets] = useState<CustomerTicket[]>(initialTickets)
   const { toast } = useToast()
 
-  const addTicket = (title: string, description: string) => {
+  const addTicket = async (title: string, description: string, files: File[] = []) => {
+    // Handle file attachments if provided
+    let attachments: TicketAttachment[] = []
+    if (files.length > 0) {
+      try {
+        // Upload files and get attachment metadata
+        attachments = await Promise.all(files.map(file => uploadFile(file)))
+      } catch (error) {
+        toast({
+          title: "Upload Error",
+          description: "There was an error uploading your files. Please try again.",
+          variant: "destructive"
+        })
+      }
+    }
+
     const newTicket: CustomerTicket = {
       id: `ticket#${1000 + tickets.length + 1}`,
       title,
       description,
       status: 'open',
       createdAt: new Date(),
-      replies: []
+      replies: [],
+      attachments: attachments.length > 0 ? attachments : undefined
     }
     
     setTickets([...tickets, newTicket])

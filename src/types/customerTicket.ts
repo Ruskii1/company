@@ -7,6 +7,14 @@ export interface TicketReply {
   createdAt: Date
 }
 
+export interface TicketAttachment {
+  id: string
+  fileName: string
+  fileType: string
+  fileUrl: string
+  uploadedAt: Date
+}
+
 export interface CustomerTicket {
   id: string
   title: string
@@ -14,4 +22,5 @@ export interface CustomerTicket {
   status: TicketStatus
   createdAt: Date
   replies?: TicketReply[]
+  attachments?: TicketAttachment[]
 }
