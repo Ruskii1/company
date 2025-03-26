@@ -25,6 +25,7 @@ export const ProviderLiveMap = ({ providerLocation: initialLocation, providerId,
   const map = useRef<mapboxgl.Map | null>(null);
   const marker = useRef<mapboxgl.Marker | null>(null);
   const [mapInitialized, setMapInitialized] = useState(false);
+  const [mapError, setMapError] = useState<string | null>(null);
   
   // Use our custom hook if we have a providerId, otherwise use the prop
   const { 
@@ -41,19 +42,34 @@ export const ProviderLiveMap = ({ providerLocation: initialLocation, providerId,
     if (!mapContainer.current || mapInitialized) return;
 
     try {
+      // Initialize Mapbox with token
       mapboxgl.accessToken = MAPBOX_TOKEN;
       
+      // Create map instance
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/streets-v12',
         center: location ? [location.lng, location.lat] : [45.0792, 23.8859], // Default to Saudi Arabia
-        zoom: 13
+        zoom: 13,
+        attributionControl: false
       });
 
+      // Add navigation controls
       map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
+      map.current.addControl(new mapboxgl.AttributionControl({ compact: true }));
       
-      setMapInitialized(true);
+      // Set up event listeners
+      map.current.on('load', () => {
+        console.log('Map loaded successfully');
+        setMapInitialized(true);
+      });
       
+      map.current.on('error', (e) => {
+        console.error('Map error:', e);
+        setMapError('Failed to load map. Please check your internet connection.');
+      });
+      
+      // Clean up on unmount
       return () => {
         if (map.current) {
           map.current.remove();
@@ -62,12 +78,22 @@ export const ProviderLiveMap = ({ providerLocation: initialLocation, providerId,
       };
     } catch (error) {
       console.error('Error initializing map:', error);
+      setMapError('Failed to initialize map. Please check your console for details.');
     }
-  }, [mapContainer.current, mapInitialized]);
+  }, [mapContainer.current]); // Only run once when mapContainer is available
 
   // Update marker position when location changes
   useEffect(() => {
-    if (!mapInitialized || !map.current || !location) return;
+    if (!mapInitialized || !map.current || !location) {
+      console.log('Cannot update marker, map not ready or no location', {
+        mapInitialized,
+        mapCurrent: !!map.current,
+        location
+      });
+      return;
+    }
+    
+    console.log('Updating marker position to:', location);
     
     // If the marker doesn't exist yet, create it
     if (!marker.current) {
@@ -122,11 +148,27 @@ export const ProviderLiveMap = ({ providerLocation: initialLocation, providerId,
             </AlertDescription>
           </Alert>
         )}
+
+        {mapError && (
+          <Alert variant="destructive" className="mb-4">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>
+              {mapError}
+            </AlertDescription>
+          </Alert>
+        )}
         
         <div 
           ref={mapContainer} 
           className="h-64 rounded-md border overflow-hidden"
+          style={{ position: 'relative' }}
         />
+        
+        {locationLoading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-background/50">
+            <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-primary"></div>
+          </div>
+        )}
         
         {location && (
           <div className="mt-2 text-sm text-muted-foreground">

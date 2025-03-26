@@ -21,6 +21,8 @@ export function useProviderLocation(providerId: string | undefined) {
       return;
     }
 
+    console.log(`Fetching location data for provider: ${providerId}`);
+
     async function fetchInitialLocation() {
       try {
         setLoading(true);
@@ -44,6 +46,7 @@ export function useProviderLocation(providerId: string | undefined) {
             lng: 46.6753,
           });
         } else if (data) {
+          console.log('Got initial location data:', data);
           setLocation({
             lat: data.lat,
             lng: data.lng,
@@ -64,6 +67,7 @@ export function useProviderLocation(providerId: string | undefined) {
     fetchInitialLocation();
 
     // Set up real-time subscription
+    console.log(`Setting up real-time subscription for provider: ${providerId}`);
     const channel = supabase
       .channel('provider-location-changes')
       .on(
@@ -88,10 +92,13 @@ export function useProviderLocation(providerId: string | undefined) {
           }
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        console.log(`Subscription status: ${status}`);
+      });
 
     // Cleanup subscription
     return () => {
+      console.log(`Removing channel for provider: ${providerId}`);
       supabase.removeChannel(channel);
     };
   }, [providerId]);
