@@ -20,7 +20,7 @@ export function CustomerOverview() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              {t.previousRequests}
+              {t.pastRequests}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -30,7 +30,7 @@ export function CustomerOverview() {
                 <span className="text-2xl font-bold">{pastRequests.length}</span>
               </div>
               <Button variant="ghost" size="icon" asChild>
-                <Link to="/customer/requests?tab=past">
+                <Link to="/requests?tab=past">
                   <ChevronRight className="h-4 w-4" />
                 </Link>
               </Button>
@@ -41,7 +41,7 @@ export function CustomerOverview() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              {t.currentRequests}
+              {t.todaysRequests}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -51,7 +51,7 @@ export function CustomerOverview() {
                 <span className="text-2xl font-bold">{todayRequests.length}</span>
               </div>
               <Button variant="ghost" size="icon" asChild>
-                <Link to="/customer/requests?tab=today">
+                <Link to="/requests?tab=today">
                   <ChevronRight className="h-4 w-4" />
                 </Link>
               </Button>
@@ -62,7 +62,7 @@ export function CustomerOverview() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              {t.scheduledRequests}
+              {t.futureRequests}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -72,7 +72,7 @@ export function CustomerOverview() {
                 <span className="text-2xl font-bold">{futureRequests.length}</span>
               </div>
               <Button variant="ghost" size="icon" asChild>
-                <Link to="/customer/requests?tab=future">
+                <Link to="/requests?tab=future">
                   <ChevronRight className="h-4 w-4" />
                 </Link>
               </Button>
@@ -98,7 +98,7 @@ export function CustomerOverview() {
                 </span>
               </div>
               <Button variant="ghost" size="icon" asChild>
-                <Link to="/customer/credit">
+                <Link to="/credit">
                   <ChevronRight className="h-4 w-4" />
                 </Link>
               </Button>

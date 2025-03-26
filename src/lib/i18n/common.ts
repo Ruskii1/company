@@ -49,6 +49,17 @@ export const commonTranslations = {
     upcomingRequest: "Upcoming request",
     requestsRequireImmediate: "These requests require immediate attention to ensure timely service delivery.",
     
+    // Added notifications translations for customer portal
+    requestsNeedAttention: "Requests Need Attention",
+    upcomingRequests: "Upcoming Requests",
+    youHave: "You have",
+    requestsNeedingUpdate: "requests needing your attention",
+    requestsInNextTwoHours: "requests scheduled in the next 2 hours",
+    viewRequests: "View all requests",
+    currentRequests: "Current Requests",
+    scheduledRequests: "Scheduled Requests",
+    companyBalance: "Company Balance",
+    
     // Order management filters
     advancedFilters: "Advanced Filters",
     applyFilters: "Apply Filters",
@@ -114,6 +125,17 @@ export const commonTranslations = {
     soon: "قريباً",
     upcomingRequest: "طلب قادم",
     requestsRequireImmediate: "هذه الطلبات تتطلب اهتمامًا فوريًا لضمان تقديم الخدمة في الوقت المناسب.",
+    
+    // Added notifications translations for customer portal
+    requestsNeedAttention: "طلبات تحتاج الاهتمام",
+    upcomingRequests: "الطلبات القادمة",
+    youHave: "لديك",
+    requestsNeedingUpdate: "طلبات تحتاج إلى اهتمامك",
+    requestsInNextTwoHours: "طلبات مجدولة في الساعتين القادمتين",
+    viewRequests: "عرض جميع الطلبات",
+    currentRequests: "الطلبات الحالية",
+    scheduledRequests: "الطلبات المجدولة",
+    companyBalance: "رصيد الشركة",
     
     // Order management filters
     advancedFilters: "تصفية متقدمة",

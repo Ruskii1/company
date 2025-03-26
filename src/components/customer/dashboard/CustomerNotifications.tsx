@@ -62,10 +62,10 @@ export function CustomerNotifications() {
         {notifications.needsUpdating.length > 0 && (
           <Alert>
             <AlertTriangle className="h-4 w-4" />
-            <AlertTitle>{t.requestsNeedAttention}</AlertTitle>
+            <AlertTitle className="font-medium">{t.requestsNeedAttention}</AlertTitle>
             <AlertDescription>
-              {t.youHave} {notifications.needsUpdating.length} {t.requestsNeedingUpdate}
-              <Link to="/requests" className="block mt-2 text-sm underline">
+              {t.youHave} <span className="font-medium">{notifications.needsUpdating.length}</span> {t.requestsNeedingUpdate}
+              <Link to="/requests?tab=today" className="block mt-2 text-sm underline">
                 {t.viewRequests}
               </Link>
             </AlertDescription>
@@ -75,9 +75,9 @@ export function CustomerNotifications() {
         {notifications.upcoming.length > 0 && (
           <Alert>
             <Clock className="h-4 w-4" />
-            <AlertTitle>{t.upcomingRequests}</AlertTitle>
+            <AlertTitle className="font-medium">{t.upcomingRequests}</AlertTitle>
             <AlertDescription>
-              {t.youHave} {notifications.upcoming.length} {t.requestsInNextTwoHours}
+              {t.youHave} <span className="font-medium">{notifications.upcoming.length}</span> {t.requestsInNextTwoHours}
               <div className="mt-2 space-y-1">
                 {notifications.upcoming.map(request => (
                   <Link 
