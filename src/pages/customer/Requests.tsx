@@ -63,15 +63,15 @@ const Requests = () => {
             <TabsList className="w-full justify-start mb-4">
               <TabsTrigger value="past" className="flex items-center gap-2">
                 <History className="h-4 w-4" />
-                {t.pastRequests}
+                {t.pastRequests} <span className="ml-1 text-xs text-muted-foreground">({filteredPastRequests.length})</span>
               </TabsTrigger>
               <TabsTrigger value="today" className="flex items-center gap-2">
                 <Clock className="h-4 w-4" />
-                {t.todaysRequests}
+                {t.todaysRequests} <span className="ml-1 text-xs text-muted-foreground">({filteredTodayRequests.length})</span>
               </TabsTrigger>
               <TabsTrigger value="future" className="flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
-                {t.futureRequests}
+                {t.futureRequests} <span className="ml-1 text-xs text-muted-foreground">({filteredFutureRequests.length})</span>
               </TabsTrigger>
             </TabsList>
             

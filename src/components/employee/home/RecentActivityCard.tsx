@@ -3,6 +3,7 @@ import { useLanguageStore, translations } from '@/lib/i18n'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { RecentActivityList } from '@/components/employee/home/RecentActivityList'
 import { Activity } from '@/types/activity'
+import { Clock } from 'lucide-react'
 
 interface RecentActivityCardProps {
   activities: Activity[]
@@ -15,7 +16,10 @@ export function RecentActivityCard({ activities }: RecentActivityCardProps) {
   return (
     <Card className="backdrop-blur-sm bg-white/80 dark:bg-gray-800/80">
       <CardHeader>
-        <CardTitle>{t.recentActivity}</CardTitle>
+        <CardTitle className="flex items-center">
+          <Clock className="mr-2 h-5 w-5" />
+          {t.recentActivity}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <RecentActivityList activities={activities} />

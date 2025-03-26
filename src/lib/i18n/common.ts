@@ -47,6 +47,7 @@ export const commonTranslations = {
     attention: "Attention",
     soon: "Soon",
     upcomingRequest: "Upcoming request",
+    requestsRequireImmediate: "These requests require immediate attention to ensure timely service delivery.",
     
     // Order management filters
     advancedFilters: "Advanced Filters",
@@ -112,6 +113,7 @@ export const commonTranslations = {
     attention: "انتباه",
     soon: "قريباً",
     upcomingRequest: "طلب قادم",
+    requestsRequireImmediate: "هذه الطلبات تتطلب اهتمامًا فوريًا لضمان تقديم الخدمة في الوقت المناسب.",
     
     // Order management filters
     advancedFilters: "تصفية متقدمة",
