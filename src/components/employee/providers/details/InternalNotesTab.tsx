@@ -10,7 +10,7 @@ import { Plus } from 'lucide-react';
 
 interface InternalNotesTabProps {
   provider: ServiceProvider;
-  onAddNote: (providerId: string, note: InternalNote) => void;
+  onAddNote: (text: string) => void;
   searchQuery?: string;
 }
 
@@ -20,18 +20,7 @@ export function InternalNotesTab({ provider, onAddNote, searchQuery = '' }: Inte
 
   const handleAddNote = () => {
     if (newNote.trim()) {
-      const note: InternalNote = {
-        id: `note-${Date.now()}`,
-        text: newNote,
-        createdAt: new Date().toISOString(),
-        createdBy: {
-          id: 'emp-001',
-          name: 'Fatima Al-Sulaiman',
-          role: 'Provider Manager'
-        }
-      };
-      
-      onAddNote(provider.id, note);
+      onAddNote(newNote);
       setNewNote('');
       setIsAddingNote(false);
     }

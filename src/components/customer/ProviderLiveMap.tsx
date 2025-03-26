@@ -1,7 +1,7 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { MapPin, AlertCircle } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { MapPin, AlertCircle } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { useProviderLocation } from "@/hooks/useProviderLocation";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import mapboxgl from 'mapbox-gl';
@@ -12,11 +12,12 @@ const MAPBOX_TOKEN = 'pk.eyJ1IjoibWVzaGFyaXNoIiwiYSI6ImNtOG1mMzBtMzE4Z2kyaXNlbnF
 
 interface ProviderLiveMapProps {
   providerLocation?: {
-    lat: number
-    lng: number
-  }
-  providerId?: string
-  providerName: string
+    lat: number;
+    lng: number;
+    updated_at?: string;
+  };
+  providerId?: string;
+  providerName: string;
 }
 
 export const ProviderLiveMap = ({ providerLocation: initialLocation, providerId, providerName }: ProviderLiveMapProps) => {
@@ -140,5 +141,5 @@ export const ProviderLiveMap = ({ providerLocation: initialLocation, providerId,
         )}
       </CardContent>
     </Card>
-  )
-}
+  );
+};

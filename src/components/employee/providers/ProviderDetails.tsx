@@ -65,33 +65,33 @@ export function ProviderDetails({
             </TabsList>
             
             <TabsContent value="orders">
-              <OrdersTab orders={provider.orders} />
+              <OrdersTab provider={provider} />
             </TabsContent>
             
             <TabsContent value="documents">
-              <DocumentsTab documents={provider.documents} />
+              <DocumentsTab provider={provider} />
             </TabsContent>
             
             <TabsContent value="transactions">
-              <TransactionsTab transactions={provider.transactions} />
+              <TransactionsTab provider={provider} />
             </TabsContent>
             
             <TabsContent value="bank-accounts">
               <BankAccountsTab 
-                accounts={provider.bankAccounts} 
+                provider={provider}
                 onAddAccount={handleAddBankAccount} 
               />
             </TabsContent>
             
             <TabsContent value="notes">
               <InternalNotesTab 
-                notes={provider.internalNotes} 
+                provider={provider}
                 onAddNote={handleAddInternalNote} 
               />
             </TabsContent>
             
             <TabsContent value="activity">
-              <ActivityLogTab activityLog={provider.actionLog} />
+              <ActivityLogTab provider={provider} />
             </TabsContent>
             
             <TabsContent value="location">

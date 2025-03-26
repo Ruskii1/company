@@ -1,17 +1,17 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { User, Briefcase, Camera, MapPin, Car } from "lucide-react"
-import { Order } from "@/hooks/useOrderDetailsEmployee"
-import { ProviderLiveMap } from "@/components/customer/ProviderLiveMap"
-import { useLanguageStore } from "@/lib/i18n"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { User, Briefcase, Camera, MapPin, Car } from "lucide-react";
+import { Order } from "@/hooks/useOrderDetailsEmployee";
+import { ProviderLiveMap } from "@/components/customer/ProviderLiveMap";
+import { useLanguageStore } from "@/lib/i18n";
 
 interface ProviderInfoTabProps {
-  provider: Order['provider']
-  car: Order['car']
+  provider: Order['provider'];
+  car: Order['car'];
 }
 
 export const ProviderInfoTab = ({ provider, car }: ProviderInfoTabProps) => {
-  const { language } = useLanguageStore()
+  const { language } = useLanguageStore();
   
   return (
     <div className="space-y-6">
@@ -128,10 +128,9 @@ export const ProviderInfoTab = ({ provider, car }: ProviderInfoTabProps) => {
       </Card>
       
       <ProviderLiveMap 
-        providerId={provider.id}
         providerLocation={provider.location} 
         providerName={provider.name} 
       />
     </div>
-  )
-}
+  );
+};

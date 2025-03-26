@@ -77,12 +77,13 @@ export function useProviderLocation(providerId: string | undefined) {
         (payload) => {
           console.log('Received location update:', payload);
           if (payload.new) {
+            const newData = payload.new as any;
             setLocation({
-              lat: payload.new.lat,
-              lng: payload.new.lng,
-              heading: payload.new.heading,
-              speed: payload.new.speed,
-              updated_at: payload.new.updated_at,
+              lat: newData.lat,
+              lng: newData.lng,
+              heading: newData.heading,
+              speed: newData.speed,
+              updated_at: newData.updated_at,
             });
           }
         }
