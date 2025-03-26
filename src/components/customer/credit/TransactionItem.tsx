@@ -39,10 +39,10 @@ export const TransactionItem = ({
         </div>
       </div>
       <div className="flex flex-col items-end gap-2">
-        <div className={`font-semibold ${
+        <div className={`font-bold ${
           transaction.type === 'credit' 
-            ? 'text-green-600 dark:text-green-400' 
-            : 'text-red-600 dark:text-red-400'
+            ? 'text-emerald-600 dark:text-emerald-400' 
+            : 'text-rose-600 dark:text-rose-400'
         }`}>
           {transaction.type === 'credit' ? '+' : '-'} 
           {formatCurrency(transaction.amount)}
