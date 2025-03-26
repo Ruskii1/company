@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Bell, Home } from "lucide-react";
@@ -61,9 +62,9 @@ export function CustomerTopBar() {
         size="icon"
         asChild
         className="bg-background hover:bg-accent"
-        title="Go to Home"
+        title="Go to Employee Portal"
       >
-        <Link to="/">
+        <Link to="/employee">
           <Home className="h-5 w-5" />
         </Link>
       </Button>
