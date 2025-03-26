@@ -20,4 +20,14 @@ export interface Request {
     licensePlateArabic: string
     vin: string
   }
+  // New fields for enhanced request tracking
+  autoLaunchTime?: string | null
+  assignedAt?: string | null
+  arrivedAt?: string | null
+  completedAt?: string | null
+  cancelledAt?: string | null
+  cancellationReason?: string
+  pickupPhotos?: any[]
+  dropoffPhotos?: any[]
+  manualAssignment?: boolean
 }

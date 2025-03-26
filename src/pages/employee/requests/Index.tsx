@@ -41,14 +41,17 @@ const AllRequestsPage = () => {
     setFilters(data)
   }
 
-  // Define status values
+  // Define status values - updated to match our new enum
   const statusValues = [
-    "Pending", 
-    "Waiting for provider", 
-    "In route", 
-    "Arrived at the pick-up location", 
-    "In service", 
-    "Completed"
+    "Scheduled", 
+    "Waiting for Provider", 
+    "NPA",
+    "NPF",
+    "In Route", 
+    "Arrived at Pickup Location",
+    "In Service", 
+    "Complete",
+    "Cancelled"
   ]
   
   // Combine all requests for the filter component

@@ -38,6 +38,15 @@ export const RequestsTab = ({ requests, tabType }: RequestsTabProps) => {
     }
   }
 
+  // Ensure future requests are displayed as "Scheduled"
+  const processRequestStatus = (request: Request, tabType: string) => {
+    // For backward compatibility - old "Pending" status for future requests should be "Scheduled"
+    if (tabType === 'future' && request.status === 'Pending') {
+      return 'Scheduled';
+    }
+    return request.status;
+  };
+
   return (
     <>
       {requests.length > 0 ? (
@@ -51,7 +60,7 @@ export const RequestsTab = ({ requests, tabType }: RequestsTabProps) => {
           pickupLocation: req.pickupLocation,
           dropoffLocation: req.dropoffLocation,
           notes: req.notes || '',
-          status: tabType === 'future' && req.status === 'Pending' ? 'Scheduled' : req.status
+          status: processRequestStatus(req, tabType)
         }))} />
       ) : (
         <div className="border rounded-md p-4 bg-white dark:bg-gray-700">

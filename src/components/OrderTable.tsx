@@ -11,7 +11,7 @@ import { useLanguageStore, translations } from '@/lib/i18n'
 import { useNavigate } from 'react-router-dom'
 import { MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { StatusBadge } from "@/components/customer/StatusBadge"
 
 interface Order {
   id: string
@@ -42,27 +42,6 @@ export const OrderTable = ({ orders }: OrderTableProps) => {
   const openInGoogleMaps = (location: string) => {
     const encodedLocation = encodeURIComponent(location)
     window.open(`https://www.google.com/maps/search/?api=1&query=${encodedLocation}`, '_blank')
-  }
-
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case 'Pending':
-        return <Badge className="bg-orange-500 text-black">{status}</Badge>
-      case 'Scheduled':
-        return <Badge className="bg-purple-500">{status}</Badge>
-      case 'Waiting for provider':
-        return <Badge className="bg-yellow-500 text-black">{status}</Badge>
-      case 'In route':
-        return <Badge className="bg-blue-500">{status}</Badge>
-      case 'Arrived at the pick-up location':
-        return <Badge className="bg-indigo-500">{status}</Badge>
-      case 'In service':
-        return <Badge className="bg-purple-500">{status}</Badge>
-      case 'Completed':
-        return <Badge className="bg-green-500">{status}</Badge>
-      default:
-        return <Badge>{status}</Badge>
-    }
   }
 
   return (
@@ -136,7 +115,7 @@ export const OrderTable = ({ orders }: OrderTableProps) => {
                   </div>
                 </TableCell>
                 <TableCell>{order.notes}</TableCell>
-                <TableCell>{getStatusBadge(order.status)}</TableCell>
+                <TableCell><StatusBadge status={order.status} /></TableCell>
               </TableRow>
             ))
           )}

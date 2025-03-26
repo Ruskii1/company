@@ -11,54 +11,81 @@ export type Database = {
     Tables: {
       requests: {
         Row: {
+          arrived_at: string | null
+          assigned_at: string | null
+          auto_launch_time: string | null
+          cancellation_reason: string | null
+          cancelled_at: string | null
           car: Json | null
           city: string | null
           company_name: string | null
+          completed_at: string | null
           created_at: string | null
           dropoff_location: string
+          dropoff_photos: Json[] | null
           employee_name: string | null
           id: string
+          manual_assignment: boolean | null
           notes: string | null
           pickup_location: string
+          pickup_photos: Json[] | null
           pickup_time: string
           provider_id: string | null
           provider_phone: string | null
           service_type: string
-          status: string
+          status: Database["public"]["Enums"]["request_status"]
           task_id: string | null
         }
         Insert: {
+          arrived_at?: string | null
+          assigned_at?: string | null
+          auto_launch_time?: string | null
+          cancellation_reason?: string | null
+          cancelled_at?: string | null
           car?: Json | null
           city?: string | null
           company_name?: string | null
+          completed_at?: string | null
           created_at?: string | null
           dropoff_location: string
+          dropoff_photos?: Json[] | null
           employee_name?: string | null
           id?: string
+          manual_assignment?: boolean | null
           notes?: string | null
           pickup_location: string
+          pickup_photos?: Json[] | null
           pickup_time: string
           provider_id?: string | null
           provider_phone?: string | null
           service_type: string
-          status?: string
+          status?: Database["public"]["Enums"]["request_status"]
           task_id?: string | null
         }
         Update: {
+          arrived_at?: string | null
+          assigned_at?: string | null
+          auto_launch_time?: string | null
+          cancellation_reason?: string | null
+          cancelled_at?: string | null
           car?: Json | null
           city?: string | null
           company_name?: string | null
+          completed_at?: string | null
           created_at?: string | null
           dropoff_location?: string
+          dropoff_photos?: Json[] | null
           employee_name?: string | null
           id?: string
+          manual_assignment?: boolean | null
           notes?: string | null
           pickup_location?: string
+          pickup_photos?: Json[] | null
           pickup_time?: string
           provider_id?: string | null
           provider_phone?: string | null
           service_type?: string
-          status?: string
+          status?: Database["public"]["Enums"]["request_status"]
           task_id?: string | null
         }
         Relationships: []
@@ -71,7 +98,16 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      request_status:
+        | "Scheduled"
+        | "Waiting for Provider"
+        | "NPA"
+        | "NPF"
+        | "In Route"
+        | "Arrived at Pickup Location"
+        | "In Service"
+        | "Complete"
+        | "Cancelled"
     }
     CompositeTypes: {
       [_ in never]: never

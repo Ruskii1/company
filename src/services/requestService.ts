@@ -45,11 +45,25 @@ export async function fetchAllRequests(): Promise<Request[]> {
     city: item.city,
     providerId: item.provider_id,
     providerPhone: item.provider_phone,
-    car: extractCarInfo(item.car)
+    car: extractCarInfo(item.car),
+    // Add new metadata fields
+    autoLaunchTime: item.auto_launch_time ? new Date(item.auto_launch_time).toISOString() : null,
+    assignedAt: item.assigned_at ? new Date(item.assigned_at).toISOString() : null,
+    arrivedAt: item.arrived_at ? new Date(item.arrived_at).toISOString() : null,
+    completedAt: item.completed_at ? new Date(item.completed_at).toISOString() : null,
+    cancelledAt: item.cancelled_at ? new Date(item.cancelled_at).toISOString() : null,
+    cancellationReason: item.cancellation_reason || '',
+    pickupPhotos: item.pickup_photos || [],
+    dropoffPhotos: item.dropoff_photos || [],
+    manualAssignment: item.manual_assignment || false
   })) || [];
 }
 
 export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Promise<Request | null> {
+  // Calculate auto_launch_time (30 minutes before pickup time)
+  const pickupDate = new Date(request.pickupTime);
+  const autoLaunchTime = new Date(pickupDate.getTime() - 30 * 60 * 1000);
+
   // Convert from camelCase to snake_case for database
   const { data, error } = await supabase
     .from('requests')
@@ -60,7 +74,7 @@ export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Pr
       pickup_time: request.pickupTime,
       pickup_location: request.pickupLocation,
       dropoff_location: request.dropoffLocation,
-      status: request.status,
+      status: request.status || 'Scheduled', // Default to Scheduled if not specified
       notes: request.notes,
       city: request.city,
       provider_id: request.providerId,
@@ -71,7 +85,9 @@ export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Pr
         licensePlate: request.car.licensePlate,
         licensePlateArabic: request.car.licensePlateArabic,
         vin: request.car.vin
-      } : null
+      } : null,
+      auto_launch_time: autoLaunchTime.toISOString(),
+      manual_assignment: request.manualAssignment || false
     })
     .select()
     .single();
@@ -98,14 +114,54 @@ export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Pr
     city: data.city,
     providerId: data.provider_id,
     providerPhone: data.provider_phone,
-    car: extractCarInfo(data.car)
+    car: extractCarInfo(data.car),
+    autoLaunchTime: data.auto_launch_time ? new Date(data.auto_launch_time).toISOString() : null,
+    assignedAt: data.assigned_at ? new Date(data.assigned_at).toISOString() : null,
+    arrivedAt: data.arrived_at ? new Date(data.arrived_at).toISOString() : null,
+    completedAt: data.completed_at ? new Date(data.completed_at).toISOString() : null,
+    cancelledAt: data.cancelled_at ? new Date(data.cancelled_at).toISOString() : null,
+    cancellationReason: data.cancellation_reason || '',
+    pickupPhotos: data.pickup_photos || [],
+    dropoffPhotos: data.dropoff_photos || [],
+    manualAssignment: data.manual_assignment || false
   };
 }
 
-export async function updateRequestStatus(id: string, status: string): Promise<boolean> {
+export async function updateRequestStatus(id: string, status: string, metadata: Partial<Request> = {}): Promise<boolean> {
+  // Prepare data update object with status
+  const updateData: any = { status };
+  
+  // Add timestamp based on status
+  switch (status) {
+    case 'Waiting for Provider':
+      updateData.auto_launch_time = new Date().toISOString();
+      break;
+    case 'In Route':
+      updateData.assigned_at = new Date().toISOString();
+      break;
+    case 'Arrived at Pickup Location':
+      updateData.arrived_at = new Date().toISOString();
+      break;
+    case 'Complete':
+      updateData.completed_at = new Date().toISOString();
+      break;
+    case 'Cancelled':
+      updateData.cancelled_at = new Date().toISOString();
+      updateData.cancellation_reason = metadata.cancellationReason || '';
+      break;
+  }
+  
+  // Add photos if provided
+  if (metadata.pickupPhotos?.length) {
+    updateData.pickup_photos = metadata.pickupPhotos;
+  }
+  if (metadata.dropoffPhotos?.length) {
+    updateData.dropoff_photos = metadata.dropoffPhotos;
+  }
+
   const { error } = await supabase
     .from('requests')
-    .update({ status })
+    .update(updateData)
     .eq('id', id);
 
   if (error) {
@@ -114,4 +170,8 @@ export async function updateRequestStatus(id: string, status: string): Promise<b
   }
 
   return true;
+}
+
+export async function cancelRequest(id: string, reason: string): Promise<boolean> {
+  return updateRequestStatus(id, 'Cancelled', { cancellationReason: reason });
 }
