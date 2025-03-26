@@ -1,12 +1,13 @@
 
 import { AlertCircle, Navigation } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useProviderLocation } from "@/hooks/useProviderLocation";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { initializeMap, setupMapSources } from "./map/mapInitialization";
 import { useMapMarkers } from "./map/useMapMarkers";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface ProviderLiveMapProps {
   providerLocation?: {
@@ -46,14 +47,15 @@ export const ProviderLiveMap = ({
   const { 
     location: realtimeLocation, 
     loading: locationLoading, 
-    error: locationError 
+    error: locationError,
+    lastUpdated 
   } = useProviderLocation(providerId);
   
   // Determine which location to use - realtime or provided static location
   const location = providerId ? realtimeLocation : initialLocation;
 
   // Initialize the map once when the component mounts
-  useEffect(() => {
+  useState(() => {
     if (!mapContainer.current || map.current) return;
     
     try {
@@ -122,13 +124,13 @@ export const ProviderLiveMap = ({
       <div 
         ref={mapContainer} 
         className="h-64 rounded-md border overflow-hidden relative"
-      />
-      
-      {locationLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-background/50">
-          <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-primary"></div>
-        </div>
-      )}
+      >
+        {locationLoading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-background/50">
+            <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-primary"></div>
+          </div>
+        )}
+      </div>
       
       {location && (
         <div className="mt-2 text-sm text-muted-foreground">
@@ -137,8 +139,10 @@ export const ProviderLiveMap = ({
             <p className="font-medium">{providerName}</p>
           </div>
           
-          {location.updated_at && (
-            <p className="text-xs">Last updated: {new Date(location.updated_at).toLocaleTimeString()}</p>
+          {(location.updated_at || lastUpdated) && (
+            <p className="text-xs">
+              Last updated: {new Date(location.updated_at || lastUpdated || '').toLocaleTimeString()}
+            </p>
           )}
           
           {(location.speed !== undefined || location.heading !== undefined) && (
@@ -148,6 +152,13 @@ export const ProviderLiveMap = ({
               {location.heading !== undefined && `Heading: ${Math.round(location.heading)}°`}
             </p>
           )}
+        </div>
+      )}
+      
+      {!location && !locationLoading && (
+        <div className="mt-2">
+          <Skeleton className="h-4 w-24 mb-2" />
+          <Skeleton className="h-3 w-36" />
         </div>
       )}
     </div>
