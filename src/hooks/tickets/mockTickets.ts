@@ -7,7 +7,7 @@ export const currentUser = 'John Doe';
 // Mock initial tickets
 export const initialTickets: Ticket[] = [
   {
-    id: '1',
+    id: 'ticket#0001',
     title: 'System Login Issue',
     description: 'Users are experiencing intermittent login failures on the provider portal.',
     status: 'open',
@@ -38,7 +38,7 @@ export const initialTickets: Ticket[] = [
     createdBy: 'Mike Johnson'
   },
   {
-    id: '2',
+    id: 'ticket#0002',
     title: 'Payment Processing Delay',
     description: 'Customers reporting delays in payment processing for corporate accounts.',
     status: 'open',
@@ -62,7 +62,7 @@ export const initialTickets: Ticket[] = [
     createdBy: 'Alex Wang'
   },
   {
-    id: '3',
+    id: 'ticket#0003',
     title: 'Driver Scheduling Conflict',
     description: 'Multiple drivers assigned to the same pickup slot.',
     status: 'closed',

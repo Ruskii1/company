@@ -1,4 +1,3 @@
-
 import { useState } from 'react'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'
@@ -36,7 +35,7 @@ const Tickets = () => {
   const [replyContent, setReplyContent] = useState('')
   const [tickets, setTickets] = useState<CustomerTicket[]>([
     {
-      id: 'TKT-1001',
+      id: 'ticket#1001',
       title: 'Late delivery issue',
       description: 'My package was supposed to arrive yesterday but it still hasn\'t been delivered.',
       status: 'open',
@@ -55,7 +54,7 @@ const Tickets = () => {
       ]
     },
     {
-      id: 'TKT-1002',
+      id: 'ticket#1002',
       title: 'Billing question',
       description: 'I have a question about my last invoice. There seems to be an extra charge.',
       status: 'closed',
@@ -88,7 +87,7 @@ const Tickets = () => {
     }
     
     const newTicket: CustomerTicket = {
-      id: `TKT-${1000 + tickets.length + 1}`,
+      id: `ticket#${1000 + tickets.length + 1}`,
       title,
       description,
       status: 'open',

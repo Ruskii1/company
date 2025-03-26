@@ -19,7 +19,7 @@ const initialActivities: Activity[] = [
     description: 'Added note to ticket',
     type: 'ticket',
     entityType: 'Ticket',
-    entityId: '1',
+    entityId: 'ticket#0001',
     timestamp: new Date(Date.now() - 1000 * 60 * 120).toISOString(), // 2 hours ago
     userId: 'employee-1'
   },
@@ -46,7 +46,7 @@ const initialActivities: Activity[] = [
     description: 'Closed ticket',
     type: 'ticket',
     entityType: 'Ticket',
-    entityId: '3',
+    entityId: 'ticket#0003',
     timestamp: new Date(Date.now() - 1000 * 60 * 300).toISOString(), // 5 hours ago
     userId: 'employee-1'
   }

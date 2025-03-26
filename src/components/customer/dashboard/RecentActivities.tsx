@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLanguageStore, translations } from "@/lib/i18n";
 import { Activity, Ticket, Calendar, Clock } from "lucide-react";
@@ -63,16 +64,16 @@ export function RecentActivities() {
     }
   ];
   
-  // Mock tickets data
+  // Mock tickets data with standardized ticket IDs
   const mockTickets: Ticket[] = [
     {
-      id: 'T001',
+      id: 'ticket#0001',
       title: 'Driver was late',
       createdAt: new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString(), // 2 days ago
       status: 'Open'
     },
     {
-      id: 'T002',
+      id: 'ticket#0002',
       title: 'Question about billing',
       createdAt: new Date(Date.now() - 72 * 60 * 60 * 1000).toISOString(), // 3 days ago
       status: 'Closed'

@@ -11,7 +11,7 @@ const initialActivities: Activity[] = [
     description: "New request created by TechCorp LLC",
     timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString(), // 30 minutes ago
     entityType: "Request",
-    entityId: "TASK-1001",
+    entityId: "2025-001",
     userId: "emp-001"
   },
   {
@@ -20,7 +20,7 @@ const initialActivities: Activity[] = [
     description: "Provider assigned to GlobalTrade Inc. request",
     timestamp: new Date(Date.now() - 1.5 * 60 * 60 * 1000).toISOString(), // 1.5 hours ago
     entityType: "Order",
-    entityId: "TASK-1002",
+    entityId: "2025-002",
     userId: "emp-002"
   },
   {
@@ -29,7 +29,7 @@ const initialActivities: Activity[] = [
     description: "Request for SmartSolutions SA marked as completed",
     timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
     entityType: "Order",
-    entityId: "TASK-1003",
+    entityId: "2025-003",
     userId: "emp-001"
   },
   {
@@ -38,7 +38,7 @@ const initialActivities: Activity[] = [
     description: "New support ticket opened by InnovateX Ltd",
     timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(), // 3 hours ago
     entityType: "Ticket",
-    entityId: "TICKET-001",
+    entityId: "ticket#0001",
     userId: "emp-003"
   },
   {
@@ -47,7 +47,7 @@ const initialActivities: Activity[] = [
     description: "Support ticket for QualityServices LLC resolved",
     timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(), // 4 hours ago
     entityType: "Ticket",
-    entityId: "TICKET-002",
+    entityId: "ticket#0002",
     userId: "emp-001"
   }
 ];
