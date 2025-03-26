@@ -7,9 +7,11 @@ import { Calendar, Clock, History } from 'lucide-react'
 import { RequestsTable } from '@/components/customer/RequestsTable'
 import { NoRequestsMessage } from '@/components/customer/NoRequestsMessage'
 import { useRequestsData } from '@/hooks/useRequestsData'
-import { RequestFilter } from '@/components/customer/RequestFilter'
+import { RequestFilter, FilterValues } from '@/components/customer/RequestFilter'
 import { serviceTypeValues } from '@/components/forms/ServiceTypeField'
 import { useLocation } from 'react-router-dom'
+import { parseISO, isSameDay } from 'date-fns'
+import { extractCityFromLocation } from '@/utils/orderManagementUtils'
 
 const Requests = () => {
   const { language } = useLanguageStore()
@@ -25,10 +27,20 @@ const Requests = () => {
   
   const [activeTab, setActiveTab] = useState(getInitialTab)
   const { pastRequests, todayRequests, futureRequests } = useRequestsData()
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<FilterValues>({
     requestNumber: '',
-    serviceType: ''
+    serviceType: '',
+    date: undefined,
+    city: ''
   })
+
+  // Extract unique cities from all requests
+  const allRequests = [...pastRequests, ...todayRequests, ...futureRequests]
+  const uniqueCities = Array.from(new Set(
+    allRequests.map(request => 
+      request.city || extractCityFromLocation(request.pickupLocation)
+    ).filter(Boolean)
+  )).sort()
 
   // Update the active tab when the URL query parameter changes
   useEffect(() => {
@@ -44,8 +56,24 @@ const Requests = () => {
       }
       
       // Filter by service type if provided
-      if (filters.serviceType && request.serviceType !== filters.serviceType) {
+      if (filters.serviceType && filters.serviceType !== 'all' && request.serviceType !== filters.serviceType) {
         return false
+      }
+      
+      // Filter by date if provided
+      if (filters.date) {
+        const requestDate = parseISO(request.pickupTime)
+        if (!isSameDay(requestDate, filters.date)) {
+          return false
+        }
+      }
+      
+      // Filter by city if provided
+      if (filters.city && filters.city !== 'all') {
+        const requestCity = request.city || extractCityFromLocation(request.pickupLocation)
+        if (!requestCity.toLowerCase().includes(filters.city.toLowerCase())) {
+          return false
+        }
       }
       
       return true
@@ -72,6 +100,7 @@ const Requests = () => {
           <RequestFilter 
             onFilterChange={handleFilterChange} 
             serviceTypeValues={serviceTypeValues}
+            cityValues={uniqueCities}
           />
           
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full mt-4">
