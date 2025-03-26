@@ -6,11 +6,12 @@ import { NotificationButton } from '@/components/employee/home/NotificationButto
 import { RecentActivityCard } from '@/components/employee/home/RecentActivityCard'
 import { TodaysRequestsCard } from '@/components/employee/home/TodaysRequestsCard'
 import { AttentionRequiredCard } from '@/components/employee/home/AttentionRequiredCard'
-import { Activity } from '@/types/activity'
+import { useActivities } from '@/hooks/useActivities'
 
 const EmployeeHomePage = () => {
   const { language } = useLanguageStore()
   const t = translations[language]
+  const { activities } = useActivities()
   
   // Dummy data for statistics
   const totalRequests = 42
@@ -54,55 +55,6 @@ const EmployeeHomePage = () => {
   
   const hasNotifications = providerIssues.length > 0
   
-  // Updated dummy data for recent activities to match the Activity type
-  const recentActivities: Activity[] = [
-    {
-      id: "act-001",
-      type: "request",
-      description: "New request created by TechCorp LLC",
-      timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString(), // 30 minutes ago
-      entityType: "Request",
-      entityId: "TASK-1001",
-      userId: "emp-001"
-    },
-    {
-      id: "act-002",
-      type: "edit",
-      description: "Provider assigned to GlobalTrade Inc. request",
-      timestamp: new Date(Date.now() - 1.5 * 60 * 60 * 1000).toISOString(), // 1.5 hours ago
-      entityType: "Order",
-      entityId: "TASK-1002",
-      userId: "emp-002"
-    },
-    {
-      id: "act-003",
-      type: "edit",
-      description: "Request for SmartSolutions SA marked as completed",
-      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
-      entityType: "Order",
-      entityId: "TASK-1003",
-      userId: "emp-001"
-    },
-    {
-      id: "act-004",
-      type: "ticket",
-      description: "New support ticket opened by InnovateX Ltd",
-      timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(), // 3 hours ago
-      entityType: "Ticket",
-      entityId: "TICKET-001",
-      userId: "emp-003"
-    },
-    {
-      id: "act-005",
-      type: "ticket",
-      description: "Support ticket for QualityServices LLC resolved",
-      timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(), // 4 hours ago
-      entityType: "Ticket",
-      entityId: "TICKET-002",
-      userId: "emp-001"
-    }
-  ]
-  
   return (
     <>
       <div className="flex justify-between items-center mb-12">
@@ -137,7 +89,7 @@ const EmployeeHomePage = () => {
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <RecentActivityCard activities={recentActivities} />
+        <RecentActivityCard activities={activities} />
         <TodaysRequestsCard todayOrders={todayOrders} />
         <AttentionRequiredCard providerIssues={providerIssues} />
       </div>
