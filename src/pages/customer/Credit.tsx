@@ -1,22 +1,15 @@
-
 import { useState } from 'react'
 import { useLanguageStore, translations } from '@/lib/i18n'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { CreditCard, SlidersHorizontal, ChevronUp, ChevronDown, Download } from 'lucide-react'
 import { addDays } from 'date-fns'
-import { DateRange } from 'react-day-picker'
 import { Transaction, TransactionFilterState } from '@/types/transaction'
-import { TransactionItem } from '@/components/customer/credit/TransactionItem'
-import { TransactionFilters } from '@/components/customer/credit/TransactionFilters'
 import { useTransactions } from '@/hooks/useTransactions'
-import { filterTransactions } from '@/utils/transactionUtils'
-import { Button } from '@/components/ui/button'
+import { CreditBalance } from '@/components/customer/credit/CreditBalance'
+import { TransactionCard } from '@/components/customer/credit/TransactionCard'
 
 const Credit = () => {
   const { language } = useLanguageStore()
   const t = translations[language]
   const [currentBalance] = useState(845.75)
-  const [showFilters, setShowFilters] = useState(false)
   
   // Enhanced transactions data with a variety of entries
   const initialTransactions: Transaction[] = [
@@ -115,88 +108,20 @@ const Credit = () => {
   const handleFilterChange = (newFilters: Partial<TransactionFilterState>) => {
     setFilters(prev => ({ ...prev, ...newFilters }))
   }
-  
-  // Get filtered transactions
-  const filteredTransactions = showFilters 
-    ? filterTransactions(transactions, filters.dateRange, filters.transactionType)
-    : transactions
-
-  // Toggle filters visibility
-  const toggleFilters = () => {
-    setShowFilters(prev => !prev)
-  }
 
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">Credit</h1>
       
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <CreditCard className="h-5 w-5" />
-            Current Balance
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="text-4xl font-bold text-primary">
-            ${currentBalance.toFixed(2)}
-          </div>
-        </CardContent>
-      </Card>
+      <CreditBalance currentBalance={currentBalance} />
       
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <span>Transaction History</span>
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleDownloadAllTransactions}
-                className="flex items-center gap-1"
-              >
-                <Download className="h-4 w-4" />
-                Export All
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={toggleFilters}
-                className="flex items-center gap-1"
-              >
-                <SlidersHorizontal className="h-4 w-4" />
-                {showFilters ? "Hide Filters" : "Show Filters"}
-                {showFilters ? <ChevronUp className="h-4 w-4 ml-1" /> : <ChevronDown className="h-4 w-4 ml-1" />}
-              </Button>
-            </div>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {showFilters && (
-            <div className="mb-4">
-              <TransactionFilters 
-                filters={filters}
-                onFilterChange={handleFilterChange}
-              />
-            </div>
-          )}
-          <div className="space-y-4">
-            {filteredTransactions.length === 0 ? (
-              <div className="text-center py-6 text-muted-foreground">
-                No transactions found for the selected filters
-              </div>
-            ) : (
-              filteredTransactions.map((transaction) => (
-                <TransactionItem 
-                  key={transaction.id}
-                  transaction={transaction}
-                  onDownloadTransaction={handleDownloadTransaction}
-                />
-              ))
-            )}
-          </div>
-        </CardContent>
-      </Card>
+      <TransactionCard 
+        transactions={transactions}
+        filters={filters}
+        onFilterChange={handleFilterChange}
+        handleDownloadTransaction={handleDownloadTransaction}
+        handleDownloadAllTransactions={handleDownloadAllTransactions}
+      />
     </div>
   )
 }
