@@ -11,9 +11,9 @@ export function SecuritySettings() {
   return (
     <div className="space-y-8">
       <div>
-        <h3 className="text-lg font-medium">{t.securitySettings}</h3>
+        <h3 className="text-lg font-medium">{t.customer.settings.securitySettings.securitySettings}</h3>
         <p className="text-sm text-muted-foreground">
-          {t.manageYourSecuritySettings}
+          {t.customer.settings.securitySettings.manageYourSecuritySettings}
         </p>
       </div>
       

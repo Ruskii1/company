@@ -17,7 +17,7 @@ export function RecentActivities() {
       <CardHeader>
         <CardTitle className="flex items-center">
           <Clock className="mr-2 h-5 w-5" />
-          {t.recentActivities}
+          {t.customer.dashboard.recentActivities}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -43,7 +43,7 @@ export function RecentActivities() {
                     key={`ticket-${index}`}
                     type="ticket"
                     title={ticket.title}
-                    subtitle={`${t.status}: ${ticket.status}`}
+                    subtitle={`${t.ticketStatus}: ${ticket.status}`}
                     date={ticket.createdAt.toISOString()}
                     linkTo={`/tickets/${ticket.id}`}
                   />
@@ -51,7 +51,7 @@ export function RecentActivities() {
               }
             })
           ) : (
-            <p className="text-center text-muted-foreground py-4">{t.noRecentActivities}</p>
+            <p className="text-center text-muted-foreground py-4">{t.customer.dashboard.noRecentActivity}</p>
           )}
         </div>
       </CardContent>

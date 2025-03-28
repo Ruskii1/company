@@ -20,13 +20,14 @@ interface TopCustomersTableProps {
 export function TopCustomersTable({ customers }: TopCustomersTableProps) {
   const { language } = useLanguageStore();
   const t = translations[language];
+  const financeT = translations[language].finance;
 
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between pb-2">
         <div>
-          <CardTitle>{t.topSpendingCustomers}</CardTitle>
-          <CardDescription>{t.topSpendingCustomersDescription}</CardDescription>
+          <CardTitle>{financeT.topSpendingCustomers}</CardTitle>
+          <CardDescription>{financeT.topSpendingCustomersDescription}</CardDescription>
         </div>
         <div className="bg-primary/10 text-primary p-2 rounded-full">
           <Users className="h-5 w-5" />
@@ -36,9 +37,9 @@ export function TopCustomersTable({ customers }: TopCustomersTableProps) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>{t.customer}</TableHead>
-              <TableHead>{t.invoices}</TableHead>
-              <TableHead className="text-right">{t.totalSpent}</TableHead>
+              <TableHead>{financeT.customer}</TableHead>
+              <TableHead>{financeT.invoices}</TableHead>
+              <TableHead className="text-right">{financeT.totalSpent}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
