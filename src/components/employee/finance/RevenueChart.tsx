@@ -1,4 +1,3 @@
-
 import { useTheme } from '@/lib/theme';
 import { useLanguageStore, translations } from '@/lib/i18n';
 import { formatCurrency } from '@/utils/formatters';

@@ -32,13 +32,17 @@ export const useLanguageStore = create<LanguageState>()(
 );
 
 // Import all translation files
-import { commonTranslations } from './common';
+import { commonTranslations, common } from './common';
 import { orderTranslations } from './order';
+import { orderTranslationsExt } from './orders';
 import { securityTranslations } from './security';
 import { profileTranslations } from './profile';
 import { paymentTranslations } from './payment';
 import { providerTranslations } from './providers';
 import { serviceTranslations } from './services';
+import { financeTranslations } from './finance';
+import { accountTranslations } from './account';
+import { navigationTranslations } from './navigation';
 
 // Merge all translations
 const mergeTranslations = (language: Language) => {
@@ -46,11 +50,15 @@ const mergeTranslations = (language: Language) => {
     ...baseTranslations,
     ...commonTranslations[language],
     ...orderTranslations[language],
+    ...orderTranslationsExt[language],
     ...securityTranslations?.[language] || {},
     ...profileTranslations?.[language] || {},
     ...paymentTranslations?.[language] || {},
     ...providerTranslations?.[language] || {},
     ...serviceTranslations?.[language] || {},
+    ...financeTranslations?.[language] || {},
+    ...accountTranslations?.[language] || {},
+    ...navigationTranslations?.[language] || {},
     ...(language === 'ar' ? arabicTranslations : {}),
   };
 };
@@ -67,6 +75,10 @@ export * from './common';
 export * from './services';
 export * from './security';
 export * from './order';
+export * from './orders';
 export * from './profile';
 export * from './payment';
 export * from './providers';
+export * from './finance';
+export * from './account';
+export * from './navigation';
