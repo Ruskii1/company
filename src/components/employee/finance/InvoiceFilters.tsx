@@ -133,7 +133,7 @@ export function InvoiceFilters({ onFilter }: InvoiceFiltersProps) {
                   <SelectValue placeholder={t.selectMonth} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">{t.allMonths}</SelectItem>
+                  <SelectItem value="all_months">{t.allMonths}</SelectItem>
                   {getMonthOptions().map(option => (
                     <SelectItem key={option.value} value={option.value}>
                       {option.label}
@@ -153,7 +153,7 @@ export function InvoiceFilters({ onFilter }: InvoiceFiltersProps) {
                   <SelectValue placeholder={t.selectStatus} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">{t.allStatuses}</SelectItem>
+                  <SelectItem value="all_statuses">{t.allStatuses}</SelectItem>
                   <SelectItem value="Paid">{t.paid}</SelectItem>
                   <SelectItem value="Unpaid">{t.unpaid}</SelectItem>
                   <SelectItem value="Overdue">{t.overdue}</SelectItem>
