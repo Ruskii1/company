@@ -20,7 +20,7 @@ interface TopCustomersTableProps {
 export function TopCustomersTable({ customers }: TopCustomersTableProps) {
   const { language } = useLanguageStore();
   const t = translations[language];
-  const financeT = translations[language].finance;
+  const financeT = t.finance;
 
   return (
     <Card>

@@ -54,13 +54,14 @@ const data: CancellationFee[] = [
 export function CancellationFeesTable({ fees }: CancellationFeesTableProps) {
   const { language } = useLanguageStore()
   const t = translations[language]
+  const financeT = t.finance
   
   const displayData = fees || data;
   
   const columns: ColumnDef<CancellationFee>[] = [
     {
       accessorKey: "chargedAt",
-      header: t.finance.date,
+      header: financeT.date,
       cell: ({ row }) => {
         const date = row.getValue("chargedAt") as Date;
         return date.toLocaleDateString();
@@ -68,11 +69,11 @@ export function CancellationFeesTable({ fees }: CancellationFeesTableProps) {
     },
     {
       accessorKey: "customerName",
-      header: t.finance.customer,
+      header: financeT.customer,
     },
     {
       accessorKey: "amount",
-      header: t.finance.amount,
+      header: financeT.amount,
       cell: ({ row }) => {
         const amount = parseFloat(row.getValue("amount"));
         const formatted = new Intl.NumberFormat("en-US", {
@@ -84,7 +85,7 @@ export function CancellationFeesTable({ fees }: CancellationFeesTableProps) {
     },
     {
       accessorKey: "reason",
-      header: t.finance.reason,
+      header: financeT.reason,
     },
   ]
 
@@ -131,7 +132,7 @@ export function CancellationFeesTable({ fees }: CancellationFeesTableProps) {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  {t.finance.noCancellationFees}
+                  {financeT.noCancellationFees}
                 </TableCell>
               </TableRow>
             )}

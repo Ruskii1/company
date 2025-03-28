@@ -18,47 +18,48 @@ interface FinanceStatsProps {
 export function FinanceStats({ summaryData }: FinanceStatsProps) {
   const { language } = useLanguageStore();
   const t = translations[language];
+  const financeT = t.finance;
 
   const stats = [
     {
-      title: t.totalRevenue,
+      title: financeT.totalRevenue,
       value: formatCurrency(summaryData.totalRevenue),
-      description: t.totalRevenueDescription,
+      description: financeT.totalRevenueDescription,
       icon: DollarSign,
       color: 'text-emerald-500 bg-emerald-100 dark:bg-emerald-900 dark:text-emerald-300'
     },
     {
-      title: t.paidInvoices,
+      title: financeT.paidInvoices,
       value: summaryData.paidInvoices,
-      description: t.paidInvoicesDescription,
+      description: financeT.paidInvoicesDescription,
       icon: CreditCard,
       color: 'text-blue-500 bg-blue-100 dark:bg-blue-900 dark:text-blue-300'
     },
     {
-      title: t.unpaidInvoices,
+      title: financeT.unpaidInvoices,
       value: summaryData.unpaidInvoices,
-      description: t.unpaidInvoicesDescription,
+      description: financeT.unpaidInvoicesDescription,
       icon: FileText,
       color: 'text-yellow-500 bg-yellow-100 dark:bg-yellow-900 dark:text-yellow-300'
     },
     {
-      title: t.overdueInvoices,
+      title: financeT.overdueInvoices,
       value: summaryData.overdueInvoices,
-      description: t.overdueInvoicesDescription,
+      description: financeT.overdueInvoicesDescription,
       icon: AlertCircle,
       color: 'text-red-500 bg-red-100 dark:bg-red-900 dark:text-red-300'
     },
     {
-      title: t.totalTax,
+      title: financeT.totalTax,
       value: formatCurrency(summaryData.totalTax),
-      description: t.totalTaxDescription,
+      description: financeT.totalTaxDescription,
       icon: PieChart,
       color: 'text-purple-500 bg-purple-100 dark:bg-purple-900 dark:text-purple-300'
     },
     {
-      title: t.cancellationFees,
+      title: financeT.cancellationFees,
       value: formatCurrency(summaryData.cancellationFees),
-      description: t.cancellationFeesDescription,
+      description: financeT.cancellationFeesDescription,
       icon: Receipt,
       color: 'text-indigo-500 bg-indigo-100 dark:bg-indigo-900 dark:text-indigo-300'
     },
