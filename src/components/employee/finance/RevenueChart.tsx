@@ -61,14 +61,20 @@ export function RevenueChart({ monthlyData, serviceTypeData }: RevenueChartProps
     setActiveIndex(index);
   };
 
-  // Create chart config objects
+  // Create a properly typed chart config object
   const chartConfig = {
     revenue: {
       label: t.revenue,
       color: theme === 'dark' ? '#8884d8' : '#8884d8'
     },
-    bar: { type: 'bar' },
-    pie: { type: 'pie' }
+    monthlyBar: {
+      label: t.monthlyRevenue,
+      color: '#8884d8'
+    },
+    serviceType: {
+      label: t.revenueByServiceType,
+      color: '#00C49F'
+    }
   };
 
   // Custom active shape for PieChart
