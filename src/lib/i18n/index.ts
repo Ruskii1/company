@@ -10,6 +10,7 @@ import { services as enServices } from './en/services';
 import { order as enOrder } from './en/order';
 import { customer as enCustomer } from './en/customer';
 import { finance as enFinance } from './en/finance';
+import { payment as enPayment } from './en/payment';
 
 import { core as arCore } from './ar/core';
 import { common as arCommon } from './ar/common';
@@ -35,9 +36,11 @@ export const translations = {
     ...enServices,
     ...enOrder,
     ...enFinance,
+    ...enPayment,
     customer: enCustomer,
     finance: enFinance,
     order: enOrder,
+    payment: enPayment,
     dashboard: enCore.dashboard,
     services: enServices.services
   },
@@ -60,3 +63,4 @@ export * from './en/core';
 export * from './en/common';
 export * from './en/services';
 export * from './en/order';
+
