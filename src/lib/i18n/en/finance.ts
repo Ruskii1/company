@@ -18,13 +18,13 @@ export const finance = {
   
   // Revenue stats
   totalRevenue: "Total Revenue",
-  totalRevenueDescription: "Total revenue generated in the selected period",
+  totalRevenueDescription: "Total revenue earned in the selected period",
   paidInvoices: "Paid Invoices",
   paidInvoicesDescription: "Number of invoices that have been paid",
   unpaidInvoices: "Unpaid Invoices",
-  unpaidInvoicesDescription: "Number of invoices that are still pending payment",
+  unpaidInvoicesDescription: "Number of invoices still awaiting payment",
   overdueInvoices: "Overdue Invoices",
-  overdueInvoicesDescription: "Number of invoices that are past their due date",
+  overdueInvoicesDescription: "Number of invoices past their due date",
   totalTax: "Total Tax",
   totalTaxDescription: "Total tax collected in the selected period",
   cancellationFees: "Cancellation Fees",
@@ -50,7 +50,7 @@ export const finance = {
   
   // Top customers
   topSpendingCustomers: "Top Spending Customers",
-  topSpendingCustomersDescription: "Customers who have spent the most in the selected period",
+  topSpendingCustomersDescription: "Customers who spent the most in the selected period",
   totalSpent: "Total Spent",
   
   // Invoice actions
@@ -72,6 +72,29 @@ export const finance = {
   selectMonth: "Select Month",
   allMonths: "All Months",
   
-  // Custom IDs 
-  customerId: "Customer ID"
+  // Custom IDs
+  customerId: "Customer ID",
+  
+  // Search fields
+  searchByOrderNumber: "Search by order number",
+  searchByInvoiceNumber: "Search by invoice number", 
+  searchByCustomerName: "Search by customer name",
+  searchByProviderName: "Search by provider name",
+  
+  // Filter actions
+  clearFilters: "Clear Filters",
+  applyFilters: "Apply Filters",
+  allStatuses: "All Statuses",
+  
+  // Invoice details
+  orderNumber: "Order Number",
+  invoiceNumber: "Invoice Number", 
+  customerName: "Customer Name",
+  status: "Status",
+  date: "Date",
+  paid: "Paid",
+  unpaid: "Unpaid",
+  overdue: "Overdue",
+  serviceType: "Service Type",
+  actions: "Actions"
 }

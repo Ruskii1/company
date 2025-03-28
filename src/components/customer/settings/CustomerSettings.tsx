@@ -10,25 +10,24 @@ import { Lock, Settings } from "lucide-react"
 export function CustomerSettings() {
   const { language } = useLanguageStore()
   const t = translations[language]
-  const cs = t.customer.settings
   const [activeTab, setActiveTab] = useState("security")
   
   return (
     <div className="container mx-auto px-4 py-6">
       <div className="mb-6">
         <h1 className="text-2xl font-bold">{t.settings}</h1>
-        <p className="text-muted-foreground mt-1">{cs.manageYourAccountSettings}</p>
+        <p className="text-muted-foreground mt-1">{t.customer.settings.manageYourAccountSettings}</p>
       </div>
       
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
         <TabsList className="grid grid-cols-2 w-full max-w-2xl">
           <TabsTrigger value="security" className="flex items-center gap-2">
             <Lock className="h-4 w-4" />
-            <span>{cs.securitySettings.securitySettings}</span>
+            <span>{t.customer.settings.securitySettings.securitySettings}</span>
           </TabsTrigger>
           <TabsTrigger value="preferences" className="flex items-center gap-2">
             <Settings className="h-4 w-4" />
-            <span>{cs.preferences}</span>
+            <span>{t.customer.settings.preferences}</span>
           </TabsTrigger>
         </TabsList>
         

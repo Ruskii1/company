@@ -73,5 +73,28 @@ export const finance = {
   allMonths: "جميع الشهور",
   
   // Custom IDs
-  customerId: "معرف العميل"
+  customerId: "معرف العميل",
+  
+  // Search fields
+  searchByOrderNumber: "البحث عن طريق رقم الطلب",
+  searchByInvoiceNumber: "البحث عن طريق رقم الفاتورة",
+  searchByCustomerName: "البحث باسم العميل",
+  searchByProviderName: "البحث باسم المزود",
+  
+  // Filter actions
+  clearFilters: "مسح الفلاتر",
+  applyFilters: "تطبيق الفلاتر",
+  allStatuses: "جميع الحالات",
+  
+  // Invoice details
+  orderNumber: "رقم الطلب",
+  invoiceNumber: "رقم الفاتورة",
+  customerName: "اسم العميل",
+  status: "الحالة",
+  date: "التاريخ",
+  paid: "مدفوع",
+  unpaid: "غير مدفوع",
+  overdue: "متأخر",
+  serviceType: "نوع الخدمة",
+  actions: "الإجراءات"
 }
