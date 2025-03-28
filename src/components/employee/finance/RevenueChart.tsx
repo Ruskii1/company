@@ -121,7 +121,7 @@ export function RevenueChart({ monthlyData, serviceTypeData }: RevenueChartProps
           </TabsList>
           
           <TabsContent value="monthly" className="h-[400px]">
-            <ChartContainer className="h-full">
+            <ChartContainer className="h-full" config={{ type: 'bar' }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={formattedMonthlyData}
@@ -157,7 +157,7 @@ export function RevenueChart({ monthlyData, serviceTypeData }: RevenueChartProps
           </TabsContent>
           
           <TabsContent value="service" className="h-[400px]">
-            <ChartContainer className="h-full">
+            <ChartContainer className="h-full" config={{ type: 'pie' }}>
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie

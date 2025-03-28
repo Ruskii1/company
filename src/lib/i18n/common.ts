@@ -1,5 +1,6 @@
 
-export const common = {
+// Export the renamed object as commonTranslations
+export const commonTranslations = {
   en: {
     home: "Home",
     orderManagement: "Order Management",
@@ -119,7 +120,6 @@ export const common = {
     medium: "Medium",
     low: "Low",
     subject: "Subject",
-    submit: "Submit",
     cancel: "Cancel",
     search: "Search",
     allRequests: "All Requests",
@@ -354,13 +354,10 @@ export const common = {
     invoiceNumber: "Invoice Number",
     orderNumber: "Order Number",
     customer: "Customer",
-    provider: "Provider",
     providerName: "Provider Name",
-    serviceType: "Service Type",
     amount: "Amount",
     issueDate: "Issue Date",
     dueDate: "Due Date",
-    status: "Status",
     actions: "Actions",
     paid: "Paid",
     unpaid: "Unpaid",
@@ -377,14 +374,12 @@ export const common = {
     searchByCustomerName: "Search by customer name",
     searchByProviderName: "Search by provider name",
     selectMonth: "Select month",
-    selectStatus: "Select status",
     allMonths: "All Months",
     allStatuses: "All Statuses",
     noInvoicesFound: "No invoices found",
     sendInvoiceViaEmail: "Send Invoice via Email",
     recipientEmail: "Recipient Email",
     invoiceToSend: "Invoice to send",
-    cancel: "Cancel",
     sending: "Sending...",
     sendEmail: "Send Email",
     totalRevenue: "Total Revenue",
@@ -409,7 +404,6 @@ export const common = {
     topSpendingCustomersDescription: "Customers with the highest spending",
     invoices: "Invoices",
     totalSpent: "Total Spent",
-    customerName: "Customer Name",
     reason: "Reason",
     date: "Date",
     noCancellationFees: "No cancellation fees",
@@ -511,3 +505,5 @@ export const common = {
   }
 };
 
+// Also export as default for backwards compatibility
+export const common = commonTranslations;
