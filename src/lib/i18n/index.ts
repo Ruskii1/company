@@ -18,6 +18,7 @@ import { services as arServices } from './ar/services';
 import { order as arOrder } from './ar/order';
 import { customer as arCustomer } from './ar/customer';
 import { finance as arFinance } from './ar/finance';
+import { payment as arPayment } from './ar/payment';
 
 import { locales, rtlLanguages } from './constants';
 import { useLanguageStore } from './store';
@@ -50,9 +51,11 @@ export const translations = {
     ...arServices,
     ...arOrder,
     ...arFinance,
+    ...arPayment,
     customer: arCustomer,
     finance: arFinance,
     order: arOrder,
+    payment: arPayment,
     dashboard: arCore.dashboard,
     services: arServices.services
   }
@@ -63,4 +66,3 @@ export * from './en/core';
 export * from './en/common';
 export * from './en/services';
 export * from './en/order';
-
