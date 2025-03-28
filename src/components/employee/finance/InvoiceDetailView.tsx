@@ -6,6 +6,7 @@ import { OrderInformationSection } from './detail/sections/OrderInformationSecti
 import { OrderChargesSection } from './detail/sections/OrderChargesSection';
 import { ProviderInfoSection } from './detail/sections/ProviderInfoSection';
 import { InvoiceActivitySection } from './detail/sections/InvoiceActivitySection';
+import { useState, useEffect } from 'react';
 
 interface InvoiceDetailViewProps {
   invoice: Invoice;
@@ -13,6 +14,7 @@ interface InvoiceDetailViewProps {
   onSendEmailClick: (invoice: Invoice) => void;
   onBack: () => void;
   onEdit?: (invoice: Invoice, field: string) => void;
+  userRole?: string;
 }
 
 export function InvoiceDetailView({ 
@@ -20,7 +22,8 @@ export function InvoiceDetailView({
   downloadInvoice, 
   onSendEmailClick,
   onBack,
-  onEdit 
+  onEdit,
+  userRole = 'AuthorizedEmployee' // Default role for demo purposes
 }: InvoiceDetailViewProps) {
   return (
     <div className="space-y-6">
@@ -31,11 +34,11 @@ export function InvoiceDetailView({
         onSendEmailClick={onSendEmailClick} 
       />
       
-      <InvoiceDetailsSection invoice={invoice} onEdit={onEdit} />
-      <OrderInformationSection invoice={invoice} />
-      <OrderChargesSection invoice={invoice} onEdit={onEdit} />
-      <ProviderInfoSection invoice={invoice} onEdit={onEdit} />
-      <InvoiceActivitySection invoice={invoice} onEdit={onEdit} />
+      <InvoiceDetailsSection invoice={invoice} onEdit={onEdit} userRole={userRole} />
+      <OrderInformationSection invoice={invoice} onEdit={onEdit} userRole={userRole} />
+      <OrderChargesSection invoice={invoice} onEdit={onEdit} userRole={userRole} />
+      <ProviderInfoSection invoice={invoice} onEdit={onEdit} userRole={userRole} />
+      <InvoiceActivitySection invoice={invoice} onEdit={onEdit} userRole={userRole} />
     </div>
   );
 }

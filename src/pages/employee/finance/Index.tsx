@@ -18,6 +18,10 @@ import { Invoice } from '@/types/finance';
 import { FileText, BarChart3, DollarSign } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
+// For demonstration purposes, we'll use a simulated user role
+// In a real application, this would come from authentication
+const SIMULATED_USER_ROLE = 'AuthorizedEmployee'; // Can be 'Admin' or 'AuthorizedEmployee'
+
 const FinancePage = () => {
   const { language } = useLanguageStore();
   const t = translations[language];
@@ -92,6 +96,7 @@ const FinancePage = () => {
               downloadInvoice={downloadInvoice}
               sendInvoiceEmail={sendInvoiceEmail}
               onEditInvoice={handleEditInvoice}
+              userRole={SIMULATED_USER_ROLE}
             />
           )}
         </TabsContent>

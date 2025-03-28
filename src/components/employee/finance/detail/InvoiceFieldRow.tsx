@@ -5,6 +5,8 @@ import { Edit } from 'lucide-react';
 import { Invoice } from '@/types/finance';
 import { Badge } from '@/components/ui/badge';
 import { useLanguageStore, translations } from '@/lib/i18n';
+import { EditorRole, getFieldPermission } from '@/types/permissions';
+import { useState } from 'react';
 
 interface InvoiceFieldRowProps {
   label: string;
@@ -12,7 +14,7 @@ interface InvoiceFieldRowProps {
   invoice?: Invoice;
   fieldName?: string;
   onEdit?: (invoice: Invoice, field: string) => void;
-  isEditable?: boolean;
+  userRole?: string; // Added userRole prop
 }
 
 export function InvoiceFieldRow({ 
@@ -20,12 +22,19 @@ export function InvoiceFieldRow({
   value, 
   invoice, 
   fieldName, 
-  onEdit, 
-  isEditable = false 
+  onEdit,
+  userRole = 'AuthorizedEmployee' // Default role for demo purposes
 }: InvoiceFieldRowProps) {
   const { language } = useLanguageStore();
   const t = translations[language];
   const financeT = t.finance;
+  
+  // Get field permission if fieldName is provided
+  const fieldPermission = fieldName ? getFieldPermission(fieldName) : undefined;
+  const editableBy: EditorRole | undefined = fieldPermission?.editableBy;
+  
+  // Determine if the field is editable based on permissions
+  const isEditable = determineEditability(editableBy, userRole);
 
   // Handle boolean values with badges
   const displayValue = () => {
@@ -52,4 +61,24 @@ export function InvoiceFieldRow({
       </TableCell>
     </TableRow>
   );
+}
+
+// Helper function to determine if a field is editable based on the user's role
+function determineEditability(editableBy?: EditorRole, userRole?: string): boolean {
+  if (!editableBy || !userRole || editableBy === 'System') {
+    return false;
+  }
+  
+  // Admin and SuperAdmin can edit any non-system field
+  if (userRole === 'Admin' || userRole === 'SuperAdmin') {
+    return true;
+  }
+  
+  // Authorized Employee can only edit fields marked as 'Admin/Authorized Employee'
+  if (userRole === 'AuthorizedEmployee') {
+    return editableBy === 'Admin/Authorized Employee';
+  }
+  
+  // Any other role has no edit permissions
+  return false;
 }

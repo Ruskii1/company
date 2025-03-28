@@ -10,13 +10,15 @@ interface InvoiceTableProps {
   downloadInvoice: (invoice: Invoice, type: InvoiceType) => void;
   sendInvoiceEmail: (invoice: Invoice, email: string) => Promise<boolean>;
   onEditInvoice?: (invoice: Invoice, field: string) => void;
+  userRole?: string;
 }
 
 export function InvoiceTable({ 
   invoices, 
   downloadInvoice,
   sendInvoiceEmail,
-  onEditInvoice
+  onEditInvoice,
+  userRole = 'AuthorizedEmployee'
 }: InvoiceTableProps) {
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
   const [emailDialogOpen, setEmailDialogOpen] = useState(false);
@@ -53,6 +55,7 @@ export function InvoiceTable({
         onSendEmailClick={handleSendEmailClick}
         onBack={handleBackToInvoices}
         onEdit={onEditInvoice}
+        userRole={userRole}
       />
     );
   }

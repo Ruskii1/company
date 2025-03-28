@@ -4,13 +4,15 @@ import { InvoiceFieldRow } from '../InvoiceFieldRow';
 import { InvoiceSectionCard } from '../InvoiceSectionCard';
 import { useLanguageStore, translations } from '@/lib/i18n';
 import { format } from 'date-fns';
+import { getFieldPermission } from '@/types/permissions';
 
 interface InvoiceDetailsSectionProps {
   invoice: Invoice;
   onEdit?: (invoice: Invoice, field: string) => void;
+  userRole?: string;
 }
 
-export function InvoiceDetailsSection({ invoice, onEdit }: InvoiceDetailsSectionProps) {
+export function InvoiceDetailsSection({ invoice, onEdit, userRole = 'AuthorizedEmployee' }: InvoiceDetailsSectionProps) {
   const { language } = useLanguageStore();
   const t = translations[language];
   const financeT = t.finance;
@@ -24,19 +26,27 @@ export function InvoiceDetailsSection({ invoice, onEdit }: InvoiceDetailsSection
     <InvoiceSectionCard title={financeT.invoiceDetails}>
       <InvoiceFieldRow 
         label={financeT.invoiceNumber} 
-        value={invoice.invoiceNumber} 
+        value={invoice.invoiceNumber}
+        invoice={invoice}
+        fieldName="invoiceNumber"
+        onEdit={onEdit}
+        userRole={userRole}
       />
       <InvoiceFieldRow 
         label={financeT.issueDate} 
         value={formatDateTime(invoice.issueDate)}
+        invoice={invoice}
+        fieldName="issueDate"
+        onEdit={onEdit}
+        userRole={userRole}
       />
       <InvoiceFieldRow 
         label={financeT.billable} 
-        value={invoice.isBillable} 
-        invoice={invoice} 
-        fieldName="isBillable" 
+        value={invoice.isBillable}
+        invoice={invoice}
+        fieldName="isBillable"
         onEdit={onEdit}
-        isEditable={true}
+        userRole={userRole}
       />
     </InvoiceSectionCard>
   );

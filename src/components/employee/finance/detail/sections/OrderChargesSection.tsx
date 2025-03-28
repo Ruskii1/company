@@ -8,22 +8,23 @@ import { formatCurrency } from '@/utils/formatters';
 interface OrderChargesSectionProps {
   invoice: Invoice;
   onEdit?: (invoice: Invoice, field: string) => void;
+  userRole?: string;
 }
 
-export function OrderChargesSection({ invoice, onEdit }: OrderChargesSectionProps) {
+export function OrderChargesSection({ invoice, onEdit, userRole = 'AuthorizedEmployee' }: OrderChargesSectionProps) {
   const { language } = useLanguageStore();
   const t = translations[language];
   const financeT = t.finance;
 
   return (
-    <InvoiceSectionCard title="Order Charges Breakdown">
+    <InvoiceSectionCard title={financeT.orderChargesBreakdown || "Order Charges Breakdown"}>
       <InvoiceFieldRow 
         label={financeT.baseServiceFee} 
         value={formatCurrency(invoice.baseServiceFee)}
         invoice={invoice}
         fieldName="baseServiceFee"
         onEdit={onEdit}
-        isEditable={true}
+        userRole={userRole}
       />
       <InvoiceFieldRow 
         label={financeT.distanceCost} 
@@ -31,11 +32,15 @@ export function OrderChargesSection({ invoice, onEdit }: OrderChargesSectionProp
         invoice={invoice}
         fieldName="distanceCost"
         onEdit={onEdit}
-        isEditable={true}
+        userRole={userRole}
       />
       <InvoiceFieldRow 
         label={financeT.vat} 
         value={formatCurrency(invoice.taxAmount)}
+        invoice={invoice}
+        fieldName="taxAmount"
+        onEdit={onEdit}
+        userRole={userRole}
       />
       <InvoiceFieldRow 
         label={financeT.totalAmount} 
@@ -43,7 +48,7 @@ export function OrderChargesSection({ invoice, onEdit }: OrderChargesSectionProp
         invoice={invoice}
         fieldName="amount"
         onEdit={onEdit}
-        isEditable={true}
+        userRole={userRole}
       />
     </InvoiceSectionCard>
   );

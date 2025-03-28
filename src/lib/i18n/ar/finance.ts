@@ -123,5 +123,11 @@ export const finance = {
   invoiceLastModifiedAt: "آخر تعديل في",
   markedBillableBy: "تم تحديده كقابل للفوترة بواسطة",
   internalNotes: "ملاحظات داخلية",
-  backToInvoices: "العودة إلى الفواتير"
+  backToInvoices: "العودة إلى الفواتير",
+  
+  // Section titles
+  orderInformation: "معلومات الطلب",
+  orderChargesBreakdown: "تفاصيل رسوم الطلب",
+  serviceProviderInformation: "معلومات مزود الخدمة",
+  invoiceActivityLog: "سجل نشاط الفاتورة"
 }

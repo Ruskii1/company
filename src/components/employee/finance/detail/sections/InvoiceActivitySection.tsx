@@ -8,9 +8,10 @@ import { format } from 'date-fns';
 interface InvoiceActivitySectionProps {
   invoice: Invoice;
   onEdit?: (invoice: Invoice, field: string) => void;
+  userRole?: string;
 }
 
-export function InvoiceActivitySection({ invoice, onEdit }: InvoiceActivitySectionProps) {
+export function InvoiceActivitySection({ invoice, onEdit, userRole = 'AuthorizedEmployee' }: InvoiceActivitySectionProps) {
   const { language } = useLanguageStore();
   const t = translations[language];
   const financeT = t.finance;
@@ -21,19 +22,31 @@ export function InvoiceActivitySection({ invoice, onEdit }: InvoiceActivitySecti
   };
 
   return (
-    <InvoiceSectionCard title="Invoice Activity Log">
+    <InvoiceSectionCard title={financeT.invoiceActivityLog || "Invoice Activity Log"}>
       <InvoiceFieldRow 
         label={financeT.invoiceCreatedAt} 
         value={formatDateTime(invoice.createdAt)}
+        invoice={invoice}
+        fieldName="createdAt"
+        onEdit={onEdit}
+        userRole={userRole}
       />
       <InvoiceFieldRow 
         label={financeT.invoiceLastModifiedAt} 
         value={formatDateTime(invoice.lastModifiedAt)}
+        invoice={invoice}
+        fieldName="lastModifiedAt"
+        onEdit={onEdit}
+        userRole={userRole}
       />
       {invoice.markedBillableBy && (
         <InvoiceFieldRow 
           label={financeT.markedBillableBy} 
           value={invoice.markedBillableBy}
+          invoice={invoice}
+          fieldName="markedBillableBy"
+          onEdit={onEdit}
+          userRole={userRole}
         />
       )}
       {invoice.internalNotes && (
@@ -43,7 +56,7 @@ export function InvoiceActivitySection({ invoice, onEdit }: InvoiceActivitySecti
           invoice={invoice}
           fieldName="internalNotes"
           onEdit={onEdit}
-          isEditable={true}
+          userRole={userRole}
         />
       )}
     </InvoiceSectionCard>

@@ -2,7 +2,7 @@
 export const finance = {
   // Finance dashboard
   financeAndReports: "Finance & Reports",
-  financeAndReportsDescription: "Manage invoices, view financial reports and analytics",
+  financeAndReportsDescription: "Manage invoices and view financial reports and analytics",
   
   // Invoice management
   invoiceManagement: "Invoice Management",
@@ -18,13 +18,13 @@ export const finance = {
   
   // Revenue stats
   totalRevenue: "Total Revenue",
-  totalRevenueDescription: "Total revenue earned in the selected period",
+  totalRevenueDescription: "Total revenue generated in the selected period",
   paidInvoices: "Paid Invoices",
   paidInvoicesDescription: "Number of invoices that have been paid",
   unpaidInvoices: "Unpaid Invoices",
-  unpaidInvoicesDescription: "Number of invoices still awaiting payment",
+  unpaidInvoicesDescription: "Number of invoices that are still pending payment",
   overdueInvoices: "Overdue Invoices",
-  overdueInvoicesDescription: "Number of invoices past their due date",
+  overdueInvoicesDescription: "Number of invoices that have passed their due date",
   totalTax: "Total Tax",
   totalTaxDescription: "Total tax collected in the selected period",
   cancellationFees: "Cancellation Fees",
@@ -40,7 +40,7 @@ export const finance = {
   noInvoicesFound: "No invoices found",
   
   // Cancellation fees
-  cancellationFeesTableDescription: "Records of cancellation fees collected from customers",
+  cancellationFeesTableDescription: "Records of cancellation fees charged to customers",
   reason: "Reason",
   noCancellationFees: "No cancellation fees for the selected period",
   
@@ -78,7 +78,7 @@ export const finance = {
   
   // Search fields
   searchByOrderNumber: "Search by order number",
-  searchByInvoiceNumber: "Search by invoice number", 
+  searchByInvoiceNumber: "Search by invoice number",
   searchByCustomerName: "Search by customer name",
   searchByProviderName: "Search by provider name",
   
@@ -89,7 +89,7 @@ export const finance = {
   
   // Invoice details
   orderNumber: "Order Number",
-  invoiceNumber: "Invoice Number", 
+  invoiceNumber: "Invoice Number",
   customerName: "Customer Name",
   status: "Status",
   date: "Date",
@@ -108,7 +108,7 @@ export const finance = {
   value: "Value",
   corporateName: "Corporate Name",
   pickupLocation: "Pickup Location",
-  dropoffLocation: "Drop-off Location",
+  dropoffLocation: "Dropoff Location",
   orderStartTime: "Order Start Time",
   orderCompletionTime: "Order Completion Time",
   baseServiceFee: "Base Service Fee",
@@ -123,5 +123,11 @@ export const finance = {
   invoiceLastModifiedAt: "Last Modified At",
   markedBillableBy: "Marked Billable By",
   internalNotes: "Internal Notes",
-  backToInvoices: "Back to Invoices"
+  backToInvoices: "Back to Invoices",
+  
+  // Section titles
+  orderInformation: "Order Information",
+  orderChargesBreakdown: "Order Charges Breakdown",
+  serviceProviderInformation: "Service Provider Information",
+  invoiceActivityLog: "Invoice Activity Log"
 }

@@ -7,9 +7,11 @@ import { format } from 'date-fns';
 
 interface OrderInformationSectionProps {
   invoice: Invoice;
+  onEdit?: (invoice: Invoice, field: string) => void;
+  userRole?: string;
 }
 
-export function OrderInformationSection({ invoice }: OrderInformationSectionProps) {
+export function OrderInformationSection({ invoice, onEdit, userRole = 'AuthorizedEmployee' }: OrderInformationSectionProps) {
   const { language } = useLanguageStore();
   const t = translations[language];
   const financeT = t.finance;
@@ -20,40 +22,72 @@ export function OrderInformationSection({ invoice }: OrderInformationSectionProp
   };
 
   return (
-    <InvoiceSectionCard title="Order Information">
+    <InvoiceSectionCard title={financeT.orderInformation || "Order Information"}>
       <InvoiceFieldRow 
         label={financeT.orderNumber} 
-        value={invoice.orderId} 
+        value={invoice.orderId}
+        invoice={invoice}
+        fieldName="orderId"
+        onEdit={onEdit}
+        userRole={userRole}
       />
       <InvoiceFieldRow 
         label={financeT.customerName} 
         value={invoice.customerName}
+        invoice={invoice}
+        fieldName="customerName"
+        onEdit={onEdit}
+        userRole={userRole}
       />
       {invoice.corporateName && (
         <InvoiceFieldRow 
           label={financeT.corporateName} 
           value={invoice.corporateName}
+          invoice={invoice}
+          fieldName="corporateName"
+          onEdit={onEdit}
+          userRole={userRole}
         />
       )}
       <InvoiceFieldRow 
         label={financeT.serviceType} 
         value={invoice.serviceType}
+        invoice={invoice}
+        fieldName="serviceType"
+        onEdit={onEdit}
+        userRole={userRole}
       />
       <InvoiceFieldRow 
         label={financeT.pickupLocation} 
         value={invoice.pickupLocation}
+        invoice={invoice}
+        fieldName="pickupLocation"
+        onEdit={onEdit}
+        userRole={userRole}
       />
       <InvoiceFieldRow 
         label={financeT.dropoffLocation} 
         value={invoice.dropoffLocation}
+        invoice={invoice}
+        fieldName="dropoffLocation"
+        onEdit={onEdit}
+        userRole={userRole}
       />
       <InvoiceFieldRow 
         label={financeT.orderStartTime} 
         value={formatDateTime(invoice.orderStartTime)}
+        invoice={invoice}
+        fieldName="orderStartTime"
+        onEdit={onEdit}
+        userRole={userRole}
       />
       <InvoiceFieldRow 
         label={financeT.orderCompletionTime} 
         value={formatDateTime(invoice.orderCompletionTime)}
+        invoice={invoice}
+        fieldName="orderCompletionTime"
+        onEdit={onEdit}
+        userRole={userRole}
       />
     </InvoiceSectionCard>
   );
