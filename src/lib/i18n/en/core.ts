@@ -49,7 +49,7 @@ export const core = {
   waitingForProvider: "Waiting for provider",
   serviceProviderCompanies: "Service Provider Companies",
   
-  // Dashboard
+  // Dashboard section
   dashboard: {
     previousRequests: 'Previous Requests',
     currentRequests: 'Current Requests',

@@ -1,6 +1,4 @@
 
-import { enUS, arDZ } from "date-fns/locale";
-
 // Define language type
 export type Language = 'en' | 'ar';
 
@@ -76,26 +74,8 @@ export interface Translation {
   noProviderFound: string;
   waitingForProvider: string;
   serviceProviderCompanies: string;
-  dashboard: {
-    previousRequests: string;
-    currentRequests: string;
-    scheduledRequests: string;
-    companyBalance: string;
-    recentActivities: string;
-    notifications: string;
-    requestsNeedAttention: string;
-    youHave: string;
-    requestsNeedingUpdate: string;
-    viewRequests: string;
-    upcomingRequests: string;
-    requestsInNextTwoHours: string;
-    noRecentActivities: string;
-    ticketStatus: string;
-    attention: string;
-    soon: string;
-    waitingForProvider: string;
-    upcomingRequest: string;
-  };
+  // Moved dashboard object to its own property in translations
+  dashboardTranslation: DashboardTranslation;
 }
 
 // Define overall translation structure

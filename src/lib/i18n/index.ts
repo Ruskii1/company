@@ -8,11 +8,15 @@ import { common as enCommon } from './en/common';
 import { services as enServices } from './en/services';
 import { core as enCore } from './en/core';
 import { order as enOrder } from './en/order';
+import { customer as enCustomer } from './en/customer';
+import { finance as enFinance } from './en/finance';
 
 import { common as arCommon } from './ar/common';
 import { services as arServices } from './ar/services';
 import { core as arCore } from './ar/core';
 import { order as arOrder } from './ar/order';
+import { customer as arCustomer } from './ar/customer';
+import { finance as arFinance } from './ar/finance';
 
 import { locales, rtlLanguages } from './constants';
 import { useLanguageStore } from './store';
@@ -30,6 +34,8 @@ export const translations = {
     ...enCommon,
     ...enServices,
     ...enOrder,
+    ...enCustomer,
+    ...enFinance,
     dashboard: enCore.dashboard,
     services: enServices.services
   },
@@ -38,6 +44,8 @@ export const translations = {
     ...arCommon,
     ...arServices,
     ...arOrder,
+    ...arCustomer,
+    ...arFinance,
     dashboard: arCore.dashboard,
     services: arServices.services
   }

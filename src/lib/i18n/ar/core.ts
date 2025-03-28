@@ -49,7 +49,7 @@ export const core = {
   waitingForProvider: "في انتظار المورد",
   serviceProviderCompanies: "شركات مقدمي الخدمات",
   
-  // Dashboard
+  // Dashboard section
   dashboard: {
     previousRequests: 'الطلبات السابقة',
     currentRequests: 'الطلبات الحالية',
