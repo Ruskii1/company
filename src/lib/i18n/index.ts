@@ -1,12 +1,16 @@
 
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import {
-  Translations,
-  baseTranslations,
-  arabicTranslations,
-  locales,
-} from './core';
+import { enUS, arDZ } from "date-fns/locale";
+
+// Import language files
+import { common as enCommon } from './en/common';
+import { services as enServices } from './en/services';
+import { core as enCore } from './en/core';
+
+import { common as arCommon } from './ar/common';
+import { services as arServices } from './ar/services';
+import { core as arCore } from './ar/core';
 
 // Define language type
 export type Language = 'en' | 'ar';
@@ -31,54 +35,34 @@ export const useLanguageStore = create<LanguageState>()(
   )
 );
 
-// Import all translation files
-import { commonTranslations, common } from './common';
-import { orderTranslations } from './order';
-import { orderTranslationsExt } from './orders';
-import { securityTranslations } from './security';
-import { profileTranslations } from './profile';
-import { paymentTranslations } from './payment';
-import { providerTranslations } from './providers';
-import { serviceTranslations } from './services';
-import { financeTranslations } from './finance';
-import { accountTranslations } from './account';
-import { navigationTranslations } from './navigation';
+// Export locales for date-fns
+export const locales = {
+  en: enUS,
+  ar: arDZ,
+};
+
+// Define rtl languages
+export const rtlLanguages: Language[] = ["ar"];
 
 // Merge all translations
-const mergeTranslations = (language: Language) => {
-  return {
-    ...baseTranslations,
-    ...commonTranslations[language],
-    ...orderTranslations[language],
-    ...orderTranslationsExt[language],
-    ...securityTranslations?.[language] || {},
-    ...profileTranslations?.[language] || {},
-    ...paymentTranslations?.[language] || {},
-    ...providerTranslations?.[language] || {},
-    ...serviceTranslations?.[language] || {},
-    ...financeTranslations?.[language] || {},
-    ...accountTranslations?.[language] || {},
-    ...navigationTranslations?.[language] || {},
-    ...(language === 'ar' ? arabicTranslations : {}),
-  };
+export const translations = {
+  en: {
+    ...enCore,
+    ...enCommon,
+    ...enServices,
+    dashboard: enCore.dashboard,
+    services: enServices.services
+  },
+  ar: {
+    ...arCore,
+    ...arCommon,
+    ...arServices,
+    dashboard: arCore.dashboard,
+    services: arServices.services
+  }
 };
 
-// Create translations object with all translations
-export const translations: Record<Language, any> = {
-  en: mergeTranslations('en'),
-  ar: mergeTranslations('ar'),
-};
-
-// Make the translations available globally
-export * from './core';
-export * from './common';
-export * from './services';
-export * from './security';
-export * from './order';
-export * from './orders';
-export * from './profile';
-export * from './payment';
-export * from './providers';
-export * from './finance';
-export * from './account';
-export * from './navigation';
+// Re-export for backward compatibility
+export * from './en/core';
+export * from './en/common';
+export * from './en/services';
