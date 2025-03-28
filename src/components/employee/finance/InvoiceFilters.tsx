@@ -64,7 +64,7 @@ export function InvoiceFilters({ onFilter }: InvoiceFiltersProps) {
               id="taskId"
               label={t.finance.taskId}
               value={filters.taskId}
-              placeholder={t.searchByTaskId}
+              placeholder={t.finance.searchByTaskId}
               onChange={(value) => handleChange('taskId', value)}
             />
             
@@ -72,7 +72,7 @@ export function InvoiceFilters({ onFilter }: InvoiceFiltersProps) {
               id="customerName"
               label={t.finance.customerName}
               value={filters.customerName}
-              placeholder={t.searchByCustomerName}
+              placeholder={t.finance.searchByCustomerName}
               onChange={(value) => handleChange('customerName', value)}
             />
             
@@ -80,7 +80,7 @@ export function InvoiceFilters({ onFilter }: InvoiceFiltersProps) {
               id="providerName"
               label={t.finance.providerName}
               value={filters.providerName}
-              placeholder={t.searchByProviderName}
+              placeholder={t.finance.searchByProviderName}
               onChange={(value) => handleChange('providerName', value)}
             />
             

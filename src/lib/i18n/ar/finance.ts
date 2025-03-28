@@ -77,6 +77,7 @@ export const finance = {
   customerId: "معرف العميل",
   
   // Search fields
+  searchByTaskId: "البحث عن طريق معرف المهمة",
   searchByOrderNumber: "البحث عن طريق رقم الطلب",
   searchByInvoiceNumber: "البحث عن طريق رقم الفاتورة",
   searchByCustomerName: "البحث باسم العميل",

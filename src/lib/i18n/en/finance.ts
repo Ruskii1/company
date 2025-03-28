@@ -77,6 +77,7 @@ export const finance = {
   customerId: "Customer ID",
   
   // Search fields
+  searchByTaskId: "Search by task ID",
   searchByOrderNumber: "Search by order number",
   searchByInvoiceNumber: "Search by invoice number",
   searchByCustomerName: "Search by customer name",
