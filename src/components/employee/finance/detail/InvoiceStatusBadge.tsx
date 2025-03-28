@@ -3,9 +3,10 @@ import { Badge } from '@/components/ui/badge';
 
 interface InvoiceStatusBadgeProps {
   status: string;
+  size?: 'sm' | 'md' | 'lg';
 }
 
-export function InvoiceStatusBadge({ status }: InvoiceStatusBadgeProps) {
+export function InvoiceStatusBadge({ status, size = 'md' }: InvoiceStatusBadgeProps) {
   // Get status badge color
   const getStatusColor = (status: string): string => {
     switch (status) {
@@ -20,8 +21,21 @@ export function InvoiceStatusBadge({ status }: InvoiceStatusBadgeProps) {
     }
   };
 
+  // Get size class
+  const getSizeClass = (size: string): string => {
+    switch (size) {
+      case 'sm':
+        return 'px-2 py-0.5 text-xs';
+      case 'lg':
+        return 'px-3 py-1.5 text-sm';
+      case 'md':
+      default:
+        return 'px-2.5 py-1 text-xs';
+    }
+  };
+
   return (
-    <Badge className={getStatusColor(status)}>
+    <Badge className={`${getStatusColor(status)} ${getSizeClass(size)} font-medium rounded-full`}>
       {status}
     </Badge>
   );

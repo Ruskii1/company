@@ -13,6 +13,7 @@ import {
 import { useLanguageStore, translations } from '@/lib/i18n';
 import { formatCurrency } from '@/utils/formatters';
 import { Invoice, InvoiceType } from '@/types/finance';
+import { InvoiceStatusBadge } from '../detail/InvoiceStatusBadge';
 import { Download, Mail, MoreHorizontal, FileText, Eye } from 'lucide-react';
 import { format } from 'date-fns';
 
@@ -32,19 +33,6 @@ export function InvoiceTableRow({
   const { language } = useLanguageStore();
   const t = translations[language];
 
-  const getStatusClass = (status: string) => {
-    switch (status) {
-      case 'Paid':
-        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300';
-      case 'Unpaid':
-        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300';
-      case 'Overdue':
-        return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300';
-      default:
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300';
-    }
-  };
-
   return (
     <TableRow key={invoice.id}>
       <TableCell className="font-medium">{invoice.invoiceNumber}</TableCell>
@@ -56,9 +44,7 @@ export function InvoiceTableRow({
       <TableCell>{format(invoice.issueDate, 'MMM d, yyyy')}</TableCell>
       <TableCell>{format(invoice.dueDate, 'MMM d, yyyy')}</TableCell>
       <TableCell>
-        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusClass(invoice.status)}`}>
-          {invoice.status}
-        </span>
+        <InvoiceStatusBadge status={invoice.status} size="sm" />
       </TableCell>
       <TableCell className="text-right">
         <div className="flex justify-end gap-2">
