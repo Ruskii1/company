@@ -25,6 +25,7 @@ import {
   Sector
 } from 'recharts';
 import { useState } from 'react';
+import { BarChart3, PieChart as PieChartIcon } from 'lucide-react';
 
 interface RevenueChartProps {
   monthlyData: MonthlyRevenue[];
@@ -69,10 +70,12 @@ export function RevenueChart({ monthlyData, serviceTypeData }: RevenueChartProps
     },
     monthlyBar: {
       label: t.monthlyRevenue,
+      icon: BarChart3,
       color: '#8884d8'
     },
     serviceType: {
       label: t.revenueByServiceType,
+      icon: PieChartIcon,
       color: '#00C49F'
     }
   };

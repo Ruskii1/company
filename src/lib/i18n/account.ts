@@ -46,7 +46,15 @@ export const accountTranslations = {
     currentPassword: "كلمة المرور الحالية",
     newPassword: "كلمة المرور الجديدة",
     confirmNewPassword: "تأكيد كلمة المرور الجديدة",
-    customerDetails: "تفاصيل العميل"
-    // Add more Arabic translations as needed
+    customerDetails: "تفاصيل العميل",
+    
+    // Add more Arabic translations
+    confirmDelete: "تأكيد الحذف",
+    areYouSure: "هل أنت متأكد؟",
+    thisActionCannotBeUndone: "لا يمكن التراجع عن هذا الإجراء.",
+    yesDelete: "نعم، احذف",
+    noCancel: "لا، إلغاء",
+    success: "نجاح",
+    error: "خطأ"
   }
 };
