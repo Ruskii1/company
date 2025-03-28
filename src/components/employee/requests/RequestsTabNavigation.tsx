@@ -1,7 +1,7 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useLanguageStore, translations } from '@/lib/i18n'
-import { Calendar, Clock, History } from 'lucide-react'
+import { Calendar } from 'lucide-react'
 import { ReactNode } from 'react'
 
 interface RequestsTabNavigationProps {
@@ -26,11 +26,11 @@ export const RequestsTabNavigation = ({
     <Tabs value={activeTab} onValueChange={onTabChange} className="w-full mt-4">
       <TabsList className="w-full justify-start mb-4">
         <TabsTrigger value="past" className="flex items-center gap-2">
-          <History className="h-4 w-4" />
+          <Calendar className="h-4 w-4" />
           {t.pastRequests}
         </TabsTrigger>
         <TabsTrigger value="today" className="flex items-center gap-2">
-          <Clock className="h-4 w-4" />
+          <Calendar className="h-4 w-4" />
           {t.todaysRequests}
         </TabsTrigger>
         <TabsTrigger value="future" className="flex items-center gap-2">

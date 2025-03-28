@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useLanguageStore, translations } from '@/lib/i18n'
-import { Calendar, Clock, History } from 'lucide-react'
+import { Calendar } from 'lucide-react'
 import { RequestsTable } from '@/components/customer/RequestsTable'
 import { NoRequestsMessage } from '@/components/customer/NoRequestsMessage'
 import { useRequestsData } from '@/hooks/useRequestsData'
@@ -98,11 +98,11 @@ const Requests = () => {
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full mt-4">
             <TabsList className="w-full justify-start mb-4">
               <TabsTrigger value="past" className="flex items-center gap-2">
-                <History className="h-4 w-4" />
+                <Calendar className="h-4 w-4" />
                 {t.pastRequests} <span className="ml-1 text-xs text-muted-foreground">({filteredPastRequests.length})</span>
               </TabsTrigger>
               <TabsTrigger value="today" className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />
+                <Calendar className="h-4 w-4" />
                 {t.todaysRequests} <span className="ml-1 text-xs text-muted-foreground">({filteredTodayRequests.length})</span>
               </TabsTrigger>
               <TabsTrigger value="future" className="flex items-center gap-2">
