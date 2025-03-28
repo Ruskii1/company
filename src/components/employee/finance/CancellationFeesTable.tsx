@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/table"
 import { useLanguageStore, translations } from "@/lib/i18n"
 import { CancellationFee } from "@/types/finance"
+import { formatCurrency } from "@/utils/formatters"
 
 interface CancellationFeesTableProps {
   fees?: CancellationFee[]
@@ -64,7 +65,7 @@ export function CancellationFeesTable({ fees }: CancellationFeesTableProps) {
       header: financeT.date,
       cell: ({ row }) => {
         const date = row.getValue("chargedAt") as Date;
-        return date.toLocaleDateString();
+        return date.toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US');
       }
     },
     {
@@ -76,11 +77,7 @@ export function CancellationFeesTable({ fees }: CancellationFeesTableProps) {
       header: financeT.amount,
       cell: ({ row }) => {
         const amount = parseFloat(row.getValue("amount"));
-        const formatted = new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-        }).format(amount);
-        return formatted;
+        return formatCurrency(amount);
       }
     },
     {
