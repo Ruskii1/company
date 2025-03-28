@@ -49,23 +49,23 @@ const FinancePage = () => {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold mb-2">{t.financeAndReports}</h1>
-        <p className="text-muted-foreground">{t.financeAndReportsDescription}</p>
+        <h1 className="text-3xl font-bold mb-2">{t.finance.financeAndReports}</h1>
+        <p className="text-muted-foreground">{t.finance.financeAndReportsDescription}</p>
       </div>
       
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
         <TabsList>
           <TabsTrigger value="invoices" className="flex items-center gap-2">
             <FileText className="h-4 w-4" />
-            <span>{t.invoiceManagement}</span>
+            <span>{t.finance.invoiceManagement}</span>
           </TabsTrigger>
           <TabsTrigger value="analytics" className="flex items-center gap-2">
             <BarChart3 className="h-4 w-4" />
-            <span>{t.financialAnalytics}</span>
+            <span>{t.finance.financialAnalytics}</span>
           </TabsTrigger>
           <TabsTrigger value="cashflow" className="flex items-center gap-2">
             <DollarSign className="h-4 w-4" />
-            <span>{t.cashFlowAnalysis}</span>
+            <span>{t.finance.cashFlowAnalysis}</span>
           </TabsTrigger>
         </TabsList>
         

@@ -1,3 +1,4 @@
+
 import {
   ColumnDef,
   flexRender,
@@ -14,64 +15,81 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useLanguageStore, translations } from "@/lib/i18n"
+import { CancellationFee } from "@/types/finance"
 
-interface CancellationFee {
-  id: string
-  date: string
-  customer: string
-  amount: number
-  reason: string
+interface CancellationFeesTableProps {
+  fees?: CancellationFee[]
 }
 
 const data: CancellationFee[] = [
   {
     id: "728ed52f",
-    date: "2023-03-15",
-    customer: "John Doe",
+    orderId: "ORD-123",
+    customerName: "John Doe",
     amount: 50.00,
     reason: "Customer cancellation",
+    chargedAt: new Date("2023-03-15"),
+    createdAt: new Date("2023-03-15"),
   },
   {
     id: "39cd12bb",
-    date: "2023-03-10",
-    customer: "Alice Smith",
+    orderId: "ORD-456",
+    customerName: "Alice Smith",
     amount: 75.00,
     reason: "Service unavailable",
+    chargedAt: new Date("2023-03-10"),
+    createdAt: new Date("2023-03-10"),
   },
   {
     id: "091b2dcf",
-    date: "2023-03-05",
-    customer: "Bob Johnson",
+    orderId: "ORD-789",
+    customerName: "Bob Johnson",
     amount: 60.00,
     reason: "Incorrect address",
+    chargedAt: new Date("2023-03-05"),
+    createdAt: new Date("2023-03-05"),
   },
 ]
 
-const columns: ColumnDef<CancellationFee>[] = [
-  {
-    accessorKey: "date",
-    header: "Date",
-  },
-  {
-    accessorKey: "customer",
-    header: "Customer",
-  },
-  {
-    accessorKey: "amount",
-    header: "Amount",
-  },
-  {
-    accessorKey: "reason",
-    header: "Reason",
-  },
-]
-
-export function CancellationFeesTable() {
+export function CancellationFeesTable({ fees }: CancellationFeesTableProps) {
   const { language } = useLanguageStore()
   const t = translations[language]
   
+  const displayData = fees || data;
+  
+  const columns: ColumnDef<CancellationFee>[] = [
+    {
+      accessorKey: "chargedAt",
+      header: t.finance.date,
+      cell: ({ row }) => {
+        const date = row.getValue("chargedAt") as Date;
+        return date.toLocaleDateString();
+      }
+    },
+    {
+      accessorKey: "customerName",
+      header: t.finance.customer,
+    },
+    {
+      accessorKey: "amount",
+      header: t.finance.amount,
+      cell: ({ row }) => {
+        const amount = parseFloat(row.getValue("amount"));
+        const formatted = new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+        }).format(amount);
+        return formatted;
+      }
+    },
+    {
+      accessorKey: "reason",
+      header: t.finance.reason,
+    },
+  ]
+
   const table = useReactTable({
-    data,
+    data: displayData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   })
@@ -113,7 +131,7 @@ export function CancellationFeesTable() {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  {t.common.noDataAvailable}
+                  {t.finance.noCancellationFees}
                 </TableCell>
               </TableRow>
             )}

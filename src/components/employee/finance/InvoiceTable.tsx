@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { 
   Table, 
@@ -47,23 +48,23 @@ export function InvoiceTable({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>{t.invoiceNumber}</TableHead>
-              <TableHead>{t.orderNumber}</TableHead>
-              <TableHead>{t.customer}</TableHead>
-              <TableHead>{t.provider}</TableHead>
-              <TableHead>{t.serviceType}</TableHead>
-              <TableHead className="text-right">{t.amount}</TableHead>
-              <TableHead>{t.issueDate}</TableHead>
-              <TableHead>{t.dueDate}</TableHead>
-              <TableHead>{t.status}</TableHead>
-              <TableHead className="text-right">{t.actions}</TableHead>
+              <TableHead>{t.finance.invoiceNumber}</TableHead>
+              <TableHead>{t.finance.orderNumber}</TableHead>
+              <TableHead>{t.finance.customer}</TableHead>
+              <TableHead>{t.finance.provider}</TableHead>
+              <TableHead>{t.finance.serviceType}</TableHead>
+              <TableHead className="text-right">{t.finance.amount}</TableHead>
+              <TableHead>{t.finance.issueDate}</TableHead>
+              <TableHead>{t.finance.dueDate}</TableHead>
+              <TableHead>{t.finance.status}</TableHead>
+              <TableHead className="text-right">{t.finance.actions}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {invoices.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={10} className="text-center py-8 text-muted-foreground">
-                  {t.common.noData}
+                  {t.finance.noInvoicesFound}
                 </TableCell>
               </TableRow>
             ) : (
