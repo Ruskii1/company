@@ -16,8 +16,8 @@ export function TwoFactorCard() {
   function handleToggleTwoFactor() {
     setIsTwoFactorEnabled(!isTwoFactorEnabled)
     toast({
-      title: isTwoFactorEnabled ? t.twoFactorDisabled : t.twoFactorEnabled,
-      description: isTwoFactorEnabled ? t.twoFactorAuthenticationIsNowDisabled : t.twoFactorAuthenticationIsNowEnabled,
+      title: isTwoFactorEnabled ? t.customer.settings.securitySettings.twoFactorDisabled : t.customer.settings.securitySettings.twoFactorEnabled,
+      description: isTwoFactorEnabled ? t.customer.settings.securitySettings.twoFactorAuthenticationIsNowDisabled : t.customer.settings.securitySettings.twoFactorAuthenticationIsNowEnabled,
     })
   }
 
@@ -26,18 +26,18 @@ export function TwoFactorCard() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Shield className="h-5 w-5" />
-          {t.twoFactorAuthentication}
+          {t.customer.settings.securitySettings.twoFactorAuthentication}
         </CardTitle>
         <CardDescription>
-          {t.enhanceYourAccountSecurity}
+          {t.customer.settings.securitySettings.enhanceYourAccountSecurity}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex items-center justify-between">
           <div className="space-y-1">
-            <Label htmlFor="two-factor">{t.enableTwoFactor}</Label>
+            <Label htmlFor="two-factor">{t.customer.settings.securitySettings.enableTwoFactor}</Label>
             <p className="text-sm text-muted-foreground">
-              {t.twoFactorDescription}
+              {t.customer.settings.securitySettings.twoFactorDescription}
             </p>
           </div>
           <Switch

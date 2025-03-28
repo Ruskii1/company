@@ -40,7 +40,7 @@ export const PickupDateField = ({ control }: PickupDateFieldProps) => {
                     {field.value ? (
                       format(field.value, 'MM/dd/yyyy')
                     ) : (
-                      <span>{t.selectDate}</span>
+                      <span>{t.order.selectDate}</span>
                     )}
                     <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                   </Button>

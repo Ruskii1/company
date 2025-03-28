@@ -92,20 +92,20 @@ export function PaymentSettings() {
   return (
     <div className="space-y-8">
       <div>
-        <h3 className="text-lg font-medium">{t.paymentMethods}</h3>
+        <h3 className="text-lg font-medium">{t.customer.settings.payment.paymentMethods}</h3>
         <p className="text-sm text-muted-foreground">
-          {t.manageYourPaymentMethodsForBillingAndPayments}
+          {t.customer.settings.payment.manageYourPaymentMethodsForBillingAndPayments}
         </p>
       </div>
       
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <div>
-            <CardTitle className="text-lg">{t.paymentMethods}</CardTitle>
+            <CardTitle className="text-lg">{t.customer.settings.payment.paymentMethods}</CardTitle>
             <CardDescription>
               {activeTab === "cards" 
-                ? t.manageYourCreditCardsForPayments
-                : t.manageYourBankAccountsForPayments}
+                ? t.customer.settings.payment.manageYourCreditCardsForPayments
+                : t.customer.settings.payment.manageYourBankAccountsForPayments}
             </CardDescription>
           </div>
           <AddPaymentSheet />
@@ -113,8 +113,8 @@ export function PaymentSettings() {
         <CardContent>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid w-full grid-cols-2 mb-6">
-              <TabsTrigger value="cards">{t.creditCards}</TabsTrigger>
-              <TabsTrigger value="accounts">{t.bankAccounts}</TabsTrigger>
+              <TabsTrigger value="cards">{t.customer.settings.payment.creditCards}</TabsTrigger>
+              <TabsTrigger value="accounts">{t.customer.settings.payment.bankAccounts}</TabsTrigger>
             </TabsList>
             
             <TabsContent value="cards">
@@ -123,7 +123,7 @@ export function PaymentSettings() {
                 type="card"
                 onSetDefault={handleSetDefault}
                 onDelete={handleDelete}
-                emptyMessage={t.noCreditCardsAdded}
+                emptyMessage={t.customer.settings.payment.noCreditCardsAdded}
               />
             </TabsContent>
             
@@ -133,7 +133,7 @@ export function PaymentSettings() {
                 type="bank"
                 onSetDefault={handleSetDefault}
                 onDelete={handleDelete}
-                emptyMessage={t.noBankAccountsAdded}
+                emptyMessage={t.customer.settings.payment.noBankAccountsAdded}
               />
             </TabsContent>
           </Tabs>

@@ -1,28 +1,31 @@
 
 import { useState } from "react"
-import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { useLanguageStore, translations } from "@/lib/i18n"
-import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { LockKeyhole } from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
 
 const passwordFormSchema = z.object({
-  currentPassword: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
+  currentPassword: z.string().min(6, {
+    message: "Password must be at least 6 characters.",
   }),
   newPassword: z.string().min(8, {
     message: "Password must be at least 8 characters.",
   }),
-  confirmPassword: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
-  }),
+  confirmPassword: z.string(),
 }).refine((data) => data.newPassword === data.confirmPassword, {
-  message: "Passwords do not match",
+  message: "Passwords don't match",
   path: ["confirmPassword"],
 })
 
@@ -34,15 +37,13 @@ export function PasswordChangeForm() {
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
   
-  const defaultValues: Partial<PasswordFormValues> = {
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  }
-  
   const form = useForm<PasswordFormValues>({
     resolver: zodResolver(passwordFormSchema),
-    defaultValues,
+    defaultValues: {
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    },
   })
   
   function onSubmit(data: PasswordFormValues) {
@@ -52,22 +53,24 @@ export function PasswordChangeForm() {
     setTimeout(() => {
       setIsLoading(false)
       toast({
-        title: t.passwordUpdated,
-        description: t.yourPasswordHasBeenSuccessfullyUpdated,
+        title: t.customer.settings.securitySettings.passwordUpdated,
+        description: t.customer.settings.securitySettings.yourPasswordHasBeenSuccessfullyUpdated,
       })
-      form.reset(defaultValues)
-    }, 1000)
+      form.reset()
+    }, 1500)
+    
+    console.log(data)
   }
-
+  
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <LockKeyhole className="h-5 w-5" />
-          {t.changePassword}
+          <Lock className="h-5 w-5" />
+          {t.customer.settings.securitySettings.changePassword}
         </CardTitle>
         <CardDescription>
-          {t.updateYourPasswordToASecureOne}
+          {t.customer.settings.securitySettings.updateYourPasswordToASecureOne}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -78,7 +81,7 @@ export function PasswordChangeForm() {
               name="currentPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t.currentPassword}</FormLabel>
+                  <FormLabel>{t.customer.settings.securitySettings.currentPassword}</FormLabel>
                   <FormControl>
                     <Input {...field} type="password" />
                   </FormControl>
@@ -92,7 +95,7 @@ export function PasswordChangeForm() {
               name="newPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t.newPassword}</FormLabel>
+                  <FormLabel>{t.customer.settings.securitySettings.newPassword}</FormLabel>
                   <FormControl>
                     <Input {...field} type="password" />
                   </FormControl>
@@ -106,7 +109,7 @@ export function PasswordChangeForm() {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t.confirmPassword}</FormLabel>
+                  <FormLabel>{t.customer.settings.securitySettings.confirmPassword}</FormLabel>
                   <FormControl>
                     <Input {...field} type="password" />
                   </FormControl>
@@ -115,8 +118,8 @@ export function PasswordChangeForm() {
               )}
             />
             
-            <Button type="submit" disabled={isLoading}>
-              {isLoading ? t.updating : t.updatePassword}
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? t.customer.settings.securitySettings.updating : t.customer.settings.securitySettings.updatePassword}
             </Button>
           </form>
         </Form>
@@ -124,3 +127,7 @@ export function PasswordChangeForm() {
     </Card>
   )
 }
+
+// Missing import
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Lock } from "lucide-react"

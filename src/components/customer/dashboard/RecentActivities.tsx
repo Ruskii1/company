@@ -43,7 +43,7 @@ export function RecentActivities() {
                     key={`ticket-${index}`}
                     type="ticket"
                     title={ticket.title}
-                    subtitle={`${t.ticketStatus}: ${ticket.status}`}
+                    subtitle={`${t.customer.dashboard.ticketStatus}: ${ticket.status}`}
                     date={ticket.createdAt.toISOString()}
                     linkTo={`/tickets/${ticket.id}`}
                   />

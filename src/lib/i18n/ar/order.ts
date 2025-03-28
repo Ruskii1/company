@@ -22,5 +22,6 @@ export const order = {
   optional: "اختياري",
   dropFilesHere: "أسقط الملفات هنا",
   allowedFileTypes: "أنواع الملفات المسموح بها: JPG، PNG، PDF",
-  maximumFileSize: "الحد الأقصى لحجم الملف: 5 ميغابايت"
+  maximumFileSize: "الحد الأقصى لحجم الملف: 5 ميغابايت",
+  selectDate: "اختر التاريخ"
 }

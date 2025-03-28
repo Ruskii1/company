@@ -15,8 +15,8 @@ export function ResetPasswordCard() {
   function handleResetPassword() {
     setIsResetPasswordSent(true)
     toast({
-      title: t.resetPasswordEmailSent,
-      description: t.pleaseCheckYourEmailToResetYourPassword,
+      title: t.customer.settings.securitySettings.resetPasswordEmailSent,
+      description: t.customer.settings.securitySettings.pleaseCheckYourEmailToResetYourPassword,
     })
   }
 
@@ -25,22 +25,22 @@ export function ResetPasswordCard() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Mail className="h-5 w-5" />
-          {t.resetPassword}
+          {t.customer.settings.securitySettings.resetPassword}
         </CardTitle>
         <CardDescription>
-          {t.requestAPasswordResetEmail}
+          {t.customer.settings.securitySettings.requestAPasswordResetEmail}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <p className="text-sm mb-4">
-          {t.resetPasswordDescription}
+          {t.customer.settings.securitySettings.resetPasswordDescription}
         </p>
         <Button 
           variant="outline" 
           onClick={handleResetPassword} 
           disabled={isResetPasswordSent}
         >
-          {isResetPasswordSent ? t.emailSent : t.sendResetEmail}
+          {isResetPasswordSent ? t.customer.settings.securitySettings.emailSent : t.customer.settings.securitySettings.sendResetEmail}
         </Button>
       </CardContent>
     </Card>

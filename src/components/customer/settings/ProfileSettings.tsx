@@ -59,8 +59,8 @@ export function ProfileSettings() {
     setTimeout(() => {
       setIsLoading(false)
       toast({
-        title: t.profileUpdated,
-        description: t.yourProfileHasBeenSuccessfullyUpdated,
+        title: t.customer.settings.profile.profileUpdated,
+        description: t.customer.settings.profile.yourProfileHasBeenSuccessfullyUpdated,
       })
     }, 1000)
     
@@ -70,9 +70,9 @@ export function ProfileSettings() {
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-lg font-medium">{t.profileInformation}</h3>
+        <h3 className="text-lg font-medium">{t.customer.settings.profile.profileInformation}</h3>
         <p className="text-sm text-muted-foreground">
-          {t.updateYourProfileInformation}
+          {t.customer.settings.profile.updateYourProfileInformation}
         </p>
       </div>
       
@@ -83,7 +83,7 @@ export function ProfileSettings() {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t.fullName}</FormLabel>
+                <FormLabel>{t.customer.settings.profile.fullName}</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -97,7 +97,7 @@ export function ProfileSettings() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t.emailAddress}</FormLabel>
+                <FormLabel>{t.customer.settings.profile.emailAddress}</FormLabel>
                 <FormControl>
                   <Input {...field} type="email" />
                 </FormControl>
@@ -135,7 +135,7 @@ export function ProfileSettings() {
           />
           
           <Button type="submit" disabled={isLoading}>
-            {isLoading ? t.saving : t.saveChanges}
+            {isLoading ? t.customer.settings.profile.saving : t.saveChanges}
           </Button>
         </form>
       </Form>

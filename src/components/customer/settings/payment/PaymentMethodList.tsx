@@ -60,13 +60,13 @@ export function PaymentMethodList({
                       : `${item.bankName}`}
                     {item.default && (
                       <span className="ml-2 text-xs text-muted-foreground">
-                        ({t.default})
+                        ({t.customer.settings.payment.default})
                       </span>
                     )}
                   </p>
                   <p className="text-sm text-muted-foreground">
                     {type === "card" 
-                      ? `${t.expires}: ${item.expiryDate}`
+                      ? `${t.customer.settings.payment.expires}: ${item.expiryDate}`
                       : `${item.accountType} •••• ${item.last4}`
                     }
                   </p>
@@ -79,7 +79,7 @@ export function PaymentMethodList({
                     size="sm"
                     onClick={() => onSetDefault(item.id, item.type)}
                   >
-                    {t.setAsDefault}
+                    {t.customer.settings.payment.setAsDefault}
                   </Button>
                 )}
                 <Button 

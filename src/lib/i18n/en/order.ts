@@ -22,5 +22,6 @@ export const order = {
   optional: "Optional",
   dropFilesHere: "Drop files here",
   allowedFileTypes: "Allowed file types: JPG, PNG, PDF",
-  maximumFileSize: "Maximum file size: 5MB"
+  maximumFileSize: "Maximum file size: 5MB",
+  selectDate: "Select date"
 }

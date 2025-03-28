@@ -37,6 +37,7 @@ export const translations = {
     ...enFinance,
     customer: enCustomer,
     finance: enFinance,
+    order: enOrder,
     dashboard: enCore.dashboard,
     services: enServices.services
   },
@@ -48,6 +49,7 @@ export const translations = {
     ...arFinance,
     customer: arCustomer,
     finance: arFinance,
+    order: arOrder,
     dashboard: arCore.dashboard,
     services: arServices.services
   }

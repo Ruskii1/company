@@ -14,14 +14,14 @@ export function AddPaymentSheet() {
       <SheetTrigger asChild>
         <Button>
           <PlusCircle className="mr-2 h-4 w-4" />
-          {t.addPaymentMethod}
+          {t.customer.settings.payment.addPaymentMethod}
         </Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>{t.addPaymentMethod}</SheetTitle>
+          <SheetTitle>{t.customer.settings.payment.addPaymentMethod}</SheetTitle>
           <SheetDescription>
-            {t.addANewPaymentMethodToYourAccount}
+            {t.customer.settings.payment.addANewPaymentMethodToYourAccount}
           </SheetDescription>
         </SheetHeader>
         <div className="py-4">

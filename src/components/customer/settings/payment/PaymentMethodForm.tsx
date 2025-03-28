@@ -16,11 +16,11 @@ export function PaymentMethodForm() {
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="creditCard">
           <CreditCard className="mr-2 h-4 w-4" />
-          {t.creditCard}
+          {t.customer.settings.payment.creditCard}
         </TabsTrigger>
         <TabsTrigger value="bankAccount">
           <Building className="mr-2 h-4 w-4" />
-          {t.bankAccount}
+          {t.customer.settings.payment.bankAccount}
         </TabsTrigger>
       </TabsList>
       

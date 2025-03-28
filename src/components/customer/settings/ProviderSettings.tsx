@@ -34,10 +34,10 @@ export function ProviderSettings() {
     
     const provider = providers.find(p => p.id === id)
     toast({
-      title: provider?.status === "active" ? t.providerDeactivated : t.providerActivated,
+      title: provider?.status === "active" ? t.customer.settings.providers.providerDeactivated : t.customer.settings.providers.providerActivated,
       description: provider?.status === "active" 
-        ? `${provider.name} ${t.hasBeenDeactivated}`
-        : `${provider.name} ${t.hasBeenActivated}`,
+        ? `${provider.name} ${t.customer.settings.providers.hasBeenDeactivated}`
+        : `${provider.name} ${t.customer.settings.providers.hasBeenActivated}`,
     })
   }
   
@@ -46,17 +46,17 @@ export function ProviderSettings() {
     setProviders(prevProviders => prevProviders.filter(provider => provider.id !== id))
     
     toast({
-      title: t.providerRemoved,
-      description: `${provider?.name} ${t.hasBeenRemovedFromYourAccount}`,
+      title: t.customer.settings.providers.providerRemoved,
+      description: `${provider?.name} ${t.customer.settings.providers.hasBeenRemovedFromYourAccount}`,
     })
   }
   
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-lg font-medium">{t.manageProviders}</h3>
+        <h3 className="text-lg font-medium">{t.customer.settings.providers.manageProviders}</h3>
         <p className="text-sm text-muted-foreground">
-          {t.configureServiceProvidersForYourAccount}
+          {t.customer.settings.providers.configureServiceProvidersForYourAccount}
         </p>
       </div>
       
@@ -65,28 +65,28 @@ export function ProviderSettings() {
           <SheetTrigger asChild>
             <Button>
               <PlusCircle className="mr-2 h-4 w-4" />
-              {t.addProvider}
+              {t.customer.settings.providers.addProvider}
             </Button>
           </SheetTrigger>
           <SheetContent>
             <SheetHeader>
-              <SheetTitle>{t.addNewProvider}</SheetTitle>
+              <SheetTitle>{t.customer.settings.providers.addNewProvider}</SheetTitle>
               <SheetDescription>
-                {t.connectToANewServiceProvider}
+                {t.customer.settings.providers.connectToANewServiceProvider}
               </SheetDescription>
             </SheetHeader>
             <div className="py-4">
               {/* Form for adding new provider would go here */}
               <p className="text-sm text-muted-foreground mb-4">
-                {t.providerSelectionInstructions}
+                {t.customer.settings.providers.providerSelectionInstructions}
               </p>
               <Button className="w-full" onClick={() => {
                 toast({
-                  title: t.providerAdded,
-                  description: t.newProviderHasBeenAddedToYourAccount,
+                  title: t.customer.settings.providers.providerAdded,
+                  description: t.customer.settings.providers.newProviderHasBeenAddedToYourAccount,
                 })
               }}>
-                {t.connectProvider}
+                {t.customer.settings.providers.connectProvider}
               </Button>
             </div>
           </SheetContent>
@@ -97,19 +97,19 @@ export function ProviderSettings() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Link className="h-5 w-5" />
-            {t.connectedProviders}
+            {t.customer.settings.providers.connectedProviders}
           </CardTitle>
           <CardDescription>
-            {t.servicesYouveAuthorizedToAccessYourAccount}
+            {t.customer.settings.providers.servicesYouveAuthorizedToAccessYourAccount}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>{t.providerName}</TableHead>
+                <TableHead>{t.customer.settings.providers.providerName}</TableHead>
                 <TableHead>{t.status}</TableHead>
-                <TableHead>{t.lastUsed}</TableHead>
+                <TableHead>{t.customer.settings.providers.lastUsed}</TableHead>
                 <TableHead className="text-right">{t.actions}</TableHead>
               </TableRow>
             </TableHeader>
@@ -119,7 +119,7 @@ export function ProviderSettings() {
                   <TableCell className="font-medium">{provider.name}</TableCell>
                   <TableCell>
                     <Badge variant={provider.status === "active" ? "default" : "secondary"}>
-                      {provider.status === "active" ? t.active : t.inactive}
+                      {provider.status === "active" ? t.customer.settings.providers.active : t.customer.settings.providers.inactive}
                     </Badge>
                   </TableCell>
                   <TableCell>{provider.lastUsed}</TableCell>
