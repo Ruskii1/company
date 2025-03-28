@@ -21,7 +21,7 @@ export function FilterActions({ onClear, onApply }: FilterActionsProps) {
         className="gap-2"
       >
         <X size={16} />
-        {t.clearFilters}
+        {t.finance.clearFilters}
       </Button>
       
       <Button 
@@ -30,7 +30,7 @@ export function FilterActions({ onClear, onApply }: FilterActionsProps) {
         className="gap-2"
       >
         <Search size={16} />
-        {t.applyFilters}
+        {t.finance.applyFilters}
       </Button>
     </div>
   );
