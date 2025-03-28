@@ -33,6 +33,7 @@ export const finance = {
   // Tables
   customer: "Customer",
   provider: "Provider",
+  providerName: "Provider Name",
   amount: "Amount",
   issueDate: "Issue Date",
   dueDate: "Due Date",
@@ -96,5 +97,31 @@ export const finance = {
   unpaid: "Unpaid",
   overdue: "Overdue",
   serviceType: "Service Type",
-  actions: "Actions"
+  actions: "Actions",
+  
+  // Saudi e-invoicing format fields
+  invoiceDetails: "Invoice Details",
+  billable: "Billable",
+  yes: "Yes",
+  no: "No",
+  field: "Field",
+  value: "Value",
+  corporateName: "Corporate Name",
+  pickupLocation: "Pickup Location",
+  dropoffLocation: "Drop-off Location",
+  orderStartTime: "Order Start Time",
+  orderCompletionTime: "Order Completion Time",
+  baseServiceFee: "Base Service Fee",
+  distanceCost: "Distance Cost",
+  vat: "VAT",
+  totalAmount: "Total Amount",
+  providerPhone: "Provider Phone",
+  providerCompany: "Provider Company",
+  amountDueToProvider: "Amount Due to Provider",
+  providerBonus: "Provider Bonus",
+  invoiceCreatedAt: "Invoice Created At",
+  invoiceLastModifiedAt: "Last Modified At",
+  markedBillableBy: "Marked Billable By",
+  internalNotes: "Internal Notes",
+  backToInvoices: "Back to Invoices"
 }

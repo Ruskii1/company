@@ -1,137 +1,133 @@
+import { Invoice, Payment, CancellationFee } from '@/types/finance';
 
-import { 
-  Invoice, 
-  Payment, 
-  CancellationFee 
-} from '@/types/finance';
-
-// Generate mock invoices
 export const generateMockInvoices = (): Invoice[] => {
-  const serviceTypes = [
-    'Car Towing', 
-    'Battery Replacement', 
-    'Tire Change', 
-    'Fuel Delivery', 
-    'Lockout Service',
-    'Emergency Repair'
-  ];
-  const statuses: ('Paid' | 'Unpaid' | 'Overdue')[] = ['Paid', 'Unpaid', 'Overdue'];
-  const customers = [
-    'Ahmed Al-Mansour', 
-    'Fatima Khalid', 
-    'Mohammed Al-Harbi', 
-    'Layla Al-Otaibi', 
-    'Omar Al-Qahtani',
-    'Nora Al-Saud',
-    'Saeed Al-Ghamdi',
-    'Aisha Al-Zahrani'
-  ];
-  const providers = [
-    'RoadStar Services', 
-    'Quick Fix Auto', 
-    'Premium Roadside Co.', 
-    'Elite Automotive', 
-    'Royal Assistance',
-    'Desert Rescue'
-  ];
+  const invoices: Invoice[] = [];
   
-  const result: Invoice[] = [];
-  
-  // Generate invoices over the past 12 months
-  for (let i = 0; i < 120; i++) {
+  // Generate 20 random invoices
+  for (let i = 0; i < 20; i++) {
     const issueDate = new Date();
-    issueDate.setMonth(issueDate.getMonth() - Math.floor(Math.random() * 12));
-    issueDate.setDate(Math.floor(Math.random() * 28) + 1);
+    issueDate.setDate(issueDate.getDate() - Math.floor(Math.random() * 60));
     
     const dueDate = new Date(issueDate);
     dueDate.setDate(dueDate.getDate() + 30);
     
-    const amount = Math.floor(Math.random() * 400) + 100;
-    const taxAmount = Math.round(amount * 0.15 * 100) / 100;
+    const amount = Math.floor(Math.random() * 1000) + 100;
+    const taxAmount = Math.floor(amount * 0.15); // 15% VAT
     
-    const status = statuses[Math.floor(Math.random() * statuses.length)];
+    const baseServiceFee = Math.floor(amount * 0.7);
+    const distanceCost = amount - baseServiceFee;
     
-    result.push({
-      id: `inv-${i + 1000}`,
-      orderId: `ORD-${Math.floor(Math.random() * 9000) + 1000}`,
-      invoiceNumber: `INV-${2023}-${(i + 1000).toString().padStart(4, '0')}`,
-      customerName: customers[Math.floor(Math.random() * customers.length)],
-      providerName: providers[Math.floor(Math.random() * providers.length)],
-      serviceType: serviceTypes[Math.floor(Math.random() * serviceTypes.length)],
-      amount: amount,
-      taxAmount: taxAmount,
-      issueDate: issueDate,
-      dueDate: dueDate,
-      status: status,
-      createdAt: new Date(issueDate.getTime() - Math.floor(Math.random() * 86400000))
+    const amountDueToProvider = Math.floor(amount * 0.8);
+    
+    const orderStartTime = new Date(issueDate);
+    orderStartTime.setHours(Math.floor(Math.random() * 12) + 8); // Between 8 AM and 8 PM
+    
+    const orderCompletionTime = new Date(orderStartTime);
+    orderCompletionTime.setHours(orderCompletionTime.getHours() + Math.floor(Math.random() * 3) + 1); // 1-3 hours after start
+    
+    const isBillable = Math.random() > 0.2; // 80% are billable
+    
+    // Status is based on due date and a random factor
+    let status: 'Paid' | 'Unpaid' | 'Overdue';
+    if (dueDate < new Date()) {
+      status = Math.random() > 0.5 ? 'Paid' : 'Overdue';
+    } else {
+      status = Math.random() > 0.7 ? 'Paid' : 'Unpaid';
+    }
+    
+    const providerBonus = Math.random() > 0.7 ? Math.floor(Math.random() * 50) + 10 : undefined;
+    const corporateName = Math.random() > 0.6 ? `Corp ${String.fromCharCode(65 + i % 26)}` : undefined;
+    const providerCompany = Math.random() > 0.5 ? `Provider Company ${String.fromCharCode(65 + i % 26)}` : undefined;
+    const markedBillableBy = isBillable ? `Employee ${String.fromCharCode(65 + i % 26)}` : undefined;
+    const internalNotes = Math.random() > 0.6 ? `Some internal notes for invoice #INV-2023-${1000 + i}` : undefined;
+    
+    const createdAt = new Date(issueDate);
+    createdAt.setHours(createdAt.getHours() - 2);
+    
+    const lastModifiedAt = new Date(createdAt);
+    lastModifiedAt.setHours(lastModifiedAt.getHours() + Math.floor(Math.random() * 48));
+    
+    invoices.push({
+      id: `inv-${i + 1}`,
+      orderId: `ord-${1000 + i}`,
+      invoiceNumber: `INV-2023-${1000 + i}`,
+      customerName: `Customer ${String.fromCharCode(65 + i % 26)}`,
+      providerName: `Provider ${String.fromCharCode(65 + i % 26)}`,
+      serviceType: ['Taxi', 'Delivery', 'Moving', 'Roadside Assistance'][i % 4],
+      amount,
+      taxAmount,
+      issueDate,
+      dueDate,
+      status,
+      createdAt,
+      
+      // Additional Saudi e-invoicing fields
+      isBillable,
+      corporateName,
+      pickupLocation: `Pickup Location ${i + 1}`,
+      dropoffLocation: `Dropoff Location ${i + 1}`,
+      orderStartTime,
+      orderCompletionTime,
+      baseServiceFee,
+      distanceCost,
+      providerPhone: `+966 5${Math.floor(Math.random() * 10000000).toString().padStart(8, '0')}`,
+      providerCompany,
+      amountDueToProvider,
+      providerBonus,
+      lastModifiedAt,
+      markedBillableBy,
+      internalNotes
     });
   }
   
-  return result;
+  return invoices;
 };
 
-// Generate mock payments based on invoices
 export const generateMockPayments = (invoices: Invoice[]): Payment[] => {
-  const paymentMethods = ['Credit Card', 'Bank Transfer', 'Cash', 'Digital Wallet'];
-  const result: Payment[] = [];
+  const payments: Payment[] = [];
   
-  // Create payments for all paid invoices
-  invoices.filter(inv => inv.status === 'Paid').forEach((invoice, index) => {
-    const paymentDate = new Date(invoice.issueDate);
-    paymentDate.setDate(paymentDate.getDate() + Math.floor(Math.random() * 10));
+  // Generate 3-5 payments for each invoice
+  invoices.forEach(invoice => {
+    const numPayments = Math.floor(Math.random() * 3) + 3;
     
-    result.push({
-      id: `pay-${index + 1000}`,
-      invoiceId: invoice.id,
-      amount: invoice.amount,
-      paymentDate: paymentDate,
-      paymentMethod: paymentMethods[Math.floor(Math.random() * paymentMethods.length)],
-      createdAt: paymentDate
-    });
+    for (let i = 0; i < numPayments; i++) {
+      const amount = Math.floor(invoice.amount / numPayments);
+      const paymentDate = new Date(invoice.issueDate);
+      paymentDate.setDate(paymentDate.getDate() + Math.floor(Math.random() * 30));
+      
+      payments.push({
+        id: `pay-${invoice.id}-${i + 1}`,
+        invoiceId: invoice.id,
+        amount,
+        paymentDate,
+        paymentMethod: ['Credit Card', 'Bank Transfer', 'Cash'][i % 3],
+        createdAt: new Date()
+      });
+    }
   });
   
-  return result;
+  return payments;
 };
 
-// Generate mock cancellation fees
 export const generateMockCancellationFees = (): CancellationFee[] => {
-  const customers = [
-    'Ahmed Al-Mansour', 
-    'Fatima Khalid', 
-    'Mohammed Al-Harbi', 
-    'Layla Al-Otaibi', 
-    'Omar Al-Qahtani',
-    'Nora Al-Saud'
-  ];
+  const cancellationFees: CancellationFee[] = [];
   
-  const reasons = [
-    'Service cancelled after provider dispatched',
-    'Late cancellation',
-    'No-show',
-    'Service request cancelled on arrival',
-    null
-  ];
-  
-  const result: CancellationFee[] = [];
-  
-  // Generate 15 cancellation fees
-  for (let i = 0; i < 15; i++) {
-    const chargedDate = new Date();
-    chargedDate.setMonth(chargedDate.getMonth() - Math.floor(Math.random() * 6));
-    chargedDate.setDate(Math.floor(Math.random() * 28) + 1);
+  // Generate 10 random cancellation fees
+  for (let i = 0; i < 10; i++) {
+    const amount = Math.floor(Math.random() * 50) + 20;
+    const chargedAt = new Date();
+    chargedAt.setDate(chargedAt.getDate() - Math.floor(Math.random() * 90));
     
-    const amount = Math.floor(Math.random() * 100) + 50;
-    
-    result.push({
-      id: `fee-${i + 1000}`,
-      orderId: `ORD-${Math.floor(Math.random() * 9000) + 1000}`,
-      customerName: customers[Math.floor(Math.random() * customers.length)],
-      amount: amount,
-      reason: reasons[Math.floor(Math.random() * reasons.length)],
-      chargedAt: chargedDate,
-      createdAt: new Date(chargedDate.getTime() - 3600000)
+    cancellationFees.push({
+      id: `cancel-${i + 1}`,
+      orderId: `ord-${2000 + i}`,
+      customerName: `Customer ${String.fromCharCode(65 + i % 26)}`,
+      amount,
+      reason: ['Customer Cancellation', 'Provider Cancellation', null][i % 3],
+      chargedAt,
+      createdAt: new Date()
     });
   }
   
-  return result;
+  return cancellationFees;
 };

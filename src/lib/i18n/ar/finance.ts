@@ -33,6 +33,7 @@ export const finance = {
   // Tables
   customer: "العميل",
   provider: "المزود",
+  providerName: "اسم المزود",
   amount: "المبلغ",
   issueDate: "تاريخ الإصدار",
   dueDate: "تاريخ الاستحقاق",
