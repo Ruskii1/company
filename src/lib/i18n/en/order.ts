@@ -1,0 +1,26 @@
+
+export const order = {
+  placeOrder: "Place Order",
+  placeNewOrder: "Place New Order",
+  orderDetails: "Order Details",
+  orderHistory: "Order History",
+  pickupDate: "Pickup Date",
+  taskId: "Task ID",
+  status: "Status",
+  serviceType: "Service Type",
+  vehicleDetails: "Vehicle Details",
+  model: "Model",
+  modelYear: "Model Year",
+  licensePlate: "License Plate",
+  vin: "VIN",
+  companyName: "Company Name",
+  employeeName: "Employee Name",
+  pickupTime: "Pickup Time",
+  pickupLocation: "Pickup Location",
+  dropoffLocation: "Dropoff Location",
+  attachments: "Attachments",
+  optional: "Optional",
+  dropFilesHere: "Drop files here",
+  allowedFileTypes: "Allowed file types: JPG, PNG, PDF",
+  maximumFileSize: "Maximum file size: 5MB"
+}

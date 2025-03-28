@@ -77,6 +77,7 @@ export const common = {
   noIssues: "No issues",
   noActivities: "No activities",
   noRequests: "No requests",
+  noOrders: "No orders found",
   
   // Time indicators
   minutesAgo: "minutes ago",
@@ -130,5 +131,23 @@ export const common = {
   chooseHowTheApplicationLooks: "Choose how the application looks",
   light: "Light",
   dark: "Dark",
-  selectYourPreferredLanguage: "Select your preferred language"
+  selectYourPreferredLanguage: "Select your preferred language",
+  
+  // Additional translations needed to fix errors
+  companyName: "Company Name",
+  employeeName: "Employee Name",
+  pickupTime: "Pickup Time",
+  pickupLocation: "Pickup Location",
+  dropoffLocation: "Dropoff Location",
+  actions: "Actions",
+  allRequests: "All Requests",
+  pastRequests: "Past Requests",
+  futureRequests: "Future Requests",
+  noPastRequests: "No past requests",
+  noFutureRequests: "No future requests",
+  upcomingRequest: "Upcoming Request",
+  placeOrder: "Place Order",
+  placeNewOrder: "Place New Order",
+  attention: "Attention",
+  soon: "Soon"
 }

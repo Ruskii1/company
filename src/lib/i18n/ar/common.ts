@@ -77,6 +77,7 @@ export const common = {
   noIssues: "لا توجد مشاكل",
   noActivities: "لا توجد أنشطة",
   noRequests: "لا توجد طلبات",
+  noOrders: "لا توجد طلبات",
   
   // Time indicators
   minutesAgo: "دقائق مضت",
@@ -130,5 +131,23 @@ export const common = {
   chooseHowTheApplicationLooks: "اختر كيف تبدو التطبيق",
   light: "فاتح",
   dark: "داكن",
-  selectYourPreferredLanguage: "اختر لغتك المفضلة"
+  selectYourPreferredLanguage: "اختر لغتك المفضلة",
+  
+  // Additional translations needed to fix errors
+  companyName: "اسم الشركة",
+  employeeName: "اسم الموظف",
+  pickupTime: "وقت الالتقاط",
+  pickupLocation: "موقع الالتقاط",
+  dropoffLocation: "موقع التسليم",
+  actions: "إجراءات",
+  allRequests: "جميع الطلبات",
+  pastRequests: "طلبات سابقة",
+  futureRequests: "طلبات مستقبلية",
+  noPastRequests: "لا توجد طلبات سابقة",
+  noFutureRequests: "لا توجد طلبات مستقبلية",
+  upcomingRequest: "طلب قادم",
+  placeOrder: "تقديم الطلب",
+  placeNewOrder: "تقديم طلب جديد",
+  attention: "انتباه",
+  soon: "قريباً"
 }

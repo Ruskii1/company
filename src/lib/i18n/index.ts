@@ -7,42 +7,21 @@ import { enUS, arDZ } from "date-fns/locale";
 import { common as enCommon } from './en/common';
 import { services as enServices } from './en/services';
 import { core as enCore } from './en/core';
+import { order as enOrder } from './en/order';
 
 import { common as arCommon } from './ar/common';
 import { services as arServices } from './ar/services';
 import { core as arCore } from './ar/core';
+import { order as arOrder } from './ar/order';
 
-// Define language type
-export type Language = 'en' | 'ar';
+import { locales, rtlLanguages } from './constants';
+import { useLanguageStore } from './store';
+import { Language, TranslationCore } from './types';
 
-// Define language store state
-type LanguageState = {
-  language: Language;
-  setLanguage: (language: Language) => void;
-};
-
-// Create language store
-export const useLanguageStore = create<LanguageState>()(
-  persist(
-    (set) => ({
-      language: 'en',
-      setLanguage: (language) => set({ language }),
-    }),
-    {
-      name: 'language-storage',
-      storage: createJSONStorage(() => localStorage),
-    }
-  )
-);
-
-// Export locales for date-fns
-export const locales = {
-  en: enUS,
-  ar: arDZ,
-};
-
-// Define rtl languages
-export const rtlLanguages: Language[] = ["ar"];
+// Export constants and types
+export { locales, rtlLanguages };
+export { useLanguageStore };
+export type { Language };
 
 // Merge all translations
 export const translations = {
@@ -50,6 +29,7 @@ export const translations = {
     ...enCore,
     ...enCommon,
     ...enServices,
+    ...enOrder,
     dashboard: enCore.dashboard,
     services: enServices.services
   },
@@ -57,6 +37,7 @@ export const translations = {
     ...arCore,
     ...arCommon,
     ...arServices,
+    ...arOrder,
     dashboard: arCore.dashboard,
     services: arServices.services
   }
@@ -66,3 +47,4 @@ export const translations = {
 export * from './en/core';
 export * from './en/common';
 export * from './en/services';
+export * from './en/order';
