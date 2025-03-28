@@ -23,5 +23,11 @@ export const order = {
   dropFilesHere: "Drop files here",
   allowedFileTypes: "Allowed file types: JPG, PNG, PDF",
   maximumFileSize: "Maximum file size: 5MB",
-  selectDate: "Select date"
+  selectDate: "Select date",
+  // Added translations for employee components
+  viewDetails: "View Details",
+  escalateStatus: "Escalate Status",
+  loadingRequests: "Loading requests...",
+  requestsRequireImmediate: "requests require immediate attention",
+  advancedFilters: "Advanced Filters"
 }

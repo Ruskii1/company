@@ -1,3 +1,4 @@
+
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -40,10 +41,9 @@ export function CreditCardForm() {
   })
 
   const onSubmit = (data: CreditCardFormValues) => {
-    // Implementation remains the same
     toast({
-      title: t.creditCardAdded,
-      description: t.yourCreditCardHasBeenAddedSuccessfully,
+      title: t.customer.settings.payment.creditCardAdded,
+      description: t.customer.settings.payment.yourCreditCardHasBeenAddedSuccessfully,
     })
     form.reset()
   }
@@ -56,7 +56,7 @@ export function CreditCardForm() {
           name="cardNumber"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t.cardNumber}</FormLabel>
+              <FormLabel>{t.customer.settings.payment.cardNumber}</FormLabel>
               <FormControl>
                 <Input {...field} placeholder="1234 5678 9012 3456" />
               </FormControl>
@@ -70,7 +70,7 @@ export function CreditCardForm() {
           name="cardholderName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t.cardholderName}</FormLabel>
+              <FormLabel>{t.customer.settings.payment.cardholderName}</FormLabel>
               <FormControl>
                 <Input {...field} placeholder="John Doe" />
               </FormControl>
@@ -85,7 +85,7 @@ export function CreditCardForm() {
             name="expiryDate"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t.expiryDate}</FormLabel>
+                <FormLabel>{t.customer.settings.payment.expiryDate}</FormLabel>
                 <FormControl>
                   <Input {...field} placeholder="MM/YY" />
                 </FormControl>
@@ -99,7 +99,7 @@ export function CreditCardForm() {
             name="cvv"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t.cvv}</FormLabel>
+                <FormLabel>{t.customer.settings.payment.cvv}</FormLabel>
                 <FormControl>
                   <Input {...field} type="password" placeholder="123" />
                 </FormControl>
@@ -110,7 +110,7 @@ export function CreditCardForm() {
         </div>
         
         <Button type="submit" className="w-full">
-          {t.addCreditCard}
+          {t.customer.settings.payment.addCreditCard}
         </Button>
       </form>
     </Form>

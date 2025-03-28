@@ -1,3 +1,4 @@
+
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -41,8 +42,8 @@ export function BankAccountForm() {
 
   const onSubmit = (data: BankAccountFormValues) => {
     toast({
-      title: t.bankAccountAdded,
-      description: t.yourBankAccountHasBeenAddedSuccessfully,
+      title: t.customer.settings.payment.bankAccountAdded,
+      description: t.customer.settings.payment.yourBankAccountHasBeenAddedSuccessfully,
     })
     form.reset()
   }
@@ -55,7 +56,7 @@ export function BankAccountForm() {
           name="bankName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t.bankName}</FormLabel>
+              <FormLabel>{t.customer.settings.payment.bankName}</FormLabel>
               <FormControl>
                 <Input {...field} placeholder="Bank of America" />
               </FormControl>
@@ -69,7 +70,7 @@ export function BankAccountForm() {
           name="accountHolderName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t.accountHolderName}</FormLabel>
+              <FormLabel>{t.customer.settings.payment.accountHolderName}</FormLabel>
               <FormControl>
                 <Input {...field} placeholder="John Doe" />
               </FormControl>
@@ -83,7 +84,7 @@ export function BankAccountForm() {
           name="routingNumber"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t.routingNumber}</FormLabel>
+              <FormLabel>{t.customer.settings.payment.routingNumber}</FormLabel>
               <FormControl>
                 <Input {...field} placeholder="123456789" />
               </FormControl>
@@ -97,7 +98,7 @@ export function BankAccountForm() {
           name="accountNumber"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t.accountNumber}</FormLabel>
+              <FormLabel>{t.customer.settings.payment.accountNumber}</FormLabel>
               <FormControl>
                 <Input {...field} placeholder="12345678" />
               </FormControl>
@@ -107,7 +108,7 @@ export function BankAccountForm() {
         />
         
         <Button type="submit" className="w-full">
-          {t.addBankAccount}
+          {t.customer.settings.payment.addBankAccount}
         </Button>
       </form>
     </Form>

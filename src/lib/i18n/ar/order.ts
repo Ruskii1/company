@@ -23,5 +23,11 @@ export const order = {
   dropFilesHere: "أسقط الملفات هنا",
   allowedFileTypes: "أنواع الملفات المسموح بها: JPG، PNG، PDF",
   maximumFileSize: "الحد الأقصى لحجم الملف: 5 ميغابايت",
-  selectDate: "اختر التاريخ"
+  selectDate: "اختر التاريخ",
+  // Added translations for employee components
+  viewDetails: "عرض التفاصيل",
+  escalateStatus: "تصعيد الحالة",
+  loadingRequests: "جاري تحميل الطلبات...",
+  requestsRequireImmediate: "الطلبات تتطلب اهتمام فوري",
+  advancedFilters: "تصفية متقدمة"
 }

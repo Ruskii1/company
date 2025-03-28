@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { 
   Table, 
@@ -64,7 +63,7 @@ export function InvoiceTable({
             {invoices.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={10} className="text-center py-8 text-muted-foreground">
-                  {t.noInvoicesFound}
+                  {t.common.noData}
                 </TableCell>
               </TableRow>
             ) : (
