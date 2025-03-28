@@ -96,5 +96,31 @@ export const finance = {
   unpaid: "غير مدفوع",
   overdue: "متأخر",
   serviceType: "نوع الخدمة",
-  actions: "الإجراءات"
+  actions: "الإجراءات",
+  
+  // Saudi e-invoicing format fields
+  invoiceDetails: "تفاصيل الفاتورة",
+  billable: "قابل للفوترة",
+  yes: "نعم",
+  no: "لا",
+  field: "الحقل",
+  value: "القيمة",
+  corporateName: "اسم الشركة",
+  pickupLocation: "موقع الاستلام",
+  dropoffLocation: "موقع التسليم",
+  orderStartTime: "وقت بدء الطلب",
+  orderCompletionTime: "وقت إكمال الطلب",
+  baseServiceFee: "رسوم الخدمة الأساسية",
+  distanceCost: "تكلفة المسافة",
+  vat: "ضريبة القيمة المضافة",
+  totalAmount: "المبلغ الإجمالي",
+  providerPhone: "هاتف المزود",
+  providerCompany: "شركة المزود",
+  amountDueToProvider: "المبلغ المستحق للمزود",
+  providerBonus: "مكافأة المزود",
+  invoiceCreatedAt: "تاريخ إنشاء الفاتورة",
+  invoiceLastModifiedAt: "آخر تعديل في",
+  markedBillableBy: "تم تحديده كقابل للفوترة بواسطة",
+  internalNotes: "ملاحظات داخلية",
+  backToInvoices: "العودة إلى الفواتير"
 }

@@ -16,6 +16,7 @@ import { TopCustomersTable } from '@/components/employee/finance/TopCustomersTab
 import { CancellationFeesTable } from '@/components/employee/finance/CancellationFeesTable';
 import { Invoice } from '@/types/finance';
 import { FileText, BarChart3, DollarSign } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 const FinancePage = () => {
   const { language } = useLanguageStore();
@@ -39,6 +40,15 @@ const FinancePage = () => {
   const handleFilter = (filters: any) => {
     const filtered = filterInvoices(filters);
     setFilteredInvoices(filtered);
+  };
+  
+  const handleEditInvoice = (invoice: Invoice, field: string) => {
+    // In a real app, this would call an API to update the invoice
+    // For now, just show a toast notification
+    toast({
+      title: "Edit invoice field",
+      description: `Edited field ${field} for invoice #${invoice.invoiceNumber}`,
+    });
   };
   
   const financialSummary = getFinancialSummary();
@@ -81,6 +91,7 @@ const FinancePage = () => {
               invoices={filteredInvoices} 
               downloadInvoice={downloadInvoice}
               sendInvoiceEmail={sendInvoiceEmail}
+              onEditInvoice={handleEditInvoice}
             />
           )}
         </TabsContent>

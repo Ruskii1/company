@@ -12,23 +12,27 @@ import { useLanguageStore, translations } from '@/lib/i18n';
 import { Invoice, InvoiceType } from '@/types/finance';
 import { InvoiceTableRow } from './table/InvoiceTableRow';
 import { SendInvoiceEmailDialog } from './dialogs/SendInvoiceEmailDialog';
+import { InvoiceDetailView } from './InvoiceDetailView';
 
 interface InvoiceTableProps {
   invoices: Invoice[];
   downloadInvoice: (invoice: Invoice, type: InvoiceType) => void;
   sendInvoiceEmail: (invoice: Invoice, email: string) => Promise<boolean>;
+  onEditInvoice?: (invoice: Invoice, field: string) => void;
 }
 
 export function InvoiceTable({ 
   invoices, 
   downloadInvoice,
-  sendInvoiceEmail
+  sendInvoiceEmail,
+  onEditInvoice
 }: InvoiceTableProps) {
   const { language } = useLanguageStore();
   const t = translations[language];
   
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
   const [emailDialogOpen, setEmailDialogOpen] = useState(false);
+  const [detailViewOpen, setDetailViewOpen] = useState(false);
 
   const handleSendEmailClick = (invoice: Invoice) => {
     setSelectedInvoice(invoice);
@@ -41,6 +45,29 @@ export function InvoiceTable({
     await sendInvoiceEmail(selectedInvoice, email);
     setEmailDialogOpen(false);
   };
+  
+  const handleViewDetails = (invoice: Invoice) => {
+    setSelectedInvoice(invoice);
+    setDetailViewOpen(true);
+  };
+  
+  const handleBackToInvoices = () => {
+    setDetailViewOpen(false);
+    setSelectedInvoice(null);
+  };
+
+  // If detail view is open, show the invoice details
+  if (detailViewOpen && selectedInvoice) {
+    return (
+      <InvoiceDetailView 
+        invoice={selectedInvoice}
+        downloadInvoice={downloadInvoice}
+        onSendEmailClick={handleSendEmailClick}
+        onBack={handleBackToInvoices}
+        onEdit={onEditInvoice}
+      />
+    );
+  }
 
   return (
     <>
@@ -73,6 +100,7 @@ export function InvoiceTable({
                   key={invoice.id}
                   invoice={invoice}
                   onSendEmailClick={handleSendEmailClick}
+                  onViewDetails={handleViewDetails}
                   downloadInvoice={downloadInvoice}
                 />
               ))

@@ -63,14 +63,43 @@ export const financeTranslations = {
     reason: "Reason",
     date: "Date",
     noCancellationFees: "No cancellation fees",
-    month: "Month"
+    month: "Month",
+    
+    // Saudi e-invoicing format fields
+    invoiceDetails: "Invoice Details",
+    billable: "Billable",
+    yes: "Yes",
+    no: "No",
+    field: "Field",
+    value: "Value",
+    customerName: "Customer Name",
+    corporateName: "Corporate Name",
+    serviceType: "Service Type",
+    pickupLocation: "Pickup Location",
+    dropoffLocation: "Drop-off Location",
+    orderStartTime: "Order Start Time",
+    orderCompletionTime: "Order Completion Time",
+    baseServiceFee: "Base Service Fee",
+    distanceCost: "Distance Cost",
+    vat: "VAT",
+    totalAmount: "Total Amount",
+    providerPhone: "Provider Phone",
+    providerCompany: "Provider Company",
+    amountDueToProvider: "Amount Due to Provider",
+    providerBonus: "Provider Bonus",
+    invoiceCreatedAt: "Invoice Created At",
+    invoiceLastModifiedAt: "Last Modified At",
+    markedBillableBy: "Marked Billable By",
+    internalNotes: "Internal Notes",
+    backToInvoices: "Back to Invoices"
   },
   ar: {
     financeAndReports: "المالية والتقارير",
     financeAndReportsDescription: "إدارة الفواتير، وعرض التحليلات المالية، وإنشاء التقارير",
     invoiceManagement: "إدارة الفواتير",
     financialAnalytics: "التحليلات المالية",
-    cashFlowAnalysis: "تحليل التدفق النقدي"
-    // Add Arabic translations as needed
+    cashFlowAnalysis: "تحليل التدفق النقدي",
+    // Arabic translations can be added as needed
+    // The UI will automatically use the appropriate language
   }
 };

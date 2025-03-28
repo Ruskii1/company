@@ -12,6 +12,23 @@ export interface Invoice {
   dueDate: Date;
   status: 'Paid' | 'Unpaid' | 'Overdue';
   createdAt: Date;
+  
+  // Additional fields for Saudi e-invoicing format
+  isBillable: boolean;
+  corporateName?: string;
+  pickupLocation: string;
+  dropoffLocation: string;
+  orderStartTime: Date;
+  orderCompletionTime: Date;
+  baseServiceFee: number;
+  distanceCost: number;
+  providerPhone: string;
+  providerCompany?: string;
+  amountDueToProvider: number;
+  providerBonus?: number;
+  lastModifiedAt: Date;
+  markedBillableBy?: string;
+  internalNotes?: string;
 }
 
 export interface Payment {
@@ -60,3 +77,18 @@ export interface MonthlyRevenue {
 }
 
 export type InvoiceType = 'Company' | 'Provider' | 'Client';
+
+// Invoice section types for the detailed view
+export type InvoiceSection = 
+  | 'Invoice Details' 
+  | 'Order Information' 
+  | 'Order Charges Breakdown' 
+  | 'Service Provider Information' 
+  | 'Invoice Activity Log';
+
+export interface InvoiceField {
+  name: string;
+  value: string | number | boolean | Date | null;
+  editable: boolean;
+  editableBy: 'System' | 'Admin/Authorized Employee' | 'Admin Only';
+}
