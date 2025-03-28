@@ -2,7 +2,6 @@
 import { useState } from 'react'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { EmployeeStatCard } from '@/components/employee/home/EmployeeStatCard'
-import { NotificationButton } from '@/components/employee/home/NotificationButton'
 import { RecentActivityCard } from '@/components/employee/home/RecentActivityCard'
 import { TodaysRequestsCard } from '@/components/employee/home/TodaysRequestsCard'
 import { AttentionRequiredCard } from '@/components/employee/home/AttentionRequiredCard'
@@ -53,16 +52,10 @@ const EmployeeHomePage = () => {
   // Dummy data for provider issues
   const providerIssues = todayOrders.filter(order => order.status === 'Waiting for provider')
   
-  const hasNotifications = providerIssues.length > 0
-  
   return (
     <>
-      <div className="flex justify-between items-center mb-12">
+      <div className="mb-12">
         <h1 className="text-4xl font-bold">{t.home}</h1>
-        <NotificationButton 
-          notificationCount={providerIssues.length} 
-          hasNotifications={hasNotifications} 
-        />
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">

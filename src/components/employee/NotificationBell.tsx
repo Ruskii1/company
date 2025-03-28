@@ -7,14 +7,26 @@ import { Link } from 'react-router-dom'
 import { Order } from '@/types/orderManagement'
 import { useLanguageStore, translations } from '@/lib/i18n'
 
+// Notification types interface 
+interface Notification {
+  id: string
+  taskId: string
+  customerName: string
+  status: string
+  serviceType: string
+  pickupTime: string
+  city?: string
+  type: 'critical' | 'provider' | 'general'
+}
+
 export function NotificationBell() {
   const [showNotifications, setShowNotifications] = useState(false)
   const { allOrders } = useOrderManagement()
   const { language } = useLanguageStore()
   const t = translations[language]
   
-  // Dummy critical notifications data (more comprehensive)
-  const dummyCriticalNotifications = [
+  // Comprehensive notifications data
+  const dummyCriticalNotifications: Notification[] = [
     {
       id: "notif-001",
       taskId: "TASK-4523",
@@ -22,7 +34,8 @@ export function NotificationBell() {
       status: "NPA",
       serviceType: "Flatbed Towing",
       pickupTime: new Date(Date.now() - 35 * 60 * 1000).toISOString(), // 35 min ago
-      city: "Riyadh"
+      city: "Riyadh",
+      type: 'critical'
     },
     {
       id: "notif-002",
@@ -31,44 +44,52 @@ export function NotificationBell() {
       status: "NPF", 
       serviceType: "Battery Jumpstart",
       pickupTime: new Date(Date.now() - 45 * 60 * 1000).toISOString(), // 45 min ago
-      city: "Dammam"
-    },
-    {
-      id: "notif-003",
-      taskId: "TASK-4602",
-      customerName: "SABIC",
-      status: "NPA",
-      serviceType: "Fuel Delivery",
-      pickupTime: new Date(Date.now() - 60 * 60 * 1000).toISOString(), // 60 min ago
-      city: "Jubail"
-    },
-    {
-      id: "notif-004",
-      taskId: "TASK-4617",
-      customerName: "Al Rajhi Bank",
-      status: "NPF",
-      serviceType: "Tire Change",
-      pickupTime: new Date(Date.now() - 75 * 60 * 1000).toISOString(), // 75 min ago
-      city: "Jeddah"
-    },
-    {
-      id: "notif-005",
-      taskId: "TASK-4625",
-      customerName: "Saudi Airlines",
-      status: "NPA",
-      serviceType: "Key Lockout",
-      pickupTime: new Date(Date.now() - 90 * 60 * 1000).toISOString(), // 90 min ago
-      city: "Medina"
+      city: "Dammam",
+      type: 'critical'
     }
-  ];
-  
-  // Merge real critical orders with dummy notifications for demonstration
-  const criticalOrders = [
-    ...dummyCriticalNotifications,
-    ...allOrders.filter(order => order.status === 'NPA' || order.status === 'NPF')
+  ]
+
+  // Provider issue notifications (from home page)
+  const dummyProviderNotifications: Notification[] = [
+    {
+      id: "prov-001",
+      taskId: "TASK-2001",
+      customerName: "TechCorp LLC",
+      status: "Waiting for provider",
+      serviceType: "Regular Towing",
+      pickupTime: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
+      type: 'provider'
+    },
+    {
+      id: "prov-002",
+      taskId: "TASK-2002",
+      customerName: "GlobalTrade Inc.",
+      status: "Waiting for provider",
+      serviceType: "Battery Jumpstart",
+      pickupTime: new Date(Date.now() - 45 * 60 * 1000).toISOString(),
+      type: 'provider'
+    }
   ]
   
-  const hasNotifications = criticalOrders.length > 0
+  // Combine all notifications
+  const allNotifications = [
+    ...dummyCriticalNotifications,
+    ...dummyProviderNotifications,
+    ...allOrders
+      .filter(order => order.status === 'NPA' || order.status === 'NPF')
+      .map(order => ({
+        id: order.id,
+        taskId: order.taskId || order.id,
+        customerName: order.customerName || '',
+        status: order.status,
+        serviceType: order.serviceType || '',
+        pickupTime: order.pickupTime || new Date().toISOString(),
+        city: order.city || '',
+        type: 'critical' as const
+      }))
+  ]
+  
+  const hasNotifications = allNotifications.length > 0
   
   // Close notifications panel when clicking outside
   useEffect(() => {
@@ -82,6 +103,20 @@ export function NotificationBell() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [showNotifications])
   
+  // Get notification badge color based on type
+  const getNotificationBadge = (type: string) => {
+    switch(type) {
+      case 'NPA':
+        return <span className="px-2 py-1 text-xs bg-amber-100 text-amber-800 rounded">{t.noProviderAccepted}</span>
+      case 'NPF':
+        return <span className="px-2 py-1 text-xs bg-red-100 text-red-800 rounded">{t.noProviderFound}</span>
+      case 'Waiting for provider':
+        return <span className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded">{t.waitingForProvider}</span>
+      default:
+        return null
+    }
+  }
+  
   return (
     <div className="relative">
       <Button 
@@ -94,7 +129,7 @@ export function NotificationBell() {
         <BellRing className="h-5 w-5" />
         {hasNotifications && (
           <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-white text-xs">
-            {criticalOrders.length}
+            {allNotifications.length}
           </span>
         )}
       </Button>
@@ -102,30 +137,39 @@ export function NotificationBell() {
       {showNotifications && hasNotifications && (
         <div className="notification-panel absolute top-full right-0 mt-2 w-80 bg-background border rounded-md shadow-lg z-50">
           <div className="p-3 border-b font-medium">
-            {t.criticalAlerts}
+            {t.notifications}
           </div>
           
           <div className="max-h-96 overflow-y-auto">
-            {criticalOrders.map((order) => (
-              <div key={order.id} className="p-3 border-b hover:bg-muted/50">
+            {allNotifications.map((notification) => (
+              <div key={notification.id} className="p-3 border-b hover:bg-muted/50">
                 <Link 
-                  to={`/employee/orders/${order.taskId}`} 
+                  to={`/employee/orders/${notification.taskId}`} 
                   className="block"
                   onClick={() => setShowNotifications(false)}
                 >
-                  <p className="font-medium">{order.taskId}</p>
-                  <p className="text-sm text-muted-foreground">
-                    {order.status === 'NPA' ? t.noProviderAccepted : t.noProviderFound}
-                  </p>
-                  <p className="text-sm">
-                    {order.customerName} - {order.serviceType}
-                  </p>
-                  <p className="text-xs mt-1">
-                    {order.city || ""}
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    {new Date(order.pickupTime).toLocaleString()}
-                  </p>
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <p className="font-medium">{notification.taskId}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {notification.status === 'NPA' ? t.noProviderAccepted : 
+                         notification.status === 'NPF' ? t.noProviderFound : 
+                         notification.status}
+                      </p>
+                      <p className="text-sm">
+                        {notification.customerName} - {notification.serviceType}
+                      </p>
+                      {notification.city && (
+                        <p className="text-xs mt-1">
+                          {notification.city}
+                        </p>
+                      )}
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        {new Date(notification.pickupTime).toLocaleString()}
+                      </p>
+                    </div>
+                    {getNotificationBadge(notification.status)}
+                  </div>
                 </Link>
               </div>
             ))}
