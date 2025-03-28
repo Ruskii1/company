@@ -100,7 +100,7 @@ export const navigationTranslations = {
     backToVerifyDates: "Back to Verify Dates",
     backToVerifyDatetimes: "Back to Verify Datetimes",
     backToVerifyTimestamps: "Back to Verify Timestamps",
-    backToVerifyDurations: "Back to Verify Durations",
+    // Removed the duplicate backToVerifyDurations declaration
     backToVerifyIntervals: "Back to Verify Intervals",
     backToVerifyPeriods: "Back to Verify Periods",
     backToVerifySeasons: "Back to Verify Seasons",

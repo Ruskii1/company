@@ -1,3 +1,4 @@
+
 import { useTheme } from '@/lib/theme';
 import { useLanguageStore, translations } from '@/lib/i18n';
 import { formatCurrency } from '@/utils/formatters';
@@ -60,6 +61,16 @@ export function RevenueChart({ monthlyData, serviceTypeData }: RevenueChartProps
     setActiveIndex(index);
   };
 
+  // Create chart config objects
+  const chartConfig = {
+    revenue: {
+      label: t.revenue,
+      color: theme === 'dark' ? '#8884d8' : '#8884d8'
+    },
+    bar: { type: 'bar' },
+    pie: { type: 'pie' }
+  };
+
   // Custom active shape for PieChart
   const renderActiveShape = (props: any) => {
     const RADIAN = Math.PI / 180;
@@ -120,7 +131,7 @@ export function RevenueChart({ monthlyData, serviceTypeData }: RevenueChartProps
           </TabsList>
           
           <TabsContent value="monthly" className="h-[400px]">
-            <ChartContainer className="h-full" config={{ type: 'bar' }}>
+            <ChartContainer className="h-full" config={chartConfig}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={formattedMonthlyData}
@@ -156,7 +167,7 @@ export function RevenueChart({ monthlyData, serviceTypeData }: RevenueChartProps
           </TabsContent>
           
           <TabsContent value="service" className="h-[400px]">
-            <ChartContainer className="h-full" config={{ type: 'pie' }}>
+            <ChartContainer className="h-full" config={chartConfig}>
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
