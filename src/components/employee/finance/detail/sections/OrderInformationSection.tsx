@@ -24,7 +24,7 @@ export function OrderInformationSection({ invoice, onEdit, userRole = 'Authorize
   return (
     <InvoiceSectionCard title={financeT.orderInformation || "Order Information"}>
       <InvoiceFieldRow 
-        label={financeT.orderNumber} 
+        label={financeT.taskId} 
         value={invoice.orderId}
         invoice={invoice}
         fieldName="orderId"

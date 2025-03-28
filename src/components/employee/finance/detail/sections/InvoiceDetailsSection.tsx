@@ -25,10 +25,10 @@ export function InvoiceDetailsSection({ invoice, onEdit, userRole = 'AuthorizedE
   return (
     <InvoiceSectionCard title={financeT.invoiceDetails}>
       <InvoiceFieldRow 
-        label={financeT.invoiceNumber} 
-        value={invoice.invoiceNumber}
+        label={financeT.taskId} 
+        value={invoice.orderId}
         invoice={invoice}
-        fieldName="invoiceNumber"
+        fieldName="orderId"
         onEdit={onEdit}
         userRole={userRole}
       />

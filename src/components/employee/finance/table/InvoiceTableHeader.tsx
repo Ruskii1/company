@@ -13,8 +13,7 @@ export function InvoiceTableHeader() {
   return (
     <TableHeader>
       <TableRow>
-        <TableHead>{t.finance.invoiceNumber}</TableHead>
-        <TableHead>{t.finance.orderNumber}</TableHead>
+        <TableHead>{t.finance.taskId}</TableHead>
         <TableHead>{t.finance.customer}</TableHead>
         <TableHead>{t.finance.provider}</TableHead>
         <TableHead>{t.finance.serviceType}</TableHead>

@@ -12,8 +12,7 @@ import { FilterActions } from './filters/FilterActions';
 
 interface InvoiceFiltersProps {
   onFilter: (filters: {
-    orderNumber?: string;
-    invoiceNumber?: string;
+    taskId?: string;
     customerName?: string;
     providerName?: string;
     month?: string;
@@ -26,8 +25,7 @@ export function InvoiceFilters({ onFilter }: InvoiceFiltersProps) {
   const t = translations[language];
   
   const [filters, setFilters] = useState({
-    orderNumber: '',
-    invoiceNumber: '',
+    taskId: '',
     customerName: '',
     providerName: '',
     month: '',
@@ -48,8 +46,7 @@ export function InvoiceFilters({ onFilter }: InvoiceFiltersProps) {
 
   const clearFilters = () => {
     setFilters({
-      orderNumber: '',
-      invoiceNumber: '',
+      taskId: '',
       customerName: '',
       providerName: '',
       month: '',
@@ -64,24 +61,16 @@ export function InvoiceFilters({ onFilter }: InvoiceFiltersProps) {
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <SearchField
-              id="orderNumber"
-              label={t.orderNumber}
-              value={filters.orderNumber}
-              placeholder={t.searchByOrderNumber}
-              onChange={(value) => handleChange('orderNumber', value)}
-            />
-            
-            <SearchField
-              id="invoiceNumber"
-              label={t.invoiceNumber}
-              value={filters.invoiceNumber}
-              placeholder={t.searchByInvoiceNumber}
-              onChange={(value) => handleChange('invoiceNumber', value)}
+              id="taskId"
+              label={t.finance.taskId}
+              value={filters.taskId}
+              placeholder={t.searchByTaskId}
+              onChange={(value) => handleChange('taskId', value)}
             />
             
             <SearchField
               id="customerName"
-              label={t.customerName}
+              label={t.finance.customerName}
               value={filters.customerName}
               placeholder={t.searchByCustomerName}
               onChange={(value) => handleChange('customerName', value)}
@@ -89,7 +78,7 @@ export function InvoiceFilters({ onFilter }: InvoiceFiltersProps) {
             
             <SearchField
               id="providerName"
-              label={t.providerName}
+              label={t.finance.providerName}
               value={filters.providerName}
               placeholder={t.searchByProviderName}
               onChange={(value) => handleChange('providerName', value)}

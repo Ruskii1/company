@@ -90,6 +90,7 @@ export const finance = {
   // Invoice details
   orderNumber: "Order Number",
   invoiceNumber: "Invoice Number",
+  taskId: "Task ID",
   customerName: "Customer Name",
   status: "Status",
   date: "Date",

@@ -90,6 +90,7 @@ export const finance = {
   // Invoice details
   orderNumber: "رقم الطلب",
   invoiceNumber: "رقم الفاتورة",
+  taskId: "معرف المهمة",
   customerName: "اسم العميل",
   status: "الحالة",
   date: "التاريخ",

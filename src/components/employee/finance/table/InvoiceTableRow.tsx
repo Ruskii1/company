@@ -35,8 +35,7 @@ export function InvoiceTableRow({
 
   return (
     <TableRow key={invoice.id}>
-      <TableCell className="font-medium">{invoice.invoiceNumber}</TableCell>
-      <TableCell>{invoice.orderId}</TableCell>
+      <TableCell className="font-medium">{invoice.orderId}</TableCell>
       <TableCell>{invoice.customerName}</TableCell>
       <TableCell>{invoice.providerName}</TableCell>
       <TableCell>{invoice.serviceType}</TableCell>
