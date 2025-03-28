@@ -9,6 +9,116 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      cancellation_fees: {
+        Row: {
+          amount: number
+          charged_at: string
+          created_at: string
+          customer_name: string
+          id: string
+          order_id: string
+          reason: string | null
+        }
+        Insert: {
+          amount: number
+          charged_at?: string
+          created_at?: string
+          customer_name: string
+          id?: string
+          order_id: string
+          reason?: string | null
+        }
+        Update: {
+          amount?: number
+          charged_at?: string
+          created_at?: string
+          customer_name?: string
+          id?: string
+          order_id?: string
+          reason?: string | null
+        }
+        Relationships: []
+      }
+      invoices: {
+        Row: {
+          amount: number
+          created_at: string
+          customer_name: string
+          due_date: string
+          id: string
+          invoice_number: string
+          issue_date: string
+          order_id: string
+          provider_name: string
+          service_type: string
+          status: string
+          tax_amount: number
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          customer_name: string
+          due_date: string
+          id?: string
+          invoice_number: string
+          issue_date?: string
+          order_id: string
+          provider_name: string
+          service_type: string
+          status: string
+          tax_amount: number
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          customer_name?: string
+          due_date?: string
+          id?: string
+          invoice_number?: string
+          issue_date?: string
+          order_id?: string
+          provider_name?: string
+          service_type?: string
+          status?: string
+          tax_amount?: number
+        }
+        Relationships: []
+      }
+      payments: {
+        Row: {
+          amount: number
+          created_at: string
+          id: string
+          invoice_id: string
+          payment_date: string
+          payment_method: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          id?: string
+          invoice_id: string
+          payment_date?: string
+          payment_method: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: string
+          invoice_id?: string
+          payment_date?: string
+          payment_method?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "invoices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       providers_location: {
         Row: {
           heading: number | null

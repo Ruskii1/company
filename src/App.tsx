@@ -28,6 +28,7 @@ import { ThemeProvider } from './lib/theme'
 import CustomerSignIn from './pages/auth/CustomerSignIn'
 import EmployeeSignIn from './pages/auth/EmployeeSignIn'
 import { CustomerSettings } from './components/customer/settings/CustomerSettings'
+import FinancePage from './pages/employee/finance/Index'
 
 // Create the router configuration with components that need router context
 const router = createBrowserRouter([
@@ -111,6 +112,10 @@ const router = createBrowserRouter([
   {
     path: '/employee/customers/:customerId',
     element: <EmployeeLayout><CustomerDetails /></EmployeeLayout>,
+  },
+  {
+    path: '/employee/finance',
+    element: <EmployeeLayout><FinancePage /></EmployeeLayout>,
   }
 ]);
 

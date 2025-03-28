@@ -25,6 +25,7 @@ import {
   Ticket,
   User,
   ShieldCheck,
+  DollarSign
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTheme } from '@/lib/theme'
@@ -76,6 +77,11 @@ export function EmployeeSidebar() {
       title: t.serviceProvidersMap,
       url: '/employee/providers-map',
       icon: Map,
+    },
+    {
+      title: t.financeAndReports,
+      url: '/employee/finance',
+      icon: DollarSign,
     },
   ]
   
