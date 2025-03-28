@@ -13,7 +13,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { CreditCard, Home, LogOut, PlusCircle, Settings, Ticket } from 'lucide-react'
+import { Calendar, CreditCard, Home, LogOut, PlusCircle, Settings, Ticket } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTheme } from '@/lib/theme'
 import { useToast } from '@/hooks/use-toast'
@@ -41,7 +41,7 @@ export function CustomerSidebar() {
     {
       title: ct.allRequests,
       url: '/requests',
-      icon: Home,
+      icon: Calendar,
     },
     {
       title: t.tickets,
