@@ -51,7 +51,6 @@ export const finance = {
   // Top customers
   topSpendingCustomers: "أكثر العملاء إنفاقًا",
   topSpendingCustomersDescription: "العملاء الذين أنفقوا أكثر في الفترة المحددة",
-  invoices: "الفواتير",
   totalSpent: "إجمالي الإنفاق",
   
   // Invoice actions
