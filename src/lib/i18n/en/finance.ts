@@ -51,7 +51,6 @@ export const finance = {
   // Top customers
   topSpendingCustomers: "Top Spending Customers",
   topSpendingCustomersDescription: "Customers who have spent the most in the selected period",
-  invoices: "Invoices",
   totalSpent: "Total Spent",
   
   // Invoice actions
@@ -75,4 +74,4 @@ export const finance = {
   
   // Custom IDs 
   customerId: "Customer ID"
-};
+}

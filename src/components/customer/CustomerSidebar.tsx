@@ -22,6 +22,7 @@ export function CustomerSidebar() {
   const { language, setLanguage } = useLanguageStore()
   const { theme, setTheme } = useTheme()
   const t = translations[language]
+  const ct = t.customer
   const location = useLocation()
   const navigate = useNavigate()
   const { toast } = useToast()
@@ -33,12 +34,12 @@ export function CustomerSidebar() {
       icon: Home,
     },
     {
-      title: t.placeNewOrder,
+      title: ct.placeNewOrder,
       url: '/new-order',
       icon: PlusCircle,
     },
     {
-      title: t.allRequests,
+      title: ct.allRequests,
       url: '/requests',
       icon: Home,
     },
@@ -48,7 +49,7 @@ export function CustomerSidebar() {
       icon: Ticket,
     },
     {
-      title: t.credit,
+      title: ct.credit,
       url: '/credit',
       icon: CreditCard,
     },
@@ -76,7 +77,7 @@ export function CustomerSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>{t.navigation}</SidebarGroupLabel>
+          <SidebarGroupLabel>{ct.navigation}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {menuItems.map((item) => (
@@ -115,7 +116,7 @@ export function CustomerSidebar() {
             onClick={handleSignOut}
           >
             <LogOut className="mr-2 h-4 w-4" />
-            <span>{t.signOut}</span>
+            <span>{ct.signOut}</span>
           </Button>
         </div>
       </SidebarFooter>

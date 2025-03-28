@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 export function CustomerOverview() {
   const { language } = useLanguageStore();
   const t = translations[language];
+  const dt = t.customer.dashboard;
   const { pastRequests, todayRequests, futureRequests } = useRequestsData();
   
   // Mock company balance (this would come from an API in a real implementation)
@@ -20,7 +21,7 @@ export function CustomerOverview() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              {t.pastRequests}
+              {dt.pastRequests}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -41,7 +42,7 @@ export function CustomerOverview() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              {t.todaysRequests}
+              {dt.todaysRequests}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -62,7 +63,7 @@ export function CustomerOverview() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              {t.futureRequests}
+              {dt.futureRequests}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -83,7 +84,7 @@ export function CustomerOverview() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              {t.companyBalance}
+              {dt.companyBalance}
             </CardTitle>
           </CardHeader>
           <CardContent>

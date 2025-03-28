@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 export function CustomerNotifications() {
   const { language } = useLanguageStore();
   const t = translations[language];
+  const dt = t.customer.dashboard;
   
   // Dummy notifications data
   const notifications = {
@@ -55,18 +56,18 @@ export function CustomerNotifications() {
       <CardHeader>
         <CardTitle className="flex items-center">
           <Bell className="mr-2 h-5 w-5" />
-          {t.notifications}
+          {dt.notifications}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         {notifications.needsUpdating.length > 0 && (
           <Alert>
             <AlertTriangle className="h-4 w-4" />
-            <AlertTitle className="font-medium">{t.requestsNeedAttention}</AlertTitle>
+            <AlertTitle className="font-medium">{dt.requestsNeedAttention}</AlertTitle>
             <AlertDescription>
-              {t.youHave} <span className="font-medium">{notifications.needsUpdating.length}</span> {t.requestsNeedingUpdate}
+              {dt.youHave} <span className="font-medium">{notifications.needsUpdating.length}</span> {dt.requestsNeedingUpdate}
               <Link to="/requests?tab=today" className="block mt-2 text-sm underline">
-                {t.viewRequests}
+                {dt.viewRequests}
               </Link>
             </AlertDescription>
           </Alert>
@@ -75,9 +76,9 @@ export function CustomerNotifications() {
         {notifications.upcoming.length > 0 && (
           <Alert>
             <Clock className="h-4 w-4" />
-            <AlertTitle className="font-medium">{t.upcomingRequests}</AlertTitle>
+            <AlertTitle className="font-medium">{dt.upcomingRequests}</AlertTitle>
             <AlertDescription>
-              {t.youHave} <span className="font-medium">{notifications.upcoming.length}</span> {t.requestsInNextTwoHours}
+              {dt.youHave} <span className="font-medium">{notifications.upcoming.length}</span> {dt.requestsInNextTwoHours}
               <div className="mt-2 space-y-1">
                 {notifications.upcoming.map(request => (
                   <Link 

@@ -4,16 +4,16 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 import { enUS, arDZ } from "date-fns/locale";
 
 // Import language files
+import { core as enCore } from './en/core';
 import { common as enCommon } from './en/common';
 import { services as enServices } from './en/services';
-import { core as enCore } from './en/core';
 import { order as enOrder } from './en/order';
 import { customer as enCustomer } from './en/customer';
 import { finance as enFinance } from './en/finance';
 
+import { core as arCore } from './ar/core';
 import { common as arCommon } from './ar/common';
 import { services as arServices } from './ar/services';
-import { core as arCore } from './ar/core';
 import { order as arOrder } from './ar/order';
 import { customer as arCustomer } from './ar/customer';
 import { finance as arFinance } from './ar/finance';
@@ -34,8 +34,8 @@ export const translations = {
     ...enCommon,
     ...enServices,
     ...enOrder,
-    ...enCustomer,
-    ...enFinance,
+    customer: enCustomer,
+    finance: enFinance,
     dashboard: enCore.dashboard,
     services: enServices.services
   },
@@ -44,8 +44,8 @@ export const translations = {
     ...arCommon,
     ...arServices,
     ...arOrder,
-    ...arCustomer,
-    ...arFinance,
+    customer: arCustomer,
+    finance: arFinance,
     dashboard: arCore.dashboard,
     services: arServices.services
   }

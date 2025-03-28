@@ -75,4 +75,4 @@ export const finance = {
   
   // Custom IDs
   customerId: "معرف العميل"
-};
+}
