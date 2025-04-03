@@ -32,8 +32,8 @@ export const OrderActionButtons = ({
       return false
     }
     
+    // Admin can cancel any non-completed/cancelled order
     if (isAdmin) {
-      // Admins can cancel unless completed
       return true
     } else {
       // Regular employees can only cancel if order is still in Scheduled status
@@ -41,12 +41,17 @@ export const OrderActionButtons = ({
     }
   }
 
+  // Determine if the escalate button should be shown
+  const showEscalateButton = () => {
+    return order.status !== 'Completed' && order.status !== 'Cancelled'
+  }
+
   // Add debugging to see what's happening
   console.log({
     orderStatus: order.status,
     isAdmin,
     showCancel: showCancelButton(),
-    showEscalate: order.status !== 'Completed' && order.status !== 'Cancelled'
+    showEscalate: showEscalateButton()
   })
 
   return (
@@ -62,7 +67,7 @@ export const OrderActionButtons = ({
         </Button>
       )}
       
-      {order.status !== 'Completed' && order.status !== 'Cancelled' && (
+      {showEscalateButton() && (
         <Button 
           variant="default"
           onClick={escalateStatus}
