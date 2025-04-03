@@ -65,12 +65,12 @@ const OrderDetails = () => {
     // User role logic would be implemented here
     const isAdmin = true // This should be replaced with actual role check
     
-    if (order.status === 'Completed') {
+    if (order.status === 'Completed' || order.status === 'Cancelled') {
       return false
     }
     
     if (isAdmin) {
-      return order.status !== 'Completed'
+      return order.status !== 'Completed' && order.status !== 'Cancelled'
     } else {
       return order.status === 'Pending' || order.status === 'Scheduled'
     }
