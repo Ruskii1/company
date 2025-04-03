@@ -34,12 +34,20 @@ export const OrderActionButtons = ({
     
     if (isAdmin) {
       // Admins can cancel unless completed
-      return order.status !== 'Completed'
+      return true
     } else {
       // Regular employees can only cancel if order is still in Scheduled status
       return order.status === 'Scheduled'
     }
   }
+
+  // Add debugging to see what's happening
+  console.log({
+    orderStatus: order.status,
+    isAdmin,
+    showCancel: showCancelButton(),
+    showEscalate: order.status !== 'Completed' && order.status !== 'Cancelled'
+  })
 
   return (
     <CardFooter className="w-full bg-white dark:bg-gray-800 border-t p-4 shadow-lg flex justify-end gap-4 z-50">

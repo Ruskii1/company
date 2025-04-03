@@ -72,8 +72,8 @@ const OrderDetails = () => {
   }
 
   return (
-    <div className="relative flex flex-col h-full">
-      <Card className="flex-1 backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 pb-20">
+    <div className="relative flex flex-col min-h-[calc(100vh-4rem)]">
+      <Card className="flex-1 backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 mb-20">
         <OrderDetailsHeader order={order} />
         
         <OrderTabsContent 
@@ -86,7 +86,7 @@ const OrderDetails = () => {
         />
       </Card>
       
-      <div className="absolute bottom-0 left-0 right-0">
+      <div className="fixed bottom-0 left-0 right-0">
         <OrderActionButtons 
           order={order}
           isAdmin={isAdmin}

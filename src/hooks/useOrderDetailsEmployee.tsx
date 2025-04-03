@@ -21,8 +21,10 @@ export const useOrderDetailsEmployee = (taskId: string | undefined) => {
       if (taskId === '2023-009') {
         mockOrder.status = 'Scheduled';
       } else if (taskId === '2025-002') {
-        // Use the current route for testing
         mockOrder.status = 'Waiting for provider';
+      } else if (taskId === '2025-006') {
+        // Add a test case for the current route
+        mockOrder.status = 'Scheduled';
       }
       
       console.log("Loaded order with status:", mockOrder.status);
