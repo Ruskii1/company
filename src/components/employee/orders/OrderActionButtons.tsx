@@ -7,14 +7,14 @@ import { Order } from '@/types/order'
 
 interface OrderActionButtonsProps {
   order: Order | null
-  showCancelButton: () => boolean
+  isAdmin: boolean
   cancelOrder: () => void
   escalateStatus: () => void
 }
 
 export const OrderActionButtons = ({
   order,
-  showCancelButton,
+  isAdmin,
   cancelOrder,
   escalateStatus
 }: OrderActionButtonsProps) => {
@@ -22,6 +22,24 @@ export const OrderActionButtons = ({
   const t = translations[language]
   
   if (!order) return null
+
+  // Determine if the cancel button should be shown based on role and order status
+  const showCancelButton = () => {
+    if (!order) return false
+    
+    // Order is completed or cancelled - no one can cancel
+    if (order.status === 'Completed' || order.status === 'Cancelled') {
+      return false
+    }
+    
+    if (isAdmin) {
+      // Admins can cancel unless completed
+      return order.status !== 'Completed'
+    } else {
+      // Regular employees can only cancel if order is still in Scheduled status
+      return order.status === 'Scheduled'
+    }
+  }
 
   return (
     <CardFooter className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t p-4 shadow-lg flex justify-end gap-4 z-10">

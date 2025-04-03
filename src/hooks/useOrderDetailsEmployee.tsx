@@ -14,6 +14,12 @@ export const useOrderDetailsEmployee = (taskId: string | undefined) => {
   useEffect(() => {
     setTimeout(() => {
       const mockOrder = getMockOrder(taskId);
+      
+      // Add a special case for testing the 'Scheduled' status
+      if (taskId === '2023-009') {
+        mockOrder.status = 'Scheduled';
+      }
+      
       setOrder(mockOrder);
       setLoading(false);
     }, 500);

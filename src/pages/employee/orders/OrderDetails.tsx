@@ -27,6 +27,10 @@ const OrderDetails = () => {
     updateOrderStatus
   } = useOrderDetailsEmployee(taskId)
 
+  // In a real application, this would come from an auth context or user store
+  // For this demo, we're using a mock value
+  const isAdmin = true
+
   const openInGoogleMaps = (location: string) => {
     const encodedLocation = encodeURIComponent(location)
     window.open(`https://www.google.com/maps/search/?api=1&query=${encodedLocation}`, '_blank')
@@ -54,24 +58,6 @@ const OrderDetails = () => {
     toast.success("Order has been cancelled")
   }
 
-  // Determine if the cancel button should be shown
-  const showCancelButton = () => {
-    if (!order) return false
-    
-    // User role logic would be implemented here
-    const isAdmin = true // This should be replaced with actual role check
-    
-    if (order.status === 'Completed' || order.status === 'Cancelled') {
-      return false
-    }
-    
-    if (isAdmin) {
-      return order.status !== 'Completed' && order.status !== 'Cancelled'
-    } else {
-      return order.status === 'Pending' || order.status === 'Scheduled'
-    }
-  }
-
   if (loading) {
     return <OrderLoadingState />
   }
@@ -95,7 +81,7 @@ const OrderDetails = () => {
       
       <OrderActionButtons 
         order={order}
-        showCancelButton={showCancelButton}
+        isAdmin={isAdmin}
         cancelOrder={cancelOrder}
         escalateStatus={escalateStatus}
       />

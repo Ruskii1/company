@@ -1,4 +1,3 @@
-
 import { Order } from '@/types/orderManagement'
 
 /**
@@ -140,6 +139,8 @@ export const extractCityFromLocation = (location: string): string => {
 export const getNextStatus = (currentStatus: string): string => {
   switch (currentStatus) {
     case 'Pending':
+      return 'Scheduled'
+    case 'Scheduled':
       return 'Waiting for provider'
     case 'Waiting for provider':
       return 'In route'
