@@ -81,7 +81,7 @@ const OrderDetails = () => {
   }
 
   return (
-    <Card className="backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 relative pb-20">
+    <Card className="backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 relative pb-24">
       <OrderDetailsHeader order={order} />
       
       <OrderTabsContent 
