@@ -12,14 +12,20 @@ export const useOrderDetailsEmployee = (taskId: string | undefined) => {
   const { addNoteToConversation: addNote, addInternalNote: addInternal } = useConversationUtils();
 
   useEffect(() => {
+    console.log("Loading order details for taskId:", taskId);
+    
     setTimeout(() => {
       const mockOrder = getMockOrder(taskId);
       
-      // Add a special case for testing the 'Scheduled' status
+      // Add special cases for testing different statuses
       if (taskId === '2023-009') {
         mockOrder.status = 'Scheduled';
+      } else if (taskId === '2025-002') {
+        // Use the current route for testing
+        mockOrder.status = 'Waiting for provider';
       }
       
+      console.log("Loaded order with status:", mockOrder.status);
       setOrder(mockOrder);
       setLoading(false);
     }, 500);
@@ -41,6 +47,8 @@ export const useOrderDetailsEmployee = (taskId: string | undefined) => {
 
   const updateOrderStatus = (newStatus: string) => {
     if (!order) return;
+    
+    console.log(`Updating order status from ${order.status} to ${newStatus}`);
     
     // In a real app, this would make an API call
     // For now, we just update the local state

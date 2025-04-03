@@ -1,3 +1,4 @@
+
 import { Order } from '@/types/orderManagement'
 
 /**
@@ -137,6 +138,8 @@ export const extractCityFromLocation = (location: string): string => {
  * Get the next status in the workflow for a given order status
  */
 export const getNextStatus = (currentStatus: string): string => {
+  console.log("Getting next status for:", currentStatus)
+  
   switch (currentStatus) {
     case 'Pending':
       return 'Scheduled'
@@ -151,6 +154,7 @@ export const getNextStatus = (currentStatus: string): string => {
     case 'In service':
       return 'Completed'
     default:
+      console.log("Warning: Unknown status in getNextStatus:", currentStatus)
       return currentStatus
   }
 }

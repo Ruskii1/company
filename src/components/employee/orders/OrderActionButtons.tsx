@@ -42,7 +42,7 @@ export const OrderActionButtons = ({
   }
 
   return (
-    <CardFooter className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t p-4 shadow-lg flex justify-end gap-4 z-10">
+    <CardFooter className="w-full bg-white dark:bg-gray-800 border-t p-4 shadow-lg flex justify-end gap-4 z-50">
       {showCancelButton() && (
         <Button 
           variant="destructive" 
