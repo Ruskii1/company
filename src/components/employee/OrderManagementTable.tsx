@@ -10,10 +10,9 @@ import {
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
-import { MapPin, ArrowUp } from "lucide-react"
+import { MapPin } from "lucide-react"
 import { StatusBadge } from "@/components/employee/orders/StatusBadge"
 import { toast } from "sonner"
-import { getNextStatus } from '@/utils/orderManagementUtils'
 
 interface Order {
   id: string
@@ -43,21 +42,6 @@ export const OrderManagementTable = ({
   const { language } = useLanguageStore()
   const t = translations[language]
   const navigate = useNavigate()
-
-  const escalateStatus = (id: string, currentStatus: string) => {
-    if (currentStatus === 'Completed') {
-      toast.info("Order is already completed")
-      return
-    }
-    
-    const newStatus = getNextStatus(currentStatus)
-    console.log(`Escalating order ${id} status from ${currentStatus} to ${newStatus}`)
-    
-    // Directly call the parent component's callback
-    // This bypasses the actual database call which is causing the UUID error
-    onStatusChange(id, newStatus);
-    toast.success(`Order status updated to ${newStatus}`);
-  }
 
   const openInGoogleMaps = (location: string) => {
     const encodedLocation = encodeURIComponent(location)
@@ -149,17 +133,6 @@ export const OrderManagementTable = ({
                     >
                       {t.viewDetails}
                     </Button>
-                    {!isFutureTab && order.status !== 'Completed' && (
-                      <Button 
-                        variant="default"
-                        size="sm"
-                        onClick={() => escalateStatus(order.id, order.status)}
-                        className="flex items-center gap-1"
-                      >
-                        <ArrowUp size={14} />
-                        <span>{t.escalateStatus}</span>
-                      </Button>
-                    )}
                   </div>
                 </TableCell>
               </TableRow>

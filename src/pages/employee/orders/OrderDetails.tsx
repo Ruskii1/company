@@ -1,9 +1,9 @@
 
 import { useParams, useNavigate } from 'react-router-dom'
 import { useLanguageStore, translations } from '@/lib/i18n'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, ArrowUp, X } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useState } from 'react'
 import { StatusBadge } from '@/components/employee/orders/StatusBadge'
@@ -13,6 +13,8 @@ import { InternalNotesTab } from '@/components/employee/orders/InternalNotesTab'
 import { ConversationTab } from '@/components/employee/orders/ConversationTab'
 import { useOrderDetailsEmployee } from '@/hooks/useOrderDetailsEmployee'
 import { TimeTrackingComponent } from '@/components/customer/TimeTrackingComponent'
+import { toast } from 'sonner'
+import { getNextStatus } from '@/utils/orderManagementUtils'
 
 const OrderDetails = () => {
   const { taskId } = useParams()
@@ -25,12 +27,53 @@ const OrderDetails = () => {
     order, 
     loading, 
     addNoteToConversation, 
-    addInternalNote 
+    addInternalNote,
+    updateOrderStatus
   } = useOrderDetailsEmployee(taskId)
 
   const openInGoogleMaps = (location: string) => {
     const encodedLocation = encodeURIComponent(location)
     window.open(`https://www.google.com/maps/search/?api=1&query=${encodedLocation}`, '_blank')
+  }
+
+  const escalateStatus = () => {
+    if (!order) return
+    
+    if (order.status === 'Completed') {
+      toast.info("Order is already completed")
+      return
+    }
+    
+    const newStatus = getNextStatus(order.status)
+    console.log(`Escalating order status from ${order.status} to ${newStatus}`)
+    
+    updateOrderStatus(newStatus)
+    toast.success(`Order status updated to ${newStatus}`)
+  }
+
+  const cancelOrder = () => {
+    if (!order) return
+    
+    updateOrderStatus('Cancelled')
+    toast.success("Order has been cancelled")
+  }
+
+  // Determine if the cancel button should be shown
+  const showCancelButton = () => {
+    if (!order) return false
+    
+    // User role logic would be implemented here
+    const isAdmin = true // This should be replaced with actual role check
+    
+    if (order.status === 'Completed') {
+      return false
+    }
+    
+    if (isAdmin) {
+      return order.status !== 'Completed'
+    } else {
+      return order.status === 'Pending' || order.status === 'Scheduled'
+    }
   }
 
   if (loading) {
@@ -61,7 +104,7 @@ const OrderDetails = () => {
   }
 
   return (
-    <Card className="backdrop-blur-sm bg-white/80 dark:bg-gray-800/80">
+    <Card className="backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 relative pb-20">
       <CardHeader className="flex flex-row items-center gap-4">
         <Button variant="outline" onClick={() => navigate('/employee')}>
           <ArrowLeft className="mr-2 h-4 w-4" /> {t.orderManagement}
@@ -142,6 +185,31 @@ const OrderDetails = () => {
           </TabsContent>
         </Tabs>
       </CardContent>
+      
+      {/* Fixed action buttons at the bottom */}
+      <CardFooter className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t p-4 shadow-lg flex justify-end gap-4">
+        {showCancelButton() && (
+          <Button 
+            variant="destructive" 
+            onClick={cancelOrder}
+            className="gap-2"
+          >
+            <X size={16} />
+            Cancel Order
+          </Button>
+        )}
+        
+        {order.status !== 'Completed' && order.status !== 'Cancelled' && (
+          <Button 
+            variant="default"
+            onClick={escalateStatus}
+            className="gap-2"
+          >
+            <ArrowUp size={16} />
+            {t.escalateStatus}
+          </Button>
+        )}
+      </CardFooter>
     </Card>
   )
 }

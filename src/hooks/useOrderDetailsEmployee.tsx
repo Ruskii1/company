@@ -33,10 +33,44 @@ export const useOrderDetailsEmployee = (taskId: string | undefined) => {
     }
   };
 
+  const updateOrderStatus = (newStatus: string) => {
+    if (!order) return;
+    
+    // In a real app, this would make an API call
+    // For now, we just update the local state
+    const updatedOrder = {
+      ...order,
+      status: newStatus
+    };
+    
+    // Update time tracking based on status change
+    const now = new Date().toISOString();
+    const updatedTimeTracking = { ...order.timeTracking };
+    
+    switch (newStatus) {
+      case 'In route':
+        updatedTimeTracking.inRouteAt = now;
+        break;
+      case 'Arrived at the pick-up location':
+        updatedTimeTracking.arrivedAt = now;
+        break;
+      case 'In service':
+        updatedTimeTracking.inServiceAt = now;
+        break;
+      case 'Completed':
+        updatedTimeTracking.dropoffAt = now;
+        break;
+    }
+    
+    updatedOrder.timeTracking = updatedTimeTracking;
+    setOrder(updatedOrder);
+  };
+
   return { 
     order, 
     loading, 
     addNoteToConversation,
-    addInternalNote
+    addInternalNote,
+    updateOrderStatus
   };
 };
