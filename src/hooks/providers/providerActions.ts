@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { ServiceProvider, ProviderStatus, InternalNote, BankAccount } from '@/types/provider';
+import { ServiceProvider, ProviderStatus, InternalNote, BankAccount, Document } from '@/types/provider';
 import { mockServiceProviders } from '@/data/mockProviders';
 
 export interface ProviderFilters {
@@ -125,6 +125,58 @@ export const useProviderActions = (initialProviders: ServiceProvider[] = mockSer
     );
   };
 
+  const addDocument = (providerId: string, document: Document) => {
+    setProviders(prevProviders => 
+      prevProviders.map(provider => 
+        provider.id === providerId 
+          ? { 
+              ...provider, 
+              documents: [...provider.documents, document],
+              actionLog: [
+                {
+                  id: `log-${Date.now()}`,
+                  timestamp: new Date().toISOString(),
+                  action: 'Document Added',
+                  performedBy: {
+                    id: 'emp-001',
+                    name: 'Fatima Al-Sulaiman',
+                    role: 'Provider Manager'
+                  },
+                  details: `Document uploaded: ${document.type}`
+                },
+                ...provider.actionLog
+              ]
+            } 
+          : provider
+      )
+    );
+    
+    setFilteredProviders(prevFiltered => 
+      prevFiltered.map(provider => 
+        provider.id === providerId 
+          ? { 
+              ...provider, 
+              documents: [...provider.documents, document],
+              actionLog: [
+                {
+                  id: `log-${Date.now()}`,
+                  timestamp: new Date().toISOString(),
+                  action: 'Document Added',
+                  performedBy: {
+                    id: 'emp-001',
+                    name: 'Fatima Al-Sulaiman',
+                    role: 'Provider Manager'
+                  },
+                  details: `Document uploaded: ${document.type}`
+                },
+                ...provider.actionLog
+              ]
+            } 
+          : provider
+      )
+    );
+  };
+
   const filterProviders = (filters: ProviderFilters) => {
     let results = [...providers];
     
@@ -171,6 +223,7 @@ export const useProviderActions = (initialProviders: ServiceProvider[] = mockSer
     updateProviderStatus,
     addInternalNote,
     addBankAccount,
+    addDocument,
     filterProviders,
     resetFilters
   };

@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ServiceProvider, InternalNote, BankAccount } from '@/types/provider';
+import { ServiceProvider, InternalNote, BankAccount, Document } from '@/types/provider';
 import { ProviderHeader } from './details/ProviderHeader';
 import { OrdersTab } from './details/OrdersTab';
 import { DocumentsTab } from './details/DocumentsTab';
@@ -13,6 +13,7 @@ import { LocationSimulator } from './LocationSimulator';
 import { ProviderLiveMap } from '@/components/customer/ProviderLiveMap';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MapPin } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 interface ProviderDetailsProps {
   provider: ServiceProvider;
@@ -28,6 +29,7 @@ export function ProviderDetails({
   onAddBankAccount,
 }: ProviderDetailsProps) {
   const [activeTab, setActiveTab] = useState('orders');
+  const { toast } = useToast();
 
   const handleAddInternalNote = (text: string) => {
     const note: InternalNote = {
@@ -45,6 +47,30 @@ export function ProviderDetails({
 
   const handleAddBankAccount = (account: BankAccount) => {
     onAddBankAccount(provider.id, account);
+  };
+
+  const handleDocumentUploaded = (document: Document) => {
+    // In a real application, this would save to the database
+    // For now, we're just updating the local state via our hooks
+    
+    const logEntry = {
+      id: `log-${Date.now()}`,
+      timestamp: new Date().toISOString(),
+      action: 'Document Added',
+      performedBy: {
+        id: 'emp-1',
+        name: 'Admin User',
+        role: 'admin',
+      },
+      details: `Document uploaded: ${document.type}`
+    };
+    
+    // You could call a function to update the provider's documents in the store
+    // For demo purposes, we'll just show a toast
+    toast({
+      title: "Document Uploaded",
+      description: `The ${document.type.replace('_', ' ')} document has been uploaded and is pending verification.`,
+    });
   };
 
   return (
@@ -69,7 +95,10 @@ export function ProviderDetails({
             </TabsContent>
             
             <TabsContent value="documents">
-              <DocumentsTab provider={provider} />
+              <DocumentsTab 
+                provider={provider} 
+                onDocumentUploaded={handleDocumentUploaded}
+              />
             </TabsContent>
             
             <TabsContent value="transactions">

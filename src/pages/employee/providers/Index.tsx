@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { InfoIcon, Plus, UsersIcon } from 'lucide-react';
 import { useServiceProviders } from '@/hooks/useServiceProviders';
-import { ServiceProvider, InternalNote, BankAccount } from '@/types/provider';
+import { ServiceProvider, InternalNote, BankAccount, Document } from '@/types/provider';
 import { ProvidersList } from '@/components/employee/providers/ProvidersList';
 import { ProviderDetails } from '@/components/employee/providers/ProviderDetails';
 import { ProviderFilter } from '@/components/employee/providers/ProviderFilter';
@@ -17,7 +17,8 @@ const ServiceProvidersPage = () => {
     providers, 
     allProviders,
     addInternalNote, 
-    addBankAccount, 
+    addBankAccount,
+    addDocument,
     filterProviders, 
     resetFilters 
   } = useServiceProviders();
@@ -41,6 +42,15 @@ const ServiceProvidersPage = () => {
     toast({
       title: "Bank Account Added",
       description: `${account.bankName} account has been added to the provider profile.`,
+    });
+  };
+
+  const handleAddDocument = (providerId: string, document: Document) => {
+    addDocument(providerId, document);
+    
+    toast({
+      title: "Document Uploaded",
+      description: `The ${document.type.replace('_', ' ')} document has been uploaded and is pending verification.`,
     });
   };
   

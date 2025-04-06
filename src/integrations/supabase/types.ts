@@ -119,6 +119,69 @@ export type Database = {
           },
         ]
       }
+      providers: {
+        Row: {
+          car_license_url: string | null
+          created_at: string | null
+          driving_license_url: string | null
+          email: string
+          extra_note: string | null
+          extra_photos: Json | null
+          first_name: string
+          id: string
+          is_company: boolean | null
+          national_id: string
+          nid_photo_url: string | null
+          password: string
+          personal_photo_url: string | null
+          phone: string
+          second_name: string
+          status: string | null
+          third_name: string
+          wallet_balance: number | null
+        }
+        Insert: {
+          car_license_url?: string | null
+          created_at?: string | null
+          driving_license_url?: string | null
+          email: string
+          extra_note?: string | null
+          extra_photos?: Json | null
+          first_name: string
+          id?: string
+          is_company?: boolean | null
+          national_id: string
+          nid_photo_url?: string | null
+          password: string
+          personal_photo_url?: string | null
+          phone: string
+          second_name: string
+          status?: string | null
+          third_name: string
+          wallet_balance?: number | null
+        }
+        Update: {
+          car_license_url?: string | null
+          created_at?: string | null
+          driving_license_url?: string | null
+          email?: string
+          extra_note?: string | null
+          extra_photos?: Json | null
+          first_name?: string
+          id?: string
+          is_company?: boolean | null
+          national_id?: string
+          nid_photo_url?: string | null
+          password?: string
+          personal_photo_url?: string | null
+          phone?: string
+          second_name?: string
+          status?: string | null
+          third_name?: string
+          wallet_balance?: number | null
+        }
+        Relationships: []
+      }
       providers_location: {
         Row: {
           heading: number | null
