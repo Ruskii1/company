@@ -1,6 +1,5 @@
 
-import { ProviderStatus } from '@/types/provider';
-import { ServiceProvider } from '@/types/provider';
+import { ProviderStatus, ServiceProvider } from '@/types/provider';
 
 export interface ProviderFilters {
   name?: string;

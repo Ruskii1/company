@@ -1,7 +1,6 @@
-
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ServiceProvider, InternalNote, BankAccount, Document } from '@/types/provider';
+import { ServiceProvider, InternalNote, BankAccount, Document as ProviderDocument } from '@/types/provider';
 import { ProviderHeader } from './details/ProviderHeader';
 import { OrdersTab } from './details/OrdersTab';
 import { DocumentsTab } from './details/DocumentsTab';
@@ -23,7 +22,7 @@ interface ProviderDetailsProps {
   onAddNote: (providerId: string, note: InternalNote) => void;
   onAddBankAccount: (providerId: string, account: BankAccount) => void;
   onApproveProvider?: (providerId: string, isApproved: boolean) => void;
-  onAddDocument?: (providerId: string, document: Document) => void;
+  onAddDocument?: (providerId: string, document: ProviderDocument) => void;
 }
 
 export function ProviderDetails({
@@ -69,10 +68,7 @@ export function ProviderDetails({
     }
   };
 
-  const handleDocumentUploaded = (document: Document) => {
-    // In a real application, this would save to the database
-    // For now, we're just updating the local state via our hooks
-    
+  const handleDocumentUploaded = (document: ProviderDocument) => {
     const logEntry = {
       id: `log-${Date.now()}`,
       timestamp: new Date().toISOString(),
@@ -89,8 +85,6 @@ export function ProviderDetails({
       onAddDocument(provider.id, document);
     }
     
-    // You could call a function to update the provider's documents in the store
-    // For demo purposes, we'll just show a toast
     toast({
       title: "Document Uploaded",
       description: `The ${document.type.replace('_', ' ')} document has been uploaded and is pending verification.`,

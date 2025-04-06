@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ServiceProvider } from '@/types/provider';
+import { ServiceProvider, Document as ProviderDocument } from '@/types/provider';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { FileIcon, Upload, Plus } from 'lucide-react';
@@ -15,13 +15,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 interface DocumentsTabProps {
   provider: ServiceProvider;
   searchQuery?: string;
-  onDocumentUploaded?: (document: any) => void;
+  onDocumentUploaded?: (document: ProviderDocument) => void;
 }
 
 export function DocumentsTab({ provider, searchQuery = '', onDocumentUploaded }: DocumentsTabProps) {
   const [uploading, setUploading] = useState(false);
   const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
-  const [documentType, setDocumentType] = useState('national_id');
+  const [documentType, setDocumentType] = useState<'national_id' | 'drivers_license' | 'vehicle_registration' | 'equipment' | 'truck' | 'insurance' | 'operational_license' | 'other'>('national_id');
   const [documentDescription, setDocumentDescription] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const { toast } = useToast();
@@ -85,7 +85,7 @@ export function DocumentsTab({ provider, searchQuery = '', onDocumentUploaded }:
         .getPublicUrl(filePath);
 
       // Add the document to the provider's documents array
-      const newDocument = {
+      const newDocument: ProviderDocument = {
         id: `doc-${Date.now()}`,
         type: documentType,
         url: publicUrl,

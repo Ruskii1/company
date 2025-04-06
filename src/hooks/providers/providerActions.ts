@@ -1,13 +1,14 @@
 
 import { useState } from 'react';
-import { ServiceProvider } from '@/types/provider';
+import { ServiceProvider, ProviderStatus, InternalNote, BankAccount, Document } from '@/types/provider';
 import { mockServiceProviders } from '@/data/mockProviders';
 import { filterProviders as filterProvidersUtil, resetFilters as resetFiltersUtil } from './utils/filterUtils';
 import { updateProviderStatus, approveProvider } from './utils/statusUtils';
 import { addInternalNote, addBankAccount, addDocument } from './utils/providerDataUtils';
 import { ProviderFilters } from './types';
 
-export { ProviderFilters } from './types';
+// Export the type correctly with 'export type'
+export type { ProviderFilters } from './types';
 
 export const useProviderActions = (initialProviders: ServiceProvider[] = mockServiceProviders) => {
   const [providers, setProviders] = useState<ServiceProvider[]>(initialProviders);
