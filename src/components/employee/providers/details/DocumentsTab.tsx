@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ServiceProvider, Document as ProviderDocument } from '@/types/provider';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
@@ -18,10 +17,12 @@ interface DocumentsTabProps {
   onDocumentUploaded?: (document: ProviderDocument) => void;
 }
 
+type DocumentType = 'national_id' | 'drivers_license' | 'vehicle_registration' | 'equipment' | 'truck' | 'insurance' | 'operational_license' | 'other';
+
 export function DocumentsTab({ provider, searchQuery = '', onDocumentUploaded }: DocumentsTabProps) {
   const [uploading, setUploading] = useState(false);
   const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
-  const [documentType, setDocumentType] = useState<'national_id' | 'drivers_license' | 'vehicle_registration' | 'equipment' | 'truck' | 'insurance' | 'operational_license' | 'other'>('national_id');
+  const [documentType, setDocumentType] = useState<DocumentType>('national_id');
   const [documentDescription, setDocumentDescription] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const { toast } = useToast();
@@ -118,6 +119,10 @@ export function DocumentsTab({ provider, searchQuery = '', onDocumentUploaded }:
     }
   };
 
+  const handleDocumentTypeChange = (value: string) => {
+    setDocumentType(value as DocumentType);
+  };
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
@@ -147,7 +152,10 @@ export function DocumentsTab({ provider, searchQuery = '', onDocumentUploaded }:
             <div className="grid gap-4 py-4">
               <div>
                 <Label htmlFor="documentType">Document Type</Label>
-                <Select value={documentType} onValueChange={setDocumentType}>
+                <Select 
+                  value={documentType} 
+                  onValueChange={handleDocumentTypeChange}
+                >
                   <SelectTrigger id="documentType">
                     <SelectValue placeholder="Select document type" />
                   </SelectTrigger>
