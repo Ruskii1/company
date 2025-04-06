@@ -13,8 +13,9 @@ export const useAdminApprovals = () => {
     try {
       setLoading(true);
       
-      const { data, error } = await supabase
-        .from('admin_pending_approvals')
+      // Use type assertion to work around TypeScript issues with tables not in the types
+      const { data, error } = await (supabase
+        .from('admin_pending_approvals') as any)
         .select(`
           provider_id,
           status,
@@ -34,7 +35,7 @@ export const useAdminApprovals = () => {
       
       if (error) throw error;
 
-      const formattedData: PendingApproval[] = data.map(item => ({
+      const formattedData: PendingApproval[] = data.map((item: any) => ({
         provider_id: item.provider_id,
         status: item.status,
         reviewed_at: item.reviewed_at,
@@ -66,9 +67,9 @@ export const useAdminApprovals = () => {
     try {
       setLoading(true);
       
-      // Update the approval status
-      const { error: approvalError } = await supabase
-        .from('admin_pending_approvals')
+      // Update the approval status using type assertion to work around TypeScript issues
+      const { error: approvalError } = await (supabase
+        .from('admin_pending_approvals') as any)
         .update({
           status: 'approved',
           reviewed_at: new Date().toISOString(),
@@ -112,9 +113,9 @@ export const useAdminApprovals = () => {
     try {
       setLoading(true);
       
-      // Update the approval status
-      const { error: approvalError } = await supabase
-        .from('admin_pending_approvals')
+      // Update the approval status using type assertion to work around TypeScript issues
+      const { error: approvalError } = await (supabase
+        .from('admin_pending_approvals') as any)
         .update({
           status: 'rejected',
           reviewed_at: new Date().toISOString(),
