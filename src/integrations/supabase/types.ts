@@ -129,6 +129,7 @@ export type Database = {
           extra_photos: Json | null
           first_name: string
           id: string
+          is_approved: boolean | null
           is_company: boolean | null
           national_id: string
           nid_photo_url: string | null
@@ -149,6 +150,7 @@ export type Database = {
           extra_photos?: Json | null
           first_name: string
           id?: string
+          is_approved?: boolean | null
           is_company?: boolean | null
           national_id: string
           nid_photo_url?: string | null
@@ -169,6 +171,7 @@ export type Database = {
           extra_photos?: Json | null
           first_name?: string
           id?: string
+          is_approved?: boolean | null
           is_company?: boolean | null
           national_id?: string
           nid_photo_url?: string | null

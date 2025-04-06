@@ -19,6 +19,7 @@ const ServiceProvidersPage = () => {
     addInternalNote, 
     addBankAccount,
     addDocument,
+    approveProvider,
     filterProviders, 
     resetFilters 
   } = useServiceProviders();
@@ -52,6 +53,10 @@ const ServiceProvidersPage = () => {
       title: "Document Uploaded",
       description: `The ${document.type.replace('_', ' ')} document has been uploaded and is pending verification.`,
     });
+  };
+
+  const handleApproveProvider = (providerId: string, isApproved: boolean) => {
+    approveProvider(providerId, isApproved);
   };
   
   // Get unique regions from providers
@@ -104,6 +109,8 @@ const ServiceProvidersPage = () => {
             onBack={() => setSelectedProviderId(null)}
             onAddNote={handleAddNote}
             onAddBankAccount={handleAddBankAccount}
+            onApproveProvider={handleApproveProvider}
+            onAddDocument={handleAddDocument}
           />
         ) : (
           <div className="text-center py-12">

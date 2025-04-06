@@ -29,6 +29,62 @@ export const useProviderActions = (initialProviders: ServiceProvider[] = mockSer
     );
   };
 
+  const approveProvider = (providerId: string, isApproved: boolean) => {
+    setProviders(prevProviders => 
+      prevProviders.map(provider => 
+        provider.id === providerId 
+          ? { 
+              ...provider, 
+              isApproved,
+              actionLog: [
+                {
+                  id: `log-${Date.now()}`,
+                  timestamp: new Date().toISOString(),
+                  action: isApproved ? 'Provider Approved' : 'Provider Approval Revoked',
+                  performedBy: {
+                    id: 'emp-001',
+                    name: 'Fatima Al-Sulaiman',
+                    role: 'Provider Manager'
+                  },
+                  details: isApproved 
+                    ? 'Provider account has been approved' 
+                    : 'Provider approval has been revoked'
+                },
+                ...provider.actionLog
+              ]
+            } 
+          : provider
+      )
+    );
+    
+    setFilteredProviders(prevFiltered => 
+      prevFiltered.map(provider => 
+        provider.id === providerId 
+          ? { 
+              ...provider, 
+              isApproved,
+              actionLog: [
+                {
+                  id: `log-${Date.now()}`,
+                  timestamp: new Date().toISOString(),
+                  action: isApproved ? 'Provider Approved' : 'Provider Approval Revoked',
+                  performedBy: {
+                    id: 'emp-001',
+                    name: 'Fatima Al-Sulaiman',
+                    role: 'Provider Manager'
+                  },
+                  details: isApproved 
+                    ? 'Provider account has been approved' 
+                    : 'Provider approval has been revoked'
+                },
+                ...provider.actionLog
+              ]
+            } 
+          : provider
+      )
+    );
+  };
+
   const addInternalNote = (providerId: string, note: InternalNote) => {
     setProviders(prevProviders => 
       prevProviders.map(provider => 
@@ -221,6 +277,7 @@ export const useProviderActions = (initialProviders: ServiceProvider[] = mockSer
     providers: filteredProviders,
     allProviders: providers,
     updateProviderStatus,
+    approveProvider,
     addInternalNote,
     addBankAccount,
     addDocument,

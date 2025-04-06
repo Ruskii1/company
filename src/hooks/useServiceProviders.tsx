@@ -9,6 +9,7 @@ export const useServiceProviders = () => {
     addInternalNote,
     addBankAccount,
     addDocument,
+    approveProvider,
     filterProviders,
     resetFilters
   } = useProviderActions();
@@ -19,6 +20,7 @@ export const useServiceProviders = () => {
     addInternalNote,
     addBankAccount,
     addDocument,
+    approveProvider,
     filterProviders,
     resetFilters
   };
