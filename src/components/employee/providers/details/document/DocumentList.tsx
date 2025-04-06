@@ -6,18 +6,22 @@ import { EmptyDocumentState } from './EmptyDocumentState';
 
 interface DocumentListProps {
   provider: ServiceProvider;
-  searchQuery?: string;
+  documents: ProviderDocument[];
   onUploadClick: () => void;
 }
 
-export function DocumentList({ provider, searchQuery = '', onUploadClick }: DocumentListProps) {
+export function DocumentList({ provider, documents, onUploadClick }: DocumentListProps) {
   if (provider.documents.length === 0) {
-    return <EmptyDocumentState searchQuery={searchQuery} onUploadClick={onUploadClick} />;
+    return <EmptyDocumentState onUploadClick={onUploadClick} />;
+  }
+
+  if (documents.length === 0) {
+    return <EmptyDocumentState searchQuery="No matching documents found" onUploadClick={onUploadClick} />;
   }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {provider.documents.map((document) => (
+      {documents.map((document) => (
         <DocumentCard key={document.id} document={document} />
       ))}
     </div>
