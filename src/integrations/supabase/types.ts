@@ -9,6 +9,35 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      admin_pending_approvals: {
+        Row: {
+          provider_id: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+        }
+        Insert: {
+          provider_id: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+        }
+        Update: {
+          provider_id?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "admin_pending_approvals_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: true
+            referencedRelation: "providers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       cancellation_fees: {
         Row: {
           amount: number
@@ -115,6 +144,123 @@ export type Database = {
             columns: ["invoice_id"]
             isOneToOne: false
             referencedRelation: "invoices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      provider_requests: {
+        Row: {
+          car_info: Json
+          created_at: string
+          customer_name: string
+          customer_notes: string | null
+          customer_phone: string
+          id: string
+          location_log: Json[] | null
+          provider_id: string
+          request_type: string
+          required_images: number
+          status: string
+          task_id: string
+          uploaded_images: Json[] | null
+        }
+        Insert: {
+          car_info: Json
+          created_at?: string
+          customer_name: string
+          customer_notes?: string | null
+          customer_phone: string
+          id?: string
+          location_log?: Json[] | null
+          provider_id: string
+          request_type: string
+          required_images?: number
+          status?: string
+          task_id: string
+          uploaded_images?: Json[] | null
+        }
+        Update: {
+          car_info?: Json
+          created_at?: string
+          customer_name?: string
+          customer_notes?: string | null
+          customer_phone?: string
+          id?: string
+          location_log?: Json[] | null
+          provider_id?: string
+          request_type?: string
+          required_images?: number
+          status?: string
+          task_id?: string
+          uploaded_images?: Json[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "provider_requests_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: false
+            referencedRelation: "providers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      provider_status: {
+        Row: {
+          camera_on: boolean
+          last_active: string
+          notifications_on: boolean
+          provider_id: string
+          status: string
+        }
+        Insert: {
+          camera_on?: boolean
+          last_active?: string
+          notifications_on?: boolean
+          provider_id: string
+          status?: string
+        }
+        Update: {
+          camera_on?: boolean
+          last_active?: string
+          notifications_on?: boolean
+          provider_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "provider_status_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: true
+            referencedRelation: "providers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      provider_wallet: {
+        Row: {
+          balance: number
+          is_affiliated: boolean
+          provider_id: string
+          transactions: Json[] | null
+        }
+        Insert: {
+          balance?: number
+          is_affiliated?: boolean
+          provider_id: string
+          transactions?: Json[] | null
+        }
+        Update: {
+          balance?: number
+          is_affiliated?: boolean
+          provider_id?: string
+          transactions?: Json[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "provider_wallet_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: true
+            referencedRelation: "providers"
             referencedColumns: ["id"]
           },
         ]
@@ -321,6 +467,10 @@ export type Database = {
       generate_ticket_id: {
         Args: Record<PropertyKey, never>
         Returns: string
+      }
+      set_inactive_providers_offline: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
       }
     }
     Enums: {

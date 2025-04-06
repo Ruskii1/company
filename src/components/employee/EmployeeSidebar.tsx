@@ -25,7 +25,8 @@ import {
   Ticket,
   User,
   ShieldCheck,
-  DollarSign
+  DollarSign,
+  UserCheck
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTheme } from '@/lib/theme'
@@ -97,6 +98,12 @@ export function EmployeeSidebar() {
       title: t.serviceProviderCompanies,
       url: '/employee/provider-companies',
       icon: Store,
+      adminOnly: true,
+    },
+    {
+      title: 'Approval Management',
+      url: '/employee/admin/approvals',
+      icon: UserCheck,
       adminOnly: true,
     },
   ]

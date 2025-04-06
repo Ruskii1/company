@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster"
 import { Toaster as Sonner } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
@@ -29,8 +28,8 @@ import CustomerSignIn from './pages/auth/CustomerSignIn'
 import EmployeeSignIn from './pages/auth/EmployeeSignIn'
 import { CustomerSettings } from './components/customer/settings/CustomerSettings'
 import FinancePage from './pages/employee/finance/Index'
+import ApprovalsPage from './pages/employee/admin/Approvals'
 
-// Create the router configuration with components that need router context
 const router = createBrowserRouter([
   {
     path: '/signin/customer',
@@ -116,6 +115,10 @@ const router = createBrowserRouter([
   {
     path: '/employee/finance',
     element: <EmployeeLayout><FinancePage /></EmployeeLayout>,
+  },
+  {
+    path: '/employee/admin/approvals',
+    element: <EmployeeLayout><ApprovalsPage /></EmployeeLayout>,
   }
 ]);
 
