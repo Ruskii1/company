@@ -13,3 +13,5 @@ export interface ProviderStateUpdate {
   updatedProviders: ServiceProvider[];
   updatedFiltered: ServiceProvider[];
 }
+
+export type DocumentType = 'national_id' | 'drivers_license' | 'vehicle_registration' | 'equipment' | 'truck' | 'insurance' | 'operational_license' | 'other';
