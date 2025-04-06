@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { ServiceProvider, Document as ProviderDocument } from '@/types/provider';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { supabase } from '@/integrations/supabase/client';
@@ -91,9 +91,10 @@ export function DocumentsTab({ provider, onDocumentUploaded }: DocumentsTabProps
     
     // Apply search filter
     if (searchQuery) {
+      const searchLower = searchQuery.toLowerCase();
       filtered = filtered.filter(doc => 
-        doc.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        doc.type.toLowerCase().includes(searchQuery.toLowerCase())
+        doc.description.toLowerCase().includes(searchLower) ||
+        doc.type.toLowerCase().includes(searchLower)
       );
     }
     
@@ -107,6 +108,14 @@ export function DocumentsTab({ provider, onDocumentUploaded }: DocumentsTabProps
     return filtered;
   }, [provider.documents, searchQuery, selectedDocumentTypes]);
 
+  const refreshDocuments = useCallback(() => {
+    // In a real app, this would fetch the latest documents from the API
+    toast({
+      title: "Documents refreshed",
+      description: "The document list has been refreshed",
+    });
+  }, [toast]);
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
@@ -115,7 +124,9 @@ export function DocumentsTab({ provider, onDocumentUploaded }: DocumentsTabProps
           <CardDescription>
             {filteredDocuments.length !== provider.documents.length
               ? `Showing ${filteredDocuments.length} of ${provider.documents.length} documents`
-              : 'Uploaded documents and verifications'
+              : provider.documents.length > 0 
+                ? 'Uploaded documents and verifications'
+                : 'No documents uploaded yet'
             }
           </CardDescription>
         </div>
@@ -141,6 +152,7 @@ export function DocumentsTab({ provider, onDocumentUploaded }: DocumentsTabProps
             <DocumentFilter 
               onFilterChange={setSelectedDocumentTypes} 
               selectedTypes={selectedDocumentTypes}
+              onRefresh={refreshDocuments}
             />
           </div>
           

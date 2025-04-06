@@ -9,13 +9,14 @@ import {
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { Filter } from 'lucide-react';
+import { Filter, RefreshCw } from 'lucide-react';
 import { DocumentType } from '@/hooks/providers/types';
 import { Badge } from '@/components/ui/badge';
 
 interface DocumentFilterProps {
   onFilterChange: (types: DocumentType[]) => void;
   selectedTypes: DocumentType[];
+  onRefresh?: () => void;
 }
 
 // Map of document types to display names
@@ -30,7 +31,7 @@ const documentTypeLabels: Record<DocumentType, string> = {
   'other': 'Other'
 };
 
-export function DocumentFilter({ onFilterChange, selectedTypes }: DocumentFilterProps) {
+export function DocumentFilter({ onFilterChange, selectedTypes, onRefresh }: DocumentFilterProps) {
   const documentTypes: DocumentType[] = [
     'national_id',
     'drivers_license',
@@ -59,6 +60,13 @@ export function DocumentFilter({ onFilterChange, selectedTypes }: DocumentFilter
       {selectedTypes.length > 0 && (
         <Button variant="outline" size="sm" onClick={clearFilters}>
           Clear filters ({selectedTypes.length})
+        </Button>
+      )}
+      
+      {onRefresh && (
+        <Button variant="outline" size="sm" onClick={onRefresh} className="gap-1">
+          <RefreshCw size={14} />
+          Refresh
         </Button>
       )}
       
