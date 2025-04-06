@@ -28,6 +28,7 @@ export const createMockProvider = (props: Partial<ServiceProvider>): ServiceProv
     actionLog: [],
     internalNotes: [],
     createdAt: new Date().toISOString(),
+    isApproved: false,
     ...props
   };
 };
