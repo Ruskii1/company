@@ -16,7 +16,7 @@ export const useOrderDetails = (taskId?: string) => {
         await new Promise(resolve => setTimeout(resolve, 500));
         
         // Mock data for the order
-        const mockOrder = {
+        const mockOrder: Request = {
           id: taskId || '',
           taskId: taskId || '',
           companyName: 'Tech Solutions Inc.',

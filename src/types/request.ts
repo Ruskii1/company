@@ -20,7 +20,32 @@ export interface Request {
     licensePlateArabic: string
     vin: string
   }
-  // New fields for enhanced request tracking
+  // Adding fields needed for OrderDetails and useOrderDetails
+  provider?: {
+    id: string
+    name: string
+    phone: string
+    rating: number
+    totalOrders: number
+    vehicleInfo: {
+      model: string
+      licensePlate: string
+    }
+  }
+  timeTracking?: {
+    scheduled: string
+    accepted: string
+    arrivedPickup: string | null
+    inService: string | null
+    completed: string | null
+  }
+  conversation?: Array<{
+    id: string
+    sender: string
+    message: string
+    timestamp: string
+  }>
+  // Original fields
   autoLaunchTime?: string | null
   assignedAt?: string | null
   arrivedAt?: string | null
@@ -30,5 +55,5 @@ export interface Request {
   pickupPhotos?: any[]
   dropoffPhotos?: any[]
   manualAssignment?: boolean
-  attachments?: string[] // Keeping the attachments field
+  attachments?: string[]
 }

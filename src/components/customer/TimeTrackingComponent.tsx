@@ -6,11 +6,11 @@ import { Clock } from "lucide-react"
 interface TimeTrackingComponentProps {
   pickupTime: string
   timeTracking: {
-    acceptedAt: string
-    inRouteAt: string
-    arrivedAt: string
-    inServiceAt: string
-    dropoffAt: string
+    scheduled: string
+    accepted: string
+    arrivedPickup: string | null
+    inService: string | null
+    completed: string | null
   }
 }
 
@@ -34,24 +34,24 @@ export const TimeTrackingComponent = ({
               <TableCell>{pickupTime}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell className="font-medium">Order Accepted</TableCell>
-              <TableCell>{timeTracking.acceptedAt}</TableCell>
+              <TableCell className="font-medium">Scheduled</TableCell>
+              <TableCell>{timeTracking.scheduled}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell className="font-medium">In Route</TableCell>
-              <TableCell>{timeTracking.inRouteAt}</TableCell>
+              <TableCell className="font-medium">Order Accepted</TableCell>
+              <TableCell>{timeTracking.accepted}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">Arrived at Pick-up</TableCell>
-              <TableCell>{timeTracking.arrivedAt}</TableCell>
+              <TableCell>{timeTracking.arrivedPickup || 'Not yet'}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">In Service</TableCell>
-              <TableCell>{timeTracking.inServiceAt}</TableCell>
+              <TableCell>{timeTracking.inService || 'Not yet'}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell className="font-medium">Dropoff Time</TableCell>
-              <TableCell>{timeTracking.dropoffAt}</TableCell>
+              <TableCell className="font-medium">Completed</TableCell>
+              <TableCell>{timeTracking.completed || 'Not yet'}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

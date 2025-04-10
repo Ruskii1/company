@@ -84,6 +84,34 @@ const CustomerOrderDetails = () => {
     }
   }
 
+  // Create default empty objects for optional fields if they don't exist
+  const timeTracking = order.timeTracking || {
+    scheduled: order.pickupTime,
+    accepted: '',
+    arrivedPickup: null,
+    inService: null,
+    completed: null
+  }
+  
+  const provider = order.provider || {
+    id: '',
+    name: 'Not assigned',
+    phone: '',
+    rating: 0,
+    totalOrders: 0,
+    vehicleInfo: { model: '', licensePlate: '' }
+  }
+  
+  const car = order.car || {
+    model: '',
+    year: '',
+    licensePlate: '',
+    licensePlateArabic: '',
+    vin: ''
+  }
+  
+  const conversation = order.conversation || []
+
   return (
     <Card className="backdrop-blur-sm bg-white/80 dark:bg-gray-800/80">
       <CardHeader className="flex flex-row items-center gap-4">
@@ -158,21 +186,34 @@ const CustomerOrderDetails = () => {
           <TabsContent value="time">
             <TimeTrackingComponent 
               pickupTime={order.pickupTime} 
-              timeTracking={order.timeTracking} 
+              timeTracking={timeTracking} 
             />
           </TabsContent>
           
           <TabsContent value="provider">
-            <ProviderInfoComponent provider={order.provider} />
+            <ProviderInfoComponent provider={provider} />
           </TabsContent>
           
           <TabsContent value="car">
-            <CarDetailsComponent car={order.car} />
+            <CarDetailsComponent car={{
+              plate: car.licensePlate,
+              plateArabic: car.licensePlateArabic,
+              model: car.model,
+              name: car.model, // Using model as name since we don't have a separate name field
+              vin: car.vin,
+              year: car.year
+            }} />
           </TabsContent>
 
           <TabsContent value="external-notes">
             <ConversationComponent 
-              conversation={order.conversation} 
+              conversation={conversation.map(item => ({
+                id: item.id,
+                sender: item.sender === 'customer' ? 'customer' : 'employee',
+                message: item.message,
+                timestamp: item.timestamp,
+                senderName: item.sender === 'customer' ? 'You' : 'Support'
+              }))} 
               onSendNote={addNoteToConversation} 
             />
           </TabsContent>
