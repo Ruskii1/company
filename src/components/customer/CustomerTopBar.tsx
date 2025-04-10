@@ -52,7 +52,7 @@ export function CustomerTopBar() {
   };
   
   return (
-    <div className="fixed top-0 z-40 flex items-center justify-between h-12 px-4 bg-background/80 backdrop-blur-sm border-b w-full">
+    <div className="fixed top-0 z-40 flex items-center justify-between h-16 px-4 bg-background/80 backdrop-blur-sm border-b w-full">
       <div className="flex items-center">
         <Logo size="small" showText={false} />
         <span className="bg-primary/10 text-primary text-xs rounded-full px-2 py-0.5 ml-2 flex items-center">
@@ -65,82 +65,82 @@ export function CustomerTopBar() {
         {language === 'ar' ? (
           <>
             <Button
-              variant="outline"
+              variant="solid"
               size="icon"
               asChild
-              className="bg-background hover:bg-accent border-2 border-primary/50"
+              className="bg-primary hover:bg-primary/80 text-white shadow-md"
               title="Go to Employee Portal"
             >
               <Link to="/employee">
-                <Home className="h-5 w-5 text-primary" />
+                <Home className="h-5 w-5" />
               </Link>
             </Button>
             
             <Button
-              variant="outline"
+              variant="solid"
               size="icon"
-              className="relative bg-background hover:bg-accent border-2 border-primary/50"
+              className="relative bg-primary hover:bg-primary/80 text-white shadow-md"
               onClick={() => setShowNotifications(!showNotifications)}
               title="View Notifications"
             >
-              <Bell className="h-5 w-5 text-primary" />
+              <Bell className="h-5 w-5" />
               {hasNotifications && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center text-white text-xs">
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-destructive rounded-full flex items-center justify-center text-white text-xs">
                   {notifications.length}
                 </span>
               )}
             </Button>
             
             <Button
-              variant="outline" 
+              variant="solid"
               size="icon"
-              className="bg-background hover:bg-accent border-2 border-primary/50"
+              className="bg-primary hover:bg-primary/80 text-white shadow-md"
               onClick={handleMenuToggle}
               title="Toggle Sidebar Menu"
             >
               <SidebarTrigger>
-                <Menu className="h-5 w-5 text-primary" />
+                <Menu className="h-5 w-5" />
               </SidebarTrigger>
             </Button>
           </>
         ) : (
           <>
             <Button
-              variant="outline" 
+              variant="solid"
               size="icon"
-              className="bg-background hover:bg-accent border-2 border-primary/50"
+              className="bg-primary hover:bg-primary/80 text-white shadow-md"
               onClick={handleMenuToggle}
               title="Toggle Sidebar Menu"
             >
               <SidebarTrigger>
-                <Menu className="h-5 w-5 text-primary" />
+                <Menu className="h-5 w-5" />
               </SidebarTrigger>
             </Button>
             
             <Button
-              variant="outline"
+              variant="solid"
               size="icon"
-              className="relative bg-background hover:bg-accent border-2 border-primary/50"
+              className="relative bg-primary hover:bg-primary/80 text-white shadow-md"
               onClick={() => setShowNotifications(!showNotifications)}
               title="View Notifications"
             >
-              <Bell className="h-5 w-5 text-primary" />
+              <Bell className="h-5 w-5" />
               {hasNotifications && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center text-white text-xs">
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-destructive rounded-full flex items-center justify-center text-white text-xs">
                   {notifications.length}
                 </span>
               )}
             </Button>
             
             <Button
-              variant="outline"
+              variant="solid"
               size="icon"
               asChild
-              className="bg-background hover:bg-accent border-2 border-primary/50"
+              className="bg-primary hover:bg-primary/80 text-white shadow-md"
               title="Go to Employee Portal"
             >
               <Link to="/employee">
-                <Home className="h-5 w-5 text-primary" />
+                <Home className="h-5 w-5" />
               </Link>
             </Button>
           </>

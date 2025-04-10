@@ -15,7 +15,7 @@ export function CustomerLayout({ children }: { children: React.ReactNode }) {
           <CustomerSidebar />
           <main className="flex-1 overflow-auto">
             <CustomerTopBar />
-            <div className="pt-12 p-6">
+            <div className="pt-16 p-6">
               {children}
             </div>
           </main>
