@@ -1,3 +1,4 @@
+
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import {
@@ -114,7 +115,7 @@ export function CustomerSidebar() {
           <Button
             variant="ghost"
             size="sm"
-            className="w-full justify-start text-destructive hover:text-destructive"
+            className="w-full justify-start text-primary-foreground dark:text-destructive hover:bg-destructive/10 dark:hover:bg-destructive/10 dark:hover:text-destructive-foreground"
             onClick={handleSignOut}
           >
             <LogOut className="mr-2 h-4 w-4" />

@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Bell, Home } from "lucide-react";
@@ -5,9 +6,11 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useLanguageStore, translations } from "@/lib/i18n";
 import { Link } from "react-router-dom";
 import { Logo } from "@/components/Logo";
+import { useTheme } from "@/lib/theme";
 
 export function CustomerTopBar() {
   const { language } = useLanguageStore();
+  const { theme } = useTheme();
   const t = translations[language];
   const [showNotifications, setShowNotifications] = useState(false);
   
@@ -51,12 +54,13 @@ export function CustomerTopBar() {
         <Button
           variant="outline"
           size="icon"
-          className="relative bg-background hover:bg-accent"
+          className="relative bg-background hover:bg-accent dark:text-white"
           onClick={() => setShowNotifications(!showNotifications)}
+          title={t.notifications}
         >
           <Bell className="h-5 w-5" />
           {hasNotifications && (
-            <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center text-white text-xs">
+            <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-xs">
               {notifications.length}
             </span>
           )}
@@ -66,7 +70,7 @@ export function CustomerTopBar() {
           variant="outline"
           size="icon"
           asChild
-          className="bg-background hover:bg-accent"
+          className="bg-background hover:bg-accent dark:text-white"
           title="Go to Employee Portal"
         >
           <Link to="/employee">
@@ -77,7 +81,8 @@ export function CustomerTopBar() {
         <Button 
           variant="outline" 
           size="icon"
-          className="bg-background hover:bg-accent"
+          className="bg-background hover:bg-accent dark:text-white"
+          title="Toggle Sidebar"
         >
           <SidebarTrigger className="h-5 w-5" />
         </Button>
@@ -108,11 +113,11 @@ export function CustomerTopBar() {
                         </p>
                       </div>
                       {request.isWaitingForProvider ? (
-                        <span className="px-2 py-1 text-xs bg-amber-100 text-amber-800 rounded">
+                        <span className="px-2 py-1 text-xs bg-amber-100 text-amber-800 dark:bg-amber-800 dark:text-amber-100 rounded">
                           {t.attention}
                         </span>
                       ) : request.isSoon ? (
-                        <span className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded">
+                        <span className="px-2 py-1 text-xs bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100 rounded">
                           {t.soon}
                         </span>
                       ) : null}
