@@ -52,14 +52,35 @@ export const formatDateTime = (dateString: string): string => {
 export const formatDateTimeTable = (dateString: string): JSX.Element => {
   try {
     const date = parseISO(dateString);
-    return (
-      <div className="flex flex-col">
-        <span className="font-medium">{format(date, 'yyyy-MM-dd')}</span>
-        <span className="text-sm text-muted-foreground">{format(date, 'HH:mm')}</span>
-      </div>
-    );
+    return {
+      type: 'div',
+      props: {
+        className: 'flex flex-col',
+        children: [
+          {
+            type: 'span',
+            props: {
+              className: 'font-medium',
+              children: format(date, 'yyyy-MM-dd')
+            }
+          },
+          {
+            type: 'span',
+            props: {
+              className: 'text-sm text-muted-foreground',
+              children: format(date, 'HH:mm')
+            }
+          }
+        ]
+      }
+    } as unknown as JSX.Element;
   } catch (error) {
-    return <span>{dateString || 'N/A'}</span>;
+    return {
+      type: 'span',
+      props: {
+        children: dateString || 'N/A'
+      }
+    } as unknown as JSX.Element;
   }
 };
 
