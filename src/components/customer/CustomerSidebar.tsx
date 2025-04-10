@@ -1,4 +1,3 @@
-
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import {
@@ -17,6 +16,7 @@ import { Calendar, CreditCard, Home, LogOut, PlusCircle, Settings, Ticket } from
 import { Button } from '@/components/ui/button'
 import { useTheme } from '@/lib/theme'
 import { useToast } from '@/hooks/use-toast'
+import { Logo } from '@/components/Logo'
 
 export function CustomerSidebar() {
   const { language, setLanguage } = useLanguageStore()
@@ -70,11 +70,12 @@ export function CustomerSidebar() {
 
   return (
     <Sidebar side={language === 'ar' ? 'right' : 'left'}>
-      <SidebarHeader className="flex h-14 items-center border-b px-6">
-        <div className="flex flex-1 items-center gap-2 font-semibold">
-          {t.customerPortal}
+      <SidebarHeader className="flex h-20 items-center border-b px-6">
+        <div className="flex flex-1 items-center gap-2">
+          <Logo size="medium" />
         </div>
       </SidebarHeader>
+      
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>{ct.navigation}</SidebarGroupLabel>
@@ -98,6 +99,7 @@ export function CustomerSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      
       <SidebarFooter className="border-t p-4">
         <div className="flex flex-col gap-2">
           <Button
