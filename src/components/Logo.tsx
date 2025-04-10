@@ -11,13 +11,13 @@ export function Logo({ className = '', showText = true, size = 'medium' }: LogoP
   const getSizeClass = () => {
     switch (size) {
       case 'small':
-        return 'h-8';
+        return 'h-10';
       case 'medium':
-        return 'h-12';
+        return 'h-14';
       case 'large':
-        return 'h-20';
+        return 'h-24';
       default:
-        return 'h-12';
+        return 'h-14';
     }
   };
 

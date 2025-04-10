@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Bell, Home } from "lucide-react";
@@ -43,9 +44,11 @@ export function CustomerTopBar() {
   
   return (
     <div className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-4 py-2 bg-background/80 backdrop-blur-sm border-b">
-      <div className="md:hidden">
+      <div className="md:hidden flex items-center">
         <Logo size="small" showText={false} />
       </div>
+      
+      <div className="flex-1"></div>
       
       <div className={`${language === 'ar' ? 'left-4' : 'right-4'} flex items-center gap-4 dir-ltr`}>
         <Button

@@ -1,3 +1,4 @@
+
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import {
@@ -199,7 +200,7 @@ export function EmployeeSidebar() {
           <Button
             variant="ghost"
             size="sm"
-            className="w-full justify-start text-destructive hover:text-destructive"
+            className="w-full justify-start text-black hover:text-black"
             onClick={logout}
           >
             <LogOut className="mr-2 h-4 w-4" />
