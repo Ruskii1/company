@@ -1,12 +1,19 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Bell, Home, Menu, ShieldCheck } from "lucide-react";
+import { Bell, Home, Menu } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useLanguageStore, translations } from "@/lib/i18n";
 import { Link } from "react-router-dom";
 import { Logo } from "@/components/Logo";
 import { toast } from "@/hooks/use-toast";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { ShieldCheck } from "lucide-react";
 
 export function CustomerTopBar() {
   const { language } = useLanguageStore();
@@ -64,85 +71,133 @@ export function CustomerTopBar() {
       <div className="flex items-center gap-3">
         {language === 'ar' ? (
           <>
-            <Button
-              variant="solid"
-              size="icon"
-              asChild
-              className="bg-primary hover:bg-primary/80 text-white shadow-md"
-              title="Go to Employee Portal"
-            >
-              <Link to="/employee">
-                <Home className="h-5 w-5" />
-              </Link>
-            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="default"
+                    size="icon"
+                    asChild
+                    className="bg-primary hover:bg-primary/80 text-white shadow-md"
+                  >
+                    <Link to="/employee">
+                      <Home className="h-5 w-5" />
+                    </Link>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Go to Employee Portal</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
             
-            <Button
-              variant="solid"
-              size="icon"
-              className="relative bg-primary hover:bg-primary/80 text-white shadow-md"
-              onClick={() => setShowNotifications(!showNotifications)}
-              title="View Notifications"
-            >
-              <Bell className="h-5 w-5" />
-              {hasNotifications && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-destructive rounded-full flex items-center justify-center text-white text-xs">
-                  {notifications.length}
-                </span>
-              )}
-            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="default"
+                    size="icon"
+                    className="relative bg-primary hover:bg-primary/80 text-white shadow-md"
+                    onClick={() => setShowNotifications(!showNotifications)}
+                  >
+                    <Bell className="h-5 w-5" />
+                    {hasNotifications && (
+                      <span className="absolute -top-1 -right-1 w-4 h-4 bg-destructive rounded-full flex items-center justify-center text-white text-xs">
+                        {notifications.length}
+                      </span>
+                    )}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>View Notifications</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
             
-            <Button
-              variant="solid"
-              size="icon"
-              className="bg-primary hover:bg-primary/80 text-white shadow-md"
-              onClick={handleMenuToggle}
-              title="Toggle Sidebar Menu"
-            >
-              <SidebarTrigger>
-                <Menu className="h-5 w-5" />
-              </SidebarTrigger>
-            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="default"
+                    size="icon"
+                    className="bg-primary hover:bg-primary/80 text-white shadow-md"
+                    onClick={handleMenuToggle}
+                  >
+                    <SidebarTrigger>
+                      <Menu className="h-5 w-5" />
+                    </SidebarTrigger>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Toggle Sidebar Menu</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </>
         ) : (
           <>
-            <Button
-              variant="solid"
-              size="icon"
-              className="bg-primary hover:bg-primary/80 text-white shadow-md"
-              onClick={handleMenuToggle}
-              title="Toggle Sidebar Menu"
-            >
-              <SidebarTrigger>
-                <Menu className="h-5 w-5" />
-              </SidebarTrigger>
-            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="default"
+                    size="icon"
+                    className="bg-primary hover:bg-primary/80 text-white shadow-md"
+                    onClick={handleMenuToggle}
+                  >
+                    <SidebarTrigger>
+                      <Menu className="h-5 w-5" />
+                    </SidebarTrigger>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Toggle Sidebar Menu</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
             
-            <Button
-              variant="solid"
-              size="icon"
-              className="relative bg-primary hover:bg-primary/80 text-white shadow-md"
-              onClick={() => setShowNotifications(!showNotifications)}
-              title="View Notifications"
-            >
-              <Bell className="h-5 w-5" />
-              {hasNotifications && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-destructive rounded-full flex items-center justify-center text-white text-xs">
-                  {notifications.length}
-                </span>
-              )}
-            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="default"
+                    size="icon"
+                    className="relative bg-primary hover:bg-primary/80 text-white shadow-md"
+                    onClick={() => setShowNotifications(!showNotifications)}
+                  >
+                    <Bell className="h-5 w-5" />
+                    {hasNotifications && (
+                      <span className="absolute -top-1 -right-1 w-4 h-4 bg-destructive rounded-full flex items-center justify-center text-white text-xs">
+                        {notifications.length}
+                      </span>
+                    )}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>View Notifications</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
             
-            <Button
-              variant="solid"
-              size="icon"
-              asChild
-              className="bg-primary hover:bg-primary/80 text-white shadow-md"
-              title="Go to Employee Portal"
-            >
-              <Link to="/employee">
-                <Home className="h-5 w-5" />
-              </Link>
-            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="default"
+                    size="icon"
+                    asChild
+                    className="bg-primary hover:bg-primary/80 text-white shadow-md"
+                  >
+                    <Link to="/employee">
+                      <Home className="h-5 w-5" />
+                    </Link>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Go to Employee Portal</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </>
         )}
       </div>
