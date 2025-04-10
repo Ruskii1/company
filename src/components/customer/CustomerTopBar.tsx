@@ -7,6 +7,7 @@ import { useLanguageStore, translations } from "@/lib/i18n";
 import { Link } from "react-router-dom";
 import { Logo } from "@/components/Logo";
 import { useTheme } from "@/lib/theme";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function CustomerTopBar() {
   const { language } = useLanguageStore();
@@ -50,7 +51,9 @@ export function CustomerTopBar() {
         <Logo size="small" />
       </div>
       
-      <div className={`${language === 'ar' ? 'left-4' : 'right-4'} flex items-center gap-4 dir-ltr`}>
+      <div className={`fixed ${language === 'ar' ? 'left-4' : 'right-4'} flex items-center gap-2 dir-ltr`}>
+        <ThemeToggle />
+        
         <Button
           variant="outline"
           size="icon"
@@ -87,9 +90,9 @@ export function CustomerTopBar() {
           <SidebarTrigger className="h-5 w-5" />
         </Button>
         
-        {/* Notification dropdown panel */}
+        {/* Notification dropdown panel - position modified to not overlap */}
         {showNotifications && hasNotifications && (
-          <div className="absolute top-full right-0 mt-2 w-80 bg-background border rounded-md shadow-lg z-50">
+          <div className="absolute top-full mt-2 w-80 bg-background border rounded-md shadow-lg z-50" style={{ right: 0 }}>
             <div className="p-3 border-b font-medium">
               {t.notifications}
             </div>
