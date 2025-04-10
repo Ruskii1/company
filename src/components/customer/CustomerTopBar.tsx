@@ -46,18 +46,18 @@ export function CustomerTopBar() {
   const hasNotifications = notifications.length > 0;
   
   return (
-    <div className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-4 py-2 bg-background/80 backdrop-blur-sm border-b">
+    <div className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-4 py-3 bg-background/80 backdrop-blur-sm border-b">
       <div className="md:hidden">
         <Logo size="small" />
       </div>
       
-      <div className={`fixed ${language === 'ar' ? 'left-4' : 'right-4'} flex items-center gap-2 dir-ltr`}>
+      <div className={`fixed ${language === 'ar' ? 'left-4' : 'right-4'} flex items-center gap-2 dir-ltr mt-1`}>
         <ThemeToggle />
         
         <Button
           variant="outline"
           size="icon"
-          className="relative bg-background hover:bg-accent dark:text-white"
+          className="relative bg-background hover:bg-accent dark:text-white flex items-center justify-center"
           onClick={() => setShowNotifications(!showNotifications)}
           title={t.notifications}
         >
@@ -73,7 +73,7 @@ export function CustomerTopBar() {
           variant="outline"
           size="icon"
           asChild
-          className="bg-background hover:bg-accent dark:text-white"
+          className="bg-background hover:bg-accent dark:text-white flex items-center justify-center"
           title="Go to Employee Portal"
         >
           <Link to="/employee">
@@ -84,7 +84,7 @@ export function CustomerTopBar() {
         <Button 
           variant="outline" 
           size="icon"
-          className="bg-background hover:bg-accent dark:text-white"
+          className="bg-background hover:bg-accent dark:text-white flex items-center justify-center"
           title="Toggle Sidebar"
         >
           <SidebarTrigger className="h-5 w-5" />
