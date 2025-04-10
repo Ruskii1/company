@@ -1,10 +1,12 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Bell, Home, ShieldCheck } from "lucide-react";
+import { Bell, Home, Menu, ShieldCheck } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useLanguageStore, translations } from "@/lib/i18n";
 import { Link } from "react-router-dom";
 import { Logo } from "@/components/Logo";
+import { toast } from "@/hooks/use-toast";
 
 export function CustomerTopBar() {
   const { language } = useLanguageStore();
@@ -40,6 +42,14 @@ export function CustomerTopBar() {
   ];
   
   const hasNotifications = notifications.length > 0;
+
+  const handleMenuToggle = () => {
+    // Show a toast message to make it clear the menu was toggled
+    toast({
+      title: "Menu Toggled",
+      description: "You have toggled the sidebar menu",
+    });
+  };
   
   return (
     <div className="fixed top-0 z-40 flex items-center justify-between h-12 px-4 bg-background/80 backdrop-blur-sm border-b w-full">
@@ -58,21 +68,22 @@ export function CustomerTopBar() {
               variant="outline"
               size="icon"
               asChild
-              className="bg-background hover:bg-accent"
+              className="bg-background hover:bg-accent border-2 border-primary/50"
               title="Go to Employee Portal"
             >
               <Link to="/employee">
-                <Home className="h-5 w-5" />
+                <Home className="h-5 w-5 text-primary" />
               </Link>
             </Button>
             
             <Button
               variant="outline"
               size="icon"
-              className="relative bg-background hover:bg-accent"
+              className="relative bg-background hover:bg-accent border-2 border-primary/50"
               onClick={() => setShowNotifications(!showNotifications)}
+              title="View Notifications"
             >
-              <Bell className="h-5 w-5" />
+              <Bell className="h-5 w-5 text-primary" />
               {hasNotifications && (
                 <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center text-white text-xs">
                   {notifications.length}
@@ -80,19 +91,40 @@ export function CustomerTopBar() {
               )}
             </Button>
             
-            <SidebarTrigger className="h-5 w-5" />
+            <Button
+              variant="outline" 
+              size="icon"
+              className="bg-background hover:bg-accent border-2 border-primary/50"
+              onClick={handleMenuToggle}
+              title="Toggle Sidebar Menu"
+            >
+              <SidebarTrigger>
+                <Menu className="h-5 w-5 text-primary" />
+              </SidebarTrigger>
+            </Button>
           </>
         ) : (
           <>
-            <SidebarTrigger className="h-5 w-5" />
+            <Button
+              variant="outline" 
+              size="icon"
+              className="bg-background hover:bg-accent border-2 border-primary/50"
+              onClick={handleMenuToggle}
+              title="Toggle Sidebar Menu"
+            >
+              <SidebarTrigger>
+                <Menu className="h-5 w-5 text-primary" />
+              </SidebarTrigger>
+            </Button>
             
             <Button
               variant="outline"
               size="icon"
-              className="relative bg-background hover:bg-accent"
+              className="relative bg-background hover:bg-accent border-2 border-primary/50"
               onClick={() => setShowNotifications(!showNotifications)}
+              title="View Notifications"
             >
-              <Bell className="h-5 w-5" />
+              <Bell className="h-5 w-5 text-primary" />
               {hasNotifications && (
                 <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center text-white text-xs">
                   {notifications.length}
@@ -104,11 +136,11 @@ export function CustomerTopBar() {
               variant="outline"
               size="icon"
               asChild
-              className="bg-background hover:bg-accent"
+              className="bg-background hover:bg-accent border-2 border-primary/50"
               title="Go to Employee Portal"
             >
               <Link to="/employee">
-                <Home className="h-5 w-5" />
+                <Home className="h-5 w-5 text-primary" />
               </Link>
             </Button>
           </>
