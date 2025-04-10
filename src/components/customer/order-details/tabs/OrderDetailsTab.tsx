@@ -4,6 +4,7 @@ import { X } from 'lucide-react'
 import { LocationDisplay } from '@/components/customer/LocationDisplay'
 import { Request } from '@/types/request'
 import { useLanguageStore, translations } from '@/lib/i18n'
+import { formatDateTime } from '@/utils/formatters'
 
 interface OrderDetailsTabProps {
   order: Request
@@ -30,7 +31,7 @@ export const OrderDetailsTab = ({
           
           <div>
             <h3 className="text-lg font-semibold mb-1">{t.pickupTime}</h3>
-            <p>{order.pickupTime}</p>
+            <p>{formatDateTime(order.pickupTime)}</p>
           </div>
         </div>
         

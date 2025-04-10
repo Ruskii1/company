@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import { MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { StatusBadge } from "@/components/customer/StatusBadge"
+import { formatDateTimeTable } from "@/utils/formatters"
 
 interface Order {
   id: string
@@ -81,7 +82,9 @@ export const OrderTable = ({ orders }: OrderTableProps) => {
                 <TableCell>{order.companyName}</TableCell>
                 <TableCell>{order.employeeName}</TableCell>
                 <TableCell>{order.serviceType}</TableCell>
-                <TableCell>{order.pickupTime}</TableCell>
+                <TableCell>
+                  {formatDateTimeTable(order.pickupTime)}
+                </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
                     <span className="truncate max-w-44">{order.pickupLocation}</span>

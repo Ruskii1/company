@@ -2,6 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table"
 import { Clock } from "lucide-react"
+import { formatDateTime } from "@/utils/formatters"
 
 interface TimeTrackingComponentProps {
   pickupTime: string
@@ -31,27 +32,27 @@ export const TimeTrackingComponent = ({
           <TableBody>
             <TableRow>
               <TableCell className="font-medium">Pick-up Time</TableCell>
-              <TableCell>{pickupTime}</TableCell>
+              <TableCell>{formatDateTime(pickupTime)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">Scheduled</TableCell>
-              <TableCell>{timeTracking.scheduled}</TableCell>
+              <TableCell>{formatDateTime(timeTracking.scheduled)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">Order Accepted</TableCell>
-              <TableCell>{timeTracking.accepted}</TableCell>
+              <TableCell>{timeTracking.accepted ? formatDateTime(timeTracking.accepted) : 'Not yet'}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">Arrived at Pick-up</TableCell>
-              <TableCell>{timeTracking.arrivedPickup || 'Not yet'}</TableCell>
+              <TableCell>{timeTracking.arrivedPickup ? formatDateTime(timeTracking.arrivedPickup) : 'Not yet'}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">In Service</TableCell>
-              <TableCell>{timeTracking.inService || 'Not yet'}</TableCell>
+              <TableCell>{timeTracking.inService ? formatDateTime(timeTracking.inService) : 'Not yet'}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">Completed</TableCell>
-              <TableCell>{timeTracking.completed || 'Not yet'}</TableCell>
+              <TableCell>{timeTracking.completed ? formatDateTime(timeTracking.completed) : 'Not yet'}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

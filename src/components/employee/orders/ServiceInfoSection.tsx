@@ -1,5 +1,6 @@
 
 import { useLanguageStore, translations } from "@/lib/i18n"
+import { formatDateTime } from "@/utils/formatters"
 
 interface ServiceInfoSectionProps {
   serviceType: string
@@ -19,7 +20,7 @@ export const ServiceInfoSection = ({ serviceType, pickupTime }: ServiceInfoSecti
       
       <div>
         <h3 className="text-lg font-semibold mb-1">{t.pickupTime}</h3>
-        <p>{pickupTime}</p>
+        <p>{formatDateTime(pickupTime)}</p>
       </div>
     </>
   )
