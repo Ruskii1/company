@@ -5,6 +5,18 @@ import { LocationDisplay } from '@/components/customer/LocationDisplay'
 import { Request } from '@/types/request'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { formatDateTime } from '@/utils/formatters'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { useState } from 'react'
 
 interface OrderDetailsTabProps {
   order: Request
@@ -19,6 +31,12 @@ export const OrderDetailsTab = ({
 }: OrderDetailsTabProps) => {
   const { language } = useLanguageStore()
   const t = translations[language]
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false)
+  
+  const onConfirmCancel = async () => {
+    await handleCancelOrder()
+    setIsConfirmOpen(false)
+  }
   
   return (
     <div className="space-y-6">
@@ -57,14 +75,31 @@ export const OrderDetailsTab = ({
 
       {canCancelOrder && (
         <div className="pt-4 border-t mt-6">
-          <Button 
-            variant="destructive" 
-            onClick={handleCancelOrder}
-            className="flex items-center gap-2"
-          >
-            <X className="h-4 w-4" />
-            Cancel Order
-          </Button>
+          <AlertDialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
+            <AlertDialogTrigger asChild>
+              <Button 
+                variant="destructive" 
+                className="flex items-center gap-2"
+              >
+                <X className="h-4 w-4" />
+                Cancel Order
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Cancel this order?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. The order will be permanently cancelled.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Keep Order</AlertDialogCancel>
+                <AlertDialogAction onClick={onConfirmCancel}>
+                  Yes, Cancel Order
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       )}
     </div>
