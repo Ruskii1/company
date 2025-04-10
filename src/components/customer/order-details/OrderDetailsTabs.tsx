@@ -6,7 +6,7 @@ import { OrderDetailsTab } from './tabs/OrderDetailsTab'
 import { TimeTrackingTab } from './tabs/TimeTrackingTab'
 import { ProviderInfoTab } from './tabs/ProviderInfoTab'
 import { CarDetailsTab } from './tabs/CarDetailsTab'
-import { ConversationTab } from './tabs/ConversationTab'
+import { ConversationTab, Note } from './tabs/ConversationTab'
 
 interface OrderDetailsTabsProps {
   order: Request
@@ -58,7 +58,7 @@ export const OrderDetailsTabs = ({
 
       <TabsContent value="external-notes">
         <ConversationTab 
-          conversation={order.conversation} 
+          conversation={order.conversation as Note[]} 
           onSendNote={addNoteToConversation} 
         />
       </TabsContent>

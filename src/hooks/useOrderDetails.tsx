@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Request } from '@/types/request';
 import { toast } from 'sonner';
+import { Note } from '@/components/customer/order-details/tabs/ConversationTab';
 
 export const useOrderDetails = (taskId?: string) => {
   const [order, setOrder] = useState<Request | null>(null);
@@ -65,7 +66,7 @@ export const useOrderDetails = (taskId?: string) => {
               message: 'I am on my way to your location',
               timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString()
             }
-          ]
+          ] as Note[]
         };
         
         setOrder(mockOrder);
@@ -87,7 +88,7 @@ export const useOrderDetails = (taskId?: string) => {
   const addNoteToConversation = (note: string) => {
     if (!order) return;
     
-    const newNote = {
+    const newNote: Note = {
       id: `note-${Date.now()}`,
       sender: 'customer',
       message: note,

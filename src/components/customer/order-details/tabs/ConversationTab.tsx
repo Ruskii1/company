@@ -5,7 +5,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Send } from 'lucide-react'
 import { formatDateTime, getTimeAgo } from '@/utils/formatters'
 
-interface Note {
+export interface Note {
   id: string
   sender: 'customer' | 'employee' | 'system' | 'provider'
   message: string
