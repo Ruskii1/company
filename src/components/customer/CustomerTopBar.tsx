@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Bell, Home } from "lucide-react";
@@ -5,12 +6,9 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useLanguageStore, translations } from "@/lib/i18n";
 import { Link } from "react-router-dom";
 import { Logo } from "@/components/Logo";
-import { useTheme } from "@/lib/theme";
-import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function CustomerTopBar() {
   const { language } = useLanguageStore();
-  const { theme } = useTheme();
   const t = translations[language];
   const [showNotifications, setShowNotifications] = useState(false);
   
@@ -76,8 +74,6 @@ export function CustomerTopBar() {
             <Home className="h-5 w-5" />
           </Link>
         </Button>
-        
-        <ThemeToggle />
         
         <Button 
           variant="outline" 
