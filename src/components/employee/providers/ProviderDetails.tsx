@@ -1,19 +1,24 @@
 
 import { useState } from 'react';
-import { ServiceProvider, InternalNote, BankAccount, Document as ProviderDocument } from '@/types/provider';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ServiceProvider, InternalNote, BankAccount } from '@/types/provider';
 import { ProviderHeader } from './details/ProviderHeader';
-import { DetailsTabs } from './details/DetailsTabs';
-import { LocationDisplay } from './details/LocationDisplay';
-import { ApprovalStatusToggle } from './details/ApprovalStatusToggle';
-import { useToast } from '@/hooks/use-toast';
+import { OrdersTab } from './details/OrdersTab';
+import { DocumentsTab } from './details/DocumentsTab';
+import { TransactionsTab } from './details/TransactionsTab';
+import { BankAccountsTab } from './details/BankAccountsTab';
+import { InternalNotesTab } from './details/InternalNotesTab';
+import { ActivityLogTab } from './details/ActivityLogTab';
+import { LocationSimulator } from './LocationSimulator';
+import { ProviderLiveMap } from '@/components/customer/ProviderLiveMap';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { MapPin } from 'lucide-react';
 
 interface ProviderDetailsProps {
   provider: ServiceProvider;
   onBack: () => void;
   onAddNote: (providerId: string, note: InternalNote) => void;
   onAddBankAccount: (providerId: string, account: BankAccount) => void;
-  onApproveProvider?: (providerId: string, isApproved: boolean) => void;
-  onAddDocument?: (providerId: string, document: ProviderDocument) => void;
 }
 
 export function ProviderDetails({
@@ -21,11 +26,8 @@ export function ProviderDetails({
   onBack,
   onAddNote,
   onAddBankAccount,
-  onApproveProvider,
-  onAddDocument,
 }: ProviderDetailsProps) {
   const [activeTab, setActiveTab] = useState('orders');
-  const { toast } = useToast();
 
   const handleAddInternalNote = (text: string) => {
     const note: InternalNote = {
@@ -45,70 +47,92 @@ export function ProviderDetails({
     onAddBankAccount(provider.id, account);
   };
 
-  const handleToggleApproval = () => {
-    if (onApproveProvider) {
-      const newApprovalStatus = !provider.isApproved;
-      onApproveProvider(provider.id, newApprovalStatus);
-      
-      toast({
-        title: newApprovalStatus ? "Provider Approved" : "Provider Approval Revoked",
-        description: newApprovalStatus 
-          ? `${provider.fullName} has been approved and can now receive requests.` 
-          : `${provider.fullName}'s approval has been revoked.`,
-      });
-    }
-  };
-
-  const handleDocumentUploaded = (document: ProviderDocument) => {
-    const logEntry = {
-      id: `log-${Date.now()}`,
-      timestamp: new Date().toISOString(),
-      action: 'Document Added',
-      performedBy: {
-        id: 'emp-1',
-        name: 'Admin User',
-        role: 'admin',
-      },
-      details: `Document uploaded: ${document.type}`
-    };
-    
-    if (onAddDocument) {
-      onAddDocument(provider.id, document);
-    }
-    
-    toast({
-      title: "Document Uploaded",
-      description: `The ${document.type.replace('_', ' ')} document has been uploaded and is pending verification.`,
-    });
-  };
-
   return (
     <div className="space-y-6">
       <ProviderHeader provider={provider} onBack={onBack} />
-      
-      <ApprovalStatusToggle 
-        isApproved={provider.isApproved} 
-        onToggleApproval={handleToggleApproval} 
-      />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-2">
-          <DetailsTabs
-            provider={provider}
-            activeTab={activeTab}
-            onTabChange={setActiveTab}
-            onAddNote={handleAddInternalNote}
-            onAddBankAccount={handleAddBankAccount}
-            onDocumentUploaded={handleDocumentUploaded}
-          />
+          <Tabs defaultValue={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="grid grid-cols-3 md:grid-cols-7 w-full">
+              <TabsTrigger value="orders">Orders</TabsTrigger>
+              <TabsTrigger value="documents">Documents</TabsTrigger>
+              <TabsTrigger value="transactions">Transactions</TabsTrigger>
+              <TabsTrigger value="bank-accounts">Bank Accounts</TabsTrigger>
+              <TabsTrigger value="notes">Internal Notes</TabsTrigger>
+              <TabsTrigger value="activity">Activity Log</TabsTrigger>
+              <TabsTrigger value="location">Live Location</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="orders">
+              <OrdersTab provider={provider} />
+            </TabsContent>
+            
+            <TabsContent value="documents">
+              <DocumentsTab provider={provider} />
+            </TabsContent>
+            
+            <TabsContent value="transactions">
+              <TransactionsTab provider={provider} />
+            </TabsContent>
+            
+            <TabsContent value="bank-accounts">
+              <BankAccountsTab 
+                provider={provider}
+                onAddAccount={handleAddBankAccount} 
+              />
+            </TabsContent>
+            
+            <TabsContent value="notes">
+              <InternalNotesTab 
+                provider={provider}
+                onAddNote={handleAddInternalNote} 
+              />
+            </TabsContent>
+            
+            <TabsContent value="activity">
+              <ActivityLogTab provider={provider} />
+            </TabsContent>
+            
+            <TabsContent value="location">
+              <div className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <MapPin className="h-5 w-5" />
+                      Provider Live Location
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ProviderLiveMap 
+                      providerId={provider.id}
+                      providerName={provider.fullName}
+                    />
+                  </CardContent>
+                </Card>
+                
+                <LocationSimulator providerId={provider.id} />
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
         
         <div>
           {activeTab !== 'location' && (
-            <LocationDisplay 
-              providerId={provider.id}
-              providerName={provider.fullName}
-            />
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <MapPin className="h-5 w-5" />
+                  Current Location
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ProviderLiveMap 
+                  providerId={provider.id}
+                  providerName={provider.fullName}
+                />
+              </CardContent>
+            </Card>
           )}
         </div>
       </div>

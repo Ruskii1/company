@@ -1,167 +1,68 @@
 
-import React, { useState, useCallback } from 'react';
-import { ServiceProvider, Document as ProviderDocument } from '@/types/provider';
+import React from 'react';
+import { ServiceProvider } from '@/types/provider';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/hooks/use-toast';
-import { DocumentList } from './document/DocumentList';
-import { DocumentUploadDialog } from './document/DocumentUploadDialog';
-import { DocumentType } from '@/hooks/providers/types';
-import { Input } from '@/components/ui/input';
-import { Search } from 'lucide-react';
-import { DocumentFilter } from './document/DocumentFilter';
+import { Badge } from '@/components/ui/badge';
+import { FileIcon } from 'lucide-react';
 
 interface DocumentsTabProps {
   provider: ServiceProvider;
-  onDocumentUploaded?: (document: ProviderDocument) => void;
+  searchQuery?: string;
 }
 
-export function DocumentsTab({ provider, onDocumentUploaded }: DocumentsTabProps) {
-  const [uploading, setUploading] = useState(false);
-  const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedDocumentTypes, setSelectedDocumentTypes] = useState<DocumentType[]>([]);
-  const { toast } = useToast();
-
-  const handleUpload = async (file: File, documentType: DocumentType, documentDescription: string) => {
-    if (!file || !documentType || !documentDescription) {
-      toast({
-        title: "Missing information",
-        description: "Please fill in all required fields",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    try {
-      setUploading(true);
-      
-      // Create a unique file path
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${provider.id}/${documentType}-${Date.now()}.${fileExt}`;
-      const filePath = `${fileName}`;
-
-      // Upload file to Supabase Storage
-      const { data, error } = await supabase.storage
-        .from('provider-files')
-        .upload(filePath, file);
-
-      if (error) throw error;
-
-      // Get the public URL for the file
-      const { data: { publicUrl } } = supabase.storage
-        .from('provider-files')
-        .getPublicUrl(filePath);
-
-      // Add the document to the provider's documents array
-      const newDocument: ProviderDocument = {
-        id: `doc-${Date.now()}`,
-        type: documentType,
-        url: publicUrl,
-        description: documentDescription,
-        uploadedAt: new Date().toISOString(),
-        status: 'pending'
-      };
-
-      if (onDocumentUploaded) {
-        onDocumentUploaded(newDocument);
-      }
-
-      toast({
-        title: "Document uploaded",
-        description: "The document was successfully uploaded",
-      });
-
-      // Close dialog
-      setUploadDialogOpen(false);
-    } catch (error: any) {
-      toast({
-        title: "Upload failed",
-        description: error.message || "An error occurred during upload",
-        variant: "destructive"
-      });
-    } finally {
-      setUploading(false);
+export function DocumentsTab({ provider, searchQuery = '' }: DocumentsTabProps) {
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'verified':
+        return <Badge className="bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100">Verified</Badge>;
+      case 'pending':
+        return <Badge variant="secondary" className="bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100">Pending</Badge>;
+      case 'rejected':
+        return <Badge variant="destructive">Rejected</Badge>;
+      default:
+        return <Badge variant="outline">Unknown</Badge>;
     }
   };
 
-  // Filter documents based on search query and selected document types
-  const filteredDocuments = React.useMemo(() => {
-    let filtered = provider.documents;
-    
-    // Apply search filter
-    if (searchQuery) {
-      const searchLower = searchQuery.toLowerCase();
-      filtered = filtered.filter(doc => 
-        doc.description.toLowerCase().includes(searchLower) ||
-        doc.type.toLowerCase().includes(searchLower)
-      );
-    }
-    
-    // Apply document type filter
-    if (selectedDocumentTypes.length > 0) {
-      filtered = filtered.filter(doc => 
-        selectedDocumentTypes.includes(doc.type as DocumentType)
-      );
-    }
-    
-    return filtered;
-  }, [provider.documents, searchQuery, selectedDocumentTypes]);
-
-  const refreshDocuments = useCallback(() => {
-    // In a real app, this would fetch the latest documents from the API
-    toast({
-      title: "Documents refreshed",
-      description: "The document list has been refreshed",
-    });
-  }, [toast]);
-
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
-        <div>
-          <CardTitle>Documents</CardTitle>
-          <CardDescription>
-            {filteredDocuments.length !== provider.documents.length
-              ? `Showing ${filteredDocuments.length} of ${provider.documents.length} documents`
-              : provider.documents.length > 0 
-                ? 'Uploaded documents and verifications'
-                : 'No documents uploaded yet'
-            }
-          </CardDescription>
-        </div>
-        <DocumentUploadDialog
-          open={uploadDialogOpen}
-          onOpenChange={setUploadDialogOpen}
-          onUpload={handleUpload}
-          uploading={uploading}
-        />
+      <CardHeader>
+        <CardTitle>Documents</CardTitle>
+        <CardDescription>
+          {searchQuery
+            ? `Showing ${provider.documents.length} matching documents`
+            : 'Uploaded documents and verifications'
+          }
+        </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="relative flex-1">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search documents..."
-                className="pl-8"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-            <DocumentFilter 
-              onFilterChange={setSelectedDocumentTypes} 
-              selectedTypes={selectedDocumentTypes}
-              onRefresh={refreshDocuments}
-            />
+        {provider.documents.length === 0 ? (
+          <p className="text-center text-muted-foreground py-8">
+            {searchQuery ? 'No documents match your search' : 'No documents found'}
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {provider.documents.map((document) => (
+              <div key={document.id} className="border rounded-md p-4 flex items-start gap-3">
+                <div className="bg-muted h-12 w-12 rounded-md flex items-center justify-center shrink-0">
+                  <FileIcon className="h-6 w-6 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <h4 className="font-medium capitalize mb-1">{document.type.replace('_', ' ')}</h4>
+                      <p className="text-sm text-muted-foreground">{document.description}</p>
+                      <p className="text-xs text-muted-foreground mt-2">
+                        Uploaded on {new Date(document.uploadedAt).toLocaleDateString()}
+                      </p>
+                    </div>
+                    <div>{getStatusBadge(document.status)}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-          
-          <DocumentList 
-            provider={provider} 
-            documents={filteredDocuments}
-            onUploadClick={() => setUploadDialogOpen(true)}
-          />
-        </div>
+        )}
       </CardContent>
     </Card>
   );

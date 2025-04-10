@@ -1,3 +1,4 @@
+
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import {
@@ -24,8 +25,7 @@ import {
   Ticket,
   User,
   ShieldCheck,
-  DollarSign,
-  UserCheck
+  DollarSign
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTheme } from '@/lib/theme'
@@ -36,7 +36,6 @@ import {
 } from "@/components/ui/popover"
 import { useToast } from '@/hooks/use-toast'
 import { useAuth } from '@/lib/auth'
-import { Logo } from '@/components/Logo'
 
 export function EmployeeSidebar() {
   const { language, setLanguage } = useLanguageStore()
@@ -100,12 +99,6 @@ export function EmployeeSidebar() {
       icon: Store,
       adminOnly: true,
     },
-    {
-      title: 'Approval Management',
-      url: '/employee/admin/approvals',
-      icon: UserCheck,
-      adminOnly: true,
-    },
   ]
   
   // Combine menu items based on user role
@@ -116,9 +109,9 @@ export function EmployeeSidebar() {
 
   return (
     <Sidebar side={language === 'ar' ? 'right' : 'left'}>
-      <SidebarHeader className="flex h-20 items-center border-b px-6">
-        <div className="flex flex-1 items-center gap-2">
-          <Logo size="medium" />
+      <SidebarHeader className="flex h-14 items-center border-b px-6">
+        <div className="flex flex-1 items-center gap-2 font-semibold">
+          {t.employeePortal}
           {isAdmin() && (
             <span className="bg-primary/10 text-primary text-xs rounded-full px-2 py-0.5 flex items-center">
               <ShieldCheck className="h-3 w-3 mr-1" />

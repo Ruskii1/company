@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { InfoIcon, Plus, UsersIcon } from 'lucide-react';
 import { useServiceProviders } from '@/hooks/useServiceProviders';
-import type { ServiceProvider, InternalNote, BankAccount, Document as ProviderDocument } from '@/types/provider';
+import { ServiceProvider, InternalNote, BankAccount } from '@/types/provider';
 import { ProvidersList } from '@/components/employee/providers/ProvidersList';
 import { ProviderDetails } from '@/components/employee/providers/ProviderDetails';
 import { ProviderFilter } from '@/components/employee/providers/ProviderFilter';
@@ -17,9 +17,7 @@ const ServiceProvidersPage = () => {
     providers, 
     allProviders,
     addInternalNote, 
-    addBankAccount,
-    addDocument,
-    approveProvider,
+    addBankAccount, 
     filterProviders, 
     resetFilters 
   } = useServiceProviders();
@@ -44,19 +42,6 @@ const ServiceProvidersPage = () => {
       title: "Bank Account Added",
       description: `${account.bankName} account has been added to the provider profile.`,
     });
-  };
-
-  const handleAddDocument = (providerId: string, document: ProviderDocument) => {
-    addDocument(providerId, document);
-    
-    toast({
-      title: "Document Uploaded",
-      description: `The ${document.type.replace('_', ' ')} document has been uploaded and is pending verification.`,
-    });
-  };
-
-  const handleApproveProvider = (providerId: string, isApproved: boolean) => {
-    approveProvider(providerId, isApproved);
   };
   
   // Get unique regions from providers
@@ -109,8 +94,6 @@ const ServiceProvidersPage = () => {
             onBack={() => setSelectedProviderId(null)}
             onAddNote={handleAddNote}
             onAddBankAccount={handleAddBankAccount}
-            onApproveProvider={handleApproveProvider}
-            onAddDocument={handleAddDocument}
           />
         ) : (
           <div className="text-center py-12">
