@@ -51,9 +51,7 @@ export function CustomerTopBar() {
         <Logo size="small" />
       </div>
       
-      <div className={`fixed ${language === 'ar' ? 'left-4' : 'right-4'} flex items-center gap-2 dir-ltr mt-1`}>
-        <ThemeToggle />
-        
+      <div className={`fixed ${language === 'ar' ? 'left-4' : 'right-4'} top-4 z-50 flex items-center gap-4 dir-ltr`}>
         <Button
           variant="outline"
           size="icon"
@@ -80,6 +78,8 @@ export function CustomerTopBar() {
             <Home className="h-5 w-5" />
           </Link>
         </Button>
+        
+        <ThemeToggle />
         
         <Button 
           variant="outline" 
