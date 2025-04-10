@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client";
 import { Request } from "@/types/request";
 import { Json } from "@/integrations/supabase/types";
@@ -62,7 +63,7 @@ export async function fetchAllRequests(): Promise<Request[]> {
       attachments: Array.isArray(dbItem.attachments) ? dbItem.attachments : [],
       // Add the missing required properties with default values
       provider: {
-        name: item.provider_name || '',
+        name: item.provider_id || '',  // Changed from provider_name which doesn't exist
         phone: item.provider_phone || '',
         rating: 0,
         corporationName: '',

@@ -9,6 +9,7 @@ import type { ServiceProvider, InternalNote, BankAccount, Document as ProviderDo
 import { ProvidersList } from '@/components/employee/providers/ProvidersList';
 import { ProviderDetails } from '@/components/employee/providers/ProviderDetails';
 import { ProviderFilter } from '@/components/employee/providers/ProviderFilter';
+import { ProviderCredentials } from '@/components/ProviderCredentials';
 import { useToast } from '@/hooks/use-toast';
 import { serviceTypeValues } from '@/components/forms/ServiceTypeField';
 
@@ -24,6 +25,7 @@ const ServiceProvidersPage = () => {
     resetFilters 
   } = useServiceProviders();
   const [selectedProviderId, setSelectedProviderId] = useState<string | null>(null);
+  const [showCredentials, setShowCredentials] = useState(true);
   const { toast } = useToast();
   
   const selectedProvider = providers.find(provider => provider.id === selectedProviderId);
@@ -90,6 +92,17 @@ const ServiceProvidersPage = () => {
                 View, filter, and manage all service providers in the system. Click on a provider to see detailed information.
               </AlertDescription>
             </Alert>
+            
+            {showCredentials && (
+              <div className="mb-6">
+                <ProviderCredentials />
+                <div className="mt-2 flex justify-end">
+                  <Button variant="ghost" size="sm" onClick={() => setShowCredentials(false)}>
+                    Hide Credentials
+                  </Button>
+                </div>
+              </div>
+            )}
             
             <ProviderFilter 
               onFilter={filterProviders}
