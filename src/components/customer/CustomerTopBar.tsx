@@ -43,7 +43,7 @@ export function CustomerTopBar() {
   const hasNotifications = notifications.length > 0;
   
   return (
-    <div className="fixed top-0 right-0 z-40 flex items-center justify-between h-16 px-4 bg-background/80 backdrop-blur-sm border-b w-full" style={{ left: "auto" }}>
+    <div className="fixed top-0 z-40 flex items-center justify-between h-12 px-4 bg-background/80 backdrop-blur-sm border-b w-full">
       <div className="md:hidden flex items-center">
         <Logo size="small" showText={false} />
         <span className="bg-primary/10 text-primary text-xs rounded-full px-2 py-0.5 ml-2 flex items-center">
