@@ -1,177 +1,100 @@
 
 import { useState } from 'react';
-import { ServiceProvider, ProviderStatus, InternalNote, BankAccount } from '@/types/provider';
+import { ServiceProvider, ProviderStatus, InternalNote, BankAccount, Document } from '@/types/provider';
 import { mockServiceProviders } from '@/data/mockProviders';
+import { filterProviders as filterProvidersUtil, resetFilters as resetFiltersUtil } from './utils/filterUtils';
+import { updateProviderStatus, approveProvider } from './utils/statusUtils';
+import { addInternalNote, addBankAccount, addDocument } from './utils/providerDataUtils';
+import { ProviderFilters } from './types';
 
-export interface ProviderFilters {
-  name?: string;
-  region?: string;
-  phone?: string;
-  serviceType?: string;
-  status?: ProviderStatus;
-}
+// Export the type correctly with 'export type'
+export type { ProviderFilters } from './types';
 
 export const useProviderActions = (initialProviders: ServiceProvider[] = mockServiceProviders) => {
   const [providers, setProviders] = useState<ServiceProvider[]>(initialProviders);
   const [filteredProviders, setFilteredProviders] = useState<ServiceProvider[]>(initialProviders);
 
-  const updateProviderStatus = (providerId: string, status: ProviderStatus) => {
-    setProviders(prevProviders => 
-      prevProviders.map(provider => 
-        provider.id === providerId ? { ...provider, status } : provider
-      )
+  // Status management functions
+  const handleUpdateProviderStatus = (providerId: string, status: ProviderStatus) => {
+    const { updatedProviders, updatedFiltered } = updateProviderStatus(
+      providers, 
+      filteredProviders, 
+      providerId, 
+      status
     );
     
-    setFilteredProviders(prevFiltered => 
-      prevFiltered.map(provider => 
-        provider.id === providerId ? { ...provider, status } : provider
-      )
-    );
+    setProviders(updatedProviders);
+    setFilteredProviders(updatedFiltered);
   };
 
-  const addInternalNote = (providerId: string, note: InternalNote) => {
-    setProviders(prevProviders => 
-      prevProviders.map(provider => 
-        provider.id === providerId 
-          ? { 
-              ...provider, 
-              internalNotes: [note, ...provider.internalNotes],
-              actionLog: [
-                {
-                  id: `log-${Date.now()}`,
-                  timestamp: new Date().toISOString(),
-                  action: 'Note Added',
-                  performedBy: note.createdBy,
-                  details: 'Internal note added to provider account'
-                },
-                ...provider.actionLog
-              ]
-            } 
-          : provider
-      )
+  const handleApproveProvider = (providerId: string, isApproved: boolean) => {
+    const { updatedProviders, updatedFiltered } = approveProvider(
+      providers, 
+      filteredProviders, 
+      providerId, 
+      isApproved
     );
     
-    setFilteredProviders(prevFiltered => 
-      prevFiltered.map(provider => 
-        provider.id === providerId 
-          ? { 
-              ...provider, 
-              internalNotes: [note, ...provider.internalNotes],
-              actionLog: [
-                {
-                  id: `log-${Date.now()}`,
-                  timestamp: new Date().toISOString(),
-                  action: 'Note Added',
-                  performedBy: note.createdBy,
-                  details: 'Internal note added to provider account'
-                },
-                ...provider.actionLog
-              ]
-            } 
-          : provider
-      )
-    );
+    setProviders(updatedProviders);
+    setFilteredProviders(updatedFiltered);
   };
 
-  const addBankAccount = (providerId: string, account: BankAccount) => {
-    setProviders(prevProviders => 
-      prevProviders.map(provider => 
-        provider.id === providerId 
-          ? { 
-              ...provider, 
-              bankAccounts: [...provider.bankAccounts, account],
-              actionLog: [
-                {
-                  id: `log-${Date.now()}`,
-                  timestamp: new Date().toISOString(),
-                  action: 'Bank Account Added',
-                  performedBy: {
-                    id: 'emp-001',
-                    name: 'Fatima Al-Sulaiman',
-                    role: 'Provider Manager'
-                  },
-                  details: `Bank account added: ${account.bankName}`
-                },
-                ...provider.actionLog
-              ]
-            } 
-          : provider
-      )
+  // Provider data management functions
+  const handleAddInternalNote = (providerId: string, note: InternalNote) => {
+    const { updatedProviders, updatedFiltered } = addInternalNote(
+      providers, 
+      filteredProviders, 
+      providerId, 
+      note
     );
     
-    setFilteredProviders(prevFiltered => 
-      prevFiltered.map(provider => 
-        provider.id === providerId 
-          ? { 
-              ...provider, 
-              bankAccounts: [...provider.bankAccounts, account],
-              actionLog: [
-                {
-                  id: `log-${Date.now()}`,
-                  timestamp: new Date().toISOString(),
-                  action: 'Bank Account Added',
-                  performedBy: {
-                    id: 'emp-001',
-                    name: 'Fatima Al-Sulaiman',
-                    role: 'Provider Manager'
-                  },
-                  details: `Bank account added: ${account.bankName}`
-                },
-                ...provider.actionLog
-              ]
-            } 
-          : provider
-      )
-    );
+    setProviders(updatedProviders);
+    setFilteredProviders(updatedFiltered);
   };
 
-  const filterProviders = (filters: ProviderFilters) => {
-    let results = [...providers];
+  const handleAddBankAccount = (providerId: string, account: BankAccount) => {
+    const { updatedProviders, updatedFiltered } = addBankAccount(
+      providers, 
+      filteredProviders, 
+      providerId, 
+      account
+    );
     
-    if (filters.name) {
-      results = results.filter(provider => 
-        provider.fullName.toLowerCase().includes(filters.name!.toLowerCase())
-      );
-    }
+    setProviders(updatedProviders);
+    setFilteredProviders(updatedFiltered);
+  };
+
+  const handleAddDocument = (providerId: string, document: Document) => {
+    const { updatedProviders, updatedFiltered } = addDocument(
+      providers, 
+      filteredProviders, 
+      providerId, 
+      document
+    );
     
-    if (filters.region) {
-      results = results.filter(provider => 
-        provider.region.toLowerCase().includes(filters.region!.toLowerCase())
-      );
-    }
-    
-    if (filters.phone) {
-      results = results.filter(provider => 
-        provider.phoneNumber.includes(filters.phone!)
-      );
-    }
-    
-    if (filters.serviceType) {
-      results = results.filter(provider => 
-        provider.serviceTypes.some(type => 
-          type.toLowerCase().includes(filters.serviceType!.toLowerCase())
-        )
-      );
-    }
-    
-    if (filters.status) {
-      results = results.filter(provider => provider.status === filters.status);
-    }
-    
+    setProviders(updatedProviders);
+    setFilteredProviders(updatedFiltered);
+  };
+
+  // Filter functions
+  const handleFilterProviders = (filters: ProviderFilters) => {
+    const results = filterProvidersUtil(providers, filters);
     setFilteredProviders(results);
   };
 
-  const resetFilters = () => {
+  const handleResetFilters = () => {
     setFilteredProviders(providers);
   };
 
   return {
     providers: filteredProviders,
     allProviders: providers,
-    updateProviderStatus,
-    addInternalNote,
-    addBankAccount,
-    filterProviders,
-    resetFilters
+    updateProviderStatus: handleUpdateProviderStatus,
+    approveProvider: handleApproveProvider,
+    addInternalNote: handleAddInternalNote,
+    addBankAccount: handleAddBankAccount,
+    addDocument: handleAddDocument,
+    filterProviders: handleFilterProviders,
+    resetFilters: handleResetFilters
   };
 };

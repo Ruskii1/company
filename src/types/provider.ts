@@ -83,4 +83,5 @@ export interface ServiceProvider {
   actionLog: ActionLogEntry[];
   internalNotes: InternalNote[];
   createdAt: string;
+  isApproved: boolean;
 }
