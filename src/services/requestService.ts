@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import { Request } from "@/types/request";
 import { Json } from "@/integrations/supabase/types";
@@ -60,7 +59,30 @@ export async function fetchAllRequests(): Promise<Request[]> {
       pickupPhotos: item.pickup_photos || [],
       dropoffPhotos: item.dropoff_photos || [],
       manualAssignment: item.manual_assignment || false,
-      attachments: Array.isArray(dbItem.attachments) ? dbItem.attachments : [] // Safely handle attachments
+      attachments: Array.isArray(dbItem.attachments) ? dbItem.attachments : [],
+      // Add the missing required properties with default values
+      provider: {
+        name: item.provider_name || '',
+        phone: item.provider_phone || '',
+        rating: 0,
+        corporationName: '',
+        images: {
+          pickup: [],
+          dropoff: []
+        },
+        location: {
+          lat: 0,
+          lng: 0
+        }
+      },
+      timeTracking: {
+        acceptedAt: '',
+        inRouteAt: '',
+        arrivedAt: '',
+        inServiceAt: '',
+        dropoffAt: ''
+      },
+      conversation: []
     }
   }) || [];
 }
@@ -135,7 +157,30 @@ export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Pr
     pickupPhotos: data.pickup_photos || [],
     dropoffPhotos: data.dropoff_photos || [],
     manualAssignment: data.manual_assignment || false,
-    attachments: Array.isArray(dbData.attachments) ? dbData.attachments : [] // Safely handle attachments
+    attachments: Array.isArray(dbData.attachments) ? dbData.attachments : [],
+    // Add the missing required properties with default values
+    provider: {
+      name: '',
+      phone: '',
+      rating: 0,
+      corporationName: '',
+      images: {
+        pickup: [],
+        dropoff: []
+      },
+      location: {
+        lat: 0,
+        lng: 0
+      }
+    },
+    timeTracking: {
+      acceptedAt: '',
+      inRouteAt: '',
+      arrivedAt: '',
+      inServiceAt: '',
+      dropoffAt: ''
+    },
+    conversation: []
   };
 }
 

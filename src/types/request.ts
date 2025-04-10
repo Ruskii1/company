@@ -17,7 +17,7 @@ export interface Request {
     model: string
     year: string
     licensePlate: string
-    licensePlateArabic: string
+    licensePlateArabic?: string  // Make this optional
     vin: string
   }
   // New fields for enhanced request tracking
@@ -30,5 +30,29 @@ export interface Request {
   pickupPhotos?: any[]
   dropoffPhotos?: any[]
   manualAssignment?: boolean
-  attachments?: string[] // Keeping the attachments field
+  attachments?: string[]
+  
+  // Required properties that were missing in implementations
+  provider?: {
+    name: string
+    phone: string
+    rating: number
+    corporationName?: string
+    images?: {
+      pickup: string[]
+      dropoff: string[]
+    }
+    location?: {
+      lat: number
+      lng: number
+    }
+  }
+  timeTracking?: {
+    acceptedAt?: string
+    inRouteAt?: string
+    arrivedAt?: string
+    inServiceAt?: string
+    dropoffAt?: string
+  }
+  conversation?: any[]
 }

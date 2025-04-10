@@ -66,7 +66,30 @@ export const NewOrderForm = () => {
           licensePlateArabic: values.licensePlateArabic,
           vin: values.vin
         },
-        attachments: attachmentUrls
+        attachments: attachmentUrls,
+        // Add the missing required properties with default values
+        provider: {
+          name: '',
+          phone: '',
+          rating: 0,
+          corporationName: '',
+          images: {
+            pickup: [],
+            dropoff: []
+          },
+          location: {
+            lat: 0,
+            lng: 0
+          }
+        },
+        timeTracking: {
+          acceptedAt: '',
+          inRouteAt: '',
+          arrivedAt: '',
+          inServiceAt: '',
+          dropoffAt: ''
+        },
+        conversation: []
       };
       
       const result = await createRequest(request);

@@ -31,7 +31,24 @@ export const useRequestsData = () => {
             notes: "Vehicle has flat tire",
             city: "Riyadh",
             providerId: "PRV-001",
-            providerPhone: "+966-123-456-7890"
+            providerPhone: "+966-123-456-7890",
+            // Add required properties
+            provider: {
+              name: "Abdullah Al-Qahtani",
+              phone: "+966-123-456-7890",
+              rating: 4.8,
+              corporationName: "TechTow Services",
+              images: { pickup: [], dropoff: [] },
+              location: { lat: 24.7136, lng: 46.6753 }
+            },
+            timeTracking: {
+              acceptedAt: new Date(Date.now() - 2.2 * 24 * 60 * 60 * 1000).toISOString(),
+              inRouteAt: new Date(Date.now() - 2.15 * 24 * 60 * 60 * 1000).toISOString(),
+              arrivedAt: new Date(Date.now() - 2.1 * 24 * 60 * 60 * 1000).toISOString(),
+              inServiceAt: new Date(Date.now() - 2.05 * 24 * 60 * 60 * 1000).toISOString(),
+              dropoffAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
+            },
+            conversation: []
           },
           {
             id: "req-002",
@@ -46,7 +63,24 @@ export const useRequestsData = () => {
             notes: "Battery drained due to lights left on",
             city: "Jeddah",
             providerId: "PRV-002",
-            providerPhone: "+966-123-456-7891"
+            providerPhone: "+966-123-456-7891",
+            // Add required properties
+            provider: {
+              name: "Khalid Al-Harbi",
+              phone: "+966-123-456-7891",
+              rating: 4.9,
+              corporationName: "JumpStart Co.",
+              images: { pickup: [], dropoff: [] },
+              location: { lat: 21.5433, lng: 39.1728 }
+            },
+            timeTracking: {
+              acceptedAt: new Date(Date.now() - 1.2 * 24 * 60 * 60 * 1000).toISOString(),
+              inRouteAt: new Date(Date.now() - 1.15 * 24 * 60 * 60 * 1000).toISOString(),
+              arrivedAt: new Date(Date.now() - 1.1 * 24 * 60 * 60 * 1000).toISOString(),
+              inServiceAt: new Date(Date.now() - 1.05 * 24 * 60 * 60 * 1000).toISOString(),
+              dropoffAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
+            },
+            conversation: []
           },
           {
             id: "req-003",
@@ -61,7 +95,24 @@ export const useRequestsData = () => {
             notes: "Spare tire in trunk",
             city: "Dammam",
             providerId: "PRV-003",
-            providerPhone: "+966-123-456-7892"
+            providerPhone: "+966-123-456-7892",
+            // Add required properties
+            provider: {
+              name: "Mohammed Al-Otaibi",
+              phone: "+966-123-456-7892",
+              rating: 4.7,
+              corporationName: "Tire Pro Services",
+              images: { pickup: [], dropoff: [] },
+              location: { lat: 26.4207, lng: 50.0888 }
+            },
+            timeTracking: {
+              acceptedAt: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(),
+              inRouteAt: new Date(Date.now() - 0.5 * 60 * 60 * 1000).toISOString(),
+              arrivedAt: "",
+              inServiceAt: "",
+              dropoffAt: ""
+            },
+            conversation: []
           },
           {
             id: "req-004",
@@ -76,7 +127,24 @@ export const useRequestsData = () => {
             notes: "Need 95 octane, 20 liters",
             city: "Riyadh",
             providerId: "",
-            providerPhone: ""
+            providerPhone: "",
+            // Add required properties
+            provider: {
+              name: "",
+              phone: "",
+              rating: 0,
+              corporationName: "",
+              images: { pickup: [], dropoff: [] },
+              location: { lat: 0, lng: 0 }
+            },
+            timeTracking: {
+              acceptedAt: "",
+              inRouteAt: "",
+              arrivedAt: "",
+              inServiceAt: "",
+              dropoffAt: ""
+            },
+            conversation: []
           },
           {
             id: "req-005",
@@ -91,7 +159,24 @@ export const useRequestsData = () => {
             notes: "Keys locked in Toyota Camry",
             city: "Jeddah",
             providerId: "",
-            providerPhone: ""
+            providerPhone: "",
+            // Add required properties
+            provider: {
+              name: "",
+              phone: "",
+              rating: 0,
+              corporationName: "",
+              images: { pickup: [], dropoff: [] },
+              location: { lat: 0, lng: 0 }
+            },
+            timeTracking: {
+              acceptedAt: "",
+              inRouteAt: "",
+              arrivedAt: "",
+              inServiceAt: "",
+              dropoffAt: ""
+            },
+            conversation: []
           },
           {
             id: "req-006",
@@ -106,7 +191,24 @@ export const useRequestsData = () => {
             notes: "Non-running vehicle, transmission issue",
             city: "Dammam",
             providerId: "",
-            providerPhone: ""
+            providerPhone: "",
+            // Add required properties
+            provider: {
+              name: "",
+              phone: "",
+              rating: 0,
+              corporationName: "",
+              images: { pickup: [], dropoff: [] },
+              location: { lat: 0, lng: 0 }
+            },
+            timeTracking: {
+              acceptedAt: "",
+              inRouteAt: "",
+              arrivedAt: "",
+              inServiceAt: "",
+              dropoffAt: ""
+            },
+            conversation: []
           }
         ];
         
