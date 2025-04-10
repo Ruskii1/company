@@ -12,6 +12,10 @@ export interface Request {
   dropoffLocation: string;
   status: string;
   notes?: string;
+  // Add fields that were in the previous version but missing in the new one
+  city?: string;
+  providerId?: string;
+  providerPhone?: string;
   car: {
     model: string;
     year: string;
@@ -38,4 +42,15 @@ export interface Request {
     completed: string | null;
   };
   conversation: Note[];
+  // Additional fields needed by other components
+  autoLaunchTime?: string | null;
+  assignedAt?: string | null;
+  arrivedAt?: string | null;
+  completedAt?: string | null;
+  cancelledAt?: string | null;
+  cancellationReason?: string;
+  pickupPhotos?: any[];
+  dropoffPhotos?: any[];
+  manualAssignment?: boolean;
+  attachments?: string[];
 }
