@@ -19,7 +19,7 @@ export const NotesField = ({ control }: NotesFieldProps) => {
       name="notes"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{t.notes} ({t.optional})</FormLabel>
+          <FormLabel>{t.notes} {t.optional}</FormLabel>
           <FormControl>
             <Textarea placeholder={t.notes} {...field} />
           </FormControl>

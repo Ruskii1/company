@@ -9,7 +9,6 @@ import type { ServiceProvider, InternalNote, BankAccount, Document as ProviderDo
 import { ProvidersList } from '@/components/employee/providers/ProvidersList';
 import { ProviderDetails } from '@/components/employee/providers/ProviderDetails';
 import { ProviderFilter } from '@/components/employee/providers/ProviderFilter';
-import { DefaultProviderCredentials } from '@/components/employee/providers/DefaultProviderCredentials';
 import { useToast } from '@/hooks/use-toast';
 import { serviceTypeValues } from '@/components/forms/ServiceTypeField';
 
@@ -25,7 +24,6 @@ const ServiceProvidersPage = () => {
     resetFilters 
   } = useServiceProviders();
   const [selectedProviderId, setSelectedProviderId] = useState<string | null>(null);
-  const [showCredentials, setShowCredentials] = useState(false);
   const { toast } = useToast();
   
   const selectedProvider = providers.find(provider => provider.id === selectedProviderId);
@@ -75,29 +73,14 @@ const ServiceProvidersPage = () => {
           <CardTitle>Service Providers</CardTitle>
         </div>
         
-        <div className="flex gap-2">
-          <Button 
-            variant="outline"
-            onClick={() => setShowCredentials(!showCredentials)}
-          >
-            {showCredentials ? "Hide Credentials" : "Show Default Credentials"}
+        {!selectedProviderId && (
+          <Button>
+            <Plus className="h-4 w-4 mr-1" />
+            Add Provider
           </Button>
-          
-          {!selectedProviderId && (
-            <Button>
-              <Plus className="h-4 w-4 mr-1" />
-              Add Provider
-            </Button>
-          )}
-        </div>
+        )}
       </CardHeader>
       <CardContent>
-        {showCredentials && (
-          <div className="mb-6">
-            <DefaultProviderCredentials />
-          </div>
-        )}
-        
         {!selectedProviderId ? (
           <div className="space-y-6">
             <Alert>

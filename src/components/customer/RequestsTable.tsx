@@ -12,7 +12,6 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
-import { formatDateTimeTable } from '@/utils/formatters'
 
 interface Request {
   id: string
@@ -35,7 +34,6 @@ export const RequestsTable = ({ requests }: RequestsTableProps) => {
   const navigate = useNavigate()
 
   const handleRequestClick = (taskId: string) => {
-    // Fixed: Now properly navigating to the specific task ID
     navigate(`/order-details/${taskId}`)
   }
 
@@ -59,15 +57,13 @@ export const RequestsTable = ({ requests }: RequestsTableProps) => {
               <TableCell>
                 <Button
                   variant="link"
-                  onClick={() => handleRequestClick(request.id)}
+                  onClick={() => handleRequestClick(request.taskId)}
                 >
                   {request.taskId}
                 </Button>
               </TableCell>
               <TableCell>{request.serviceType}</TableCell>
-              <TableCell>
-                {formatDateTimeTable(request.pickupTime)}
-              </TableCell>
+              <TableCell>{request.pickupTime}</TableCell>
               <TableCell>
                 <LocationDisplay location={request.pickupLocation} />
               </TableCell>

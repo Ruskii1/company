@@ -10,11 +10,6 @@ interface ProviderInfoComponentProps {
     phone: string
     rating: number
     corporationName: string
-    totalOrders?: number
-    vehicleInfo?: {
-      model: string
-      licensePlate: string
-    }
     images: {
       pickup: string[]
       dropoff: string[]

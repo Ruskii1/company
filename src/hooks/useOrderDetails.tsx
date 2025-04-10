@@ -1,144 +1,194 @@
 
-import { useState, useEffect } from 'react';
-import { Request } from '@/types/request';
-import { toast } from 'sonner';
-import { Note } from '@/components/customer/order-details/tabs/ConversationTab';
+import { useState, useEffect } from 'react'
 
-export const useOrderDetails = (taskId?: string) => {
-  const [order, setOrder] = useState<Request | null>(null);
-  const [loading, setLoading] = useState(true);
+interface Note {
+  id: string
+  sender: 'customer' | 'employee'
+  message: string
+  timestamp: string
+  senderName: string
+}
+
+interface Order {
+  id: string
+  taskId: string
+  customerName: string
+  serviceType: string
+  pickupTime: string
+  pickupLocation: string
+  dropoffLocation: string
+  status: string
+  notes?: string
+  timeTracking: {
+    acceptedAt: string
+    inRouteAt: string
+    arrivedAt: string
+    inServiceAt: string
+    dropoffAt: string
+  }
+  provider: {
+    name: string
+    phone: string
+    rating: number
+    corporationName: string
+    images: {
+      pickup: string[]
+      dropoff: string[]
+    }
+    location: {
+      lat: number
+      lng: number
+    }
+  }
+  car: {
+    plate: string
+    model: string
+    name: string
+    vin: string
+  }
+  conversation: Note[]
+}
+
+export const useOrderDetails = (taskId: string | undefined) => {
+  const [order, setOrder] = useState<Order | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchOrderDetails = async () => {
-      try {
-        setLoading(true);
-        
-        // Simulate API call with delay
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        // Mock data for the order
-        const mockOrder: Request = {
-          id: taskId || '',
-          taskId: taskId || '',
-          companyName: 'Tech Solutions Inc.',
-          employeeName: 'John Smith',
-          serviceType: 'Regular Towing',
-          pickupTime: new Date().toISOString(),
-          pickupLocation: '123 Main St, Riyadh',
-          dropoffLocation: '456 Market St, Riyadh',
-          status: 'Scheduled',
-          notes: 'Vehicle has flat tire',
-          car: {
-            model: 'Toyota Camry',
-            year: '2021',
-            licensePlate: '123ABC',
-            licensePlateArabic: '١٢٣أبج',
-            vin: 'ABCD1234567890123'
+      setLoading(true)
+      
+      // This simulates an API call
+      setTimeout(() => {
+        const mockOrder: Order = {
+          id: '1001',
+          taskId: '2023-001',
+          customerName: 'Acme Corporation',
+          serviceType: 'Standard Tow',
+          pickupTime: '2023-06-15 09:00 AM',
+          pickupLocation: '123 Business Ave, Tower A',
+          dropoffLocation: '456 Commerce St, Suite 300',
+          status: 'Completed',
+          notes: 'Handle with care. Fragile items inside.',
+          timeTracking: {
+            acceptedAt: '2023-06-15 08:45 AM',
+            inRouteAt: '2023-06-15 08:50 AM',
+            arrivedAt: '2023-06-15 09:00 AM',
+            inServiceAt: '2023-06-15 09:05 AM',
+            dropoffAt: '2023-06-15 10:00 AM'
           },
           provider: {
-            id: 'PRV-001',
-            name: 'Quick Towing Services',
-            phone: '+966-123-456-7890',
+            name: 'John Doe',
+            phone: '+1 (555) 123-4567',
             rating: 4.8,
-            totalOrders: 156,
-            vehicleInfo: {
-              model: 'Tow Truck 3000',
-              licensePlate: '789XYZ'
+            corporationName: 'Express Delivery Inc.',
+            images: {
+              pickup: [
+                '/placeholder.svg',
+                '/placeholder.svg',
+                '/placeholder.svg',
+                '/placeholder.svg'
+              ],
+              dropoff: [
+                '/placeholder.svg',
+                '/placeholder.svg',
+                '/placeholder.svg',
+                '/placeholder.svg'
+              ]
+            },
+            location: {
+              lat: 37.7749,
+              lng: -122.4194
             }
           },
-          timeTracking: {
-            scheduled: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
-            accepted: new Date(Date.now() - 45 * 60 * 1000).toISOString(),
-            arrivedPickup: null,
-            inService: null,
-            completed: null
+          car: {
+            plate: 'ABC-1234',
+            model: 'Toyota Camry',
+            name: 'Sedan',
+            vin: '1HGCM82633A123456'
           },
           conversation: [
             {
               id: '1',
-              sender: 'system',
-              message: 'Order created and awaiting provider',
-              timestamp: new Date(Date.now() - 60 * 60 * 1000).toISOString()
+              sender: 'customer',
+              message: 'Hi, could you please make sure the package is delivered before noon?',
+              timestamp: '2023-06-14 10:15 AM',
+              senderName: 'Acme Corporation'
             },
             {
               id: '2',
-              sender: 'provider',
-              message: 'I am on my way to your location',
-              timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString()
+              sender: 'employee',
+              message: 'Yes, we\'ve scheduled it for 9:00 AM delivery. Our driver will call you 30 minutes before arrival.',
+              timestamp: '2023-06-14 10:20 AM',
+              senderName: 'Support Team'
+            },
+            {
+              id: '3',
+              sender: 'customer',
+              message: 'Great, thank you! Is there any way to track the delivery?',
+              timestamp: '2023-06-14 10:25 AM',
+              senderName: 'Acme Corporation'
+            },
+            {
+              id: '4',
+              sender: 'employee',
+              message: 'You\'ll receive a tracking link via email once the driver picks up your package. You can also check status updates in your account dashboard.',
+              timestamp: '2023-06-14 10:30 AM',
+              senderName: 'Support Team'
             }
-          ] as Note[]
-        };
+          ]
+        }
         
-        setOrder(mockOrder);
-      } catch (error) {
-        console.error('Failed to fetch order details:', error);
-        toast.error('Failed to load order details');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (taskId) {
-      fetchOrderDetails();
-    } else {
-      setLoading(false);
+        // Find the order that matches the taskId
+        if (taskId === '2023-002') {
+          mockOrder.taskId = '2023-002'
+          mockOrder.status = 'In route'
+          mockOrder.serviceType = 'Battery Jumpstart'
+        } else if (taskId === '2023-003') {
+          mockOrder.taskId = '2023-003'
+          mockOrder.status = 'Waiting for provider'
+          mockOrder.serviceType = 'Fuel Delivery 95'
+        } else if (taskId === '2023-004' || taskId === '2023-005') {
+          mockOrder.taskId = taskId
+          mockOrder.status = 'Completed'
+          mockOrder.serviceType = 'Tire-Repair on Site'
+        } else if (taskId === '2023-006') {
+          mockOrder.taskId = taskId
+          mockOrder.status = 'In service'
+          mockOrder.serviceType = 'Lock Smith Service'
+        } else if (taskId === '2023-007' || taskId === '2023-008') {
+          mockOrder.taskId = taskId
+          mockOrder.status = 'Waiting for provider'
+          mockOrder.serviceType = 'Half-Down Towing'
+        }
+        
+        setOrder(mockOrder)
+        setLoading(false)
+      }, 500)
     }
-  }, [taskId]);
 
-  const addNoteToConversation = (note: string) => {
+    fetchOrderDetails()
+  }, [taskId])
+
+  const addNoteToConversation = (message: string) => {
     if (!order) return;
-    
+
     const newNote: Note = {
-      id: `note-${Date.now()}`,
+      id: Date.now().toString(),
       sender: 'customer',
-      message: note,
-      timestamp: new Date().toISOString()
+      message,
+      timestamp: new Date().toLocaleString(),
+      senderName: 'You'
     };
-    
-    setOrder(prev => {
-      if (!prev) return null;
-      
-      const updatedConversation = [
-        ...(prev.conversation || []),
-        newNote
-      ];
-      
-      return {
-        ...prev,
-        conversation: updatedConversation
-      };
+
+    setOrder({
+      ...order,
+      conversation: [...order.conversation, newNote]
     });
-    
-    toast.success('Note added successfully');
-  };
+  }
 
-  const updateOrderStatus = async (newStatus: string) => {
-    if (!order) return;
-    
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      setOrder(prev => {
-        if (!prev) return null;
-        return {
-          ...prev,
-          status: newStatus
-        };
-      });
-      
-      return true;
-    } catch (error) {
-      console.error('Failed to update order status:', error);
-      toast.error('Failed to update order status');
-      throw error;
-    }
-  };
-
-  return {
-    order,
-    loading,
-    addNoteToConversation,
-    updateOrderStatus
-  };
-};
+  return { 
+    order, 
+    loading, 
+    addNoteToConversation 
+  }
+}
