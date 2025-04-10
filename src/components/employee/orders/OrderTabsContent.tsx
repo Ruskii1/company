@@ -27,6 +27,15 @@ export const OrderTabsContent = ({
   addNoteToConversation,
   addInternalNote
 }: OrderTabsContentProps) => {
+  // Convert the order's timeTracking to the format expected by TimeTrackingComponent
+  const formattedTimeTracking = {
+    scheduled: order.timeTracking?.scheduled || order.pickupTime,
+    accepted: order.timeTracking?.accepted || '',
+    arrivedPickup: order.timeTracking?.arrivedPickup || null,
+    inService: order.timeTracking?.inService || null,
+    completed: order.timeTracking?.completed || null
+  };
+
   return (
     <CardContent className="space-y-6">
       <TabsContainer
@@ -47,7 +56,7 @@ export const OrderTabsContent = ({
         timeTab={
           <TimeTrackingComponent 
             pickupTime={order.pickupTime} 
-            timeTracking={order.timeTracking} 
+            timeTracking={formattedTimeTracking} 
           />
         }
         providerTab={

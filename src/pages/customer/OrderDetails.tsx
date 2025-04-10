@@ -93,21 +93,45 @@ const CustomerOrderDetails = () => {
     completed: null
   }
   
-  const provider = order.provider || {
+  // Create a provider object with all the required properties for ProviderInfoComponent
+  const provider = order.provider ? {
+    id: order.provider.id,
+    name: order.provider.name,
+    phone: order.provider.phone,
+    rating: order.provider.rating,
+    totalOrders: order.provider.totalOrders,
+    corporationName: 'Provider Company', // Default value
+    images: {
+      pickup: [], // Default empty arrays
+      dropoff: []
+    },
+    location: {
+      lat: 24.7136, // Default coordinates
+      lng: 46.6753
+    }
+  } : {
     id: '',
     name: 'Not assigned',
     phone: '',
     rating: 0,
-    totalOrders: 0,
-    vehicleInfo: { model: '', licensePlate: '' }
+    corporationName: 'Not assigned',
+    images: { 
+      pickup: [], 
+      dropoff: [] 
+    },
+    location: { 
+      lat: 24.7136, 
+      lng: 46.6753 
+    }
   }
   
-  const car = order.car || {
-    model: '',
-    year: '',
-    licensePlate: '',
-    licensePlateArabic: '',
-    vin: ''
+  // Create car object with the expected properties
+  const car = {
+    plate: order.car?.licensePlate || '',
+    plateArabic: order.car?.licensePlateArabic || '',
+    model: order.car?.model || '',
+    name: order.car?.model || '', // Using model as name
+    vin: order.car?.vin || ''
   }
   
   const conversation = order.conversation || []
@@ -195,14 +219,7 @@ const CustomerOrderDetails = () => {
           </TabsContent>
           
           <TabsContent value="car">
-            <CarDetailsComponent car={{
-              plate: car.licensePlate,
-              plateArabic: car.licensePlateArabic,
-              model: car.model,
-              name: car.model, // Using model as name since we don't have a separate name field
-              vin: car.vin,
-              year: car.year
-            }} />
+            <CarDetailsComponent car={car} />
           </TabsContent>
 
           <TabsContent value="external-notes">
