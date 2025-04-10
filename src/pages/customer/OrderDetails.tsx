@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, X } from 'lucide-react'
 import { useState } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useOrderDetails } from '@/hooks/useOrderDetails'
@@ -13,6 +13,8 @@ import { TimeTrackingComponent } from '@/components/customer/TimeTrackingCompone
 import { ProviderInfoComponent } from '@/components/customer/ProviderInfoComponent'
 import { CarDetailsComponent } from '@/components/customer/CarDetailsComponent'
 import { ConversationComponent } from '@/components/customer/ConversationComponent'
+import { toast } from 'sonner'
+import { parseISO, differenceInMinutes } from 'date-fns'
 
 const CustomerOrderDetails = () => {
   const { taskId } = useParams()
@@ -20,7 +22,7 @@ const CustomerOrderDetails = () => {
   const { language } = useLanguageStore()
   const t = translations[language]
   const [activeTab, setActiveTab] = useState('details')
-  const { order, loading, addNoteToConversation } = useOrderDetails(taskId)
+  const { order, loading, addNoteToConversation, updateOrderStatus } = useOrderDetails(taskId)
 
   if (loading) {
     return (
@@ -47,6 +49,39 @@ const CustomerOrderDetails = () => {
         </CardContent>
       </Card>
     )
+  }
+
+  // Determine if the order can be cancelled by the customer
+  const canCancelOrder = () => {
+    // Can only cancel if status is "Scheduled"
+    if (order.status !== 'Scheduled') {
+      return false
+    }
+
+    try {
+      // Check if pickupTime is at least 30 minutes in the future
+      const pickupTime = parseISO(order.pickupTime)
+      const now = new Date()
+      const minutesUntilPickup = differenceInMinutes(pickupTime, now)
+      return minutesUntilPickup >= 30
+    } catch (error) {
+      console.error("Error calculating time difference:", error)
+      return false
+    }
+  }
+
+  const handleCancelOrder = async () => {
+    if (!canCancelOrder()) {
+      toast.error("You cannot cancel this order. Orders can only be cancelled if they are scheduled and at least 30 minutes before pickup time.")
+      return
+    }
+
+    try {
+      await updateOrderStatus('Cancelled')
+      toast.success("Your order has been successfully cancelled")
+    } catch (error) {
+      toast.error("Failed to cancel the order. Please try again or contact support.")
+    }
   }
 
   return (
@@ -105,6 +140,19 @@ const CustomerOrderDetails = () => {
                 )}
               </div>
             </div>
+
+            {canCancelOrder() && (
+              <div className="pt-4 border-t mt-6">
+                <Button 
+                  variant="destructive" 
+                  onClick={handleCancelOrder}
+                  className="flex items-center gap-2"
+                >
+                  <X className="h-4 w-4" />
+                  Cancel Order
+                </Button>
+              </div>
+            )}
           </TabsContent>
           
           <TabsContent value="time">

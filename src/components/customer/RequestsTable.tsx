@@ -12,6 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
+import { format, parseISO } from 'date-fns'
 
 interface Request {
   id: string
@@ -34,7 +35,24 @@ export const RequestsTable = ({ requests }: RequestsTableProps) => {
   const navigate = useNavigate()
 
   const handleRequestClick = (taskId: string) => {
+    // Fixed: Now properly navigating to the specific task ID
     navigate(`/order-details/${taskId}`)
+  }
+
+  // Format date to show YYYY-MM-DD with time below it
+  const formatPickupTime = (dateTimeString: string) => {
+    try {
+      const date = parseISO(dateTimeString)
+      return (
+        <div className="flex flex-col">
+          <span className="font-medium">{format(date, 'yyyy-MM-dd')}</span>
+          <span className="text-sm text-muted-foreground">{format(date, 'HH:mm')}</span>
+        </div>
+      )
+    } catch (error) {
+      // Fallback for invalid dates
+      return dateTimeString
+    }
   }
 
   return (
@@ -57,13 +75,15 @@ export const RequestsTable = ({ requests }: RequestsTableProps) => {
               <TableCell>
                 <Button
                   variant="link"
-                  onClick={() => handleRequestClick(request.taskId)}
+                  onClick={() => handleRequestClick(request.id)}
                 >
                   {request.taskId}
                 </Button>
               </TableCell>
               <TableCell>{request.serviceType}</TableCell>
-              <TableCell>{request.pickupTime}</TableCell>
+              <TableCell>
+                {formatPickupTime(request.pickupTime)}
+              </TableCell>
               <TableCell>
                 <LocationDisplay location={request.pickupLocation} />
               </TableCell>
