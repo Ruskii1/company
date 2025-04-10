@@ -72,7 +72,7 @@ export function CustomerSidebar() {
     <Sidebar side={language === 'ar' ? 'right' : 'left'}>
       <SidebarHeader className="flex h-20 items-center border-b px-6">
         <div className="flex flex-1 items-center gap-2">
-          <Logo size="medium" />
+          <Logo size="medium" showText={true} />
         </div>
       </SidebarHeader>
       
