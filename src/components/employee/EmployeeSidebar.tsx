@@ -1,4 +1,3 @@
-
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import {
@@ -48,6 +47,7 @@ export function EmployeeSidebar() {
   const { toast } = useToast()
   const { user, logout, isAdmin } = useAuth()
   
+  // Common menu items for both roles
   const commonMenuItems = [
     {
       title: t.home,
@@ -86,6 +86,7 @@ export function EmployeeSidebar() {
     },
   ]
   
+  // Admin-only menu items
   const adminMenuItems = [
     {
       title: t.corporateAccounts,
@@ -107,6 +108,7 @@ export function EmployeeSidebar() {
     },
   ]
   
+  // Combine menu items based on user role
   const menuItems = [
     ...commonMenuItems,
     ...(isAdmin() ? adminMenuItems : [])
@@ -116,7 +118,7 @@ export function EmployeeSidebar() {
     <Sidebar side={language === 'ar' ? 'right' : 'left'}>
       <SidebarHeader className="flex h-20 items-center border-b px-6">
         <div className="flex flex-1 items-center gap-2">
-          <Logo size="medium" showText={true} />
+          <Logo size="medium" />
           {isAdmin() && (
             <span className="bg-primary/10 text-primary text-xs rounded-full px-2 py-0.5 flex items-center">
               <ShieldCheck className="h-3 w-3 mr-1" />
@@ -200,7 +202,7 @@ export function EmployeeSidebar() {
           <Button
             variant="ghost"
             size="sm"
-            className="w-full justify-start text-black hover:text-black"
+            className="w-full justify-start text-destructive hover:text-destructive"
             onClick={logout}
           >
             <LogOut className="mr-2 h-4 w-4" />
