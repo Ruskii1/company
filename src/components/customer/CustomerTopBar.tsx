@@ -44,8 +44,8 @@ export function CustomerTopBar() {
   
   return (
     <div className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between h-16 px-4 bg-background/80 backdrop-blur-sm border-b">
-      <div className="flex items-center gap-2">
-        <SidebarTrigger className="h-5 w-5 mr-2" />
+      <div className={`flex items-center gap-2 ${language === 'ar' ? 'order-last' : 'order-first'}`}>
+        {language === 'ar' ? null : <SidebarTrigger className="h-5 w-5 mr-2" />}
         <div className="md:hidden flex items-center">
           <Logo size="small" showText={false} />
           <span className="bg-primary/10 text-primary text-xs rounded-full px-2 py-0.5 ml-2 flex items-center">
@@ -57,7 +57,9 @@ export function CustomerTopBar() {
       
       <div className="flex-1"></div>
       
-      <div className={`${language === 'ar' ? 'left-4' : 'right-4'} flex items-center gap-4 dir-ltr`}>
+      <div className={`flex items-center gap-4 dir-ltr ${language === 'ar' ? 'order-first' : 'order-last'}`}>
+        {language === 'ar' && <SidebarTrigger className="h-5 w-5 ml-2" />}
+        
         <Button
           variant="outline"
           size="icon"
