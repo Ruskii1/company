@@ -16,6 +16,11 @@ import {
 import { Calendar, CreditCard, Home, LogOut, PlusCircle, Settings, Ticket } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTheme } from '@/lib/theme'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger
+} from "@/components/ui/popover"
 import { useToast } from '@/hooks/use-toast'
 import { Logo } from '@/components/Logo'
 
@@ -103,15 +108,53 @@ export function CustomerSidebar() {
       
       <SidebarFooter className="border-t p-4">
         <div className="flex flex-col gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="w-full justify-start"
-            onClick={() => navigate('/settings')}
-          >
-            <Settings className="mr-2 h-4 w-4" />
-            <span>{t.settings}</span>
-          </Button>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="w-full justify-start"
+              >
+                <Settings className="mr-2 h-4 w-4" />
+                <span>{t.settings}</span>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-56">
+              <div className="grid gap-2">
+                <h4 className="font-medium leading-none mb-2">{t.settings}</h4>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">{t.theme}</span>
+                  <div className="ml-auto">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                      title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+                    >
+                      {theme === "dark" ? (
+                        <span className="text-xs">☀️</span>
+                      ) : (
+                        <span className="text-xs">🌙</span>
+                      )}
+                    </Button>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">{t.language}</span>
+                  <div className="ml-auto">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
+                      title={language === 'en' ? "Switch to Arabic" : "Switch to English"}
+                    >
+                      <span className="text-xs">{language === 'en' ? 'AR' : 'EN'}</span>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
           <Button
             variant="ghost"
             size="sm"
