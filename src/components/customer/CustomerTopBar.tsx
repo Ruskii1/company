@@ -43,13 +43,16 @@ export function CustomerTopBar() {
   const hasNotifications = notifications.length > 0;
   
   return (
-    <div className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-4 py-2 bg-background/80 backdrop-blur-sm border-b">
-      <div className="md:hidden flex items-center">
-        <Logo size="small" showText={false} />
-        <span className="bg-primary/10 text-primary text-xs rounded-full px-2 py-0.5 ml-2 flex items-center">
-          <ShieldCheck className="h-3 w-3 mr-1" />
-          Customer
-        </span>
+    <div className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between h-16 px-4 bg-background/80 backdrop-blur-sm border-b">
+      <div className="flex items-center gap-2">
+        <SidebarTrigger className="h-5 w-5 mr-2" />
+        <div className="md:hidden flex items-center">
+          <Logo size="small" showText={false} />
+          <span className="bg-primary/10 text-primary text-xs rounded-full px-2 py-0.5 ml-2 flex items-center">
+            <ShieldCheck className="h-3 w-3 mr-1" />
+            Customer
+          </span>
+        </div>
       </div>
       
       <div className="flex-1"></div>
@@ -79,14 +82,6 @@ export function CustomerTopBar() {
           <Link to="/employee">
             <Home className="h-5 w-5" />
           </Link>
-        </Button>
-        
-        <Button 
-          variant="outline" 
-          size="icon"
-          className="bg-background hover:bg-accent"
-        >
-          <SidebarTrigger className="h-5 w-5" />
         </Button>
         
         {/* Notification dropdown panel */}
