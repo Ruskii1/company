@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Bell, Home } from "lucide-react";
@@ -15,7 +14,6 @@ export function CustomerTopBar() {
   const t = translations[language];
   const [showNotifications, setShowNotifications] = useState(false);
   
-  // Dummy notification data
   const notifications = [
     {
       id: "req-001",
@@ -46,8 +44,8 @@ export function CustomerTopBar() {
   const hasNotifications = notifications.length > 0;
   
   return (
-    <div className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-4 py-3 bg-background/80 backdrop-blur-sm border-b">
-      <div className="md:hidden">
+    <>
+      <div className="md:hidden absolute top-3 left-4">
         <Logo size="small" />
       </div>
       
@@ -90,7 +88,6 @@ export function CustomerTopBar() {
           <SidebarTrigger className="h-5 w-5" />
         </Button>
         
-        {/* Notification dropdown panel - position modified to not overlap */}
         {showNotifications && hasNotifications && (
           <div className="absolute top-full mt-2 w-80 bg-background border rounded-md shadow-lg z-50" style={{ right: 0 }}>
             <div className="p-3 border-b font-medium">
@@ -132,6 +129,6 @@ export function CustomerTopBar() {
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 }
