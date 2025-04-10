@@ -29,11 +29,11 @@ export const OrderTabsContent = ({
 }: OrderTabsContentProps) => {
   // Convert the order's timeTracking to the format expected by TimeTrackingComponent
   const formattedTimeTracking = {
-    scheduled: order.timeTracking?.scheduled || order.pickupTime,
-    accepted: order.timeTracking?.accepted || '',
-    arrivedPickup: order.timeTracking?.arrivedPickup || null,
-    inService: order.timeTracking?.inService || null,
-    completed: order.timeTracking?.completed || null
+    scheduled: order.pickupTime,
+    accepted: order.timeTracking.acceptedAt || '',
+    arrivedPickup: order.timeTracking.arrivedAt || null,
+    inService: order.timeTracking.inServiceAt || null,
+    completed: order.timeTracking.dropoffAt || null
   };
 
   return (
