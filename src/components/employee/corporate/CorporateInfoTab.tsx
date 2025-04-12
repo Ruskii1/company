@@ -83,10 +83,16 @@ export const CorporateInfoTab = ({ account }: CorporateInfoTabProps) => {
   };
 
   const handleEmptyStateUpload = () => {
-    // Simulate click on the hidden file input
+    // Create a hidden file input and trigger click
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
-    fileInput.addEventListener('change', (e) => handleFileUpload(e as React.ChangeEvent<HTMLInputElement>));
+    fileInput.onchange = (e) => {
+      // Convert Event to React.ChangeEvent<HTMLInputElement>
+      if (e && e.target) {
+        const event = e as unknown as React.ChangeEvent<HTMLInputElement>;
+        handleFileUpload(event);
+      }
+    };
     fileInput.click();
   };
   
