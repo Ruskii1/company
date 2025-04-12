@@ -27,10 +27,9 @@ const OrderDetails = () => {
     updateOrderStatus
   } = useOrderDetailsEmployee(taskId)
 
-  // In a real application, these would come from an auth context or user store
-  // For this demo, we're using mock values
+  // In a real application, this would come from an auth context or user store
+  // For this demo, we're using a mock value
   const isAdmin = true
-  const isEmployee = true
 
   // Log when the component mounts
   useEffect(() => {
@@ -45,7 +44,7 @@ const OrderDetails = () => {
   const escalateStatus = () => {
     if (!order) return
     
-    if (order.status === 'Complete') {
+    if (order.status === 'Completed') {
       toast.info("Order is already completed")
       return
     }
@@ -91,7 +90,6 @@ const OrderDetails = () => {
         <OrderActionButtons 
           order={order}
           isAdmin={isAdmin}
-          isEmployee={isEmployee}
           cancelOrder={cancelOrder}
           escalateStatus={escalateStatus}
         />
