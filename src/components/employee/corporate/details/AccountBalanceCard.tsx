@@ -42,6 +42,10 @@ export const AccountBalanceCard = ({
     setIsEditingBalance(false);
   };
 
+  const handleBalanceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewBalance(Number(e.target.value));
+  };
+
   return (
     <Card className="flex-1">
       <CardHeader className="pb-3">
@@ -89,8 +93,9 @@ export const AccountBalanceCard = ({
               <Input
                 type="number"
                 value={newBalance}
-                onChange={(e) => setNewBalance(Number(e.target.value))}
+                onChange={handleBalanceChange}
                 className="text-xl text-center"
+                step="any"
               />
             </div>
           )}
