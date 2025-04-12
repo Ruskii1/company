@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import { Request } from "@/types/request";
 import { Json } from "@/integrations/supabase/types";
@@ -21,10 +20,11 @@ function extractCarInfo(carData: Json | null): Request['car'] | undefined {
 }
 
 export async function fetchAllRequests(): Promise<Request[]> {
+  // Use the new Orders table
   const { data, error } = await supabase
-    .from('requests')
+    .from('Orders')
     .select('*')
-    .order('pickup_time', { ascending: true });
+    .order('requested_pickup_time', { ascending: true });
 
   if (error) {
     console.error('Error fetching requests:', error);
@@ -32,39 +32,43 @@ export async function fetchAllRequests(): Promise<Request[]> {
   }
 
   return data?.map(item => {
-    // Cast the data to include attachments with a type assertion
-    const dbItem = item as any;
-    
+    // Map the new table fields to our Request interface
     return {
-      id: item.id,
-      taskId: item.task_id,
-      companyName: item.company_name,
-      employeeName: item.employee_name,
+      id: item.order_id,
+      taskId: item.order_id, // Using order_id as taskId
+      companyName: item.corporate_name || '',
+      employeeName: item.customer_name || '',
       serviceType: item.service_type,
-      pickupTime: new Date(item.pickup_time).toISOString(),
+      pickupTime: new Date(item.requested_pickup_time).toISOString(),
       pickupLocation: item.pickup_location,
       dropoffLocation: item.dropoff_location,
       status: item.status,
-      notes: item.notes || '',
-      city: item.city,
+      notes: item.notes_customer || '',
+      city: extractCityFromLocation(item.pickup_location),
       providerId: item.provider_id,
-      providerPhone: item.provider_phone,
-      car: extractCarInfo(item.car),
-      // Add new metadata fields
-      autoLaunchTime: item.auto_launch_time ? new Date(item.auto_launch_time).toISOString() : null,
-      assignedAt: item.assigned_at ? new Date(item.assigned_at).toISOString() : null,
-      arrivedAt: item.arrived_at ? new Date(item.arrived_at).toISOString() : null,
-      completedAt: item.completed_at ? new Date(item.completed_at).toISOString() : null,
-      cancelledAt: item.cancelled_at ? new Date(item.cancelled_at).toISOString() : null,
-      cancellationReason: item.cancellation_reason || '',
-      pickupPhotos: item.pickup_photos || [],
-      dropoffPhotos: item.dropoff_photos || [],
-      manualAssignment: item.manual_assignment || false,
-      attachments: Array.isArray(dbItem.attachments) ? dbItem.attachments : [],
-      // Add the missing required properties with default values
+      providerPhone: '',  // Will need to join with Users table to get this
+      car: { // We'll need to join with Vehicles table to get this info in the future
+        model: '',
+        year: '',
+        licensePlate: '',
+        licensePlateArabic: '',
+        vin: ''
+      },
+      // Map timestamps to our interface
+      autoLaunchTime: null,
+      assignedAt: item.provider_accept_time ? new Date(item.provider_accept_time).toISOString() : null,
+      arrivedAt: item.arrival_at_pickup_time ? new Date(item.arrival_at_pickup_time).toISOString() : null,
+      completedAt: item.dropoff_time ? new Date(item.dropoff_time).toISOString() : null,
+      cancelledAt: null, // No direct field in new schema
+      cancellationReason: '',
+      pickupPhotos: [], // Need to join with Order_Photos
+      dropoffPhotos: [], // Need to join with Order_Photos
+      manualAssignment: false,
+      attachments: [],
+      // Required fields with placeholder values
       provider: {
-        name: item.provider_id || '',  // Changed from provider_name which doesn't exist
-        phone: item.provider_phone || '',
+        name: '',
+        phone: '',
         rating: 0,
         corporationName: '',
         images: {
@@ -77,48 +81,48 @@ export async function fetchAllRequests(): Promise<Request[]> {
         }
       },
       timeTracking: {
-        acceptedAt: '',
-        inRouteAt: '',
-        arrivedAt: '',
-        inServiceAt: '',
-        dropoffAt: ''
+        acceptedAt: item.provider_accept_time ? new Date(item.provider_accept_time).toISOString() : '',
+        inRouteAt: item.in_route_time ? new Date(item.in_route_time).toISOString() : '',
+        arrivedAt: item.arrival_at_pickup_time ? new Date(item.arrival_at_pickup_time).toISOString() : '',
+        inServiceAt: item.service_start_time ? new Date(item.service_start_time).toISOString() : '',
+        dropoffAt: item.dropoff_time ? new Date(item.dropoff_time).toISOString() : ''
       },
       conversation: []
     }
   }) || [];
 }
 
-export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Promise<Request | null> {
-  // Calculate auto_launch_time (30 minutes before pickup time)
-  const pickupDate = new Date(request.pickupTime);
-  const autoLaunchTime = new Date(pickupDate.getTime() - 30 * 60 * 1000);
+// Helper function to extract city from location string
+function extractCityFromLocation(location: string): string {
+  const parts = location.split(',');
+  return parts.length > 1 ? parts[1].trim() : '';
+}
 
-  // Convert from camelCase to snake_case for database
+export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Promise<Request | null> {
+  // Generate an order ID (you might want to implement a more sophisticated ID generation)
+  const orderId = `ORD-${Date.now()}`;
+  
+  // First, we need to check if the customer exists
+  // This is a simplified implementation - in a real app, you'd need proper customer management
+  const customerExists = false; // Placeholder for now
+  
+  if (!customerExists) {
+    console.error('Customer does not exist. Please create customer first.');
+    return null;
+  }
+  
+  // Insert into Orders table
   const { data, error } = await supabase
-    .from('requests')
+    .from('Orders')
     .insert({
-      company_name: request.companyName,
-      employee_name: request.employeeName,
+      order_id: orderId,
       service_type: request.serviceType,
-      pickup_time: request.pickupTime,
+      requested_pickup_time: request.pickupTime,
       pickup_location: request.pickupLocation,
       dropoff_location: request.dropoffLocation,
-      // Cast the status string to the enum type
-      status: 'Scheduled', // Default to Scheduled for new requests
-      notes: request.notes,
-      city: request.city,
-      provider_id: request.providerId,
-      provider_phone: request.providerPhone,
-      car: request.car ? {
-        model: request.car.model,
-        year: request.car.year,
-        licensePlate: request.car.licensePlate,
-        licensePlateArabic: request.car.licensePlateArabic,
-        vin: request.car.vin
-      } : null,
-      auto_launch_time: autoLaunchTime.toISOString(),
-      manual_assignment: request.manualAssignment || false,
-      attachments: request.attachments || [] // Add attachments
+      status: 'Scheduled', // Default status for new orders
+      notes_customer: request.notes,
+      // Other fields would be populated later
     })
     .select()
     .single();
@@ -128,38 +132,34 @@ export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Pr
     return null;
   }
 
-  // Convert from snake_case back to camelCase for frontend
+  // Return the newly created request
   if (!data) return null;
   
-  // Cast the data to include attachments with a type assertion
-  const dbData = data as any;
-  
   return {
-    id: data.id,
-    taskId: data.task_id,
-    companyName: data.company_name,
-    employeeName: data.employee_name,
+    id: data.order_id,
+    taskId: data.order_id,
+    companyName: request.companyName,
+    employeeName: request.employeeName,
     serviceType: data.service_type,
-    pickupTime: new Date(data.pickup_time).toISOString(),
+    pickupTime: new Date(data.requested_pickup_time).toISOString(),
     pickupLocation: data.pickup_location,
     dropoffLocation: data.dropoff_location,
     status: data.status,
-    notes: data.notes || '',
-    city: data.city,
-    providerId: data.provider_id,
-    providerPhone: data.provider_phone,
-    car: extractCarInfo(data.car),
-    autoLaunchTime: data.auto_launch_time ? new Date(data.auto_launch_time).toISOString() : null,
-    assignedAt: data.assigned_at ? new Date(data.assigned_at).toISOString() : null,
-    arrivedAt: data.arrived_at ? new Date(data.arrived_at).toISOString() : null,
-    completedAt: data.completed_at ? new Date(data.completed_at).toISOString() : null,
-    cancelledAt: data.cancelled_at ? new Date(data.cancelled_at).toISOString() : null,
-    cancellationReason: data.cancellation_reason || '',
-    pickupPhotos: data.pickup_photos || [],
-    dropoffPhotos: data.dropoff_photos || [],
-    manualAssignment: data.manual_assignment || false,
-    attachments: Array.isArray(dbData.attachments) ? dbData.attachments : [],
-    // Add the missing required properties with default values
+    notes: data.notes_customer || '',
+    city: request.city,
+    providerId: request.providerId,
+    providerPhone: request.providerPhone,
+    car: request.car,
+    autoLaunchTime: null,
+    assignedAt: null,
+    arrivedAt: null,
+    completedAt: null,
+    cancelledAt: null,
+    cancellationReason: '',
+    pickupPhotos: [],
+    dropoffPhotos: [],
+    manualAssignment: request.manualAssignment || false,
+    attachments: request.attachments || [],
     provider: {
       name: '',
       phone: '',
@@ -186,41 +186,55 @@ export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Pr
 }
 
 export async function updateRequestStatus(id: string, status: string, metadata: Partial<Request> = {}): Promise<boolean> {
-  // Prepare data update object with status
-  const updateData: any = { status };
+  // Map our application status to the database order_status enum
+  let dbStatus: string;
+  switch (status) {
+    case 'Waiting for Provider':
+      dbStatus = 'Waiting for Provider';
+      break;
+    case 'In Route':
+      dbStatus = 'In Route';
+      break;
+    case 'Arrived at Pickup Location':
+      dbStatus = 'Arrived';
+      break;
+    case 'Complete':
+      dbStatus = 'Complete';
+      break;
+    case 'Cancelled':
+      dbStatus = 'Cancelled';
+      break;
+    default:
+      dbStatus = status;
+  }
+  
+  // Prepare data update object
+  const updateData: any = { status: dbStatus };
   
   // Add timestamp based on status
   switch (status) {
-    case 'Waiting for Provider':
-      updateData.auto_launch_time = new Date().toISOString();
-      break;
     case 'In Route':
-      updateData.assigned_at = new Date().toISOString();
+      updateData.in_route_time = new Date().toISOString();
       break;
     case 'Arrived at Pickup Location':
-      updateData.arrived_at = new Date().toISOString();
+      updateData.arrival_at_pickup_time = new Date().toISOString();
+      break;
+    case 'In Service':
+      updateData.service_start_time = new Date().toISOString();
       break;
     case 'Complete':
-      updateData.completed_at = new Date().toISOString();
-      break;
-    case 'Cancelled':
-      updateData.cancelled_at = new Date().toISOString();
-      updateData.cancellation_reason = metadata.cancellationReason || '';
+      updateData.dropoff_time = new Date().toISOString();
       break;
   }
   
-  // Add photos if provided
-  if (metadata.pickupPhotos?.length) {
-    updateData.pickup_photos = metadata.pickupPhotos;
-  }
-  if (metadata.dropoffPhotos?.length) {
-    updateData.dropoff_photos = metadata.dropoffPhotos;
-  }
-
+  // For cancelled orders, we would need to store the cancellation reason elsewhere
+  // as there's no direct field in the new schema
+  
+  // Update the order in the Orders table
   const { error } = await supabase
-    .from('requests')
+    .from('Orders')
     .update(updateData)
-    .eq('id', id);
+    .eq('order_id', id);
 
   if (error) {
     console.error('Error updating request status:', error);
@@ -231,5 +245,6 @@ export async function updateRequestStatus(id: string, status: string, metadata: 
 }
 
 export async function cancelRequest(id: string, reason: string): Promise<boolean> {
+  // For cancelled orders, we can store the reason in provider_notes or create a separate table
   return updateRequestStatus(id, 'Cancelled', { cancellationReason: reason });
 }
