@@ -1,101 +1,89 @@
 
 import React from 'react';
-import { 
-  DropdownMenu, 
-  DropdownMenuCheckboxItem, 
-  DropdownMenuContent, 
-  DropdownMenuLabel, 
-  DropdownMenuSeparator, 
-  DropdownMenuTrigger 
-} from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { Filter, RefreshCw } from 'lucide-react';
 import { DocumentType } from '@/hooks/providers/types';
-import { Badge } from '@/components/ui/badge';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { Filter, RefreshCw } from 'lucide-react';
 
 interface DocumentFilterProps {
-  onFilterChange: (types: DocumentType[]) => void;
   selectedTypes: DocumentType[];
-  onRefresh?: () => void;
+  onFilterChange: (types: DocumentType[]) => void;
+  onRefresh: () => void;
 }
 
-// Map of document types to display names
-const documentTypeLabels: Record<DocumentType, string> = {
-  'national_id': 'National ID',
-  'drivers_license': 'Driver\'s License',
-  'vehicle_registration': 'Vehicle Registration',
-  'equipment': 'Equipment',
-  'truck': 'Truck',
-  'insurance': 'Insurance',
-  'operational_license': 'Operational License',
-  'other': 'Other'
-};
-
-export function DocumentFilter({ onFilterChange, selectedTypes, onRefresh }: DocumentFilterProps) {
-  const documentTypes: DocumentType[] = [
-    'national_id',
-    'drivers_license',
-    'vehicle_registration',
-    'equipment',
-    'truck',
-    'insurance',
-    'operational_license',
-    'other'
+export function DocumentFilter({ 
+  selectedTypes, 
+  onFilterChange,
+  onRefresh
+}: DocumentFilterProps) {
+  const documentTypes: { value: DocumentType; label: string }[] = [
+    { value: 'national_id', label: 'National ID' },
+    { value: 'drivers_license', label: 'Driver\'s License' },
+    { value: 'vehicle_registration', label: 'Vehicle Registration' },
+    { value: 'equipment', label: 'Equipment' },
+    { value: 'truck', label: 'Truck' },
+    { value: 'insurance', label: 'Insurance' },
+    { value: 'operational_license', label: 'Operational License' },
   ];
 
-  const handleToggleType = (type: DocumentType) => {
-    if (selectedTypes.includes(type)) {
-      onFilterChange(selectedTypes.filter(t => t !== type));
-    } else {
-      onFilterChange([...selectedTypes, type]);
-    }
-  };
-
-  const clearFilters = () => {
-    onFilterChange([]);
+  const handleTypeToggle = (value: string[]) => {
+    onFilterChange(value as DocumentType[]);
   };
 
   return (
-    <div className="flex items-center gap-2">
-      {selectedTypes.length > 0 && (
-        <Button variant="outline" size="sm" onClick={clearFilters}>
-          Clear filters ({selectedTypes.length})
-        </Button>
-      )}
+    <div className="flex flex-col md:flex-row gap-2 items-end">
+      <div className="flex-1 hidden md:block">
+        <p className="text-xs font-medium mb-1.5 text-muted-foreground">Filter by type</p>
+        <ToggleGroup 
+          type="multiple" 
+          variant="outline"
+          value={selectedTypes}
+          onValueChange={handleTypeToggle}
+          className="flex flex-wrap gap-1"
+        >
+          {documentTypes.map((type) => (
+            <ToggleGroupItem 
+              key={type.value} 
+              value={type.value}
+              size="sm"
+              className="text-xs px-2 py-1 h-7"
+            >
+              {type.label}
+            </ToggleGroupItem>
+          ))}
+        </ToggleGroup>
+      </div>
       
-      {onRefresh && (
-        <Button variant="outline" size="sm" onClick={onRefresh} className="gap-1">
-          <RefreshCw size={14} />
+      <div className="flex md:hidden gap-2 w-full">
+        <Button
+          variant="outline"
+          size="sm"
+          className="flex-1"
+          onClick={() => {}}
+        >
+          <Filter className="h-3.5 w-3.5 mr-1" />
+          Filter
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={onRefresh}
+        >
+          <RefreshCw className="h-3.5 w-3.5" />
+        </Button>
+      </div>
+      
+      <div className="hidden md:block">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={onRefresh}
+          className="h-8"
+        >
+          <RefreshCw className="h-3.5 w-3.5 mr-1" />
           Refresh
         </Button>
-      )}
-      
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="gap-2">
-            <Filter size={16} />
-            Filter
-            {selectedTypes.length > 0 && (
-              <Badge className="ml-1 h-5 w-5 rounded-full p-0 flex items-center justify-center">
-                {selectedTypes.length}
-              </Badge>
-            )}
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-56">
-          <DropdownMenuLabel>Filter by document type</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          {documentTypes.map(type => (
-            <DropdownMenuCheckboxItem
-              key={type}
-              checked={selectedTypes.includes(type)}
-              onCheckedChange={() => handleToggleType(type)}
-            >
-              {documentTypeLabels[type]}
-            </DropdownMenuCheckboxItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
+      </div>
     </div>
   );
 }

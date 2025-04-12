@@ -49,10 +49,10 @@ export function ProviderFilter({ onFilter, onReset, regions, serviceTypes }: Pro
     } = {};
     
     if (name) filters.name = name;
-    if (region) filters.region = region;
+    if (region && region !== 'all') filters.region = region;
     if (phone) filters.phone = phone;
-    if (serviceType) filters.serviceType = serviceType;
-    if (status) filters.status = status as ProviderStatus;
+    if (serviceType && serviceType !== 'all') filters.serviceType = serviceType;
+    if (status && status !== 'all') filters.status = status as ProviderStatus;
     
     onFilter(filters);
   };
@@ -171,6 +171,7 @@ export function ProviderFilter({ onFilter, onReset, regions, serviceTypes }: Pro
                     <SelectItem value="suspended">Suspended</SelectItem>
                     <SelectItem value="paused">Paused</SelectItem>
                     <SelectItem value="blacklisted">Blacklisted</SelectItem>
+                    <SelectItem value="deleted">Deleted</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

@@ -1,54 +1,113 @@
 
 import React from 'react';
-import { Document as ProviderDocument } from '@/types/provider';
-import { FileIcon } from 'lucide-react';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Document } from '@/types/provider';
+import { CheckCircle, Clock, XCircle, Eye, FileText } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface DocumentCardProps {
-  document: ProviderDocument;
+  document: Document;
 }
 
 export function DocumentCard({ document }: DocumentCardProps) {
-  const getStatusBadge = (status: string) => {
-    switch (status) {
+  const getStatusIcon = () => {
+    switch (document.status) {
       case 'verified':
-        return <Badge className="bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100">Verified</Badge>;
-      case 'pending':
-        return <Badge variant="secondary" className="bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100">Pending</Badge>;
+        return <CheckCircle className="h-4 w-4 text-green-500" />;
       case 'rejected':
-        return <Badge variant="destructive">Rejected</Badge>;
+        return <XCircle className="h-4 w-4 text-red-500" />;
       default:
-        return <Badge variant="outline">Unknown</Badge>;
+        return <Clock className="h-4 w-4 text-amber-500" />;
     }
   };
-
+  
+  const getStatusText = () => {
+    switch (document.status) {
+      case 'verified':
+        return 'Verified';
+      case 'rejected':
+        return 'Rejected';
+      default:
+        return 'Pending';
+    }
+  };
+  
+  const getStatusColor = () => {
+    switch (document.status) {
+      case 'verified':
+        return 'bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-400';
+      case 'rejected':
+        return 'bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-400';
+      default:
+        return 'bg-amber-100 text-amber-800 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400';
+    }
+  };
+  
+  const getFormattedType = (type: string) => {
+    return type
+      .split('_')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  };
+  
+  const isImage = document.url.match(/\.(jpeg|jpg|gif|png)$/i) !== null;
+  
   return (
-    <div className="border rounded-md p-4 flex items-start gap-3">
-      <div className="bg-muted h-12 w-12 rounded-md flex items-center justify-center shrink-0">
-        <FileIcon className="h-6 w-6 text-primary" />
-      </div>
-      <div className="flex-1">
-        <div className="flex items-start justify-between">
-          <div>
-            <h4 className="font-medium capitalize mb-1">{document.type.replace('_', ' ')}</h4>
-            <p className="text-sm text-muted-foreground">{document.description}</p>
-            <p className="text-xs text-muted-foreground mt-2">
-              Uploaded on {new Date(document.uploadedAt).toLocaleDateString()}
-            </p>
-            {document.url && (
-              <a 
-                href={document.url} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-xs text-primary hover:underline mt-1 inline-block"
-              >
-                View document
-              </a>
-            )}
+    <Card className="overflow-hidden">
+      <CardHeader className="p-0">
+        {isImage ? (
+          <div className="relative h-48 bg-gray-100 dark:bg-gray-800">
+            <img 
+              src={document.url} 
+              alt={document.description}
+              className="w-full h-full object-cover"
+            />
           </div>
-          <div>{getStatusBadge(document.status)}</div>
+        ) : (
+          <div className="flex items-center justify-center h-48 bg-gray-100 dark:bg-gray-800">
+            <FileText className="h-16 w-16 text-gray-400" />
+          </div>
+        )}
+      </CardHeader>
+      
+      <CardContent className="p-4">
+        <div className="flex justify-between items-start mb-2">
+          <CardTitle className="text-base">{getFormattedType(document.type)}</CardTitle>
+          <Badge variant="outline" className={`text-xs flex items-center gap-1 ${getStatusColor()}`}>
+            {getStatusIcon()}
+            {getStatusText()}
+          </Badge>
         </div>
-      </div>
-    </div>
+        
+        <p className="text-sm text-muted-foreground line-clamp-2 mb-2">{document.description}</p>
+        
+        <div className="text-xs text-muted-foreground">
+          Uploaded: {new Date(document.uploadedAt).toLocaleDateString()}
+        </div>
+      </CardContent>
+      
+      <CardFooter className="p-4 pt-0 flex justify-between">
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full"
+                onClick={() => window.open(document.url, '_blank')}
+              >
+                <Eye className="h-3.5 w-3.5 mr-2" />
+                View Document
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Open document in new tab</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </CardFooter>
+    </Card>
   );
 }
