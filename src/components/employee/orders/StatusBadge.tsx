@@ -1,24 +1,14 @@
 
 import { Badge } from "@/components/ui/badge"
-import { OrderStatus, isValidOrderStatus } from "@/types/orderStatus"
+import { OrderStatus, mapDatabaseToStatus } from "@/types/orderStatus"
 
 interface StatusBadgeProps {
   status: string
 }
 
 export const StatusBadge = ({ status }: StatusBadgeProps) => {
-  // Handle legacy status values
-  let normalizedStatus = status;
-  
-  // Map legacy status values to new format
-  switch (status) {
-    case 'Completed': normalizedStatus = 'Complete'; break;
-    case 'In route': normalizedStatus = 'In Route'; break;
-    case 'Pending': normalizedStatus = 'Scheduled'; break;
-    case 'Waiting for provider': normalizedStatus = 'Waiting for Provider'; break;
-    case 'In service': normalizedStatus = 'In Service'; break;
-    case 'Arrived at the pick-up location': normalizedStatus = 'Arrived at Pickup Location'; break;
-  }
+  // Normalize the status to ensure it matches our OrderStatus type
+  const normalizedStatus = mapDatabaseToStatus(status);
   
   switch (normalizedStatus) {
     case 'Complete':

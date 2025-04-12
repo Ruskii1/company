@@ -28,14 +28,25 @@ export const StatusBadge = ({ status }: StatusBadgeProps) => {
       return <Badge className="bg-green-500">{status}</Badge>
     case 'Cancelled':
       return <Badge className="bg-gray-500">{status}</Badge>
-    // Backwards compatibility for any old status values
-    case 'Pending':
-      return <Badge className="bg-purple-500">Scheduled</Badge>
-    case 'Arrived at the pick-up location':
-      return <Badge className="bg-indigo-500">Arrived at Pickup Location</Badge>
-    case 'Completed':
-      return <Badge className="bg-green-500">Complete</Badge>
+    // Map legacy status values to the new format
     default:
-      return <Badge>{status}</Badge>
+      // Use mapDatabaseToStatus to normalize any other status value
+      const mappedStatus = mapLegacyStatus(status);
+      return <StatusBadge status={mappedStatus} />;
+  }
+}
+
+// Helper function to map legacy status values to our standardized OrderStatus
+function mapLegacyStatus(status: string): OrderStatus {
+  switch (status) {
+    case 'Pending': return 'Scheduled';
+    case 'Arrived at the pick-up location': return 'Arrived at Pickup Location';
+    case 'Completed': return 'Complete';
+    case 'Waiting for provider': return 'Waiting for Provider';
+    case 'In route': return 'In Route';
+    case 'In service': return 'In Service';
+    default:
+      // If it's already a valid OrderStatus, return it; otherwise default to Scheduled
+      return 'Scheduled';
   }
 }

@@ -2,6 +2,7 @@
 import { OrderTable } from '@/components/OrderTable'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { Request } from '@/types/request'
+import { mapDatabaseToStatus } from '@/types/orderStatus'
 
 interface RequestsTabProps {
   requests: Request[]
@@ -38,13 +39,13 @@ export const RequestsTab = ({ requests, tabType }: RequestsTabProps) => {
     }
   }
 
-  // Ensure future requests are displayed as "Scheduled"
+  // Ensure future requests are displayed with standardized status
   const processRequestStatus = (request: Request, tabType: string) => {
-    // For backward compatibility - old "Pending" status for future requests should be "Scheduled"
+    // For future requests, legacy "Pending" status should be "Scheduled"
     if (tabType === 'future' && request.status === 'Pending') {
       return 'Scheduled';
     }
-    return request.status;
+    return mapDatabaseToStatus(request.status);
   };
 
   return (

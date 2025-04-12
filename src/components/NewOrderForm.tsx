@@ -14,6 +14,7 @@ import { CarDetailsFields } from './forms/CarDetailsFields'
 import { orderFormSchema, OrderFormValues } from './forms/types'
 import { createRequest } from '@/services/requestService'
 import { format } from 'date-fns'
+import { OrderStatus } from '@/types/orderStatus'
 
 export const NewOrderForm = () => {
   const { language } = useLanguageStore()
@@ -57,7 +58,7 @@ export const NewOrderForm = () => {
         pickupTime: format(values.pickupDate, "yyyy-MM-dd'T'HH:mm:ss"),
         pickupLocation: values.pickupLocation,
         dropoffLocation: values.dropoffLocation,
-        status: 'Scheduled', // Updated to use the enum value directly
+        status: 'Scheduled' as OrderStatus, // Fixed: Now explicitly typed as OrderStatus
         notes: values.notes || '',
         car: {
           model: values.carModel,

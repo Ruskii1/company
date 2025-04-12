@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Request } from '@/types/request';
 import { toast } from 'sonner';
 import { categorizeRequestsByDate } from '@/utils/dateUtils';
+import { OrderStatus } from '@/types/orderStatus';
 
 export const useRequestsData = () => {
   const [requests, setRequests] = useState<Request[]>([]);
@@ -27,7 +28,7 @@ export const useRequestsData = () => {
             pickupTime: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
             pickupLocation: "123 Main St, Riyadh",
             dropoffLocation: "456 Market Ave, Riyadh",
-            status: "Completed",
+            status: "Complete", // Fixed: Changed from "Completed" to "Complete"
             notes: "Vehicle has flat tire",
             city: "Riyadh",
             providerId: "PRV-001",
@@ -59,7 +60,7 @@ export const useRequestsData = () => {
             pickupTime: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(), // 1 day ago
             pickupLocation: "789 Business Blvd, Jeddah",
             dropoffLocation: "321 Commerce St, Jeddah",
-            status: "Completed",
+            status: "Complete", // Fixed: Changed from "Completed" to "Complete"
             notes: "Battery drained due to lights left on",
             city: "Jeddah",
             providerId: "PRV-002",

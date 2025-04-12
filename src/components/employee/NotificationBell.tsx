@@ -6,6 +6,7 @@ import { useOrderManagement } from '@/hooks/useOrderManagement'
 import { Link } from 'react-router-dom'
 import { Order } from '@/types/orderManagement'
 import { useLanguageStore, translations } from '@/lib/i18n'
+import { OrderStatus } from '@/types/orderStatus'
 
 // Notification types interface 
 interface Notification {
@@ -55,7 +56,7 @@ export function NotificationBell() {
       id: "prov-001",
       taskId: "TASK-2001",
       customerName: "TechCorp LLC",
-      status: "Waiting for provider",
+      status: "Waiting for Provider",  // Fixed: changed from "Waiting for provider"
       serviceType: "Regular Towing",
       pickupTime: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
       type: 'provider'
@@ -64,7 +65,7 @@ export function NotificationBell() {
       id: "prov-002",
       taskId: "TASK-2002",
       customerName: "GlobalTrade Inc.",
-      status: "Waiting for provider",
+      status: "Waiting for Provider",  // Fixed: changed from "Waiting for provider"
       serviceType: "Battery Jumpstart",
       pickupTime: new Date(Date.now() - 45 * 60 * 1000).toISOString(),
       type: 'provider'
