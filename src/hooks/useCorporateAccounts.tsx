@@ -64,7 +64,8 @@ const mockCorporateAccounts: CorporateAccount[] = [
         createdBy: 'Mohammed Al-Fahad',
         tags: ['#Finance', '#Urgent']
       }
-    ]
+    ],
+    documents: [] // Added for file storage
   },
   {
     id: 'corp-002',
@@ -115,7 +116,8 @@ const mockCorporateAccounts: CorporateAccount[] = [
         createdBy: 'Layla Mahmoud',
         tags: ['#Operations', '#Providers']
       }
-    ]
+    ],
+    documents: [] // Added for file storage
   },
   {
     id: 'corp-003',
@@ -148,7 +150,8 @@ const mockCorporateAccounts: CorporateAccount[] = [
         amount: 400.00
       }
     ],
-    tickets: []
+    tickets: [],
+    documents: [] // Added for file storage
   }
 ];
 
@@ -211,11 +214,41 @@ export const useCorporateAccounts = () => {
     );
   };
   
+  const addDocument = (corporateId: string, document: any) => {
+    setCorporateAccounts(prevAccounts => 
+      prevAccounts.map(account => {
+        if (account.id === corporateId) {
+          return {
+            ...account,
+            documents: [...(account.documents || []), document]
+          };
+        }
+        return account;
+      })
+    );
+  };
+  
+  const deleteDocument = (corporateId: string, documentId: string) => {
+    setCorporateAccounts(prevAccounts => 
+      prevAccounts.map(account => {
+        if (account.id === corporateId && account.documents) {
+          return {
+            ...account,
+            documents: account.documents.filter(doc => doc.id !== documentId)
+          };
+        }
+        return account;
+      })
+    );
+  };
+  
   return {
     corporateAccounts,
     addEmployee,
     addRequest,
     addTicket,
-    updateAccountBalance
+    updateAccountBalance,
+    addDocument,
+    deleteDocument
   };
 };

@@ -30,6 +30,16 @@ export interface CorporateTicket {
   tags: string[];
 }
 
+export interface CorporateDocument {
+  id: string;
+  name: string;
+  type: string;
+  size: string;
+  url: string;
+  uploadedBy: string;
+  uploadedAt: string;
+}
+
 export interface CorporateAccount {
   id: string;
   name: string;
@@ -41,6 +51,7 @@ export interface CorporateAccount {
   employees: Employee[];
   requests: CorporateRequest[];
   tickets: CorporateTicket[];
+  documents?: CorporateDocument[];
 }
 
 export interface ProviderCompany {
