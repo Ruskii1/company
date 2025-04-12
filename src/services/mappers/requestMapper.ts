@@ -1,6 +1,7 @@
 
 import { Json } from "@/integrations/supabase/types";
 import { Request } from "@/types/request";
+import { OrderStatus, mapDatabaseToStatus } from "@/types/orderStatus";
 import { extractCarInfo, extractCityFromLocation, createDefaultProvider, createDefaultTimeTracking } from "../utils/requestUtils";
 
 /**
@@ -16,7 +17,7 @@ export function mapToRequest(item: any): Request {
     pickupTime: item.pickup_time ? new Date(item.pickup_time).toISOString() : '',
     pickupLocation: item.pickup_location,
     dropoffLocation: item.dropoff_location,
-    status: item.status,
+    status: mapDatabaseToStatus(item.status),
     notes: item.notes || '',
     city: item.city || extractCityFromLocation(item.pickup_location),
     providerId: item.provider_id,
@@ -55,7 +56,7 @@ export function prepareRequestForInsert(request: Omit<Request, 'id' | 'taskId'>)
   pickup_time: string;
   pickup_location: string;
   dropoff_location: string;
-  status: string;
+  status: OrderStatus;
   notes?: string;
   company_name?: string;
   employee_name?: string;

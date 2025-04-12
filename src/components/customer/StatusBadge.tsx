@@ -1,12 +1,15 @@
 
 import { Badge } from "@/components/ui/badge"
+import { OrderStatus } from "@/types/orderStatus"
 
 interface StatusBadgeProps {
   status: string
 }
 
 export const StatusBadge = ({ status }: StatusBadgeProps) => {
-  switch (status) {
+  const normalizedStatus = status as OrderStatus;
+  
+  switch (normalizedStatus) {
     case 'Scheduled':
       return <Badge className="bg-purple-500">{status}</Badge>
     case 'Waiting for Provider':

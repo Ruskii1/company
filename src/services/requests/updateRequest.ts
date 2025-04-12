@@ -1,35 +1,14 @@
 
 import { supabase } from "@/integrations/supabase/client";
 import { Request } from "@/types/request";
+import { OrderStatus } from "@/types/orderStatus";
 
 /**
  * Updates the status of a request
  */
-export async function updateRequestStatus(id: string, status: string, metadata: Partial<Request> = {}): Promise<boolean> {
-  // Map our application status to the database request_status enum
-  let dbStatus: string;
-  switch (status) {
-    case 'Waiting for Provider':
-      dbStatus = 'Waiting for Provider';
-      break;
-    case 'In Route':
-      dbStatus = 'In Route';
-      break;
-    case 'Arrived at Pickup Location':
-      dbStatus = 'Arrived at Pickup Location';
-      break;
-    case 'Complete':
-      dbStatus = 'Complete';
-      break;
-    case 'Cancelled':
-      dbStatus = 'Cancelled';
-      break;
-    default:
-      dbStatus = status;
-  }
-  
+export async function updateRequestStatus(id: string, status: OrderStatus, metadata: Partial<Request> = {}): Promise<boolean> {
   // Prepare data update object
-  const updateData: any = { status: dbStatus };
+  const updateData: any = { status: status };
   
   // Add timestamp based on status
   switch (status) {
@@ -70,7 +49,7 @@ export async function cancelRequest(id: string, reason: string): Promise<boolean
   const { error } = await supabase
     .from('requests')
     .update({ 
-      status: 'Cancelled',
+      status: 'Cancelled' as OrderStatus,
       cancelled_at: new Date().toISOString(),
       cancellation_reason: reason
     })

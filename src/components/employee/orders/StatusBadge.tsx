@@ -1,36 +1,44 @@
 
 import { Badge } from "@/components/ui/badge"
+import { OrderStatus, isValidOrderStatus } from "@/types/orderStatus"
 
 interface StatusBadgeProps {
   status: string
 }
 
 export const StatusBadge = ({ status }: StatusBadgeProps) => {
+  // Handle legacy status values
+  let normalizedStatus = status;
+  
+  // Map legacy status values to new format
   switch (status) {
+    case 'Completed': normalizedStatus = 'Complete'; break;
+    case 'In route': normalizedStatus = 'In Route'; break;
+    case 'Pending': normalizedStatus = 'Scheduled'; break;
+    case 'Waiting for provider': normalizedStatus = 'Waiting for Provider'; break;
+    case 'In service': normalizedStatus = 'In Service'; break;
+    case 'Arrived at the pick-up location': normalizedStatus = 'Arrived at Pickup Location'; break;
+  }
+  
+  switch (normalizedStatus) {
     case 'Complete':
-    case 'Completed': // for backward compatibility
-      return <Badge className="bg-green-500">{status === 'Completed' ? 'Complete' : status}</Badge>
+      return <Badge className="bg-green-500">{normalizedStatus}</Badge>
     case 'In Route':
-    case 'In route': // for backward compatibility
-      return <Badge className="bg-blue-500">{status === 'In route' ? 'In Route' : status}</Badge>
+      return <Badge className="bg-blue-500">{normalizedStatus}</Badge>
     case 'Scheduled':
-    case 'Pending': // for backward compatibility
-      return <Badge className="bg-purple-500">{status === 'Pending' ? 'Scheduled' : status}</Badge>
+      return <Badge className="bg-purple-500">{normalizedStatus}</Badge>
     case 'Waiting for Provider':
-    case 'Waiting for provider': // for backward compatibility
-      return <Badge className="bg-yellow-500 text-black">{status === 'Waiting for provider' ? 'Waiting for Provider' : status}</Badge>
+      return <Badge className="bg-yellow-500 text-black">{normalizedStatus}</Badge>
     case 'NPA':
       return <Badge className="bg-red-500">No Provider Accepted</Badge>
     case 'NPF':
       return <Badge className="bg-red-500">No Provider Found</Badge>
     case 'In Service':
-    case 'In service': // for backward compatibility
-      return <Badge className="bg-purple-500">{status === 'In service' ? 'In Service' : status}</Badge>
+      return <Badge className="bg-purple-500">{normalizedStatus}</Badge>
     case 'Arrived at Pickup Location':
-    case 'Arrived at the pick-up location': // for backward compatibility
-      return <Badge className="bg-indigo-500">{status === 'Arrived at the pick-up location' ? 'Arrived at Pickup Location' : status}</Badge>
+      return <Badge className="bg-indigo-500">{normalizedStatus}</Badge>
     case 'Cancelled':
-      return <Badge className="bg-gray-500">{status}</Badge>
+      return <Badge className="bg-gray-500">{normalizedStatus}</Badge>
     default:
       return <Badge>{status}</Badge>
   }

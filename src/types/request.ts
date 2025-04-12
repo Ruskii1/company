@@ -1,4 +1,6 @@
 
+import { OrderStatus } from "./orderStatus";
+
 export interface Request {
   id: string
   taskId: string
@@ -8,7 +10,7 @@ export interface Request {
   pickupTime: string
   pickupLocation: string
   dropoffLocation: string
-  status: string
+  status: OrderStatus
   notes: string
   city?: string
   providerId?: string
