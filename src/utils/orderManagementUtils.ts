@@ -1,4 +1,3 @@
-
 import { Order } from '@/types/orderManagement'
 
 /**
@@ -30,7 +29,7 @@ export const categorizeOrders = (
       // Past time, not completed - should be in progress
       if (order.status === 'Pending') {
         // Automatically escalate status from Pending to Waiting for provider
-        updatedOrder = { ...order, status: 'Waiting for provider' }
+        updatedOrder = { ...order, status: 'Waiting for Provider' }
       }
       // Time has passed, but order is in progress
       current.push(updatedOrder)
@@ -39,7 +38,7 @@ export const categorizeOrders = (
       if (pickupTime <= now) {
         // Due now - automatically escalate from Pending to Waiting for provider
         if (order.status === 'Pending') {
-          updatedOrder = { ...order, status: 'Waiting for provider' }
+          updatedOrder = { ...order, status: 'Waiting for Provider' }
         }
         current.push(updatedOrder)
       } else {
@@ -144,15 +143,22 @@ export const getNextStatus = (currentStatus: string): string => {
     case 'Pending':
       return 'Scheduled'
     case 'Scheduled':
-      return 'Waiting for provider'
+      return 'Waiting for Provider'
+    case 'Waiting for Provider':
     case 'Waiting for provider':
-      return 'In route'
+      return 'In Route'
+    case 'In Route':
     case 'In route':
-      return 'Arrived at the pick-up location'
+      return 'Arrived at Pickup Location'
+    case 'Arrived at Pickup Location':
     case 'Arrived at the pick-up location':
-      return 'In service'
+      return 'In Service'
+    case 'In Service':
     case 'In service':
-      return 'Completed'
+      return 'Complete'
+    case 'Complete':
+    case 'Completed':
+      return 'Complete' // Already at final status
     default:
       console.log("Warning: Unknown status in getNextStatus:", currentStatus)
       return currentStatus
