@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client";
 import { Request } from "@/types/request";
 import { Json } from "@/integrations/supabase/types";
@@ -39,7 +40,7 @@ export async function fetchAllRequests(): Promise<Request[]> {
       companyName: item.corporate_name || '',
       employeeName: item.customer_name || '',
       serviceType: item.service_type,
-      pickupTime: new Date(item.requested_pickup_time).toISOString(),
+      pickupTime: item.requested_pickup_time ? new Date(item.requested_pickup_time).toISOString() : '',
       pickupLocation: item.pickup_location,
       dropoffLocation: item.dropoff_location,
       status: item.status,
@@ -94,6 +95,7 @@ export async function fetchAllRequests(): Promise<Request[]> {
 
 // Helper function to extract city from location string
 function extractCityFromLocation(location: string): string {
+  if (!location) return '';
   const parts = location.split(',');
   return parts.length > 1 ? parts[1].trim() : '';
 }
@@ -101,15 +103,6 @@ function extractCityFromLocation(location: string): string {
 export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Promise<Request | null> {
   // Generate an order ID (you might want to implement a more sophisticated ID generation)
   const orderId = `ORD-${Date.now()}`;
-  
-  // First, we need to check if the customer exists
-  // This is a simplified implementation - in a real app, you'd need proper customer management
-  const customerExists = false; // Placeholder for now
-  
-  if (!customerExists) {
-    console.error('Customer does not exist. Please create customer first.');
-    return null;
-  }
   
   // Insert into Orders table
   const { data, error } = await supabase
@@ -141,7 +134,7 @@ export async function createRequest(request: Omit<Request, 'id' | 'taskId'>): Pr
     companyName: request.companyName,
     employeeName: request.employeeName,
     serviceType: data.service_type,
-    pickupTime: new Date(data.requested_pickup_time).toISOString(),
+    pickupTime: data.requested_pickup_time ? new Date(data.requested_pickup_time).toISOString() : '',
     pickupLocation: data.pickup_location,
     dropoffLocation: data.dropoff_location,
     status: data.status,
@@ -246,5 +239,18 @@ export async function updateRequestStatus(id: string, status: string, metadata: 
 
 export async function cancelRequest(id: string, reason: string): Promise<boolean> {
   // For cancelled orders, we can store the reason in provider_notes or create a separate table
-  return updateRequestStatus(id, 'Cancelled', { cancellationReason: reason });
+  const { error } = await supabase
+    .from('Orders')
+    .update({ 
+      status: 'Cancelled',
+      provider_notes: reason
+    })
+    .eq('order_id', id);
+
+  if (error) {
+    console.error('Error cancelling request:', error);
+    return false;
+  }
+
+  return true;
 }
