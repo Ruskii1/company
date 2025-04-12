@@ -60,7 +60,7 @@ const AllRequestsPage = () => {
   return (
     <Card className="backdrop-blur-sm bg-white/80 dark:bg-gray-800/80">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>{t.allRequests}</CardTitle>
+        <CardTitle>{t.allRequests || "All Requests"}</CardTitle>
       </CardHeader>
       <CardContent>
         {loading ? (

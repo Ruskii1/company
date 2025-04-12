@@ -30,15 +30,15 @@ export const TabsSection = ({
       <TabsList className="w-full justify-start mb-4">
         <TabsTrigger value="past" className="flex items-center gap-2">
           <History className="h-4 w-4" />
-          {t.pastRequests}
+          {t.pastRequests || "Past Requests"}
         </TabsTrigger>
         <TabsTrigger value="today" className="flex items-center gap-2">
           <Clock className="h-4 w-4" />
-          {t.todaysRequests}
+          {t.todaysRequests || "Today's Requests"}
         </TabsTrigger>
         <TabsTrigger value="future" className="flex items-center gap-2">
           <Calendar className="h-4 w-4" />
-          {t.futureRequests}
+          {t.futureRequests || "Future Requests"}
         </TabsTrigger>
       </TabsList>
       
@@ -50,7 +50,7 @@ export const TabsSection = ({
           />
         ) : (
           <div className="border rounded-md p-4 bg-white dark:bg-gray-700">
-            <p className="text-gray-500 dark:text-gray-300">{t.noPastRequests}</p>
+            <p className="text-gray-500 dark:text-gray-300">{t.noPastRequests || "No past requests"}</p>
           </div>
         )}
       </TabsContent>
@@ -63,7 +63,7 @@ export const TabsSection = ({
           />
         ) : (
           <div className="border rounded-md p-4 bg-white dark:bg-gray-700">
-            <p className="text-gray-500 dark:text-gray-300">{t.noTodayRequests}</p>
+            <p className="text-gray-500 dark:text-gray-300">{t.noTodayRequests || "No requests for today"}</p>
           </div>
         )}
       </TabsContent>
@@ -77,7 +77,7 @@ export const TabsSection = ({
           />
         ) : (
           <div className="border rounded-md p-4 bg-white dark:bg-gray-700">
-            <p className="text-gray-500 dark:text-gray-300">{t.noFutureRequests}</p>
+            <p className="text-gray-500 dark:text-gray-300">{t.noFutureRequests || "No future requests"}</p>
           </div>
         )}
       </TabsContent>
