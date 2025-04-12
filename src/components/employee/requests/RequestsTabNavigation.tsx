@@ -27,15 +27,15 @@ export const RequestsTabNavigation = ({
       <TabsList className="w-full justify-start mb-4">
         <TabsTrigger value="past" className="flex items-center gap-2">
           <Calendar className="h-4 w-4" />
-          {t.pastRequests || "Past Requests"}
+          {t.pastRequests}
         </TabsTrigger>
         <TabsTrigger value="today" className="flex items-center gap-2">
           <Calendar className="h-4 w-4" />
-          {t.todaysRequests || "Today's Requests"}
+          {t.todaysRequests}
         </TabsTrigger>
         <TabsTrigger value="future" className="flex items-center gap-2">
           <Calendar className="h-4 w-4" />
-          {t.futureRequests || "Future Requests"}
+          {t.futureRequests}
         </TabsTrigger>
       </TabsList>
       

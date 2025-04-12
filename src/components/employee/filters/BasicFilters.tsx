@@ -32,7 +32,7 @@ export const BasicFilters = ({ control, serviceTypeValues }: BasicFiltersProps) 
             <FormControl>
               <div className="relative">
                 <Input 
-                  placeholder={t.enterRequestNumber || "Enter order number"}
+                  placeholder={t.enterRequestNumber}
                   className="pr-8" 
                   {...field} 
                 />
@@ -67,11 +67,11 @@ export const BasicFilters = ({ control, serviceTypeValues }: BasicFiltersProps) 
               </FormControl>
               <SelectContent>
                 <SelectItem value="all">
-                  {t.all || "All"}
+                  {t.all}
                 </SelectItem>
                 {types.map((type) => (
                   <SelectItem key={type} value={type}>
-                    {t.services && t.services[type] ? t.services[type] : type}
+                    {t.services[type] || type}
                   </SelectItem>
                 ))}
               </SelectContent>

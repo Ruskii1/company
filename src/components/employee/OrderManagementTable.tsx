@@ -67,7 +67,7 @@ export const OrderManagementTable = ({
           {orders.length === 0 ? (
             <TableRow>
               <TableCell colSpan={8} className="text-center">
-                {t.noOrders || "No orders found"}
+                {t.noOrders}
               </TableCell>
             </TableRow>
           ) : (
@@ -131,7 +131,7 @@ export const OrderManagementTable = ({
                       size="sm"
                       onClick={() => navigate(`/employee/orders/${order.taskId}`)}
                     >
-                      {t.viewDetails || "View Details"}
+                      {t.viewDetails}
                     </Button>
                   </div>
                 </TableCell>

@@ -25,7 +25,7 @@ interface OrderManagementFilterProps {
   onFilterChange: (data: FilterValues) => void
   statusValues?: string[]
   cityValues?: string[]
-  serviceTypeValues?: string[]
+  serviceTypeValues?: string[] // Add this prop
 }
 
 export const OrderManagementFilter = ({ 
@@ -33,7 +33,7 @@ export const OrderManagementFilter = ({
   onFilterChange, 
   statusValues = ["Pending", "Waiting for provider", "In route", "Arrived at the pick-up location", "In service", "Completed"],
   cityValues = [],
-  serviceTypeValues
+  serviceTypeValues // Add this prop
 }: OrderManagementFilterProps) => {
   const { language } = useLanguageStore()
   const t = translations[language]
@@ -84,7 +84,7 @@ export const OrderManagementFilter = ({
         </FilterCollapsible>
         
         <div className="flex justify-end">
-          <Button type="submit">{t.applyFilters || "Apply Filters"}</Button>
+          <Button type="submit">{t.applyFilters}</Button>
         </div>
       </form>
     </Form>

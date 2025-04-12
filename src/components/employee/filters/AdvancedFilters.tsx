@@ -31,12 +31,12 @@ export const AdvancedFilters = ({ control, statusValues, cityValues }: AdvancedF
             >
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder={t.selectStatus || "Select Status"} />
+                  <SelectValue placeholder={t.selectStatus} />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                <SelectItem value="">
-                  {t.all || "All"}
+                <SelectItem value="all">
+                  {t.all}
                 </SelectItem>
                 {statusValues.map((status) => (
                   <SelectItem key={status} value={status || "unknown_status"}>
@@ -55,7 +55,7 @@ export const AdvancedFilters = ({ control, statusValues, cityValues }: AdvancedF
         name="city"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>{t.city || "City"}</FormLabel>
+            <FormLabel>{t.city}</FormLabel>
             {cityValues.length > 0 ? (
               <Select 
                 onValueChange={field.onChange} 
@@ -63,12 +63,12 @@ export const AdvancedFilters = ({ control, statusValues, cityValues }: AdvancedF
               >
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder={t.selectCity || "Select City"} />
+                    <SelectValue placeholder={t.selectCity} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="">
-                    {t.all || "All"}
+                  <SelectItem value="all">
+                    {t.all}
                   </SelectItem>
                   {cityValues.map((city) => (
                     <SelectItem key={city} value={city || "unknown_city"}>
@@ -79,7 +79,7 @@ export const AdvancedFilters = ({ control, statusValues, cityValues }: AdvancedF
               </Select>
             ) : (
               <Input 
-                placeholder={t.enterCity || "Enter city"}
+                placeholder={t.enterCity}
                 {...field} 
               />
             )}
@@ -93,9 +93,9 @@ export const AdvancedFilters = ({ control, statusValues, cityValues }: AdvancedF
         name="providerId"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>{t.providerId || "Provider ID"}</FormLabel>
+            <FormLabel>{t.providerId}</FormLabel>
             <Input 
-              placeholder={t.enterProviderId || "Enter provider ID"} 
+              placeholder={t.enterProviderId}
               {...field} 
             />
           </FormItem>
@@ -108,9 +108,9 @@ export const AdvancedFilters = ({ control, statusValues, cityValues }: AdvancedF
         name="providerPhone"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>{t.providerPhone || "Provider Phone"}</FormLabel>
+            <FormLabel>{t.providerPhone}</FormLabel>
             <Input 
-              placeholder={t.enterProviderPhone || "Enter provider phone"}
+              placeholder={t.enterProviderPhone}
               {...field} 
             />
           </FormItem>
