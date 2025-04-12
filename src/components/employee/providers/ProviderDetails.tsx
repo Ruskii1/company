@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { ServiceProvider, InternalNote, BankAccount, Document as ProviderDocument } from '@/types/provider';
+import { ServiceProvider, InternalNote, BankAccount, Document as ProviderDocument, ProviderStatus } from '@/types/provider';
 import { ProviderHeader } from './details/ProviderHeader';
 import { DetailsTabs } from './details/DetailsTabs';
 import { LocationDisplay } from './details/LocationDisplay';
@@ -14,6 +14,7 @@ interface ProviderDetailsProps {
   onAddBankAccount: (providerId: string, account: BankAccount) => void;
   onApproveProvider?: (providerId: string, isApproved: boolean) => void;
   onAddDocument?: (providerId: string, document: ProviderDocument) => void;
+  onStatusChange?: (providerId: string, status: ProviderStatus) => void;
 }
 
 export function ProviderDetails({
@@ -23,6 +24,7 @@ export function ProviderDetails({
   onAddBankAccount,
   onApproveProvider,
   onAddDocument,
+  onStatusChange,
 }: ProviderDetailsProps) {
   const [activeTab, setActiveTab] = useState('orders');
   const { toast } = useToast();
@@ -84,7 +86,11 @@ export function ProviderDetails({
 
   return (
     <div className="space-y-6">
-      <ProviderHeader provider={provider} onBack={onBack} />
+      <ProviderHeader 
+        provider={provider} 
+        onBack={onBack}
+        onStatusChange={onStatusChange}
+      />
       
       <ApprovalStatusToggle 
         isApproved={provider.isApproved} 

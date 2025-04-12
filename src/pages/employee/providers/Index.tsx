@@ -1,11 +1,10 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { InfoIcon, Plus, UsersIcon } from 'lucide-react';
 import { useServiceProviders } from '@/hooks/useServiceProviders';
-import type { ServiceProvider, InternalNote, BankAccount, Document as ProviderDocument } from '@/types/provider';
+import type { ServiceProvider, InternalNote, BankAccount, Document as ProviderDocument, ProviderStatus } from '@/types/provider';
 import { ProvidersList } from '@/components/employee/providers/ProvidersList';
 import { ProviderDetails } from '@/components/employee/providers/ProviderDetails';
 import { ProviderFilter } from '@/components/employee/providers/ProviderFilter';
@@ -21,6 +20,7 @@ const ServiceProvidersPage = () => {
     addBankAccount,
     addDocument,
     approveProvider,
+    updateProviderStatus,
     filterProviders, 
     resetFilters 
   } = useServiceProviders();
@@ -61,10 +61,17 @@ const ServiceProvidersPage = () => {
     approveProvider(providerId, isApproved);
   };
   
-  // Get unique regions from providers
+  const handleStatusChange = (providerId: string, status: ProviderStatus) => {
+    updateProviderStatus(providerId, status);
+    
+    toast({
+      title: "Provider Status Updated",
+      description: `The provider's status has been updated to ${status.replace('_', ' ')}.`,
+    });
+  };
+  
   const regions = Array.from(new Set(allProviders.map(provider => provider.region)));
   
-  // Use standardized service types from ServiceTypeField instead of extracting from providers
   const standardServiceTypes = serviceTypeValues;
 
   return (
@@ -130,6 +137,7 @@ const ServiceProvidersPage = () => {
             onAddBankAccount={handleAddBankAccount}
             onApproveProvider={handleApproveProvider}
             onAddDocument={handleAddDocument}
+            onStatusChange={handleStatusChange}
           />
         ) : (
           <div className="text-center py-12">

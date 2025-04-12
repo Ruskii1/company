@@ -1,18 +1,20 @@
 
 import React from 'react';
-import { ServiceProvider } from '@/types/provider';
+import { ServiceProvider, ProviderStatus } from '@/types/provider';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Phone, Mail, MapPin, Calendar, FileText, AlertTriangle } from 'lucide-react';
 import { DetailsBadge } from '../list/DetailsBadge';
+import { StatusSelector } from './StatusSelector';
 
 interface ProviderHeaderProps {
   provider: ServiceProvider;
   onBack: () => void;
+  onStatusChange?: (providerId: string, status: ProviderStatus) => void;
 }
 
-export function ProviderHeader({ provider, onBack }: ProviderHeaderProps) {
+export function ProviderHeader({ provider, onBack, onStatusChange }: ProviderHeaderProps) {
   const getStatusBadgeVariant = (status: string) => {
     switch (status) {
       case 'active':
@@ -50,15 +52,29 @@ export function ProviderHeader({ provider, onBack }: ProviderHeaderProps) {
     }
   };
 
+  const handleStatusChange = (status: ProviderStatus) => {
+    if (onStatusChange) {
+      onStatusChange(provider.id, status);
+    }
+  };
+
   return (
     <>
       <div className="flex justify-between items-center mb-4">
         <Button variant="outline" onClick={onBack}>
           ← Back to providers list
         </Button>
-        <Badge variant={getStatusBadgeVariant(provider.status) as any} className="text-sm py-1 px-3">
-          {getFormattedStatus(provider.status)}
-        </Badge>
+        <div className="flex items-center gap-3">
+          <Badge variant={getStatusBadgeVariant(provider.status) as any} className="text-sm py-1 px-3">
+            {getFormattedStatus(provider.status)}
+          </Badge>
+          {onStatusChange && (
+            <StatusSelector 
+              currentStatus={provider.status} 
+              onStatusChange={handleStatusChange} 
+            />
+          )}
+        </div>
       </div>
       
       <div className="flex flex-col md:flex-row gap-6">
