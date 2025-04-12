@@ -42,7 +42,7 @@ export const RequestsTab = ({ requests, tabType }: RequestsTabProps) => {
   // Ensure future requests are displayed with standardized status
   const processRequestStatus = (request: Request, tabType: string) => {
     // For future requests, legacy "Pending" status should be "Scheduled"
-    if (tabType === 'future' && request.status === 'Pending') {
+    if (tabType === 'future' && request.status === 'Scheduled') {
       return 'Scheduled';
     }
     return mapDatabaseToStatus(request.status);
