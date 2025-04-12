@@ -1,4 +1,5 @@
 
+import { Json } from "@/integrations/supabase/types";
 import { Request } from "@/types/request";
 import { extractCarInfo, extractCityFromLocation, createDefaultProvider, createDefaultTimeTracking } from "../utils/requestUtils";
 
@@ -48,7 +49,22 @@ export function mapToRequest(item: any): Request {
 /**
  * Prepares a request object for inserting into the 'requests' table
  */
-export function prepareRequestForInsert(request: Omit<Request, 'id' | 'taskId'>): Record<string, any> {
+export function prepareRequestForInsert(request: Omit<Request, 'id' | 'taskId'>): {
+  task_id: string; 
+  service_type: string;
+  pickup_time: string;
+  pickup_location: string;
+  dropoff_location: string;
+  status: string;
+  notes?: string;
+  company_name?: string;
+  employee_name?: string;
+  car?: Json;
+  provider_id?: string;
+  provider_phone?: string;
+  city?: string;
+  manual_assignment?: boolean;
+} {
   return {
     task_id: `TID-${Date.now()}`, // Generate a task ID
     service_type: request.serviceType,
