@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CorporateAccount } from "@/types/corporate";
-import { Upload, FileText, File, Image, FilePdf, Trash2 } from "lucide-react";
+import { Upload, FileText, File, Image, FileIcon, Trash2 } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 
@@ -59,7 +59,7 @@ export const CorporateInfoTab = ({ account }: CorporateInfoTabProps) => {
     if (fileType.includes("image")) {
       return <Image className="h-8 w-8 text-blue-500" />;
     } else if (fileType.includes("pdf")) {
-      return <FilePdf className="h-8 w-8 text-red-500" />;
+      return <FileIcon className="h-8 w-8 text-red-500" />;
     } else if (fileType.includes("word") || fileType.includes("document")) {
       return <FileText className="h-8 w-8 text-blue-700" />;
     } else {
