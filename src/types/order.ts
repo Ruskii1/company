@@ -14,10 +14,30 @@ export interface InternalNote {
   employeeName: string
 }
 
+export interface ActionLogEntry {
+  id: string
+  action: string
+  timestamp: string
+  performedBy: string
+  details?: string
+}
+
+export interface Document {
+  id: string
+  name: string
+  url: string
+  type: string
+  uploadedAt: string
+  uploadedBy: string
+}
+
 export interface Order {
   id: string
   taskId: string
   customerName: string
+  customerEmail?: string
+  customerPhone?: string
+  customerCompany?: string
   serviceType: string
   pickupTime: string
   pickupLocation: string
@@ -27,6 +47,7 @@ export interface Order {
   acceptedBy?: string
   declinedBy?: string[]
   pendingProviders?: string[]
+  createdAt?: string
   timeTracking: {
     acceptedAt: string
     inRouteAt: string
@@ -58,4 +79,6 @@ export interface Order {
   }
   conversation: Note[]
   internalNotes: InternalNote[]
+  actionLog?: ActionLogEntry[]
+  documents?: Document[]
 }

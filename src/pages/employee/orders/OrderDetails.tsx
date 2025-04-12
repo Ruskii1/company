@@ -24,12 +24,14 @@ const OrderDetails = () => {
     loading, 
     addNoteToConversation, 
     addInternalNote,
-    updateOrderStatus
+    updateOrderStatus,
+    reassignProvider,
+    researchProviders
   } = useOrderDetailsEmployee(taskId)
 
   // In a real application, this would come from an auth context or user store
   // For this demo, we're using a mock value
-  const isAdmin = true
+  const userRole = 'admin' as 'admin' | 'employee' | 'provider' | 'client'
 
   // Log when the component mounts
   useEffect(() => {
@@ -44,7 +46,7 @@ const OrderDetails = () => {
   const escalateStatus = () => {
     if (!order) return
     
-    if (order.status === 'Completed') {
+    if (order.status === 'Complete') {
       toast.info("Order is already completed")
       return
     }
@@ -56,11 +58,25 @@ const OrderDetails = () => {
     toast.success(`Order status updated to ${newStatus}`)
   }
 
-  const cancelOrder = () => {
+  const cancelOrder = (reason: string) => {
     if (!order) return
     
-    updateOrderStatus('Cancelled')
+    updateOrderStatus('Cancelled', reason)
     toast.success("Order has been cancelled")
+  }
+  
+  const handleResearchProviders = () => {
+    if (!order) return
+    
+    researchProviders()
+    toast.success("Looking for providers near pickup location")
+  }
+  
+  const handleManualAssign = (providerId: string) => {
+    if (!order) return
+    
+    reassignProvider(providerId)
+    toast.success(`Order manually assigned to provider ${providerId}`)
   }
 
   if (loading) {
@@ -83,13 +99,16 @@ const OrderDetails = () => {
           openInGoogleMaps={openInGoogleMaps}
           addNoteToConversation={addNoteToConversation}
           addInternalNote={addInternalNote}
+          userRole={userRole}
+          onResearchProviders={handleResearchProviders}
+          onManualAssign={handleManualAssign}
         />
       </Card>
       
       <div className="fixed bottom-0 left-0 right-0">
         <OrderActionButtons 
           order={order}
-          isAdmin={isAdmin}
+          userRole={userRole}
           cancelOrder={cancelOrder}
           escalateStatus={escalateStatus}
         />
