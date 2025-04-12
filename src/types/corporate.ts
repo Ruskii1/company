@@ -30,6 +30,16 @@ export interface CorporateTicket {
   tags: string[];
 }
 
+export interface DocumentFile {
+  id: string;
+  name: string;
+  type: string;
+  size: string;
+  uploadedBy: string;
+  uploadedAt: string;
+  url: string;
+}
+
 export interface CorporateDocument {
   id: string;
   name: string;
