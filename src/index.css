@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
 
@@ -7,48 +8,57 @@
 
 @layer base {
   :root {
-    --background: var(--tw-hsl-background-light);
-    --foreground: var(--tw-hsl-foreground-light);
+    --background: 0 0% 100%;
+    --foreground: 220 10% 30%;
 
-    --card: var(--tw-hsl-background-light);
-    --card-foreground: var(--tw-hsl-foreground-light);
+    --card: 0 0% 100%;
+    --card-foreground: 220 10% 30%;
 
-    --popover: var(--tw-hsl-background-light);
-    --popover-foreground: var(--tw-hsl-foreground-light);
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 10% 30%;
 
-    --primary: 354 78% 53%;
+    --primary: 354 81% 53%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 5% 55%;
+    --secondary: 220 12% 40%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 95%;
+    --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 354 78% 93%;
-    --accent-foreground: 354 78% 53%;
+    --accent: 354 81% 95%;
+    --accent-foreground: 354 81% 53%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 220 13% 91%; 
-    --input: 220 13% 91%;
-    --ring: 354 78% 53%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 354 81% 53%;
 
     --radius: 0.75rem;
+
+    --sidebar-background: 354 81% 53%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 354 81% 53%;
+    --sidebar-accent: 0 0% 90%;
+    --sidebar-accent-foreground: 354 81% 53%;
+    --sidebar-border: 354 70% 45%;
+    --sidebar-ring: 0 0% 100%;
   }
 
   .dark {
-    --background: var(--tw-hsl-background-dark);
-    --foreground: var(--tw-hsl-foreground-dark);
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
 
-    --card: var(--tw-hsl-background-dark);
-    --card-foreground: var(--tw-hsl-foreground-dark);
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: var(--tw-hsl-background-dark);
-    --popover-foreground: var(--tw-hsl-foreground-dark);
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 354 78% 53%;
+    --primary: 354 81% 53%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 240 3.7% 15.9%;
@@ -57,15 +67,24 @@
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
 
-    --accent: 354 78% 20%;
-    --accent-foreground: 354 78% 53%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 354 78% 53%;
+    --ring: 240 4.9% 83.9%;
+
+    --sidebar-background: 240 10% 3.9%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 354 81% 53%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 240 4.9% 83.9%;
   }
 }
 
@@ -89,6 +108,7 @@
   font-family: 'IBM Plex Sans', sans-serif;
 }
 
+/* Smooth transitions */
 .card {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -98,6 +118,7 @@
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
 
+/* Glass morphism */
 .backdrop-blur-sm {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -107,10 +128,12 @@
   background-color: rgba(30, 30, 30, 0.8) !important;
 }
 
+/* Form animations */
 input, select, textarea {
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* Button animations */
 button {
   transition: all 0.2s ease;
 }
@@ -119,6 +142,7 @@ button:active {
   transform: scale(0.98);
 }
 
+/* Direction utility */
 .dir-ltr {
   direction: ltr;
 }

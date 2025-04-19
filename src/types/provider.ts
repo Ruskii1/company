@@ -62,11 +62,6 @@ export interface InternalNote {
   };
 }
 
-export interface Location {
-  lat: number;
-  lng: number;
-}
-
 export interface ServiceProvider {
   id: string;
   fullName: string;
@@ -89,7 +84,4 @@ export interface ServiceProvider {
   internalNotes: InternalNote[];
   createdAt: string;
   isApproved: boolean;
-  location?: Location;
-  rating?: number;
-  completedOrders?: number;
 }
