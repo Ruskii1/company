@@ -7,25 +7,25 @@
 
 @layer base {
   :root {
-    --background: 220 5% 96%; /* Light grey background */
-    --foreground: 220 10% 30%; /* Dark text */
+    --background: var(--tw-hsl-background-light);
+    --foreground: var(--tw-hsl-foreground-light);
 
-    --card: 220 5% 96%;
-    --card-foreground: 220 10% 30%;
+    --card: var(--tw-hsl-background-light);
+    --card-foreground: var(--tw-hsl-foreground-light);
 
-    --popover: 220 5% 96%;
-    --popover-foreground: 220 10% 30%;
+    --popover: var(--tw-hsl-background-light);
+    --popover-foreground: var(--tw-hsl-foreground-light);
 
-    --primary: 354 78% 53%; /* Red from logo */
-    --primary-foreground: 0 0% 100%; /* White text on red */
+    --primary: 354 78% 53%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 5% 55%; /* Grey from logo */
+    --secondary: 220 5% 55%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 95%; /* Very light grey */
+    --muted: 0 0% 95%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 354 78% 93%; /* Light red accent */
+    --accent: 354 78% 93%;
     --accent-foreground: 354 78% 53%;
 
     --destructive: 0 84.2% 60.2%;
@@ -33,31 +33,31 @@
 
     --border: 220 13% 91%; 
     --input: 220 13% 91%;
-    --ring: 354 78% 53%; /* Red ring */
+    --ring: 354 78% 53%;
 
     --radius: 0.75rem;
   }
 
   .dark {
-    --background: 240 10% 3.9%; /* Dark grey background */
-    --foreground: 0 0% 98%;
+    --background: var(--tw-hsl-background-dark);
+    --foreground: var(--tw-hsl-foreground-dark);
 
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: var(--tw-hsl-background-dark);
+    --card-foreground: var(--tw-hsl-foreground-dark);
 
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: var(--tw-hsl-background-dark);
+    --popover-foreground: var(--tw-hsl-foreground-dark);
 
-    --primary: 354 78% 53%; /* Bright red */
-    --primary-foreground: 0 0% 100%; /* White text on red */
+    --primary: 354 78% 53%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 3.7% 15.9%; /* Dark grey */
+    --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
 
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
 
-    --accent: 354 78% 20%; /* Dark red accent */
+    --accent: 354 78% 20%;
     --accent-foreground: 354 78% 53%;
 
     --destructive: 0 62.8% 30.6%;
@@ -65,7 +65,7 @@
 
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 354 78% 53%; /* Red ring */
+    --ring: 354 78% 53%;
   }
 }
 
@@ -89,7 +89,6 @@
   font-family: 'IBM Plex Sans', sans-serif;
 }
 
-/* Smooth transitions */
 .card {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -99,7 +98,6 @@
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
 
-/* Glass morphism */
 .backdrop-blur-sm {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -109,12 +107,10 @@
   background-color: rgba(30, 30, 30, 0.8) !important;
 }
 
-/* Form animations */
 input, select, textarea {
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Button animations */
 button {
   transition: all 0.2s ease;
 }
@@ -123,7 +119,6 @@ button:active {
   transform: scale(0.98);
 }
 
-/* Direction utility */
 .dir-ltr {
   direction: ltr;
 }
