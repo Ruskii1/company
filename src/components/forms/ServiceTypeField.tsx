@@ -37,7 +37,8 @@ export const serviceTypeValues = [
   'between-cities-closed-towing',
   'between-cities-heavy-lifting-towing',
   'between-cities-eight-cars-towing',
-  'between-cities-four-cars-towing'
+  'between-cities-four-cars-towing',
+  'taqdeer'  // Added new service type
 ]
 
 export const ServiceTypeField = ({ control }: ServiceTypeFieldProps) => {

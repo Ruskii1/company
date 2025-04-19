@@ -1,4 +1,3 @@
-
 export const services = {
   serviceType: "Service Type",
   all: "All",
@@ -31,5 +30,6 @@ export const services = {
     'between-cities-heavy-lifting-towing': 'Between Cities Heavy-Lifting Towing',
     'between-cities-eight-cars-towing': 'Between Cities Eight-Cars Towing',
     'between-cities-four-cars-towing': 'Between Cities Four-Cars Towing',
+    'taqdeer': 'Taqdeer Service'
   }
 }

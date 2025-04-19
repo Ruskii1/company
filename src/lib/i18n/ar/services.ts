@@ -1,4 +1,3 @@
-
 export const services = {
   serviceType: "نوع الخدمة",
   all: "الكل",
@@ -31,5 +30,6 @@ export const services = {
     'between-cities-heavy-lifting-towing': 'قطر رفع ثقيل بين المدن',
     'between-cities-eight-cars-towing': 'قطر ثمانية سيارات بين المدن',
     'between-cities-four-cars-towing': 'قطر أربع سيارات بين المدن',
+    'taqdeer': 'خدمة تقدير'
   }
 }

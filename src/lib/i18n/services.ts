@@ -1,4 +1,3 @@
-
 export const serviceTranslations = {
   en: {
     serviceType: "Service Type",
@@ -32,6 +31,7 @@ export const serviceTranslations = {
       'between-cities-heavy-lifting-towing': 'Between Cities Heavy-Lifting Towing',
       'between-cities-eight-cars-towing': 'Between Cities Eight-Cars Towing',
       'between-cities-four-cars-towing': 'Between Cities Four-Cars Towing',
+      'taqdeer': 'Taqdeer Service'
     }
   },
   ar: {
@@ -66,6 +66,7 @@ export const serviceTranslations = {
       'between-cities-heavy-lifting-towing': 'قطر رفع ثقيل بين المدن',
       'between-cities-eight-cars-towing': 'قطر ثمانية سيارات بين المدن',
       'between-cities-four-cars-towing': 'قطر أربع سيارات بين المدن',
+      'taqdeer': 'خدمة تقدير'
     }
   }
 }
