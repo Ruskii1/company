@@ -6,6 +6,13 @@ import { AlertCircle } from 'lucide-react'
 import { ServiceProvider } from '@/types/provider'
 import { mockServiceProviders } from '@/data/mockProviders'
 
+// Interface for provider data shown in the map
+interface ProviderMapItem extends ServiceProvider {
+  name: string;
+  rating: number;
+  completedOrders: number;
+}
+
 interface ProvidersMapViewProps {
   centerAddress: string
   radiusKm: number
@@ -19,7 +26,7 @@ export const ProvidersMapView = ({
 }: ProvidersMapViewProps) => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [providers, setProviders] = useState<ServiceProvider[]>([])
+  const [providers, setProviders] = useState<ProviderMapItem[]>([])
   
   // In a real app, this would fetch nearby providers from an API
   useEffect(() => {
@@ -31,7 +38,14 @@ export const ProvidersMapView = ({
         
         // Mock data - in a real app, this would be filtered by location
         // using the centerAddress and radiusKm parameters
-        setProviders(mockServiceProviders.slice(0, 5))
+        const mappedProviders = mockServiceProviders.slice(0, 5).map(provider => ({
+          ...provider,
+          name: `Provider ${provider.id.slice(0, 4)}`,
+          rating: 4.5,
+          completedOrders: 25
+        }));
+        
+        setProviders(mappedProviders)
         setError(null)
       } catch (err) {
         console.error('Error loading providers:', err)

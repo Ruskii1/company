@@ -1,7 +1,7 @@
 
 import { useState } from 'react'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { Transaction, TransactionFilterState } from '@/types/transaction'
+import { Transaction, TransactionFilterState, FilterableTransactionType } from '@/types/transaction'
 import { TransactionHeader } from './TransactionHeader'
 import { TransactionFilters } from './TransactionFilters'
 import { TransactionList } from './TransactionList'

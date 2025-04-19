@@ -1,7 +1,7 @@
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { DateRangePicker } from '@/components/ui/date-range-picker'
-import { TransactionFilterState, TransactionType } from '@/types/transaction'
+import { TransactionFilterState, FilterableTransactionType } from '@/types/transaction'
 import { DateRange } from 'react-day-picker'
 
 interface TransactionFiltersProps {
@@ -10,8 +10,8 @@ interface TransactionFiltersProps {
 }
 
 export const TransactionFilters = ({ filters, onFilterChange }: TransactionFiltersProps) => {
-  const handleTypeChange = (value: TransactionType) => {
-    onFilterChange({ transactionType: value })
+  const handleTypeChange = (value: string) => {
+    onFilterChange({ transactionType: value as FilterableTransactionType })
   }
   
   const handleDateChange = (date: DateRange | undefined) => {
@@ -30,6 +30,9 @@ export const TransactionFilters = ({ filters, onFilterChange }: TransactionFilte
           <SelectItem value="all">All Transactions</SelectItem>
           <SelectItem value="credit">Credits Only</SelectItem>
           <SelectItem value="debit">Debits Only</SelectItem>
+          <SelectItem value="payment">Payments</SelectItem>
+          <SelectItem value="refund">Refunds</SelectItem>
+          <SelectItem value="adjustment">Adjustments</SelectItem>
         </SelectContent>
       </Select>
       

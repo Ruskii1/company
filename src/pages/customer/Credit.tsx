@@ -1,7 +1,8 @@
+
 import { useState } from 'react'
 import { useLanguageStore, translations } from '@/lib/i18n'
 import { addDays } from 'date-fns'
-import { Transaction, TransactionFilterState } from '@/types/transaction'
+import { TransactionFilterState, WalletTransaction } from '@/types/transaction'
 import { useTransactions } from '@/hooks/useTransactions'
 import { CreditBalance } from '@/components/customer/credit/CreditBalance'
 import { TransactionCard } from '@/components/customer/credit/TransactionCard'
@@ -12,7 +13,7 @@ const Credit = () => {
   const [currentBalance] = useState(845.75)
   
   // Enhanced transactions data with a variety of entries
-  const initialTransactions: Transaction[] = [
+  const initialTransactions: WalletTransaction[] = [
     {
       id: 'TRX-10001',
       type: 'credit',
@@ -92,9 +93,6 @@ const Credit = () => {
     }
   ]
   
-  // Transaction management
-  const { transactions, handleDownloadTransaction, handleDownloadAllTransactions } = useTransactions(initialTransactions)
-  
   // Filtering state
   const [filters, setFilters] = useState<TransactionFilterState>({
     dateRange: {
@@ -103,6 +101,13 @@ const Credit = () => {
     },
     transactionType: 'all'
   })
+  
+  // Transaction management using the hook
+  const { 
+    transactions, 
+    handleDownloadTransaction, 
+    handleDownloadAllTransactions 
+  } = useTransactions();
   
   // Handle filter changes
   const handleFilterChange = (newFilters: Partial<TransactionFilterState>) => {
@@ -116,7 +121,7 @@ const Credit = () => {
       <CreditBalance currentBalance={currentBalance} />
       
       <TransactionCard 
-        transactions={transactions}
+        transactions={initialTransactions}
         filters={filters}
         onFilterChange={handleFilterChange}
         handleDownloadTransaction={handleDownloadTransaction}
