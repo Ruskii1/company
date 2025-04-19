@@ -1,9 +1,9 @@
-
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useLanguageStore, translations } from "@/lib/i18n"
 import { Control } from "react-hook-form"
 import { OrderFormValues } from "./types"
+import { useServiceTypes } from "@/hooks/useServiceTypes"
 
 type ServiceTypeFieldProps = {
   control: Control<OrderFormValues>
@@ -38,12 +38,13 @@ export const serviceTypeValues = [
   'between-cities-heavy-lifting-towing',
   'between-cities-eight-cars-towing',
   'between-cities-four-cars-towing',
-  'taqdeer'  // Added new service type
+  'taqdeer'
 ]
 
 export const ServiceTypeField = ({ control }: ServiceTypeFieldProps) => {
   const { language } = useLanguageStore()
   const t = translations[language]
+  const { data: serviceTypes = serviceTypeValues } = useServiceTypes()
 
   return (
     <FormField
@@ -59,7 +60,7 @@ export const ServiceTypeField = ({ control }: ServiceTypeFieldProps) => {
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {serviceTypeValues.map((type) => (
+              {serviceTypes.map((type) => (
                 <SelectItem key={type} value={type}>
                   {t.services[type]}
                 </SelectItem>

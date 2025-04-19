@@ -148,6 +148,32 @@ export type Database = {
           },
         ]
       }
+      provider_available_services: {
+        Row: {
+          available_since: string | null
+          provider_id: string
+          service: Database["public"]["Enums"]["service_type"]
+        }
+        Insert: {
+          available_since?: string | null
+          provider_id: string
+          service: Database["public"]["Enums"]["service_type"]
+        }
+        Update: {
+          available_since?: string | null
+          provider_id?: string
+          service?: Database["public"]["Enums"]["service_type"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "provider_available_services_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: false
+            referencedRelation: "providers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       provider_requests: {
         Row: {
           car_info: Json
@@ -197,6 +223,29 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "provider_requests_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: false
+            referencedRelation: "providers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      provider_services: {
+        Row: {
+          provider_id: string
+          service: Database["public"]["Enums"]["service_type"]
+        }
+        Insert: {
+          provider_id: string
+          service: Database["public"]["Enums"]["service_type"]
+        }
+        Update: {
+          provider_id?: string
+          service?: Database["public"]["Enums"]["service_type"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "provider_services_provider_id_fkey"
             columns: ["provider_id"]
             isOneToOne: false
             referencedRelation: "providers"
@@ -381,7 +430,7 @@ export type Database = {
           pickup_time: string
           provider_id: string | null
           provider_phone: string | null
-          service_type: string
+          service_type: Database["public"]["Enums"]["service_type"]
           status: Database["public"]["Enums"]["request_status"]
           task_id: string | null
         }
@@ -407,7 +456,7 @@ export type Database = {
           pickup_time: string
           provider_id?: string | null
           provider_phone?: string | null
-          service_type: string
+          service_type: Database["public"]["Enums"]["service_type"]
           status?: Database["public"]["Enums"]["request_status"]
           task_id?: string | null
         }
@@ -433,7 +482,7 @@ export type Database = {
           pickup_time?: string
           provider_id?: string | null
           provider_phone?: string | null
-          service_type?: string
+          service_type?: Database["public"]["Enums"]["service_type"]
           status?: Database["public"]["Enums"]["request_status"]
           task_id?: string | null
         }
@@ -468,6 +517,13 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: string
       }
+      provider_offers_service: {
+        Args: {
+          provider_uuid: string
+          requested_service: Database["public"]["Enums"]["service_type"]
+        }
+        Returns: boolean
+      }
       set_inactive_providers_offline: {
         Args: Record<PropertyKey, never>
         Returns: undefined
@@ -484,6 +540,36 @@ export type Database = {
         | "In Service"
         | "Complete"
         | "Cancelled"
+      service_type:
+        | "regular-towing"
+        | "winch-towing"
+        | "half-down-towing"
+        | "full-down-towing"
+        | "closed-towing"
+        | "heavy-lifting-towing"
+        | "eight-cars-towing"
+        | "four-cars-towing"
+        | "battery-jumpstart"
+        | "battery-replacement"
+        | "fuel-delivery-95"
+        | "fuel-delivery-91"
+        | "fuel-delivery-diesel"
+        | "locksmith-service"
+        | "tire-spare-installation"
+        | "tire-repair-station"
+        | "tire-change-station"
+        | "tire-repair-site"
+        | "tire-inflation-site"
+        | "mvpi"
+        | "between-cities-regular-towing"
+        | "between-cities-winch-towing"
+        | "between-cities-half-down-towing"
+        | "between-cities-full-down-towing"
+        | "between-cities-closed-towing"
+        | "between-cities-heavy-lifting-towing"
+        | "between-cities-eight-cars-towing"
+        | "between-cities-four-cars-towing"
+        | "taqdeer"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -609,6 +695,37 @@ export const Constants = {
         "In Service",
         "Complete",
         "Cancelled",
+      ],
+      service_type: [
+        "regular-towing",
+        "winch-towing",
+        "half-down-towing",
+        "full-down-towing",
+        "closed-towing",
+        "heavy-lifting-towing",
+        "eight-cars-towing",
+        "four-cars-towing",
+        "battery-jumpstart",
+        "battery-replacement",
+        "fuel-delivery-95",
+        "fuel-delivery-91",
+        "fuel-delivery-diesel",
+        "locksmith-service",
+        "tire-spare-installation",
+        "tire-repair-station",
+        "tire-change-station",
+        "tire-repair-site",
+        "tire-inflation-site",
+        "mvpi",
+        "between-cities-regular-towing",
+        "between-cities-winch-towing",
+        "between-cities-half-down-towing",
+        "between-cities-full-down-towing",
+        "between-cities-closed-towing",
+        "between-cities-heavy-lifting-towing",
+        "between-cities-eight-cars-towing",
+        "between-cities-four-cars-towing",
+        "taqdeer",
       ],
     },
   },
