@@ -12,6 +12,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { ProvidersMapView } from "../providers/ProvidersMapView"
+import { useServiceProviders } from "@/hooks/useServiceProviders"
+import { ServiceProvider } from "@/types/provider"
 
 interface ManualAssignmentSectionProps {
   order: {
@@ -32,11 +34,18 @@ export const ManualAssignmentSection = ({
   const t = translations[language]
   const [providerId, setProviderId] = useState("")
   const [mapOpen, setMapOpen] = useState(false)
+  // Get nearby providers using the hook
+  const { allProviders } = useServiceProviders()
   
   // Only show for NPF or NPA status
   if (order.status !== 'NPA' && order.status !== 'NPF') {
     return null
   }
+
+  // Filter for online providers only
+  const onlineProviders = allProviders.filter(
+    provider => provider.availabilityStatus === 'online'
+  );
 
   return (
     <div className="mt-6 border-t pt-6">
@@ -82,9 +91,10 @@ export const ManualAssignmentSection = ({
             </DialogHeader>
             <div className="h-full">
               <ProvidersMapView 
+                providers={onlineProviders}
                 centerAddress={order.pickupLocation}
                 radiusKm={7}
-                onProviderSelect={(provider) => {
+                onProviderSelect={(provider: ServiceProvider) => {
                   onManualAssign(provider.id);
                   setMapOpen(false);
                 }}
