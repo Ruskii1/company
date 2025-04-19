@@ -23,11 +23,13 @@ export function Logo({ className = '', showText = true, size = 'medium' }: LogoP
 
   return (
     <div className={`flex flex-col items-center ${className}`}>
-      <img 
-        src="/lovable-uploads/f90e0ae4-277c-44a0-99d3-29f89b50a226.png" 
-        alt="TruckIt Logo" 
-        className={`${getSizeClass()} w-auto object-contain`}
-      />
+      <div className="bg-[#8E9196] p-2 rounded-lg inline-block"> {/* Added background container */}
+        <img 
+          src="/lovable-uploads/f90e0ae4-277c-44a0-99d3-29f89b50a226.png" 
+          alt="TruckIt Logo" 
+          className={`${getSizeClass()} w-auto object-contain`}
+        />
+      </div>
     </div>
   );
 }
