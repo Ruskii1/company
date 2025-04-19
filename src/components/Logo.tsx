@@ -24,7 +24,7 @@ export function Logo({ className = '', showText = true, size = 'medium' }: LogoP
   return (
     <div className={`flex flex-col items-center ${className}`}>
       <img 
-        src="/lovable-uploads/42765535-98d3-42b9-b5f3-a02b2fa4cd3c.png" 
+        src="/lovable-uploads/f90e0ae4-277c-44a0-99d3-29f89b50a226.png" 
         alt="TruckIt Logo" 
         className={`${getSizeClass()} w-auto object-contain`}
       />

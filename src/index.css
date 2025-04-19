@@ -17,8 +17,8 @@
     --popover: 0 0% 100%;
     --popover-foreground: 220 10% 30%;
 
-    --primary: 354 81% 53%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 220 10% 50%; /* Grey color */
+    --primary-foreground: 0 80% 50%; /* Red color */
 
     --secondary: 220 12% 40%;
     --secondary-foreground: 0 0% 100%;
@@ -26,25 +26,25 @@
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 354 81% 95%;
-    --accent-foreground: 354 81% 53%;
+    --accent: 0 80% 95%; /* Light red accent */
+    --accent-foreground: 0 80% 50%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 354 81% 53%;
+    --ring: 0 80% 50%; /* Red ring */
 
     --radius: 0.75rem;
 
-    --sidebar-background: 354 81% 53%;
+    --sidebar-background: 220 10% 50%; /* Grey sidebar */
     --sidebar-foreground: 0 0% 100%;
     --sidebar-primary: 0 0% 100%;
-    --sidebar-primary-foreground: 354 81% 53%;
+    --sidebar-primary-foreground: 0 80% 50%; /* Red primary foreground */
     --sidebar-accent: 0 0% 90%;
-    --sidebar-accent-foreground: 354 81% 53%;
-    --sidebar-border: 354 70% 45%;
+    --sidebar-accent-foreground: 0 80% 50%;
+    --sidebar-border: 0 70% 45%;
     --sidebar-ring: 0 0% 100%;
   }
 
@@ -58,8 +58,8 @@
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 354 81% 53%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 220 10% 50%; /* Grey color */
+    --primary-foreground: 0 80% 50%; /* Red color */
 
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
@@ -67,19 +67,19 @@
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
 
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 0 80% 20%; /* Dark red accent */
+    --accent-foreground: 0 80% 50%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --ring: 0 80% 50%; /* Red ring */
 
     --sidebar-background: 240 10% 3.9%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 354 81% 53%;
+    --sidebar-primary: 0 80% 50%; /* Red primary */
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 0 0% 98%;
