@@ -13,7 +13,8 @@ import { toast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
 import { jsPDF } from 'jspdf';
 
-// Define a type for wallet ledger entries
+// Define a type for wallet ledger entries - this acts as a bridge between 
+// what's in Supabase and our app's transaction model
 interface WalletLedgerEntry {
   id: string;
   provider_id?: string;
@@ -45,8 +46,11 @@ export const useTransactions = (entityId?: string, entityType: 'provider' | 'com
         return;
       }
 
+      // We're fetching from a table that's not in the TypeScript definitions
+      // Need to use a workaround with 'any' typing for now
+      // This will be fixed when Supabase types are regenerated
       let query = supabase
-        .from('provider_wallet_ledger')
+        .from('provider_wallet_ledger' as any)
         .select('*');
 
       // Apply entity filter based on type
@@ -91,7 +95,10 @@ export const useTransactions = (entityId?: string, entityType: 'provider' | 'com
       }
 
       // Transform data to match our Transaction interface
-      const mappedTransactions: WalletTransaction[] = (data as WalletLedgerEntry[]).map(item => {
+      // Need to safely cast the data to our expected interface
+      const ledgerEntries = data as unknown as WalletLedgerEntry[];
+      
+      const mappedTransactions: WalletTransaction[] = ledgerEntries.map(item => {
         // Determine the transaction type based on database info
         let transactionType: TransactionType;
         
@@ -138,9 +145,6 @@ export const useTransactions = (entityId?: string, entityType: 'provider' | 'com
   const handleDownloadTransaction = (transaction: WalletTransaction) => {
     try {
       const doc = new jsPDF();
-      
-      // Add logo
-      // doc.addImage("/logo.png", "PNG", 10, 10, 40, 40);
       
       // Add title
       doc.setFontSize(20);
