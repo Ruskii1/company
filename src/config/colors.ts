@@ -28,4 +28,3 @@ export const colors = {
     foreground: "hsl(var(--destructive-foreground))"
   }
 } as const;
-
