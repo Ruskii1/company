@@ -7,13 +7,13 @@
 
 @layer base {
   :root {
-    --background: 240 5% 96%; /* Light grey background */
+    --background: 220 5% 96%; /* Light grey background */
     --foreground: 220 10% 30%; /* Dark text */
 
-    --card: 240 5% 96%;
+    --card: 220 5% 96%;
     --card-foreground: 220 10% 30%;
 
-    --popover: 240 5% 96%;
+    --popover: 220 5% 96%;
     --popover-foreground: 220 10% 30%;
 
     --primary: 354 78% 53%; /* Red from logo */

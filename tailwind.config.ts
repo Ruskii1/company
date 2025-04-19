@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -25,11 +26,11 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#ea384c",
-          foreground: "hsl(0 0% 100%)"
+          DEFAULT: "#ea384c", // Red from logo
+          foreground: "hsl(0 0% 100%)" // White text on red
         },
         secondary: {
-          DEFAULT: "#8E9196",
+          DEFAULT: "#8E9196", // Grey from logo
           foreground: "hsl(0 0% 100%)"
         },
         destructive: {
@@ -37,7 +38,7 @@ export default {
           foreground: "hsl(var(--destructive-foreground))"
         },
         muted: {
-          DEFAULT: "#F1F1F1",
+          DEFAULT: "#F1F1F1", // Light grey
           foreground: "hsl(var(--muted-foreground))"
         },
         accent: {
@@ -52,16 +53,6 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))"
         },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          'primary-foreground': "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          'accent-foreground': "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))"
-        }
       },
       borderRadius: {
         lg: "var(--radius)",
