@@ -1,18 +1,31 @@
 
 import { DateRange } from "react-day-picker"
 
+export type TransactionType = 'payment' | 'commission' | 'refund' | 'bonus' | 'adjustment';
+
 export interface Transaction {
-  id: string
-  type: 'credit' | 'debit'
-  amount: number
-  description: string
-  date: Date
-  receipt?: File | null
+  id: string;
+  type: TransactionType;
+  amount: number;
+  description: string;
+  date: Date;
+  reference?: string;
+  receipt?: File | null;
+  relatedOrderId?: string;
 }
 
-export type TransactionType = 'all' | 'credit' | 'debit'
+export interface WalletTransaction extends Transaction {
+  providerId?: string;
+  companyId?: string;
+}
+
+export interface CorporateTransaction extends Transaction {
+  corporateId: string;
+}
+
+export type FilterableTransactionType = 'all' | TransactionType;
 
 export interface TransactionFilterState {
-  dateRange: DateRange
-  transactionType: TransactionType
+  dateRange: DateRange;
+  transactionType: FilterableTransactionType;
 }
