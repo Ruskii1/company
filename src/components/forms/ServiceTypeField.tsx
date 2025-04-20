@@ -1,50 +1,23 @@
+
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useLanguageStore, translations } from "@/lib/i18n"
 import { Control } from "react-hook-form"
 import { OrderFormValues } from "./types"
 import { useServiceTypes } from "@/hooks/useServiceTypes"
+import { ServiceType, getAllServiceTypes } from "@/types/serviceType"
 
 type ServiceTypeFieldProps = {
   control: Control<OrderFormValues>
 }
 
-export const serviceTypeValues = [
-  'regular-towing',
-  'winch-towing',
-  'half-down-towing',
-  'full-down-towing',
-  'closed-towing',
-  'heavy-lifting-towing',
-  'eight-cars-towing',
-  'four-cars-towing',
-  'battery-jumpstart',
-  'battery-replacement',
-  'fuel-delivery-95',
-  'fuel-delivery-91',
-  'fuel-delivery-diesel',
-  'locksmith-service',
-  'tire-spare-installation',
-  'tire-repair-station',
-  'tire-change-station',
-  'tire-repair-site',
-  'tire-inflation-site',
-  'mvpi',
-  'between-cities-regular-towing',
-  'between-cities-winch-towing',
-  'between-cities-half-down-towing',
-  'between-cities-full-down-towing',
-  'between-cities-closed-towing',
-  'between-cities-heavy-lifting-towing',
-  'between-cities-eight-cars-towing',
-  'between-cities-four-cars-towing',
-  'taqdeer'
-]
+// Use the getAllServiceTypes function for the default values
+export const serviceTypeValues = getAllServiceTypes();
 
 export const ServiceTypeField = ({ control }: ServiceTypeFieldProps) => {
   const { language } = useLanguageStore()
   const t = translations[language]
-  const { data: serviceTypes = serviceTypeValues } = useServiceTypes()
+  const { data: serviceTypes = serviceTypeValues, isLoading, error } = useServiceTypes()
 
   return (
     <FormField
@@ -62,7 +35,7 @@ export const ServiceTypeField = ({ control }: ServiceTypeFieldProps) => {
             <SelectContent>
               {serviceTypes.map((type) => (
                 <SelectItem key={type} value={type}>
-                  {t.services[type]}
+                  {t.services[type as ServiceType]}
                 </SelectItem>
               ))}
             </SelectContent>

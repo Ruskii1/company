@@ -1,12 +1,13 @@
 
 import { OrderStatus } from "./orderStatus";
+import { ServiceType } from "./serviceType";
 
 export interface Request {
   id: string
   taskId: string
   companyName?: string
   employeeName?: string
-  serviceType: string
+  serviceType: ServiceType
   pickupTime: string
   pickupLocation: string
   dropoffLocation: string
@@ -19,7 +20,7 @@ export interface Request {
     model: string
     year: string
     licensePlate: string
-    licensePlateArabic?: string  // Make this optional
+    licensePlateArabic?: string
     vin: string
   }
   // New fields for enhanced request tracking
