@@ -1,3 +1,4 @@
+
 import { Request } from "@/types/request";
 
 /**
@@ -38,10 +39,13 @@ export function mapToRequest(dbRequest: any): Request {
 /**
  * Prepares a request object for insertion into the database
  */
-export function prepareRequestForInsert(request: Omit<Request, 'id' | 'taskId'>) {
+export function prepareRequestForInsert(request: Partial<Request>) {
+  // Generate a new taskId if not provided
+  const generatedTaskId = crypto.randomUUID();
+  
   // Map the request object to the database schema
   const insertData: any = {
-    task_id: request.taskId || crypto.randomUUID(),
+    task_id: request.taskId || generatedTaskId,
     service_type: request.serviceType as any, // Cast to any to bypass type checking temporarily
     pickup_time: request.pickupTime,
     pickup_location: request.pickupLocation,

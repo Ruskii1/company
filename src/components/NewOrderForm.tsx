@@ -15,6 +15,7 @@ import { orderFormSchema, OrderFormValues } from './forms/types'
 import { createRequest } from '@/services/requestService'
 import { format } from 'date-fns'
 import { OrderStatus } from '@/types/orderStatus'
+import { ServiceType } from '@/types/serviceType'
 
 export const NewOrderForm = () => {
   const { language } = useLanguageStore()
@@ -24,7 +25,7 @@ export const NewOrderForm = () => {
   const form = useForm<OrderFormValues>({
     resolver: zodResolver(orderFormSchema),
     defaultValues: {
-      serviceType: '',
+      serviceType: '' as ServiceType,
       pickupDate: new Date(),
       pickupLocation: '',
       dropoffLocation: '',
@@ -54,11 +55,11 @@ export const NewOrderForm = () => {
       const request = {
         companyName: 'Company Name', // You would get this from user context
         employeeName: 'Employee Name', // You would get this from user context
-        serviceType: values.serviceType,
+        serviceType: values.serviceType as ServiceType,
         pickupTime: format(values.pickupDate, "yyyy-MM-dd'T'HH:mm:ss"),
         pickupLocation: values.pickupLocation,
         dropoffLocation: values.dropoffLocation,
-        status: 'Scheduled' as OrderStatus, // Fixed: Now explicitly typed as OrderStatus
+        status: 'Scheduled' as OrderStatus,
         notes: values.notes || '',
         car: {
           model: values.carModel,

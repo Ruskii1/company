@@ -1,10 +1,11 @@
 
 import { z } from "zod"
+import { ServiceType } from "@/types/serviceType";
 
 export const orderFormSchema = z.object({
   serviceType: z.string().min(1, {
     message: "Service type is required",
-  }),
+  }) as z.ZodType<ServiceType>,
   pickupDate: z.date({
     required_error: "Pickup date is required",
   }),
